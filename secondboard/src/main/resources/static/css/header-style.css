@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container .header {
+  width: 90%;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.container .header h1 img:hover{
+  cursor: pointer;
+}
+
+.container .nav ul {
+  margin-top: 50px;
+}
+
+.container .nav ul li {
+  display: inline-block;
+  margin: 20px 20px;
+}
+
+.container .nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.container .nav ul li a:hover {
+  color: #1fdfdf;
+  cursor: pointer;
+}
+
+.container .login-menu ul {
+  margin: 20px 20px;
+}
+
+.container .login-menu ul li {
+  display: inline-block;
+}
+
+.container .login-menu ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.login-menu ul li a:hover {
+  color: #1fdfdf;
+  cursor: pointer;
+}

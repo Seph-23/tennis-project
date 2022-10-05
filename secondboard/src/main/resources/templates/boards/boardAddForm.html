@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
+        rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <link href="/css/header-style.css" rel="stylesheet">
+  <title>Board Add</title>
+</head>
+<body>
+  <div class="container">   <!-- Container Start -->
+    <div class="header">  <!-- Header Start -->
+      <h1>
+        <img th:src="@{/images/gogoTennisLogo.png}" alt="logo" width="160"
+             th:onclick="|location.href='@{/}'|">
+      </h1>
+      <div class="nav"> <!-- Main Menu Start -->
+        <ul>
+          <li>
+            <a th:onclick="|location.href='@{/match/home}'|">매치</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
+          </li>
+        </ul>
+      </div> <!-- Main Menu End -->
+      <div class="login-menu"> <!-- login start -->
+        <ul>
+          <li th:if="${session.loginMember == null}">
+            <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
+          </li>
+          <li th:if="${session.loginMember == null}">
+            <a th:onclick="|location.href='@{/login}'|">로그인</a>
+          </li>
+          <li th:if="${session.loginMember != null}">
+            <a th:onclick="|location.href='@{/members/profile}'|">프로필</a>
+          </li>
+          <li th:if="${session.loginMember != null}">
+            <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
+          </li>
+        </ul>
+      </div> <!-- login end -->
+    </div><!-- Header End -->
+    <div class="board"> <!-- board start -->
+      <div class="side-menu-left"> <!-- Side Menu Start -->
+        <h3>Community</h3>
+        <ul>
+          <li><a href="#">자유게시판</a></li>
+          <li><a href="#">공지사항</a></li>
+          <li><a href="#">Q&A</a></li>
+          <li><a href="#">레슨 찾아요</a></li>
+          <li><a href="#">동호회</a></li>
+        </ul>
+      </div> <!-- Side Menu End -->
+
+      <div class="board-main"> <!-- Board Main Start -->
+        <h4>글쓰기</h4>
+        <form role="form" th:object="${board}" action="/boards/new" method="post">
+          <div class="form-group">
+            <label th:for="title"></label>
+            <input id="title" type="text" class="form-control" th:field="${board.title}"
+                   placeholder="제목을 입력해주세요." />
+            <div class="field-error" th:errors="${board.title}"></div>
+          </div>
+          <div class="form-group">
+            <label th:for="content"></label>
+            <textarea id="content" type="text" class="form-control" th:field="${board.content}"
+                      placeholder="내용을 입력해주세요."></textarea>
+            <div class="field-error" th:errors="${board.content}"></div>
+          </div>
+          <button type="submit" class="button-submit" id="board-submit">등록하기</button>
+        </form>
+      </div> <!-- Board Main End -->
+
+      <div class="side-menu-right"> <!-- Right Side Menu Start -->
+      </div> <!-- Right Side Menu End -->
+    </div> <!-- board end -->
+  </div> <!-- Container End -->
+</body>
+</html>

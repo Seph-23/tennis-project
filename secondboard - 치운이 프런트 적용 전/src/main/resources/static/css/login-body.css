@@ -1,0 +1,39 @@
+*{
+  font-family: 'Noto Sans KR', sans-serif;
+  list-style: none;
+  text-decoration: none;
+  border-collapse: collapse;
+}
+
+.container .login h3{
+  color: black;
+}
+
+.container .login{
+  position: relative;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+  background: lightslategray;
+  border-radius: 15px;
+}
+
+.container .login .form-group{
+  color: white;
+}
+
+.container .login .form-control{
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.container .login .button-submit{
+  color: black;
+}
+
+.container .field-error{
+  color: red;
+}

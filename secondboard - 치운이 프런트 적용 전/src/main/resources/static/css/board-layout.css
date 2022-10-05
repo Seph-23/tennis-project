@@ -1,0 +1,70 @@
+.container .board{
+  display: flex;
+  height: 100%;
+}
+
+/* Left Side Menu Start */
+.container .board .side-menu-left{
+  font-family: 'Noto Sans KR', sans-serif;
+  text-decoration: none;
+  color: black;
+  width: 15%;
+  height: 100%;
+  align-items: center;
+  display: inline-block;
+  border-right-style: solid;
+  border-right-color: rgba(0,0,0,0.3);
+  border-right-width: 3px;
+}
+
+.container .board .side-menu-left h3{
+  text-align: center;
+  margin-left: 18%;
+}
+
+.container .board .side-menu-left ul{
+  text-align: right;
+  list-style: none;
+  margin-right: 18%;
+}
+
+.container .board .side-menu-left ul li a{
+  text-decoration: none;
+  color: black;
+}
+
+.container .board .side-menu-left ul li a:hover{
+  color: #1fdfdf;
+  cursor: pointer;
+  transition: all .4s;
+}
+/* Left Side Menu End */
+
+/* Main Board Start */
+.container .board .board-main{
+  width: 70%;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-decoration: none;
+  color: black;
+  align-items: center;
+  display: inline-block;
+  border-right-style: solid;
+  border-right-color: rgba(0,0,0,0.3);
+  border-right-width: 3px;
+}
+
+/* Main Board End */
+
+/* Right Side Menu Start */
+.container .board .side-menu-right{
+  width: 15%;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-decoration: none;
+  color: black;
+  align-items: center;
+  display: inline-block;
+}
+
+/* Right Side Menu End */

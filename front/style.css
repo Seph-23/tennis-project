@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container .header {
+  width: 80%;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: cneter;
+  display: flex;
+}
+
+.container .header h1 a {
+  font-size: 40px;
+  text-decoration: none;
+  color: black;
+  font-family: abster;
+  text-decoration: none;
+}
+
+.container .nav ul {
+  margin-top: 50px;
+}
+
+.container .nav ul li {
+  display: inline-block;
+  margin: 20px 20px;
+}
+
+.container .nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.container .nav ul li a:hover {
+  color: #1fdfdf;
+}
+
+.container .login ul {
+  margin: 20px 20px;
+}
+
+.container .login ul li {
+  display: inline-block;
+}
+
+.container .login ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.login ul li a:hover {
+  color: #1fdfdf;
+}

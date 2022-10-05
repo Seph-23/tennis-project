@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
+        rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <link href="/css/header-style.css" rel="stylesheet">
+  <link href="/css/login.css" rel="stylesheet">
+  <title>로그인</title>
+</head>
+<body>
+  <div class="container"> <!-- container start -->
+    <div class="header">  <!-- Header Start -->
+      <h1>
+        <img th:src="@{/images/gogoTennisLogo.png}" alt="logo" width="160"
+             th:onclick="|location.href='@{/}'|">
+      </h1>
+      <div class="nav"> <!-- Main Menu Start -->
+        <ul>
+          <li>
+            <a th:onclick="|location.href='@{/match/home}'|">매치</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
+          </li>
+        </ul>
+      </div> <!-- Main Menu End -->
+      <div class="login-menu"> <!-- login start -->
+        <ul>
+          <li th:if="${session.loginMember == null}">
+            <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
+          </li>
+          <li th:if="${session.loginMember == null}">
+            <a th:onclick="|location.href='@{/login}'|">로그인</a>
+          </li>
+          <li th:if="${session.loginMember != null}">
+            <a th:onclick="|location.href='@{/members/profile}'|">프로필</a>
+          </li>
+          <li th:if="${session.loginMember != null}">
+            <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
+          </li>
+        </ul>
+      </div> <!-- login end -->
+    </div><!-- Header End -->
+    <div class="wrap">
+      <div class="login"> <!-- Login Body Start -->
+        <h3>로그인 페이지</h3>
+        <form role="form" action="/login" method="post" th:object="${loginForm}"> <!-- login form -->
+
+          <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+          </div>
+
+          <div class="login_id">
+            <label th:for="loginId"></label>
+            <input id="login_id" type="text" class="form-control" th:field="${loginForm.loginId}"
+                   placeholder="아이디를 입력해주세요."/>
+            <div class="field-error" th:errors="${loginForm.loginId}"></div>
+          </div>
+          <div class="login_pw">
+            <label th:for="password"></label>
+            <input id="password" type="password" class="form-control" th:field="${loginForm.password}"
+                   placeholder="비밀번호를 입력해주세요."/>
+            <div class="field-error" th:errors="${loginForm.password}"></div>
+          </div>
+          <button type="submit" class="button-submit" id="login-submit">로그인</button>
+        </form>
+      </div> <!-- Login Body End -->
+    </div>
+  </div> <!-- container end -->
+</body>
+</html>

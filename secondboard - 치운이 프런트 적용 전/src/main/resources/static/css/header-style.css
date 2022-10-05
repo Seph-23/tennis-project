@@ -1,0 +1,89 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Start */
+.container .header{
+  font-family: 'Noto Sans KR', sans-serif;
+  list-style: none;
+  text-decoration: none;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+}
+
+.container{
+  width: 100%;
+  height: 100vh;
+}
+
+.container .top-menu{
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(rgba(0,0,0,1.0),rgba(0,0,0,0.8));
+}
+
+.top-menu h1 {
+  margin-left: 10px;
+}
+
+.container .top-menu h1 a{
+  text-decoration: none;
+}
+
+.top-menu h1 a:hover{
+  color: #1fdfdf;
+  cursor: pointer;
+  transition: all .4s;
+}
+
+.container .nav ul li{
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.container .nav ul li a{
+  text-decoration: none;
+}
+
+.container .nav ul li a:hover{
+  color: #1fdfdf;
+  cursor: pointer;
+  transition: all .4s;
+}
+
+/* Header End */
+
+/* Main Menu Start */
+.container .main-menu{
+  width: 100%;
+  height: 30px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.5));
+}
+
+.container .main-menu ul{
+  margin-right: 15%;
+}
+
+.container .main-menu ul li{
+  display: inline-block;
+  margin: 0 50px 0 auto;
+}
+
+.container .main-menu ul li a:hover{
+  color: #1fdfdf;
+  cursor: pointer;
+  transition: all .4s;
+}
+/* Main Menu End */

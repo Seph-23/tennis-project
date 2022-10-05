@@ -1,0 +1,43 @@
+*{
+  font-family: 'Noto Sans KR', sans-serif;
+  list-style: none;
+  text-decoration: none;
+  border-collapse: collapse;
+}
+
+.container .signup h3{
+  color: black;
+}
+
+.container .signup{
+  position: relative;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+  background: lightslategray;
+  border-radius: 15px;
+}
+
+.container .signup .form-group{
+  color: white;
+}
+
+.container .signup .form-control{
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.container .signup .button-submit{
+  color: black;
+}
+
+.container .signup .dup-check-button{
+  color: black;
+}
+
+.container .field-error{
+  color: red;
+}

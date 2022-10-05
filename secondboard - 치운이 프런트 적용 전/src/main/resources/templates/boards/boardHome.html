@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
+        rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <link href="/css/board-layout.css" rel="stylesheet">
+  <link href="/css/header-style.css" rel="stylesheet">
+  <title>Board Home</title>
+</head>
+<body>
+  <div class="container">   <!-- Container Start -->
+    <div class="header">  <!-- Header Start -->
+      <div class="top-menu"> <!-- Top Menu Start -->
+        <h1><a th:onclick="|location.href='@{/}'|">GoGo Tennis</a></h1>   <!-- Header Start -->
+        <div class="nav">
+          <ul>
+            <li th:if="${session.loginMember == null}">
+              <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
+            </li>
+            <li th:if="${session.loginMember == null}">
+              <a th:onclick="|location.href='@{/login}'|">로그인</a>
+            </li>
+            <li th:if="${session.loginMember != null}">
+              <a th:onclick="|location.href='@{/members/profile}'|">프로필</a>
+            </li>
+            <li th:if="${session.loginMember != null}">
+              <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- Top Menu End -->
+      <div class="main-menu"> <!-- Main Menu Start -->
+        <ul>
+          <li>
+            <a th:onclick="|location.href='@{/match/home}'|">매치</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
+          </li>
+        </ul>
+      </div> <!-- Main Menu End -->
+    </div><!-- Header End -->
+    <div class="board"> <!-- board start -->
+      <div class="side-menu-left"> <!-- Left Side Menu Start -->
+        <h3>Community</h3>
+        <ul>
+          <li><a href="#">자유게시판</a></li>
+          <li><a href="#">공지사항</a></li>
+          <li><a href="#">Q&A</a></li>
+          <li><a href="#">레슨 찾아요</a></li>
+          <li><a href="#">동호회</a></li>
+        </ul>
+      </div> <!-- Left Side Menu End -->
+
+      <div class="board-main"> <!-- Board Main Start -->
+        <button type="button" th:onclick="|location.href='@{/boards/boardAdd}'|"
+                th:if="${session.loginMember != null}">게시글 등록</button>
+      </div> <!-- Board Main End -->
+
+      <div class="side-menu-right"> <!-- Right Side Menu Start -->
+
+      </div> <!-- Right Side Menu End -->
+    </div> <!-- board end -->
+  </div> <!-- Container End -->
+</body>
+</html>
