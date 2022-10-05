@@ -1,8 +1,19 @@
 package myweb.secondboard.repository;
 
+import java.util.List;
+import java.util.Optional;
+import javax.persistence.EntityManager;
 import myweb.secondboard.domain.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepositoryInterface extends JpaRepository<Member, Long> {
+public interface MemberRepositoryInterface {
 
+  void save(Member member);
+
+  List<Member> findAll();
+
+  Optional<Member> findByLoginId(String loginId);
+
+  Optional<Member> findByNickname(String nickname);
+
+  Optional<Member> findByEmail(String email);
 }

@@ -2,7 +2,7 @@ package myweb.secondboard.service;
 
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
-import myweb.secondboard.repository.MemberRepository;
+import myweb.secondboard.repository.MemberRepositoryImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LoginService {
 
-  private final MemberRepository memberRepository;
+  private final MemberRepositoryImpl memberRepository;
 
   public Member login(String loginId, String password) {
     return memberRepository.findByLoginId(loginId).filter(m -> m.getPassword().equals(password))

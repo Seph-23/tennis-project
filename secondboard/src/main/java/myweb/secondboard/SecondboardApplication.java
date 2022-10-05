@@ -1,16 +1,7 @@
 package myweb.secondboard;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.stream.IntStream;
-import myweb.secondboard.domain.Board;
-import myweb.secondboard.domain.Member;
-import myweb.secondboard.repository.BoardRepositoryInterface;
-import myweb.secondboard.repository.MemberRepositoryInterface;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SecondboardApplication {

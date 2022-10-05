@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.repository.MemberRepository;
+import myweb.secondboard.repository.MemberRepositoryImpl;
+import myweb.secondboard.repository.MemberRepositoryInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-  private final MemberRepository memberRepository;
+  private final MemberRepositoryInterface memberRepository;
 
   @Transactional
   public Long signUp(MemberSaveForm form) {
