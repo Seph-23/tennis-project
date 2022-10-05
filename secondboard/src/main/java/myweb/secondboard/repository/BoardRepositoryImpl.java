@@ -1,6 +1,7 @@
 package myweb.secondboard.repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class BoardRepositoryImpl implements BoardRepositoryInterface {
 
+  @PersistenceContext
   private final EntityManager em;
 
   public Board findOne(Long boardId) {

@@ -3,6 +3,7 @@ package myweb.secondboard.repository;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MemberRepositoryImpl {
 
+  @PersistenceContext
   private final EntityManager em;
 
   public List<Member> findAll() {         //Member entity 전체를 리스트로 반환
