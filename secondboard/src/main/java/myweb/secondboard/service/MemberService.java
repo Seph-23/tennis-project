@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-  private final MemberRepositoryInterface memberRepository;
+  private final MemberRepository memberRepository;
 
   @Transactional
   public Long signUp(MemberSaveForm form) {

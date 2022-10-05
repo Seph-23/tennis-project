@@ -11,10 +11,6 @@ public class BoardRepositoryImpl implements BoardRepositoryInterface {
 
   private final EntityManager em;
 
-  public void save(Board board) {      //보드 엔티티를 디비에 저장.
-    em.persist(board);
-  }
-
   public Board findOne(Long boardId) {
     return em.find(Board.class, boardId);
   }

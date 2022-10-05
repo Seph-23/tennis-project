@@ -7,8 +7,6 @@ import myweb.secondboard.domain.Member;
 
 public interface MemberRepositoryInterface {
 
-  void save(Member member);
-
   List<Member> findAll();
 
   Optional<Member> findByLoginId(String loginId);

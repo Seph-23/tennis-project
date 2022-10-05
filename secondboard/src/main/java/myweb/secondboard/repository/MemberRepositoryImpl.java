@@ -13,10 +13,6 @@ public class MemberRepositoryImpl {
 
   private final EntityManager em;
 
-  public void save(Member member) {       //멤버 엔티티를 디비에 저장.
-    em.persist(member);
-  }
-
   public List<Member> findAll() {         //Member entity 전체를 리스트로 반환
     return em.createQuery("select m from Member m", Member.class).getResultList();
   }
