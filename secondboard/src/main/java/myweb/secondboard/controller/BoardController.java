@@ -4,9 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Board;
+import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.BoardSaveForm;
 import myweb.secondboard.service.BoardService;
+import myweb.secondboard.service.CommentService;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/boards")
@@ -30,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 
   private final BoardService boardService;
+  private final CommentService commentService;
 
   @GetMapping("/home")
   public String home(@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
@@ -79,6 +84,13 @@ public class BoardController {
     Board board = boardService.findOne(boardId);
     boardService.increaseView(boardId);
     model.addAttribute("board", board);
+
+    //TODO
+    List<Comment> comments = commentService.findComments(boardId);
+    if (comments != null) {
+      model.addAttribute("comments", comments);
+    }
+
     return "/boards/boardDetail";
   }
 }

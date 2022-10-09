@@ -58,7 +58,7 @@ public class Board {
   //생성 메서드
   public static Board createBoard(BoardSaveForm form, Member member) {
     Board board = new Board();
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy:MM:dd:HH:mm:ss");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 
     board.setTitle(form.getTitle());
     board.setContent(form.getContent());
