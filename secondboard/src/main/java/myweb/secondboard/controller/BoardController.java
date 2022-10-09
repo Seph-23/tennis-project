@@ -93,4 +93,5 @@ public class BoardController {
 
     return "/boards/boardDetail";
   }
+
 }

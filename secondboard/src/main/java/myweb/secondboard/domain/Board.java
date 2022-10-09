@@ -1,9 +1,13 @@
 package myweb.secondboard.domain;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,6 +59,9 @@ public class Board {
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
+
+  @OneToMany(mappedBy = "board", cascade = REMOVE)
+  private List<Comment> comments = new ArrayList<>();
 
   //생성 메서드
   public static Board createBoard(BoardSaveForm form, Member member) {

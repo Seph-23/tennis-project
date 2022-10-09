@@ -95,7 +95,7 @@
       <!-- TODO -->
       <div class="comment">
         <div class="comment-body">
-          <table>
+          <table th:if="${!comments.isEmpty()}">
             <thead>
             <tr>
               <th>작성자</th>
@@ -111,10 +111,12 @@
           </table>
         </div>
 
-        <form>
+        <form >
           <div class="comment-input-body">
+            <input hidden id="board-id" th:value="${board.id}">
             <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
           </div>
+          <button id="comment-submit" type="submit">등록</button>
         </form>
 
       </div>
@@ -122,4 +124,31 @@
     </div> <!-- board end -->
   </div> <!-- Container End -->
 </body>
+<script type="text/javascript">
+  $("#comment-submit").click(function () {
+    let comment = {
+      content: $("#comment").val(),
+      boardId: $("#board-id").val()
+    }
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/comments/commentAdd/" + comment.boardId,
+      data: comment,
+      success: function (data) {
+        if(data == 1) {
+          alert("댓글 저장 성공!");
+          window.location.reload();
+        }
+        else{
+          alert("댓글 저장 실패!");
+        }
+      },
+      error: function () {
+        alert("서버 에러!");
+      },
+    })
+  });
+
+</script>
 </html>

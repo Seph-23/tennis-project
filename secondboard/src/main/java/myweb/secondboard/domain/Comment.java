@@ -44,4 +44,9 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    //연관관계 편의 메서드
+    public void setBoard(Board board) {
+        this.board = board;
+        board.getComments().add(this);
+    }
 }
