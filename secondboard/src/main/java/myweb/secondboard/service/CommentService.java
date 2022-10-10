@@ -27,7 +27,6 @@ public class CommentService {
     @Transactional
     public void save(Map<String, Object> param, Board board, Member member) {
         Comment comment = new Comment();
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 
         comment.setAuthor(member.getNickname());

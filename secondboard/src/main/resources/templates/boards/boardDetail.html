@@ -139,9 +139,10 @@
         if(data == 1) {
           alert("댓글 저장 성공!");
           window.location.reload();
-        }
-        else{
-          alert("댓글 저장 실패!");
+        } else if (data == 0) {
+          alert("로그인 후 이용 가능합니다.")
+        } else if (data == 2) {
+          alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
         }
       },
       error: function () {

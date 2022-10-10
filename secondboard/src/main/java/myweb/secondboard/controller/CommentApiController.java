@@ -29,7 +29,14 @@ public class CommentApiController {
   public int commentAdd(@PathVariable("boardId") Long boardId,
     @RequestParam Map<String, Object> param, HttpServletRequest request) {
 
-    Comment comment = new Comment();
+    String content = param.get("content").toString();
+
+    if (request.getSession(false) == null) {
+      return 0;
+    } else if (content.length() < 1 || content.length() > 100) {
+      return 2;
+    }
+
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
     Board board = boardService.findOne(boardId);
