@@ -44,4 +44,11 @@ public class CommentApiController {
     commentService.save(param, board, member);
     return 1;
   }
+
+  @PostMapping("/commentDelete/{commentId}")
+  public int commentDelete(@PathVariable("commentId") Long commentId,
+    @RequestParam Map<String, Object> param, HttpServletRequest request) {
+    commentService.deleteById(param);
+    return 1;
+  }
 }

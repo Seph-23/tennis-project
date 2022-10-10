@@ -37,4 +37,8 @@ public class CommentService {
         comment.setModifiedDate(LocalDateTime.now().format(dtf));
         commentRepository.save(comment);
     }
+
+    public void deleteById(Map<String, Object> param) {
+        commentRepository.deleteById(Long.parseLong(param.get("id").toString()));
+    }
 }

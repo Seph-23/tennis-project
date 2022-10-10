@@ -106,12 +106,23 @@
             <tr th:each = "comment : ${comments}">
               <td th:text="${comment.author}"></td>
               <td th:text="${comment.content}"></td>
+              <div th:if="${session.loginMember != null}">
+                <td th:if="${session.loginMember.id == comment.member.id}">
+                  <button id="comment-update">수정</button>
+                </td>
+                <td th:if="${session.loginMember.id == comment.member.id}">
+                  <form>
+                    <input hidden id="comment-id-delete" th:value="${comment.id}">
+                    <button id="comment-delete">삭제</button>
+                  </form>
+                </td>
+              </div>
             </tr>
             </tbody>
           </table>
         </div>
 
-        <form >
+        <form>
           <div class="comment-input-body">
             <input hidden id="board-id" th:value="${board.id}">
             <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
@@ -151,5 +162,25 @@
     })
   });
 
+  $("#comment-delete").click(function () {
+    let comment = {
+      id: $("#comment-id-delete").val()
+    }
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/comments/commentDelete/" + comment.id,
+      data: comment,
+      success: function (data) {
+        if (data == 1) {
+          alert("댓글 삭제 성공!");
+          window.location.reload();
+        }
+      },
+      error: function () {
+        alert("서버 에러!");
+      },
+    })
+  });
 </script>
 </html>
