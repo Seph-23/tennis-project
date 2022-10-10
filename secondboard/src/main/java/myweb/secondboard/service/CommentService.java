@@ -38,7 +38,8 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public void deleteById(Map<String, Object> param) {
-        commentRepository.deleteById(Long.parseLong(param.get("id").toString()));
+    @Transactional
+    public void deleteById(Long commentId) {
+        commentRepository.deleteById(commentId);
     }
 }

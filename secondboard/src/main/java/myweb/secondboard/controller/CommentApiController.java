@@ -46,9 +46,8 @@ public class CommentApiController {
   }
 
   @PostMapping("/commentDelete/{commentId}")
-  public int commentDelete(@PathVariable("commentId") Long commentId,
-    @RequestParam Map<String, Object> param, HttpServletRequest request) {
-    commentService.deleteById(param);
+  public int commentDelete(@PathVariable("commentId") Long commentId) {
+    commentService.deleteById(commentId);
     return 1;
   }
 }
