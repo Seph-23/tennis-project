@@ -83,6 +83,14 @@
                 <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
                 <a th:text="${board.views}"></a>
               </th>
+              <div th:if="${session.loginMember != null}">
+                <th th:if="${session.loginMember.id == board.member.id}">
+                  <button th:onclick="deleteBoard([[${board.id}]])">게시글 삭제</button>
+                </th>
+                <th th:if="${session.loginMember.id == board.member.id}">
+                  <button>게시글 수정</button>
+                </th>
+              </div>
             </tr>
             </thead>
           </table>
@@ -92,7 +100,6 @@
         </div> <!-- 게시글 본문 끝 -->
       </div> <!-- Board Detail End -->
 
-      <!-- TODO -->
       <div class="comment">
         <div class="comment-body">
           <table th:if="${!comments.isEmpty()}">
@@ -119,7 +126,7 @@
           </table>
         </div>
 
-        <form>
+        <form th:if="${session.loginMember != null}">
           <div class="comment-input-body">
             <input hidden id="board-id" th:value="${board.id}">
             <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
@@ -137,42 +144,67 @@
       content: $("#comment").val(),
       boardId: $("#board-id").val()
     }
-    $.ajax({
-      type: "post",
-      async: false,
-      url: "/comments/commentAdd/" + comment.boardId,
-      data: comment,
-      success: function (data) {
-        if(data == 1) {
-          alert("댓글 저장 성공!");
-          window.location.reload();
-        } else if (data == 0) {
-          alert("로그인 후 이용 가능합니다.")
-        } else if (data == 2) {
-          alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
-        }
-      },
-      error: function () {
-        alert("서버 에러!");
-      },
-    })
+    if (confirm("댓글을 등록하시겠습니까?") === true) {
+      $.ajax({
+        type: "post",
+        async: false,
+        url: "/comments/api/commentAdd/" + comment.boardId,
+        data: comment,
+        success: function (data) {
+          if (data === 1) {
+            alert("댓글 저장 완료!");
+            window.location.reload();
+          } else if (data === 2) {
+            alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
+          }
+        },
+        error: function () {
+          alert("서버 에러!");
+        },
+      });
+    } else {
+      return false;
+    }
   });
 
   const deleteComment = (commentId) => {
-    $.ajax({
-      type: "post",
-      url: "/comments/commentDelete/" + commentId,
-      success: function (data) {
-        if (data == 1) {
-          alert("댓글 삭제 성공!");
-          window.location.reload();
-        }
-      },
-      error: function () {
-        alert("서버 에러!");
-      },
-    });
+    if (confirm("댓글을 삭제하시겠습니까?") === true) {
+      $.ajax({
+        type: "post",
+        url: "/comments/api/commentDelete/" + commentId,
+        success: function (data) {
+          if (data === 1) {
+            alert("댓글 삭제!");
+            window.location.reload();
+          }
+        },
+        error: function () {
+          alert("서버 에러!");
+        },
+      });
+    } else {
+      return false;
+    }
   };
 
+  const deleteBoard = (boardId) => {
+    if (confirm("게시글을 삭제하시겠습니까?") === true) {
+      $.ajax({
+        type: "post",
+        url: "/boards/api/boardDelete/" + boardId,
+        success: function (data) {
+          if (data === 1) {
+            alert("게시글 삭제!");
+            window.location.assign("http://localhost:8080/boards/home");
+          }
+        },
+        error: function () {
+          alert("서버 에러!");
+        },
+      });
+    } else {
+      return false;
+    }
+  };
 </script>
 </html>

@@ -41,10 +41,7 @@ public class BoardController {
   Pageable pageable, Model model) {
 
     Page<Board> boardList = boardService.getBoardList(pageable);
-    //페이지블럭 처리
-    //1을 더해주는 이유는 pageable은 0부터라 1을 처리하려면 1을 더해서 시작해주어야 한다.
     int nowPage = boardList.getPageable().getPageNumber() + 1;
-    //-1값이 들어가는 것을 막기 위해서 max값으로 두 개의 값을 넣고 더 큰 값을 넣어주게 된다.
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, boardList.getTotalPages());
 
@@ -58,6 +55,7 @@ public class BoardController {
 
   @GetMapping("/boardAdd")
   public String addForm(Model model) {
+
     model.addAttribute("board", new BoardSaveForm());
     return "/boards/boardAddForm";
   }
@@ -74,18 +72,18 @@ public class BoardController {
       return "/boards/boardAddForm";
     }
 
-    boardService.addBoard(form, member);
+    Long boardId = boardService.addBoard(form, member);
 
-    return "home";
+    return "/home";
   }
 
   @GetMapping("/detail/{boardId}")
   public String boardDetail(@PathVariable("boardId") Long boardId, Model model) {
+
     Board board = boardService.findOne(boardId);
     boardService.increaseView(boardId);
     model.addAttribute("board", board);
 
-    //TODO
     List<Comment> comments = commentService.findComments(boardId);
     if (comments != null) {
       model.addAttribute("comments", comments);
@@ -93,5 +91,4 @@ public class BoardController {
 
     return "/boards/boardDetail";
   }
-
 }

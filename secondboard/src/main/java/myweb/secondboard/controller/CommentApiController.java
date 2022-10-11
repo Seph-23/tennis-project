@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/comments/api")
 public class CommentApiController {
 
   private final CommentService commentService;
@@ -31,9 +31,7 @@ public class CommentApiController {
 
     String content = param.get("content").toString();
 
-    if (request.getSession(false) == null) {
-      return 0;
-    } else if (content.length() < 1 || content.length() > 100) {
+    if (content.length() < 1 || content.length() > 100) {
       return 2;
     }
 
