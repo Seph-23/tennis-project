@@ -52,5 +52,4 @@ public class BoardService {
     board.setContent(boardForm.getContent());
     boardRepository.save(board);
   }
-
 }

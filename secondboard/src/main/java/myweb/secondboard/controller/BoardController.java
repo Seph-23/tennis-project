@@ -90,16 +90,14 @@ public class BoardController {
 
 
   @GetMapping("/update/{boardId}")
-  public String boardUpdateForm(@PathVariable("boardId")Long boardId, Model model) {
+  public String boardUpdateForm(@PathVariable("boardId") Long boardId, Model model) {
     Board board = boardService.findOne(boardId);
     model.addAttribute("board",board);
     return "/boards/boardUpdateForm";
   }
 
   @PostMapping("/update/{boardId}")
-  public String boardUpdate(@PathVariable("boardId") Long boardId, Model model,Board board) {
-    System.out.println("board.getTitle() = " + board.getTitle());
-    System.out.println("board.getContent() = " + board.getContent());
+  public String boardUpdate(@PathVariable("boardId") Long boardId, Board board) {
     boardService.update(board, boardId);
     return "redirect:/boards/detail/"+boardId;
   }
