@@ -1,5 +1,6 @@
 package myweb.secondboard.service;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
@@ -43,4 +44,13 @@ public class BoardService {
   public void deleteById(Long boardId) {
     boardRepository.deleteById(boardId);
   }
+
+  @Transactional
+  public void update(Board boardForm, Long boardId) {
+    Board board = boardRepository.findById(boardId).get();
+    board.setTitle(boardForm.getTitle());
+    board.setContent(boardForm.getContent());
+    boardRepository.save(board);
+  }
+
 }

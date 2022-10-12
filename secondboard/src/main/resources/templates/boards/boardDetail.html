@@ -88,7 +88,10 @@
                   <button th:onclick="deleteBoard([[${board.id}]])">게시글 삭제</button>
                 </th>
                 <th th:if="${session.loginMember.id == board.member.id}">
-                  <button>게시글 수정</button>
+                  <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
+                        method="get">
+                    <button type="submit">게시글 수정</button>
+                  </form>
                 </th>
               </div>
             </tr>
@@ -126,13 +129,13 @@
           </table>
         </div>
 
-        <form th:if="${session.loginMember != null}">
+        <div th:if="${session.loginMember != null}">
           <div class="comment-input-body">
             <input hidden id="board-id" th:value="${board.id}">
             <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
           </div>
           <button id="comment-submit" type="submit">등록</button>
-        </form>
+        </div>
       </div>
 
     </div> <!-- board end -->

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -73,8 +74,7 @@ public class BoardController {
     }
 
     Long boardId = boardService.addBoard(form, member);
-
-    return "/home";
+    return "redirect:/boards/detail/"+boardId;
   }
 
   @GetMapping("/detail/{boardId}")
@@ -82,13 +82,34 @@ public class BoardController {
 
     Board board = boardService.findOne(boardId);
     boardService.increaseView(boardId);
+    boardDetailView(boardId, model, board);
+
+    return "/boards/boardDetail";
+  }
+
+
+
+  @GetMapping("/update/{boardId}")
+  public String boardUpdateForm(@PathVariable("boardId")Long boardId, Model model) {
+    Board board = boardService.findOne(boardId);
+    model.addAttribute("board",board);
+    return "/boards/boardUpdateForm";
+  }
+
+  @PostMapping("/update/{boardId}")
+  public String boardUpdate(@PathVariable("boardId") Long boardId, Model model,Board board) {
+    System.out.println("board.getTitle() = " + board.getTitle());
+    System.out.println("board.getContent() = " + board.getContent());
+    boardService.update(board, boardId);
+    return "redirect:/boards/detail/"+boardId;
+  }
+
+  private void boardDetailView(Long boardId, Model model, Board board) {
     model.addAttribute("board", board);
 
     List<Comment> comments = commentService.findComments(boardId);
     if (comments != null) {
       model.addAttribute("comments", comments);
     }
-
-    return "/boards/boardDetail";
   }
 }

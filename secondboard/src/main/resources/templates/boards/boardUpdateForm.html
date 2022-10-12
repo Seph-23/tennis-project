@@ -66,17 +66,17 @@
 
       <div class="board-main"> <!-- Board Main Start -->
         <h4>글쓰기</h4>
-        <form role="form" th:object="${board}" action="/boards/new" method="post">
+        <form role="form" th:action="@{/boards/update/{id} (id=${board.id})}" method="post">
           <div class="form-group">
             <label th:for="title"></label>
-            <input id="title" type="text" class="form-control" th:field="${board.title}"
-                   placeholder="제목을 입력해주세요." />
+            <input id="title" type="text" class="form-control" name="title"
+                   th:value="${board.title}"/>
             <div class="field-error" th:errors="${board.title}"></div>
           </div>
           <div class="form-group">
             <label th:for="content"></label>
-            <textarea id="content" type="text" class="form-control" th:field="${board.content}"
-                      placeholder="내용을 입력해주세요."></textarea>
+            <textarea id="content" type="text" class="form-control" name="content"
+                      th:text="${board.content}"></textarea>
             <div class="field-error" th:errors="${board.content}"></div>
           </div>
           <button type="submit" class="button-submit" id="board-submit">등록하기</button>
