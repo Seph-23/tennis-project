@@ -3,6 +3,7 @@ package myweb.secondboard.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
@@ -41,5 +42,18 @@ public class CommentService {
     @Transactional
     public void deleteById(Long commentId) {
         commentRepository.deleteById(commentId);
+    }
+
+    @Transactional
+    public void updateComment(Long commentId, Map<String, Object> param) {
+        Comment comment = commentRepository.findById(commentId).get();
+        comment.setContent(param.get("content").toString());
+        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void updateCommentCancel(Long commentId, Map<String, Object> param) {
+        Comment comment = commentRepository.findById(commentId).get();
+        commentRepository.save(comment);
     }
 }

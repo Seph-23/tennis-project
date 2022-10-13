@@ -48,4 +48,23 @@ public class CommentApiController {
     commentService.deleteById(commentId);
     return 1;
   }
+
+  @PostMapping("/commentUpdate/{commentId}")
+  public int commentUpdate(@PathVariable("commentId") Long commentId,
+    @RequestParam Map<String, Object> param) {
+
+    String content = param.get("content").toString();
+    if (content.length() < 1 || content.length() > 100) {
+      return 2;
+    }
+    commentService.updateComment(commentId, param);
+    return 1;
+  }
+
+  @PostMapping("/commentUpdateCancel/{commentId}")
+  public int commentDeleteCancel(@PathVariable("commentId") Long commentId,
+    @RequestParam Map<String, Object> param) {
+    commentService.updateCommentCancel(commentId, param);
+    return 1;
+  }
 }
