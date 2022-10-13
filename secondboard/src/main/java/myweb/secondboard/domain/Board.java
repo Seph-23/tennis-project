@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.BoardSaveForm;
+import myweb.secondboard.dto.BoardUpdateForm;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -72,6 +73,21 @@ public class Board {
     board.setContent(form.getContent());
     board.setAuthor(member.getNickname());
     board.setViews(0);
+    board.setCreatedDate(LocalDateTime.now().format(dtf));
+    board.setModifiedDate(LocalDateTime.now().format(dtf));
+    board.setMember(member);
+    return board;
+  }
+
+  public static Board updateBoard(Board originBoard, BoardUpdateForm form, Member member) {
+    Board board = new Board();
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+    board.setId(form.getId());
+    board.setTitle(form.getTitle());
+    board.setContent(form.getContent());
+    board.setAuthor(member.getNickname());
+    board.setViews(originBoard.getViews() - 1);
     board.setCreatedDate(LocalDateTime.now().format(dtf));
     board.setModifiedDate(LocalDateTime.now().format(dtf));
     board.setMember(member);

@@ -1,5 +1,6 @@
 package myweb.secondboard.controller;
 
+import java.time.format.DateTimeFormatter;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.BoardSaveForm;
+import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.service.BoardService;
 import myweb.secondboard.service.CommentService;
 import myweb.secondboard.web.SessionConst;
@@ -55,14 +57,14 @@ public class BoardController {
   }
 
   @GetMapping("/boardAdd")
-  public String addForm(Model model) {
+  public String boardAddForm(Model model) {
 
     model.addAttribute("board", new BoardSaveForm());
     return "/boards/boardAddForm";
   }
 
   @PostMapping("/new")
-  public String addBoard(@Validated @ModelAttribute("board") BoardSaveForm form,
+  public String boardAdd(@Validated @ModelAttribute("board") BoardSaveForm form,
     BindingResult bindingResult, HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
@@ -87,18 +89,28 @@ public class BoardController {
     return "/boards/boardDetail";
   }
 
-
-
   @GetMapping("/update/{boardId}")
   public String boardUpdateForm(@PathVariable("boardId") Long boardId, Model model) {
     Board board = boardService.findOne(boardId);
-    model.addAttribute("board",board);
+
+    BoardUpdateForm form = new BoardUpdateForm();
+    form.setId(board.getId());
+    form.setTitle(board.getTitle());
+    form.setContent(board.getContent());
+    model.addAttribute("form",form);
+
     return "/boards/boardUpdateForm";
   }
 
   @PostMapping("/update/{boardId}")
-  public String boardUpdate(@PathVariable("boardId") Long boardId, Board board) {
-    boardService.update(board, boardId);
+  public String boardUpdate(@ModelAttribute("form")BoardUpdateForm form, HttpServletRequest request,
+    @PathVariable("boardId") Long boardId) {
+
+    Member member = (Member) request.getSession(false)
+      .getAttribute(SessionConst.LOGIN_MEMBER);
+
+    Board originBoard = boardService.findOne(boardId);
+    boardService.update(originBoard, form, member);
     return "redirect:/boards/detail/"+boardId;
   }
 

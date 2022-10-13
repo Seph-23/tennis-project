@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.BoardSaveForm;
+import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,10 +47,8 @@ public class BoardService {
   }
 
   @Transactional
-  public void update(Board boardForm, Long boardId) {
-    Board board = boardRepository.findById(boardId).get();
-    board.setTitle(boardForm.getTitle());
-    board.setContent(boardForm.getContent());
+  public void update(Board originBoard, BoardUpdateForm form, Member member) {
+    Board board = Board.updateBoard(originBoard, form, member);
     boardRepository.save(board);
   }
 }
