@@ -45,6 +45,7 @@ public class CommentApiController {
 
   @PostMapping("/commentDelete/{commentId}")
   public String commentDelete(@PathVariable("commentId") Long commentId) {
+
     commentService.deleteById(commentId);
     return "success";
   }
@@ -64,6 +65,7 @@ public class CommentApiController {
   @PostMapping("/commentUpdateCancel/{commentId}")
   public String commentDeleteCancel(@PathVariable("commentId") Long commentId,
     @RequestParam Map<String, Object> param) {
+
     commentService.updateCommentCancel(commentId, param);
     return "success";
   }
