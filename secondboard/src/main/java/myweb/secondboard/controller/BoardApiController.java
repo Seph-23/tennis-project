@@ -17,9 +17,9 @@ public class BoardApiController {
   private final BoardService boardService;
 
   @PostMapping("/boardDelete/{boardId}")
-  public int boardDelete(@PathVariable("boardId") Long boardId) {
+  public String boardDelete(@PathVariable("boardId") Long boardId) {
 
     boardService.deleteById(boardId);
-    return 1;
+    return "success";
   }
 }

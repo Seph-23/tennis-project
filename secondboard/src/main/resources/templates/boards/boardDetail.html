@@ -167,10 +167,10 @@
         url: "/comments/api/commentAdd/" + comment.boardId,
         data: comment,
         success: function (data) {
-          if (data === 1) {
+          if (data === "success") {
             alert("댓글 저장 완료!");
             window.location.reload();
-          } else if (data === 2) {
+          } else if (data === "validate") {
             alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
           }
         },
@@ -188,7 +188,7 @@
         type: "post",
         url: "/comments/api/commentDelete/" + commentId,
         success: function (data) {
-          if (data === 1) {
+          if (data === "success") {
             alert("댓글 삭제!");
             window.location.reload();
           }
@@ -220,7 +220,7 @@
         url: "/comments/api/commentUpdate/" + commentId,
         data: comment,
         success: function (data) {
-          if (data === 1) {
+          if (data === "success") {
             alert("댓글 수정 완료!");
             window.location.reload();
             $("#comment-content-" + commentId).prop('disabled', true);
@@ -228,7 +228,7 @@
             $("#comment-delete-" + commentId).attr("hidden", false);
             $("#comment-update-confirm-" + commentId).attr("hidden", true);
             $("#comment-update-cancel-" + commentId).attr("hidden", true);
-          } else if (data === 2) {
+          } else if (data === "validate") {
             alert("댓글은 1 ~ 100 자 이내여야 합니다.");
           }
         },
@@ -250,7 +250,7 @@
       url: "/comments/api/commentUpdateCancel/" + commentId,
       data: comment,
       success: function (data) {
-        if (data === 1) {
+        if (data === "success") {
           window.location.reload();
           $("#comment-content-" + commentId).prop('disabled', true);
           $("#comment-update-" + commentId).attr("hidden", false);
@@ -271,7 +271,7 @@
         type: "post",
         url: "/boards/api/boardDelete/" + boardId,
         success: function (data) {
-          if (data === 1) {
+          if (data === "success") {
             alert("게시글 삭제!");
             window.location.assign("http://localhost:8080/boards/home");
           }

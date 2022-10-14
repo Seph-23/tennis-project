@@ -1,5 +1,6 @@
 package myweb.secondboard.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,12 @@ public class CommentApiController {
   private final BoardService boardService;
 
   @PostMapping("/commentAdd/{boardId}")
-  public int commentAdd(@PathVariable("boardId") Long boardId,
+  public String commentAdd(@PathVariable("boardId") Long boardId,
     @RequestParam Map<String, Object> param, HttpServletRequest request) {
 
     String content = param.get("content").toString();
-
     if (content.length() < 1 || content.length() > 100) {
-      return 2;
+      return "validate";
     }
 
     Member member = (Member) request.getSession(false)
@@ -40,31 +40,31 @@ public class CommentApiController {
     Board board = boardService.findOne(boardId);
 
     commentService.save(param, board, member);
-    return 1;
+    return "success";
   }
 
   @PostMapping("/commentDelete/{commentId}")
-  public int commentDelete(@PathVariable("commentId") Long commentId) {
+  public String commentDelete(@PathVariable("commentId") Long commentId) {
     commentService.deleteById(commentId);
-    return 1;
+    return "success";
   }
 
   @PostMapping("/commentUpdate/{commentId}")
-  public int commentUpdate(@PathVariable("commentId") Long commentId,
+  public String commentUpdate(@PathVariable("commentId") Long commentId,
     @RequestParam Map<String, Object> param) {
 
     String content = param.get("content").toString();
     if (content.length() < 1 || content.length() > 100) {
-      return 2;
+      return "validate";
     }
     commentService.updateComment(commentId, param);
-    return 1;
+    return "success";
   }
 
   @PostMapping("/commentUpdateCancel/{commentId}")
-  public int commentDeleteCancel(@PathVariable("commentId") Long commentId,
+  public String commentDeleteCancel(@PathVariable("commentId") Long commentId,
     @RequestParam Map<String, Object> param) {
     commentService.updateCommentCancel(commentId, param);
-    return 1;
+    return "success";
   }
 }
