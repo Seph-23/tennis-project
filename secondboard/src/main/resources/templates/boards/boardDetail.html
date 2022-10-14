@@ -119,21 +119,17 @@
                 <input th:id="'comment-content-'+${comment.id}" disabled
                        th:value="${comment.content}">
               </td>
-              <div th:if="${session.loginMember != null}">
+              <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
                 <td>
                   <div th:if="${session.loginMember.id == comment.member.id}">
                     <button th:onclick="updateComment([[${comment.id}]])"
                             th:id="'comment-update-'+${comment.id}">수정</button>
-                  </div>
-                  <div th:if="${session.loginMember.id == comment.member.id}">
                     <button th:id="'comment-delete-'+${comment.id}"
                             th:onclick="deleteComment([[${comment.id}]])">삭제</button>
                   </div>
                   <div>
                     <button hidden th:id="'comment-update-confirm-'+${comment.id}"
                             th:onclick="updateCommentConfirm([[${comment.id}]])">확인</button>
-                  </div>
-                  <div>
                     <button hidden th:id="'comment-update-cancel-'+${comment.id}"
                             th:onclick="updateCommentCancel([[${comment.id}]])">취소</button>
                   </div>
@@ -144,7 +140,7 @@
           </table>
         </div>
 
-        <div th:if="${session.loginMember != null}">
+        <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
           <div class="comment-input-body">
             <input hidden id="board-id" th:value="${board.id}">
             <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
