@@ -133,10 +133,10 @@
     $.ajax({
       type: "get",
       async: false,
-      url: "/members/checkId",
+      url: "/members/api/checkId",
       data: id,
       success: function (data) {
-        if (data == 1) {
+        if (data == "duplicate") {
           alert("이미 가입된 아이디 입니다.");
         } else {
           alert("사용 가능한 아이디 입니다.");
@@ -156,10 +156,10 @@
     $.ajax({
       type: "get",
       async: false,
-      url: "/members/checkNick",
+      url: "/members/api/checkNick",
       data: nick,
       success: function (data) {
-        if (data == 1) {
+        if (data == "duplicate") {
           alert("이미 사용중인 닉네임 입니다.");
         } else {
           alert("사용 가능한 닉네임 입니다.");
@@ -179,10 +179,10 @@
     $.ajax({
       type: "get",
       async: false,
-      url: "/members/checkEmail",
+      url: "/members/api/checkEmail",
       data: email,
       success: function (data) {
-        if (data == 1) {
+        if (data == "duplicate") {
           alert("이미 사용중인 이메일 입니다.");
         } else {
           alert("사용 가능한 이메일 입니다.");

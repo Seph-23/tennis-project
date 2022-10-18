@@ -46,39 +46,4 @@ public class MemberController {
     return "redirect:/";
   }
 
-  //회원가입 아이디 중복확인
-  @ResponseBody @GetMapping("/checkId")
-  public int checkId(@RequestParam Map<String, Object> param) {
-
-    int result = 0;
-    Optional<Member> member = memberService.findByLoginId(param.get("loginId").toString());
-    if (member.isEmpty()) {
-      return result;       //가입가능
-    }
-    return (result = 1);            //중복회원
-  }
-
-  //회원가입 닉네임 중복확인
-  @ResponseBody @GetMapping("/checkNick")
-  public int checkNick(@RequestParam Map<String, Object> param) {
-
-    int result = 0;
-    Optional<Member> member = memberService.findByNickname(param.get("nickname").toString());
-    if (member.isEmpty()) {
-      return result;       //가입가능
-    }
-    return (result = 1);            //중복회원
-  }
-
-  //회원가입 이메일 중복확인
-  @ResponseBody @GetMapping("/checkEmail")
-  public int checkEmail(@RequestParam Map<String, Object> param) {
-
-    int result = 0;
-    Optional<Member> member = memberService.findByEmail(param.get("email").toString());
-    if (member.isEmpty()) {
-      return result;       //가입가능
-    }
-    return (result = 1);            //중복회원
-  }
 }
