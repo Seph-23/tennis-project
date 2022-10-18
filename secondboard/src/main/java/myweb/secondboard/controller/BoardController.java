@@ -103,11 +103,17 @@ public class BoardController {
   }
 
   @PostMapping("/update/{boardId}")
-  public String boardUpdate(@ModelAttribute("form")BoardUpdateForm form, HttpServletRequest request,
+  public String boardUpdate(@Validated @ModelAttribute("form")BoardUpdateForm form,
+    BindingResult bindingResult, HttpServletRequest request,
     @PathVariable("boardId") Long boardId) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
+
+    if (bindingResult.hasErrors()) {
+      log.info("errors = {}", bindingResult);
+      return "/boards/boardUpdateForm";
+    }
 
     Board originBoard = boardService.findOne(boardId);
     boardService.update(originBoard, form, member);
