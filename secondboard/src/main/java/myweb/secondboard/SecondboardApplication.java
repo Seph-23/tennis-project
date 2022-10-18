@@ -34,6 +34,7 @@ public class SecondboardApplication {
 //			member.setPassword("testtest" + i + "!");
 //			member.setNickname("test" + i);
 //			member.setEmail("test" + i + "@gmail.com");
+//			member.setBirthday("19951126");
 //			memberRepository.save(member);
 //
 //			Board board = new Board();

@@ -33,12 +33,19 @@ public class Member implements Serializable {
   @NotNull @Column(unique = true, length = 50)
   private String email;
 
+  @NotNull @Column(length = 10)
+  private String birthday;
+
   public static Member createMember(MemberSaveForm form) {
     Member member = new Member();
     member.setLoginId(form.getLoginId());
     member.setPassword(form.getPassword());
     member.setNickname(form.getNickname());
     member.setEmail(form.getEmail());
+
+    //생년월일
+    String birth = form.getYear()+form.getMonth()+form.getDay();
+    member.setBirthday(birth);
     return member;
   }
 }

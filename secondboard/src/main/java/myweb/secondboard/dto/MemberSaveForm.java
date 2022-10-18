@@ -21,4 +21,9 @@ public class MemberSaveForm {
   @NotNull @Email
   private String email;
 
+  //생년월일
+  private String year;
+  private String month;
+  private String day;
+
 }

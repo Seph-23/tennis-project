@@ -58,7 +58,6 @@ public class BoardController {
 
   @GetMapping("/boardAdd")
   public String boardAddForm(Model model) {
-
     model.addAttribute("board", new BoardSaveForm());
     return "/boards/boardAddForm";
   }
