@@ -1,5 +1,6 @@
 package myweb.secondboard.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
@@ -18,7 +19,7 @@ public class MemberService {
   private final MemberRepository memberRepository;
 
   @Transactional
-  public Long signUp(MemberSaveForm form) {
+  public Long signUp(MemberSaveForm form) throws NoSuchAlgorithmException {
     Member member = Member.createMember(form);
     memberRepository.save(member);
     return member.getId();

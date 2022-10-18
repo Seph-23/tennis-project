@@ -1,5 +1,6 @@
 package myweb.secondboard.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class MemberController {
 
   @PostMapping("/new")
   public String signUp(@Validated @ModelAttribute("member") MemberSaveForm form,
-    BindingResult bindingResult) {
+    BindingResult bindingResult) throws NoSuchAlgorithmException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);

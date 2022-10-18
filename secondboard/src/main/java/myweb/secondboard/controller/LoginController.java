@@ -1,5 +1,6 @@
 package myweb.secondboard.controller;
 
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class LoginController {
 
   @PostMapping("/login")
   public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
-    BindingResult bindingResult, HttpServletRequest request) {
+    BindingResult bindingResult, HttpServletRequest request) throws NoSuchAlgorithmException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
