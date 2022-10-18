@@ -1,7 +1,9 @@
 package myweb.secondboard.controller;
 
 import java.time.format.DateTimeFormatter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Board;
@@ -79,10 +81,37 @@ public class BoardController {
   }
 
   @GetMapping("/detail/{boardId}")
-  public String boardDetail(@PathVariable("boardId") Long boardId, Model model) {
+  public String boardDetail(@PathVariable("boardId") Long boardId, Model model,
+    HttpServletRequest request, HttpServletResponse response) {
 
     Board board = boardService.findOne(boardId);
-    boardService.increaseView(boardId);
+
+    /* 조회수 로직 */
+    Cookie oldCookie = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("postView")) {
+          oldCookie = cookie;
+        }
+      }
+    }
+    if (oldCookie != null) {
+      if (!oldCookie.getValue().contains("["+ boardId.toString() +"]")) {
+        this.boardService.increaseView(boardId);
+        oldCookie.setValue(oldCookie.getValue() + "_[" + boardId + "]");
+        oldCookie.setPath("/");
+        oldCookie.setMaxAge(60 * 60 * 24); 							// 쿠키 시간
+        response.addCookie(oldCookie);
+      }
+    } else {
+      this.boardService.increaseView(boardId);
+      Cookie newCookie = new Cookie("postView", "[" + boardId + "]");
+      newCookie.setPath("/");
+      newCookie.setMaxAge(60 * 60 * 24); 								// 쿠키 시간
+      response.addCookie(newCookie);
+    }
+
     boardDetailView(boardId, model, board);
 
     return "/boards/boardDetail";
