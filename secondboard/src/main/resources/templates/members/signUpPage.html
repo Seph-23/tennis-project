@@ -82,12 +82,21 @@
           <button type="button" id="email-dup-button" class="dup-check-button">중복확인</button>
           <div class="field-error" th:errors="${member.email}"></div>
         </div>
-        <!-- TODO 생년월일 -->
         <div class="form-group">
           <label th:for="birthday">생년월일: </label>
           <select th:field="${member.year}" id="year"></select>년
           <select th:field="${member.month}" id="month"></select>월
           <select th:field="${member.day}" id="day"></select>일
+        </div>
+        <div class="form-group">
+          <label th:for="phoneNumber">전화번호: </label>
+          <input id="phone-number" th:field="${member.phoneNumber}"
+                 placeholder="전화번호를 입력해주세요.">
+        </div>
+        <div class="form-group">
+          <label th:for="sex">성별: </label>
+          <input type="radio" th:name="${member.gender}" value="man">남
+          <input type="radio" th:name="${member.gender}" value="woman">여
         </div>
         <button type="submit" class="button-submit" id="signup-submit">회원가입</button>
       </form> <!-- signup form end -->
@@ -96,22 +105,19 @@
 </body>
 <script type="text/javascript">
   $(document).ready(function(){
-    var now = new Date();
-    var year = now.getFullYear();
-    var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1);
-    var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());
-    //년도 selectbox만들기
-    for(var i = 1900 ; i <= year ; i++) {
+    let now = new Date();
+    let year = now.getFullYear();
+    let mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1);
+    let day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());
+    for(let i = 1900 ; i <= year ; i++) {
       $('#year').append('<option th:value="' + i + '">' + i + '</option>');
     }
-    // 월별 selectbox 만들기
-    for(var i=1; i <= 12; i++) {
-      var mm = i > 9 ? i : "0"+i ;
+    for(let i=1; i <= 12; i++) {
+      let mm = i > 9 ? i : "0"+i ;
       $('#month').append('<option th:value="' + mm + '">' + mm + '</option>');
     }
-    // 일별 selectbox 만들기
-    for(var i=1; i <= 31; i++) {
-      var dd = i > 9 ? i : "0"+i ;
+    for(let i=1; i <= 31; i++) {
+      let dd = i > 9 ? i : "0"+i ;
       $('#day').append('<option th:value="' + dd + '">' + dd + '</option>');
     }
     $("#year  > option[value="+year+"]").attr("selected", "true");

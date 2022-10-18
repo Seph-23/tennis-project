@@ -40,10 +40,8 @@ public class MemberController {
       log.info("errors = {}", bindingResult);
       return "/members/signUpPage";
     }
-
     //SignUp Success Logic
     memberService.signUp(form);
-
     return "redirect:/";
   }
 

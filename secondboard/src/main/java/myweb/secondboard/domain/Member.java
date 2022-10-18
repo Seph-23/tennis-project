@@ -3,6 +3,8 @@ package myweb.secondboard.domain;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
+import myweb.secondboard.web.Gender;
 
 @Entity
 @Getter @Setter
@@ -36,6 +39,12 @@ public class Member implements Serializable {
   @NotNull @Column(length = 10)
   private String birthday;
 
+  @NotNull @Column(unique = true, length = 11)
+  private String phoneNumber;
+
+  @Enumerated(EnumType.STRING)
+  private Gender sex;
+
   public static Member createMember(MemberSaveForm form) {
     Member member = new Member();
     member.setLoginId(form.getLoginId());
@@ -46,6 +55,15 @@ public class Member implements Serializable {
     //생년월일
     String birth = form.getYear()+form.getMonth()+form.getDay();
     member.setBirthday(birth);
+
+    member.setPhoneNumber(form.getPhoneNumber());
+
+    if (form.getGender() == "man") {
+      member.setSex(Gender.MALE);
+    } else {
+      member.setSex(Gender.FEMALE);
+    }
+
     return member;
   }
 }
