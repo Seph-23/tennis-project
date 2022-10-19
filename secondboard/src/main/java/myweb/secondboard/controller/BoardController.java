@@ -85,35 +85,8 @@ public class BoardController {
     HttpServletRequest request, HttpServletResponse response) {
 
     Board board = boardService.findOne(boardId);
-
-    /* 조회수 로직 */
-    Cookie oldCookie = null;
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-      for (Cookie cookie : cookies) {
-        if (cookie.getName().equals("postView")) {
-          oldCookie = cookie;
-        }
-      }
-    }
-    if (oldCookie != null) {
-      if (!oldCookie.getValue().contains("["+ boardId.toString() +"]")) {
-        this.boardService.increaseView(boardId);
-        oldCookie.setValue(oldCookie.getValue() + "_[" + boardId + "]");
-        oldCookie.setPath("/");
-        oldCookie.setMaxAge(60 * 60 * 24); 							// 쿠키 시간
-        response.addCookie(oldCookie);
-      }
-    } else {
-      this.boardService.increaseView(boardId);
-      Cookie newCookie = new Cookie("postView", "[" + boardId + "]");
-      newCookie.setPath("/");
-      newCookie.setMaxAge(60 * 60 * 24); 								// 쿠키 시간
-      response.addCookie(newCookie);
-    }
-
+    viewLogic(boardId, request, response);
     boardDetailView(boardId, model, board);
-
     return "/boards/boardDetail";
   }
 
@@ -150,10 +123,37 @@ public class BoardController {
 
   private void boardDetailView(Long boardId, Model model, Board board) {
     model.addAttribute("board", board);
-
     List<Comment> comments = commentService.findComments(boardId);
     if (comments != null) {
       model.addAttribute("comments", comments);
+    }
+  }
+
+  /* 조회수 로직 */
+  private void viewLogic(Long boardId, HttpServletRequest request, HttpServletResponse response) {
+    Cookie oldCookie = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("postView")) {
+          oldCookie = cookie;
+        }
+      }
+    }
+    if (oldCookie != null) {
+      if (!oldCookie.getValue().contains("["+ boardId.toString() +"]")) {
+        this.boardService.increaseView(boardId);
+        oldCookie.setValue(oldCookie.getValue() + "_[" + boardId + "]");
+        oldCookie.setPath("/");
+        oldCookie.setMaxAge(60 * 60 * 24);
+        response.addCookie(oldCookie);
+      }
+    } else {
+      this.boardService.increaseView(boardId);
+      Cookie newCookie = new Cookie("postView", "[" + boardId + "]");
+      newCookie.setPath("/");
+      newCookie.setMaxAge(60 * 60 * 24);
+      response.addCookie(newCookie);
     }
   }
 }
