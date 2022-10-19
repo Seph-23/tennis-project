@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/comments/api")
+@RequestMapping("/api/comments")
 public class CommentApiController {
 
   private final CommentService commentService;
@@ -29,23 +29,19 @@ public class CommentApiController {
   @PostMapping("/commentAdd/{boardId}")
   public String commentAdd(@PathVariable("boardId") Long boardId,
     @RequestParam Map<String, Object> param, HttpServletRequest request) {
-
     String content = param.get("content").toString();
     if (content.length() < 1 || content.length() > 100) {
       return "validate";
     }
-
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
     Board board = boardService.findOne(boardId);
-
     commentService.save(param, board, member);
     return "success";
   }
 
   @PostMapping("/commentDelete/{commentId}")
   public String commentDelete(@PathVariable("commentId") Long commentId) {
-
     commentService.deleteById(commentId);
     return "success";
   }
@@ -53,7 +49,6 @@ public class CommentApiController {
   @PostMapping("/commentUpdate/{commentId}")
   public String commentUpdate(@PathVariable("commentId") Long commentId,
     @RequestParam Map<String, Object> param) {
-
     String content = param.get("content").toString();
     if (content.length() < 1 || content.length() > 100) {
       return "validate";

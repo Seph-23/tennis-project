@@ -36,7 +36,6 @@ public class MemberController {
   @PostMapping("/new")
   public String signUp(@Validated @ModelAttribute("member") MemberSaveForm form,
     BindingResult bindingResult) throws NoSuchAlgorithmException {
-
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
       return "/members/signUpPage";
@@ -45,5 +44,4 @@ public class MemberController {
     memberService.signUp(form);
     return "redirect:/";
   }
-
 }

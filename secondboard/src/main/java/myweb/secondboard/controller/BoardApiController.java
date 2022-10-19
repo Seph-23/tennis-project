@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/boards/api")
+@RequestMapping("/api/boards")
 public class BoardApiController {
 
   private final BoardService boardService;
 
   @PostMapping("/boardDelete/{boardId}")
   public String boardDelete(@PathVariable("boardId") Long boardId) {
-
     boardService.deleteById(boardId);
     return "success";
   }

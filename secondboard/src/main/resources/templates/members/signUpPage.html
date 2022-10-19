@@ -134,7 +134,7 @@
     $.ajax({
       type: "get",
       async: false,
-      url: "/members/api/checkId",
+      url: "/api/members/checkId",
       data: id,
       success: function (data) {
         if (data == "duplicate") {
@@ -157,7 +157,7 @@
     $.ajax({
       type: "get",
       async: false,
-      url: "/members/api/checkNick",
+      url: "/api/members/checkNick",
       data: nick,
       success: function (data) {
         if (data == "duplicate") {
@@ -180,7 +180,7 @@
     $.ajax({
       type: "get",
       async: false,
-      url: "/members/api/checkEmail",
+      url: "/api/members/checkEmail",
       data: email,
       success: function (data) {
         if (data == "duplicate") {

@@ -162,7 +162,7 @@
       $.ajax({
         type: "post",
         async: false,
-        url: "/comments/api/commentAdd/" + comment.boardId,
+        url: "/api/comments/commentAdd/" + comment.boardId,
         data: comment,
         success: function (data) {
           if (data === "success") {
@@ -183,7 +183,7 @@
     if (confirm("댓글을 삭제하시겠습니까?") === true) {
       $.ajax({
         type: "post",
-        url: "/comments/api/commentDelete/" + commentId,
+        url: "/api/comments/commentDelete/" + commentId,
         success: function (data) {
           if (data === "success") {
             window.location.reload();
@@ -213,7 +213,7 @@
       }
       $.ajax({
         type: "post",
-        url: "/comments/api/commentUpdate/" + commentId,
+        url: "/api/comments/commentUpdate/" + commentId,
         data: comment,
         success: function (data) {
           if (data === "success") {
@@ -242,7 +242,7 @@
     }
     $.ajax({
       type: "post",
-      url: "/comments/api/commentUpdateCancel/" + commentId,
+      url: "/api/comments/commentUpdateCancel/" + commentId,
       data: comment,
       success: function (data) {
         if (data === "success") {
@@ -264,7 +264,7 @@
     if (confirm("게시글을 삭제하시겠습니까?") === true) {
       $.ajax({
         type: "post",
-        url: "/boards/api/boardDelete/" + boardId,
+        url: "/api/boards/boardDelete/" + boardId,
         success: function (data) {
           if (data === "success") {
             window.location.assign("http://localhost:8080/boards/home");
