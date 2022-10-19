@@ -50,12 +50,10 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).get();
         comment.setContent(param.get("content").toString());
         comment.setModifiedDate(LocalDateTime.now().format(dtf));
-        commentRepository.save(comment);
     }
 
     @Transactional
     public void updateCommentCancel(Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
-        commentRepository.save(comment);
     }
 }

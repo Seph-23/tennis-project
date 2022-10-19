@@ -49,6 +49,5 @@ public class BoardService {
   @Transactional
   public void update(Board originBoard, BoardUpdateForm form, Member member) {
     Board board = Board.updateBoard(originBoard, form, member);
-    boardRepository.save(board);
   }
 }
