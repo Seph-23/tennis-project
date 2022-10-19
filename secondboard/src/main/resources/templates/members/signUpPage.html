@@ -97,6 +97,7 @@
           <label th:for="sex">성별: </label>
           <input type="radio" th:field="${member.gender}" value="man">남
           <input type="radio" th:field="${member.gender}" value="woman">여
+          <div class="field-error" th:errors="${member.gender}"></div>
         </div>
         <button type="submit" class="button-submit" id="signup-submit">회원가입</button>
       </form> <!-- signup form end -->
