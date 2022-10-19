@@ -45,7 +45,7 @@
             <a th:onclick="|location.href='@{/login}'|">로그인</a>
           </li>
           <li th:if="${session.loginMember != null}">
-            <a th:onclick="|location.href='@{/members/profile}'|">프로필</a>
+            <a th:href="@{/members/profile/{id} (id=${session.loginMember.id})}">프로필</a>
           </li>
           <li th:if="${session.loginMember != null}">
             <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>

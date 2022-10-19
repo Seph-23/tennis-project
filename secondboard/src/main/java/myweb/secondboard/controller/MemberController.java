@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,5 +44,13 @@ public class MemberController {
     //SignUp Success Logic
     memberService.signUp(form);
     return "redirect:/";
+  }
+
+  // TODO
+  @GetMapping("/profile/{memberId}")
+  public String profileHome(@PathVariable("memberId") Long memberId, Model model) {
+    Member member = memberService.findById(memberId);
+    model.addAttribute("member", member);
+    return "/members/profileHome";
   }
 }
