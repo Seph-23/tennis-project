@@ -63,10 +63,8 @@ public class CommentApiController {
   }
 
   @PostMapping("/commentUpdateCancel/{commentId}")
-  public String commentDeleteCancel(@PathVariable("commentId") Long commentId,
-    @RequestParam Map<String, Object> param) {
-
-    commentService.updateCommentCancel(commentId, param);
+  public String commentDeleteCancel(@PathVariable("commentId") Long commentId) {
+    commentService.updateCommentCancel(commentId);
     return "success";
   }
 }

@@ -166,7 +166,6 @@
         data: comment,
         success: function (data) {
           if (data === "success") {
-            alert("댓글 저장 완료!");
             window.location.reload();
           } else if (data === "validate") {
             alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
@@ -187,7 +186,6 @@
         url: "/comments/api/commentDelete/" + commentId,
         success: function (data) {
           if (data === "success") {
-            alert("댓글 삭제!");
             window.location.reload();
           }
         },
@@ -219,7 +217,6 @@
         data: comment,
         success: function (data) {
           if (data === "success") {
-            alert("댓글 수정 완료!");
             window.location.reload();
             $("#comment-content-" + commentId).prop('disabled', true);
             $("#comment-update-" + commentId).attr("hidden", false);
@@ -270,7 +267,6 @@
         url: "/boards/api/boardDelete/" + boardId,
         success: function (data) {
           if (data === "success") {
-            alert("게시글 삭제!");
             window.location.assign("http://localhost:8080/boards/home");
           }
         },

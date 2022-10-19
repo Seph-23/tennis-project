@@ -54,7 +54,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void updateCommentCancel(Long commentId, Map<String, Object> param) {
+    public void updateCommentCancel(Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
         commentRepository.save(comment);
     }
