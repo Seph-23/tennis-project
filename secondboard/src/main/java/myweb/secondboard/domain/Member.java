@@ -55,13 +55,9 @@ public class Member implements Serializable {
     member.setPassword(passwordEncrypt.encrypt(form.getPassword()));
     member.setNickname(form.getNickname());
     member.setEmail(form.getEmail());
-
-    //생년월일
     String birth = form.getYear()+form.getMonth()+form.getDay();
     member.setBirthday(birth);
-
     member.setPhoneNumber(form.getPhoneNumber());
-
     if (form.getGender().equals("man")) {
       member.setSex(Gender.MALE);
     } else {

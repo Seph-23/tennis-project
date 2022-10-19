@@ -46,8 +46,10 @@ public class CommentService {
 
     @Transactional
     public void updateComment(Long commentId, Map<String, Object> param) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         Comment comment = commentRepository.findById(commentId).get();
         comment.setContent(param.get("content").toString());
+        comment.setModifiedDate(LocalDateTime.now().format(dtf));
         commentRepository.save(comment);
     }
 
