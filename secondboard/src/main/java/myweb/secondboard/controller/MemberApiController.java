@@ -24,10 +24,16 @@ public class MemberApiController {
   public JSONObject checkId(@RequestParam Map<String, Object> param) {
 
     JSONObject result = new JSONObject();
+    int inputLength = param.get("loginId").toString().length();
+    if (inputLength < 8 || inputLength > 15) {
+      result.put("result", "validate");
+      return result;
+    }
+
     Optional<Member> member = memberService.findByLoginId(param.get("loginId").toString());
 
     if (member.isEmpty()) {
-      result.put("result", "success");
+      result.put("result", "ok");
       return result;       //가입가능
     }
 
@@ -40,10 +46,17 @@ public class MemberApiController {
   public JSONObject checkNick(@RequestParam Map<String, Object> param) {
 
     JSONObject result = new JSONObject();
+    int inputLength = param.get("nickname").toString().length();
+
+    if (inputLength > 10 || inputLength < 4) {
+      result.put("result", "validate");
+      return result;
+    }
+
     Optional<Member> member = memberService.findByNickname(param.get("nickname").toString());
 
     if (member.isEmpty()) {
-      result.put("result", "success");
+      result.put("result", "ok");
       return result;       //가입가능
     }
     result.put("result", "duplicate");
@@ -58,7 +71,7 @@ public class MemberApiController {
     Optional<Member> member = memberService.findByEmail(param.get("email").toString());
 
     if (member.isEmpty()) {
-      result.put("result", "success");
+      result.put("result", "ok");
       return result;       //가입가능
     }
     result.put("result", "duplicate");

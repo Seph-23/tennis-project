@@ -137,11 +137,13 @@
       url: "/api/members/checkId",
       data: id,
       success: function (data) {
-        if (data.result == "duplicate") {
+        if (data.result === "duplicate") {
           alert("이미 가입된 아이디 입니다.");
-        } else {
+        } else if (data.result === "ok") {
           alert("사용 가능한 아이디 입니다.");
           $("#signup-submit").attr("type", "submit");
+        } else if (data.result === "validate") {
+          alert("아이디는 8 ~ 15 자 이내여야 합니다.");
         }
       },
       error: function () {
@@ -160,11 +162,13 @@
       url: "/api/members/checkNick",
       data: nick,
       success: function (data) {
-        if (data.result == "duplicate") {
+        if (data.result === "duplicate") {
           alert("이미 사용중인 닉네임 입니다.");
-        } else {
+        } else if (data.result === "ok") {
           alert("사용 가능한 닉네임 입니다.");
           $("#signup-submit").attr("type", "submit");
+        } else if (data.result === "validate") {
+          alert("닉네임은 4 ~ 10 자 이내여야 합니다.");
         }
       },
       error: function () {
@@ -183,9 +187,9 @@
       url: "/api/members/checkEmail",
       data: email,
       success: function (data) {
-        if (data.result == "duplicate") {
+        if (data.result === "duplicate") {
           alert("이미 사용중인 이메일 입니다.");
-        } else {
+        } else if (data.result === "ok") {
           alert("사용 가능한 이메일 입니다.");
           $("#signup-submit").attr("type", "submit");
         }
