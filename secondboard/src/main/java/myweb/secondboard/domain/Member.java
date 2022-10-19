@@ -62,7 +62,7 @@ public class Member implements Serializable {
 
     member.setPhoneNumber(form.getPhoneNumber());
 
-    if (form.getGender() == "man") {
+    if (form.getGender().equals("man")) {
       member.setSex(Gender.MALE);
     } else {
       member.setSex(Gender.FEMALE);
