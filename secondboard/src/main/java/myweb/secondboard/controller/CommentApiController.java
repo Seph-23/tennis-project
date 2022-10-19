@@ -10,6 +10,7 @@ import myweb.secondboard.domain.Member;
 import myweb.secondboard.service.BoardService;
 import myweb.secondboard.service.CommentService;
 import myweb.secondboard.web.SessionConst;
+import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,39 +28,57 @@ public class CommentApiController {
   private final BoardService boardService;
 
   @PostMapping("/commentAdd/{boardId}")
-  public String commentAdd(@PathVariable("boardId") Long boardId,
+  public JSONObject commentAdd(@PathVariable("boardId") Long boardId,
     @RequestParam Map<String, Object> param, HttpServletRequest request) {
+    JSONObject result = new JSONObject();
+
     String content = param.get("content").toString();
     if (content.length() < 1 || content.length() > 100) {
-      return "validate";
+      result.put("result", "validate");
+      return result;
     }
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
     Board board = boardService.findOne(boardId);
     commentService.save(param, board, member);
-    return "success";
+
+    result.put("result", "success");
+    return result;
   }
 
   @PostMapping("/commentDelete/{commentId}")
-  public String commentDelete(@PathVariable("commentId") Long commentId) {
+  public JSONObject commentDelete(@PathVariable("commentId") Long commentId) {
+    JSONObject result = new JSONObject();
+
     commentService.deleteById(commentId);
-    return "success";
+
+    result.put("result", "success");
+    return result;
   }
 
   @PostMapping("/commentUpdate/{commentId}")
-  public String commentUpdate(@PathVariable("commentId") Long commentId,
+  public JSONObject commentUpdate(@PathVariable("commentId") Long commentId,
     @RequestParam Map<String, Object> param) {
+    JSONObject result = new JSONObject();
     String content = param.get("content").toString();
+
     if (content.length() < 1 || content.length() > 100) {
-      return "validate";
+      result.put("result", "validate");
+      return result;
     }
+
     commentService.updateComment(commentId, param);
-    return "success";
+    result.put("result", "success");
+    return result;
   }
 
   @PostMapping("/commentUpdateCancel/{commentId}")
-  public String commentDeleteCancel(@PathVariable("commentId") Long commentId) {
+  public JSONObject commentDeleteCancel(@PathVariable("commentId") Long commentId) {
+    JSONObject result = new JSONObject();
+
     commentService.updateCommentCancel(commentId);
-    return "success";
+
+    result.put("result", "sucess");
+    return result;
   }
 }

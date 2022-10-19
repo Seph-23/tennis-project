@@ -165,9 +165,9 @@
         url: "/api/comments/commentAdd/" + comment.boardId,
         data: comment,
         success: function (data) {
-          if (data === "success") {
+          if (data.result === "success") {
             window.location.reload();
-          } else if (data === "validate") {
+          } else if (data.result === "validate") {
             alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
           }
         },
@@ -185,7 +185,7 @@
         type: "post",
         url: "/api/comments/commentDelete/" + commentId,
         success: function (data) {
-          if (data === "success") {
+          if (data.result === "success") {
             window.location.reload();
           }
         },
@@ -216,14 +216,14 @@
         url: "/api/comments/commentUpdate/" + commentId,
         data: comment,
         success: function (data) {
-          if (data === "success") {
+          if (data.result === "success") {
             window.location.reload();
             $("#comment-content-" + commentId).prop('disabled', true);
             $("#comment-update-" + commentId).attr("hidden", false);
             $("#comment-delete-" + commentId).attr("hidden", false);
             $("#comment-update-confirm-" + commentId).attr("hidden", true);
             $("#comment-update-cancel-" + commentId).attr("hidden", true);
-          } else if (data === "validate") {
+          } else if (data.result === "validate") {
             alert("댓글은 1 ~ 100 자 이내여야 합니다.");
           }
         },
@@ -245,7 +245,7 @@
       url: "/api/comments/commentUpdateCancel/" + commentId,
       data: comment,
       success: function (data) {
-        if (data === "success") {
+        if (data.result === "success") {
           window.location.reload();
           $("#comment-content-" + commentId).prop('disabled', true);
           $("#comment-update-" + commentId).attr("hidden", false);
@@ -266,7 +266,7 @@
         type: "post",
         url: "/api/boards/boardDelete/" + boardId,
         success: function (data) {
-          if (data === "success") {
+          if (data.result === "success") {
             window.location.assign("http://localhost:8080/boards/home");
           }
         },

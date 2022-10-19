@@ -30,6 +30,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
 
 // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
 //	implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.8'

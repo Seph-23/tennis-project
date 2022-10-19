@@ -137,7 +137,7 @@
       url: "/api/members/checkId",
       data: id,
       success: function (data) {
-        if (data == "duplicate") {
+        if (data.result == "duplicate") {
           alert("이미 가입된 아이디 입니다.");
         } else {
           alert("사용 가능한 아이디 입니다.");
@@ -160,7 +160,7 @@
       url: "/api/members/checkNick",
       data: nick,
       success: function (data) {
-        if (data == "duplicate") {
+        if (data.result == "duplicate") {
           alert("이미 사용중인 닉네임 입니다.");
         } else {
           alert("사용 가능한 닉네임 입니다.");
@@ -183,7 +183,7 @@
       url: "/api/members/checkEmail",
       data: email,
       success: function (data) {
-        if (data == "duplicate") {
+        if (data.result == "duplicate") {
           alert("이미 사용중인 이메일 입니다.");
         } else {
           alert("사용 가능한 이메일 입니다.");
