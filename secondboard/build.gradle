@@ -38,9 +38,9 @@ dependencies {
 
 
 // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
-//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.0.8'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.0.8'
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-//	runtimeOnly 'mysql:mysql-connector-java:8.0.28'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
 }
 
