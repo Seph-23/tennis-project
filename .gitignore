@@ -165,7 +165,3 @@ gradle-app.setting
 
 ### IntelliJ IDEA ###
 application.properties
-
-# Gradle files
-.gradle
-
