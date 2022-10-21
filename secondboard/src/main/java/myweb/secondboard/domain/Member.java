@@ -50,7 +50,6 @@ public class Member implements Serializable {
   public static Member createMember(MemberSaveForm form) throws NoSuchAlgorithmException {
     Member member = new Member();
     PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-
     member.setLoginId(form.getLoginId());
     member.setPassword(passwordEncrypt.encrypt(form.getPassword()));
     member.setNickname(form.getNickname());
@@ -63,7 +62,7 @@ public class Member implements Serializable {
     } else {
       member.setSex(Gender.FEMALE);
     }
-
     return member;
   }
+
 }

@@ -87,8 +87,6 @@ public class Board {
     board.setTitle(form.getTitle());
     board.setContent(form.getContent());
     board.setAuthor(member.getNickname());
-    board.setViews(originBoard.getViews() - 1);
-    board.setCreatedDate(LocalDateTime.now().format(dtf));
     board.setModifiedDate(LocalDateTime.now().format(dtf));
     board.setMember(member);
     return board;
