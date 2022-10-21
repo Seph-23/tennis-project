@@ -26,24 +26,14 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-jdbc'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-	runtimeOnly 'mysql:mysql-connector-java:8.0.28'
-
+//	runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-
-
-// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
-//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.0.8'
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-//	runtimeOnly 'mysql:mysql-connector-java:8.0.28'
-
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
