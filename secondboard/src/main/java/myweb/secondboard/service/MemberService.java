@@ -1,13 +1,12 @@
 package myweb.secondboard.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.repository.MemberRepository;
-import myweb.secondboard.repository.MemberRepositoryImpl;
-import myweb.secondboard.repository.MemberRepositoryInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +38,12 @@ public class MemberService {
 
   public Member findById(Long memberId) {
     return memberRepository.findById(memberId).get();
+  }
+
+  @Transactional
+  public Member kakaoSignUp(Map<String, Object> userInfo, String access_token) {
+    Member member = Member.createKakaoMember(userInfo, access_token);
+    memberRepository.save(member);
+    return member;
   }
 }

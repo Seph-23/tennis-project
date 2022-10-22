@@ -2,6 +2,7 @@ package myweb.secondboard.domain;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,13 +10,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.web.Gender;
 import myweb.secondboard.web.PasswordEncrypt;
+import myweb.secondboard.web.Provider;
 
 @Entity
 @Getter @Setter
@@ -26,26 +27,31 @@ public class Member implements Serializable {
   @Column(name = "member_id")
   private Long id;
 
-  @NotNull @Column(unique = true, length = 16)
+  @Column(unique = true, length = 16)
   private String loginId;
 
-  @NotNull @Column(unique = true, length = 64)
+  @Column(unique = true, length = 64)
   private String password;
 
-  @NotNull @Column(length = 11)
+  @Column(unique = true, length = 11)
   private String nickname;
 
-  @NotNull @Column(unique = true, length = 50)
+  @Column(unique = true, length = 50)
   private String email;
 
-  @NotNull @Column(length = 10)
+  @Column(length = 10)
   private String birthday;
 
-  @NotNull @Column(unique = true, length = 11)
+  @Column(unique = true, length = 11)
   private String phoneNumber;
 
   @Enumerated(EnumType.STRING)
-  private Gender sex;
+  private Gender gender;
+
+  @Enumerated(EnumType.STRING)
+  private Provider provider;
+
+  private String accessToken;
 
   public static Member createMember(MemberSaveForm form) throws NoSuchAlgorithmException {
     Member member = new Member();
@@ -58,11 +64,31 @@ public class Member implements Serializable {
     member.setBirthday(birth);
     member.setPhoneNumber(form.getPhoneNumber());
     if (form.getGender().equals("man")) {
-      member.setSex(Gender.MALE);
+      member.setGender(Gender.MALE);
     } else {
-      member.setSex(Gender.FEMALE);
+      member.setGender(Gender.FEMALE);
     }
+
+    //TODO
+    member.setProvider(Provider.GOGOTENNIS);
     return member;
   }
 
+  public static Member createKakaoMember(Map<String, Object> userInfo, String access_token) {
+    Member member = new Member();
+    member.setProvider(Provider.KAKAO);
+    member.setNickname(userInfo.get("nickname").toString());
+    member.setEmail(userInfo.get("email").toString());
+
+    if (userInfo.get("gender") != null) {
+      if (userInfo.get("gender").equals("male")) {
+        member.setGender(Gender.MALE);
+      } else {
+        member.setGender(Gender.FEMALE);
+      }
+    }
+    member.setAccessToken(access_token);
+
+    return member;
+  }
 }

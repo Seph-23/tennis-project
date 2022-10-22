@@ -1,15 +1,14 @@
 package myweb.secondboard;
 
-import java.security.NoSuchAlgorithmException;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.repository.BoardRepository;
 import myweb.secondboard.repository.CommentRepository;
 import myweb.secondboard.repository.MemberRepository;
-import myweb.secondboard.repository.MemberRepositoryInterface;
 import myweb.secondboard.web.Gender;
 import myweb.secondboard.web.PasswordEncrypt;
+import myweb.secondboard.web.Provider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -41,7 +40,8 @@ public class SecondboardApplication {
 //				member.setEmail("test" + i + "@gmail.com");
 //				member.setBirthday("19951126");
 //				member.setPhoneNumber("01021219" + String.format("%03d", i));
-//				member.setSex(Gender.MALE);
+//				member.setGender(Gender.MALE);
+//				member.setProvider(Provider.GOGOTENNIS);
 //				memberRepository.save(member);
 //
 //				Board board = new Board();

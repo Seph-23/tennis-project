@@ -1,10 +1,19 @@
 package myweb.secondboard.web;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public enum Gender {
-  MALE, FEMALE
+  MALE("male"), FEMALE("female");
+
+  private final String gender;
+
+  Gender(String gender) {
+    this.gender = gender;
+  }
+
+  @Override
+  public String toString() {
+    return this.gender;
+  }
 }
