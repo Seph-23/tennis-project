@@ -64,8 +64,6 @@ public class Member implements Serializable {
     member.setBirthday(birth);
     member.setPhoneNumber(form.getPhoneNumber());
     member.setGender(Gender.valueOf(form.getGender()));
-
-    //TODO
     member.setProvider(Provider.GOGOTENNIS);
     return member;
   }
