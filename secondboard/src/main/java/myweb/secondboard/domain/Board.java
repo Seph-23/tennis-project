@@ -79,8 +79,7 @@ public class Board {
     return board;
   }
 
-  public static Board updateBoard(Board originBoard, BoardUpdateForm form, Member member) {
-    Board board = new Board();
+  public void updateBoard(Board board, BoardUpdateForm form, Member member) {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 
     board.setId(form.getId());
@@ -89,11 +88,12 @@ public class Board {
     board.setAuthor(member.getNickname());
     board.setModifiedDate(LocalDateTime.now().format(dtf));
     board.setMember(member);
-    return board;
+
   }
 
   //조회수 증가
   public void updateView(Board board) {
     board.setViews(board.getViews() + 1);
   }
+
 }

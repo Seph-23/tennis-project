@@ -47,7 +47,9 @@ public class BoardService {
   }
 
   @Transactional
-  public void update(Board originBoard, BoardUpdateForm form, Member member) {
-    Board board = Board.updateBoard(originBoard, form, member);
+  public void update(BoardUpdateForm form, Member member) {
+    Board board = boardRepository.findOne(form.getId()); //조회한 board 엔티티는 영속 상태
+    board.updateBoard(board, form, member);
+    // boardRepository.save(board); 트랜잭션 커밋 시점에 변경 감지(Dirty checking)
   }
 }

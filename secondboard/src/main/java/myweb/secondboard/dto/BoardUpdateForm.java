@@ -16,4 +16,13 @@ public class BoardUpdateForm {
 
   @NotNull @Size(min = 1, max = 144, message = "내용은 1 ~ 144 자 이내여야 합니다.")
   private String content;
+
+  @Override
+  public String toString() {
+    return "BoardUpdateForm{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        '}';
+  }
 }
