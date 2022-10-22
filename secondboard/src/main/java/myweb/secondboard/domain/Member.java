@@ -68,8 +68,6 @@ public class Member implements Serializable {
     } else {
       member.setGender(Gender.FEMALE);
     }
-
-    //TODO
     member.setProvider(Provider.GOGOTENNIS);
     return member;
   }

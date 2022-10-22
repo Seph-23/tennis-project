@@ -40,12 +40,7 @@ public class KakaoController {
       Member member = memberService.findByEmail(userInfo.get("email").toString()).get();
       request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, member);
     }
-
-    model.addAttribute("code", code);
-    model.addAttribute("access_token", access_token);
-    model.addAttribute("userInfo", userInfo);
-
     //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
-    return "home";
+    return "redirect:/";
   }
 }
