@@ -63,11 +63,7 @@ public class Member implements Serializable {
     String birth = form.getYear()+form.getMonth()+form.getDay();
     member.setBirthday(birth);
     member.setPhoneNumber(form.getPhoneNumber());
-    if (form.getGender().equals("man")) {
-      member.setGender(Gender.MALE);
-    } else {
-      member.setGender(Gender.FEMALE);
-    }
+    member.setGender(Gender.valueOf(form.getGender()));
     member.setProvider(Provider.GOGOTENNIS);
     return member;
   }
@@ -78,13 +74,10 @@ public class Member implements Serializable {
     member.setNickname(userInfo.get("nickname").toString());
     member.setEmail(userInfo.get("email").toString());
 
-    if (userInfo.get("gender") != null) {
-      if (userInfo.get("gender").equals("male")) {
-        member.setGender(Gender.MALE);
-      } else {
-        member.setGender(Gender.FEMALE);
-      }
-    }
+    if (userInfo.get("has_gender").toString().equals("true")) {
+       member.setGender(Gender.valueOf(userInfo.get("gender").toString().toUpperCase()));
+    } // male, female => MALE, FEMALE
+
     member.setAccessToken(access_token);
 
     return member;

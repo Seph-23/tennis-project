@@ -110,10 +110,15 @@ public class KaKaoService {
       //선택동의
       if (kakao_account.get("has_email").toString().equals("true")) {
         result.put("email", kakao_account.get("email").toString());
+
       }
       if (kakao_account.get("has_gender").toString().equals("true")) {
         result.put("gender", kakao_account.get("gender").toString());
+        result.put("has_email", kakao_account.get("has_email").toString()); // true , false
+        result.put("has_gender", kakao_account.get("has_gender").toString()); // true , false
       }
+
+
 
       br.close();
 
