@@ -116,8 +116,7 @@ public class BoardController {
       return "/boards/boardUpdateForm";
     }
 
-    Board originBoard = boardService.findOne(boardId);
-    boardService.update(originBoard, form, member);
+    boardService.update(form, member);
     return "redirect:/boards/detail/"+boardId;
   }
 
