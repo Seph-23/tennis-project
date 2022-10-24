@@ -1,59 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
-        rel="stylesheet">
-  <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(~{::link})">
+
+  <!-- loginPage 에서만 쓸 link-->
   <link href="/css/header-style.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="/css/login.css">
+
 </head>
 <body>
-<div class="container"> <!-- container start -->
-  <div class="header">  <!-- Header Start -->
-    <h1>
-      <img th:src="@{/images/gogoTennisLogo.png}" alt="logo" width="160"
-           th:onclick="|location.href='@{/}'|">
-    </h1>
-    <div class="nav"> <!-- Main Menu Start -->
-      <ul>
-        <li>
-          <a th:onclick="|location.href='@{/match/home}'|">매치</a>
-        </li>
-        <li>
-          <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
-        </li>
-        <li>
-          <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
-        </li>
-        <li>
-          <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
-        </li>
-      </ul>
-    </div> <!-- Main Menu End -->
-    <div class="login-menu"> <!-- login start -->
-      <ul>
-        <li th:if="${session.loginMember == null}">
-          <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
-        </li>
-        <li th:if="${session.loginMember == null}">
-          <a th:onclick="|location.href='@{/login}'|">로그인</a>
-        </li>
-        <li th:if="${session.loginMember != null}">
-          <a th:href="@{/members/profile/{id} (id=${session.loginMember.id})}">프로필</a>
-        </li>
-        <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
-          <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
-        </li>
-        <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
-          <a href="https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout">로그아웃</a>
-        </li>
-      </ul>
-    </div> <!-- login end -->
-  </div><!-- Header End -->
+    <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
   <div class="wrap">
     <div class="login">
@@ -106,7 +61,7 @@
       </a>
     </div>
   </div> <!--wrap end-->
-
+  <footer th:replace="fragments/footer :: footer"></footer>
 </div> <!-- container end-->
 </body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
+        rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <link href="/css/header-style.css" rel="stylesheet">
+  <link href="/css/slide-style.css" rel="stylesheet">
+  <title>Home</title>
+</head>
+<body>
+  <div class="container">   <!-- Container Start -->
+    <div class="header">  <!-- Header Start -->
+      <h1>
+        <img th:src="@{/images/gogoTennisLogo.png}" alt="logo" width="160"
+             th:onclick="|location.href='@{/}'|">
+      </h1>
+      <div class="nav"> <!-- Main Menu Start -->
+        <ul>
+          <li>
+            <a th:onclick="|location.href='@{/match/home}'|">매치</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
+          </li>
+          <li>
+            <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
+          </li>
+        </ul>
+      </div> <!-- Main Menu End -->
+      <div class="login-menu"> <!-- login start -->
+        <ul>
+          <li th:if="${session.loginMember == null}">
+            <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
+          </li>
+          <li th:if="${session.loginMember == null}">
+            <a th:onclick="|location.href='@{/login}'|">로그인</a>
+          </li>
+          <li th:if="${session.loginMember != null}">
+            <a th:href="@{/members/profile/{id} (id=${session.loginMember.id})}">프로필</a>
+          </li>
+          <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
+            <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
+          </li>
+          <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
+            <a href="https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code">로그아웃</a>
+          </li>
+        </ul>
+      </div> <!-- login end -->
+    </div><!-- Header End -->
+  </div> <!-- Container End -->
+  <div id="slideShow">
+    <ul class="slides">
+      <li><img th:src="@{/images/1.png}" alt=""></li>
+      <li><img th:src="@{/images/2.jpeg}" alt=""></li>
+      <li><img th:src="@{/images/3.jpeg}" alt=""></li>
+      <li><img th:src="@{/images/4.jpeg}" alt=""></li>
+      <li><img th:src="@{/images/5.jpeg}" alt=""></li>
+    </ul>
+    <p class="controller">
+      <!-- &lang: 왼쪽 방향 화살표
+      &rang: 오른쪽 방향 화살표 -->
+      <span class="prev">&lang;</span> <span class="next">&rang;</span>
+    </p>
+  </div>
+</body>
+<script type="text/javascript" th:src="@{/js/slideShow.js}"></script>
+</html>

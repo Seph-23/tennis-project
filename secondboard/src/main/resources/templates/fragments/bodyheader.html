@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--bodyHeader -->
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav" th:fragment="bodyHeader">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" th:href="@{/}">GOGOtennis</a>
+    <!-- <a class="navbar-brand" th:href="@{/}">
+         <img src="img/logo2.png" alt="logo" width="100">
+     </a>-->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+    </button>
+    <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">매치</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/tournament}">대회</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}">커뮤니티</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">동호회</a></li>
+      </ul>
+
+      <div class="gap-2 d-md-flex">
+        <div th:if="${session.loginMember == null}">
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{/members/new}'|">회원가입</button>
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{/login}'|">로그인</button>
+        </div>  <!-- TODO : 로그인 modal 창 구현 -->
+        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내 정보</button>
+        </div>
+
+        <!-- 카카오 로그아웃-->
+        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">로그아웃</button>
+
+          <!-- TODO:내 정보 UI 구현-->
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내 정보</button>
+        </div>
+
+      </div> <!--gap-2 d-md-flex END-->
+
+    </div>
+  </div>
+</nav>
