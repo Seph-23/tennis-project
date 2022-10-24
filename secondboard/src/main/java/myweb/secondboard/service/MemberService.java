@@ -46,4 +46,9 @@ public class MemberService {
     memberRepository.save(member);
     return member;
   }
+
+  @Transactional
+  public void renewAccessToken(Member member, String access_token) {
+    member.setAccessToken(access_token);
+  }
 }

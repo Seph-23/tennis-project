@@ -3,6 +3,7 @@ package myweb.secondboard.controller;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.service.KaKaoService;
@@ -32,15 +33,26 @@ public class KakaoController {
     Map<String, Object> userInfo = kaKaoService.getUserInfo(access_token);
 
     System.out.println("controller token value = " + userInfo.toString());
+    System.out.println("access_token = " + access_token);
 
     if (memberService.findByEmail(userInfo.get("email").toString()).isEmpty()) {
       Member member = memberService.kakaoSignUp(userInfo, access_token);
       request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, member);
     } else {
       Member member = memberService.findByEmail(userInfo.get("email").toString()).get();
+      memberService.renewAccessToken(member, access_token);
       request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, member);
     }
     //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
     return "redirect:/";
+  }
+
+  @GetMapping("/kakao/logout")
+  public String logout(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+      session.invalidate();
+    }
+    return "home";
   }
 }
