@@ -46,8 +46,11 @@
         <li th:if="${session.loginMember != null}">
           <a th:href="@{/members/profile/{id} (id=${session.loginMember.id})}">프로필</a>
         </li>
-        <li th:if="${session.loginMember != null}">
+        <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
           <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
+        </li>
+        <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
+          <a href="https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout">로그아웃</a>
         </li>
       </ul>
     </div> <!-- login end -->
