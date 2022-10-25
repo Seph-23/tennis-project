@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Tennis</title>
-  <!-- Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-  <!-- CSS Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <!-- CSS -->
-  <link href="/css/styles.css" rel="stylesheet" />
-  <link href="/css/banner.css" rel="stylesheet" />
-  <link href="/css/menu.css" rel="stylesheet" />
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
   <link rel="shortcut icon" href="#">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
         rel="stylesheet">
@@ -22,7 +8,6 @@
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
-
 </head>
 <body>
 <div class="container"> <!-- Container Start -->
@@ -181,131 +166,5 @@
   <footer th:replace="fragments/footer :: footer"></footer>
 </div> <!-- Container End -->
 </body>
-<script type="text/javascript">
-  $("#comment-submit").click(function () {
-    let comment = {
-      content: $("#comment").val(),
-      boardId: $("#board-id").val()
-    }
-    if (confirm("댓글을 등록하시겠습니까?") === true) {
-      $.ajax({
-        type: "post",
-        async: false,
-        url: "/api/comments/commentAdd/" + comment.boardId,
-        data: comment,
-        success: function (data) {
-          if (data.result === "success") {
-            window.location.reload();
-          } else if (data.result === "validate") {
-            alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
-          }
-        },
-        error: function () {
-          alert("서버 에러!");
-        },
-      });
-    } else {
-      return false;
-    }
-  });
-  const deleteComment = (commentId) => {
-    if (confirm("댓글을 삭제하시겠습니까?") === true) {
-      $.ajax({
-        type: "post",
-        url: "/api/comments/commentDelete/" + commentId,
-        success: function (data) {
-          if (data.result === "success") {
-            window.location.reload();
-          }
-        },
-        error: function () {
-          alert("서버 에러!");
-        },
-      });
-    } else {
-      return false;
-    }
-  };
-
-  const updateComment = (commentId) => {
-    $("#comment-content-" + commentId).prop('disabled', false);
-    $("#comment-update-" + commentId).attr("hidden", true);
-    $("#comment-delete-" + commentId).attr("hidden", true);
-    $("#comment-update-confirm-" + commentId).attr("hidden", false);
-    $("#comment-update-cancel-" + commentId).attr("hidden", false);
-  };
-
-  const updateCommentConfirm = (commentId) => {
-    if (confirm("댓글을 수정하시겠습니까?") === true) {
-      let comment = {
-        content: $("#comment-content-" + commentId).val()
-      }
-      $.ajax({
-        type: "post",
-        url: "/api/comments/commentUpdate/" + commentId,
-        data: comment,
-        success: function (data) {
-          if (data.result === "success") {
-            window.location.reload();
-            $("#comment-content-" + commentId).prop('disabled', true);
-            $("#comment-update-" + commentId).attr("hidden", false);
-            $("#comment-delete-" + commentId).attr("hidden", false);
-            $("#comment-update-confirm-" + commentId).attr("hidden", true);
-            $("#comment-update-cancel-" + commentId).attr("hidden", true);
-          } else if (data.result === "validate") {
-            alert("댓글은 1 ~ 100 자 이내여야 합니다.");
-          }
-        },
-        error: function () {
-          alert("서버 에러!");
-        },
-      });
-    } else {
-      return false;
-    }
-  };
-
-  const updateCommentCancel = (commentId) => {
-    let comment = {
-      content: $("#comment-content-" + commentId).val()
-    }
-    $.ajax({
-      type: "post",
-      url: "/api/comments/commentUpdateCancel/" + commentId,
-      data: comment,
-      success: function (data) {
-        if (data.result === "success") {
-          window.location.reload();
-          $("#comment-content-" + commentId).prop('disabled', true);
-          $("#comment-update-" + commentId).attr("hidden", false);
-          $("#comment-delete-" + commentId).attr("hidden", false);
-          $("#comment-update-confirm-" + commentId).attr("hidden", true);
-          $("#comment-update-cancel-" + commentId).attr("hidden", true);
-        }
-      },
-      error: function () {
-        alert("서버 에러!");
-      },
-    });
-  };
-
-  const deleteBoard = (boardId) => {
-    if (confirm("게시글을 삭제하시겠습니까?") === true) {
-      $.ajax({
-        type: "post",
-        url: "/api/boards/boardDelete/" + boardId,
-        success: function (data) {
-          if (data.result === "success") {
-            window.location.assign("http://localhost:8080/boards/home");
-          }
-        },
-        error: function () {
-          alert("서버 에러!");
-        },
-      });
-    } else {
-      return false;
-    }
-  };
-</script>
+<script th:src="@{/js/boardDetailPage.js}"></script>
 </html>

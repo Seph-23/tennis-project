@@ -27,15 +27,7 @@ public class CommentService {
 
     @Transactional
     public void save(Map<String, Object> param, Board board, Member member) {
-        Comment comment = new Comment();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
-
-        comment.setAuthor(member.getNickname());
-        comment.setContent(param.get("content").toString());
-        comment.setBoard(board);
-        comment.setMember(member);
-        comment.setCreatedDate(LocalDateTime.now().format(dtf));
-        comment.setModifiedDate(LocalDateTime.now().format(dtf));
+        Comment comment = Comment.createComment(param, board, member);
         commentRepository.save(comment);
     }
 
@@ -46,10 +38,8 @@ public class CommentService {
 
     @Transactional
     public void updateComment(Long commentId, Map<String, Object> param) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         Comment comment = commentRepository.findById(commentId).get();
-        comment.setContent(param.get("content").toString());
-        comment.setModifiedDate(LocalDateTime.now().format(dtf));
+        comment.updateComment(commentId, param, comment);
     }
 
     @Transactional

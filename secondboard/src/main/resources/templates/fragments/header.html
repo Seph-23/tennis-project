@@ -4,7 +4,7 @@
 
 <!--header-->
 
-<head th:fragment="header(links)">
+<head th:fragment="header(links,scripts)">
   <!-- header 공통 내용 -->
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -21,6 +21,8 @@
   <link href="/css/banner.css" rel="stylesheet" />
   <link href="/css/menu.css" rel="stylesheet" />
 
+
   <!-- header 추가 내용-->
   <th:block th:replace="${links}" />
+  <th:block th:replace="${scripts}" />
 </head>
