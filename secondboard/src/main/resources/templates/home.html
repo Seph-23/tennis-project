@@ -1,76 +1,232 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
-  <link rel="shortcut icon" href="#">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
-        rel="stylesheet">
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.1.js"
-          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-          crossorigin="anonymous"></script>
-  <link href="/css/header-style.css" rel="stylesheet">
-  <link href="/css/slide-style.css" rel="stylesheet">
-  <title>Home</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Tennis</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+  <!-- CSS Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!-- CSS -->
+  <link href="/css/styles.css" rel="stylesheet" />
+  <link href="/css/carousel.css" rel="stylesheet" />
 </head>
-<body>
-  <div class="container">   <!-- Container Start -->
-    <div class="header">  <!-- Header Start -->
-      <h1>
-        <img th:src="@{/images/gogoTennisLogo.png}" alt="logo" width="160"
-             th:onclick="|location.href='@{/}'|">
-      </h1>
-      <div class="nav"> <!-- Main Menu Start -->
-        <ul>
-          <li>
-            <a th:onclick="|location.href='@{/match/home}'|">매치</a>
-          </li>
-          <li>
-            <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
-          </li>
-          <li>
-            <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
-          </li>
-          <li>
-            <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
-          </li>
-        </ul>
-      </div> <!-- Main Menu End -->
-      <div class="login-menu"> <!-- login start -->
-        <ul>
-          <li th:if="${session.loginMember == null}">
-            <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
-          </li>
-          <li th:if="${session.loginMember == null}">
-            <a th:onclick="|location.href='@{/login}'|">로그인</a>
-          </li>
-          <li th:if="${session.loginMember != null}">
-            <a th:href="@{/members/profile/{id} (id=${session.loginMember.id})}">프로필</a>
-          </li>
-          <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
-            <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
-          </li>
-          <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
-            <a href="https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout">로그아웃</a>
-          </li>
-        </ul>
-      </div> <!-- login end -->
-    </div><!-- Header End -->
-  </div> <!-- Container End -->
-  <div id="slideShow">
-    <ul class="slides">
-      <li><img th:src="@{/images/1.png}" alt=""></li>
-      <li><img th:src="@{/images/2.jpeg}" alt=""></li>
-      <li><img th:src="@{/images/3.jpeg}" alt=""></li>
-      <li><img th:src="@{/images/4.jpeg}" alt=""></li>
-      <li><img th:src="@{/images/5.jpeg}" alt=""></li>
-    </ul>
-    <p class="controller">
-      <!-- &lang: 왼쪽 방향 화살표
-      &rang: 오른쪽 방향 화살표 -->
-      <span class="prev">&lang;</span> <span class="next">&rang;</span>
-    </p>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="#page-top">GOGOtennis</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+    </button>
+    <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">매치</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/tournament}">대회</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}">커뮤니티</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">동호회</a></li>
+      </ul>
+      <div class="gap-2 d-md-flex">
+        <div th:if="${session.loginMember == null}">
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{/members/new}'|">회원가입</button>
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{/login}'|">로그인</button>
+        </div>  <!-- TODO : 로그인 modal 창 구현 -->
+        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내 정보</button>
+        </div>
+
+        <!-- 카카오 로그아웃-->
+        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">로그아웃</button>
+
+          <!-- TODO:내 정보 UI 구현-->
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내 정보</button>
+        </div>
+
+      </div> <!--gap-2 d-md-flex END-->
+    </div>
+
   </div>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="loginModalLabel">LOGIN</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Carousel -->
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/images/slide7.jpg" class="d-block w-100" alt="slideImg">
+    </div>
+    <div class="carousel-item">
+      <img src="/images/slide8.jpg" class="d-block w-100" alt="slideImg">
+    </div>
+    <div class="carousel-item">
+      <img src="/images/slide9.jpg" class="d-block w-100" alt="slideImg">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- 빈 공간 -->
+<div class="col-12 p-5"></div>
+<!-- DateCarousel -->
+<div class="container">
+  <div class="row mx-auto my-auto justify-content-center">
+    <div id="recipeCarousel" class="carousel slide">
+      <div class="carouselElement">
+        <a class="carousel-control-prev bg-transparent w-aut disableLink" href="#recipeCarousel" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+      </div>
+      <div class="carouselElement">
+        <div class="carousel-inner" role="listbox">
+          <div class="carousel-item active">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary1<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary2<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary3<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary4<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary5<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary6<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary7<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary8<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary9<br><strong>월</strong></button>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary">Primary10<br><strong>월</strong></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carouselElement">
+        <a class="carousel-control-next bg-transparent w-aut" id="nextIcon" href="#recipeCarousel" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- 빈 공간 -->
+  <div class="col-12 p-3"></div>
+
+  <!-- match table -->
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- Footer-->
+<footer class="footer bg-white small text-center text-black-50">
+  <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
+</footer>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+        crossorigin="anonymous"></script>
+<!-- JS Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<!-- JS-->
+<script src="/js/scripts.js"></script>
+<script src="/js/Carousel.js"></script>
+
 </body>
-<script type="text/javascript" th:src="@{/js/slideShow.js}"></script>
 </html>

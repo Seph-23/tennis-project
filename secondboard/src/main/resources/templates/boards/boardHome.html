@@ -1,110 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+
+<head th:replace="~{fragments/header :: header(~{::link})}">
   <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
   <link rel="shortcut icon" href="#">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap" rel="stylesheet">
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
-  <link href="/css/header-style.css" rel="stylesheet">
-  <title>Board Home</title>
+
+
 </head>
+
 <body>
-  <div class="container">   <!-- Container Start -->
-    <div class="header">  <!-- Header Start -->
-      <h1>
-        <img th:src="@{/images/gogoTennisLogo.png}" alt="logo" width="160"
-             th:onclick="|location.href='@{/}'|">
-      </h1>
-      <div class="nav"> <!-- Main Menu Start -->
-        <ul>
-          <li>
-            <a th:onclick="|location.href='@{/match/home}'|">매치</a>
-          </li>
-          <li>
-            <a th:onclick="|location.href='@{/rank/home}'|">랭킹</a>
-          </li>
-          <li>
-            <a th:onclick="|location.href='@{/tournament/home}'|">대회</a>
-          </li>
-          <li>
-            <a th:onclick="|location.href='@{/boards/home}'|">커뮤니티</a>
-          </li>
-        </ul>
-      </div> <!-- Main Menu End -->
-      <div class="login-menu"> <!-- login start -->
-        <ul>
-          <li th:if="${session.loginMember == null}">
-            <a th:onclick="|location.href='@{/members/new}'|">회원가입</a>
-          </li>
-          <li th:if="${session.loginMember == null}">
-            <a th:onclick="|location.href='@{/login}'|">로그인</a>
-          </li>
-          <li th:if="${session.loginMember != null}">
-            <a th:href="@{/members/profile/{id} (id=${session.loginMember.id})}">프로필</a>
-          </li>
-          <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
-            <a th:onclick="|location.href='@{/logout}'|">로그아웃</a>
-          </li>
-          <li th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
-            <a href="https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout">로그아웃</a>
-          </li>
-        </ul>
-      </div> <!-- login end -->
-    </div><!-- Header End -->
-    <div class="board"> <!-- board start -->
-      <div class="side-menu-left"> <!-- Left Side Menu Start -->
-        <h3>Community</h3>
-        <ul>
-          <li><a href="#">자유게시판</a></li>
-          <li><a href="#">공지사항</a></li>
-          <li><a href="#">Q&A</a></li>
-          <li><a href="#">레슨 찾아요</a></li>
-          <li><a href="#">동호회</a></li>
-        </ul>
-      </div> <!-- Left Side Menu End -->
+<div class="container">   <!-- Container Start -->
 
-      <div class="board-main"> <!-- Board Main Start -->
-        <h3>자유 게시판</h3>
-        <table>
-          <thead>
-          <tr>
-            <th>글번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회수</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each = "board:${boardList}">
-            <td th:text="${board.id}">1</td>
-            <td >
-              <a th:text="${board.title}" th:href="@{/boards/detail/{id} (id=${board.id})}"></a>
-            </td>
-            <td th:text="${board.author}"></td>
-            <td th:text="${board.createdDate}"></td>
-            <td th:text="${board.views}"></td>
-          </tr>
-          </tbody>
-        </table>
+  <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
-        <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-          <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
-             th:text ="${page}"></a>
-          <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
-        </th:block>
-        <button type="button" th:onclick="|location.href='@{/boards/boardAdd}'|"
-                th:if="${session.loginMember != null}">게시글 등록</button>
-      </div> <!-- Board Main End -->
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div class="board"> <!-- board start -->
+    <div class="side-menu-left"> <!-- Left Side Menu Start -->
+      <h3>Community</h3>
+      <ul>
+        <li><a href="#">자유게시판</a></li>
+        <li><a href="#">공지사항</a></li>
+        <li><a href="#">Q&A</a></li>
+        <li><a href="#">레슨 찾아요</a></li>
+        <li><a href="#">동호회</a></li>
+      </ul>
+    </div> <!-- Left Side Menu End -->
 
-      <div class="side-menu-right"> <!-- Right Side Menu Start -->
+    <div class="board-main"> <!-- Board Main Start -->
+      <h3>자유 게시판</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>글번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "board:${boardList}">
+          <td th:text="${board.id}">1</td>
+          <td >
+            <a th:text="${board.title}" th:href="@{/boards/detail/{id} (id=${board.id})}"></a>
+          </td>
+          <td th:text="${board.author}"></td>
+          <td th:text="${board.createdDate}"></td>
+          <td th:text="${board.views}"></td>
+        </tr>
+        </tbody>
+      </table>
 
-      </div> <!-- Right Side Menu End -->
-    </div> <!-- board end -->
-  </div> <!-- Container End -->
+      <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+           th:text ="${page}"></a>
+        <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
+      </th:block>
+      <button type="button" th:onclick="|location.href='@{/boards/boardAdd}'|"
+              th:if="${session.loginMember != null}">게시글 등록</button>
+    </div> <!-- Board Main End -->
+
+    <div class="side-menu-right"> <!-- Right Side Menu Start -->
+
+    </div> <!-- Right Side Menu End -->
+  </div> <!-- board end -->
+  <footer th:replace="fragments/footer :: footer"></footer>
+</div> <!-- Container End -->
 </body>
 </html>

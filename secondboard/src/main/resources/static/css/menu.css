@@ -1,0 +1,45 @@
+.category_area ul {
+  text-align: center;
+  margin: auto 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.category_area ul li {
+  width: 10%;
+  flex-flow: row;
+  list-style: none;
+  border: 1px solid #414241;
+  border-right: 0;
+  height: 50px;
+  line-height: 50px;
+  transition: 0.5s ease 0s;
+  -webkit-transition: 0.5s ease 0s;
+  cursor: pointer !important;
+  font-size: 15px;
+  color: #222;
+}
+
+.category_area ul li:last-child {
+  border-right: 1px solid #414241;
+}
+
+
+.category_area ul li.active {
+  background: #3db370;
+  border: 1px solid #3db370;
+  font-weight: bold;
+  color: white;
+}
+
+.category_area ul li:hover {
+  background: #b8d558;
+  border-color: #b8d558;
+  color: white;
+}
+
+.card-body ul li {
+  list-style: none;
+  text-align: left;
+}

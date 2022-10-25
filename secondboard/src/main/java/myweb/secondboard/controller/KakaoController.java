@@ -12,7 +12,6 @@ import myweb.secondboard.web.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,6 +31,7 @@ public class KakaoController {
     String access_token = kaKaoService.getToken(code);
     Map<String, Object> userInfo = kaKaoService.getUserInfo(access_token);
 
+    //==카카오 로그인 정보==//
     System.out.println("controller token value = " + userInfo.toString());
     System.out.println("access_token = " + access_token);
 
@@ -43,12 +43,13 @@ public class KakaoController {
       memberService.renewAccessToken(member, access_token);
       request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, member);
     }
-    //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
+
     return "redirect:/";
   }
 
   @GetMapping("/kakao/logout")
   public String logout(HttpServletRequest request) {
+
     HttpSession session = request.getSession(false);
     if (session != null) {
       session.invalidate();
