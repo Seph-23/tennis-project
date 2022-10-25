@@ -17,7 +17,7 @@
 
 <div class="matchAdd">  <!-- matchAdd body start -->
   <h3>매치 생성 페이지</h3>
-  <form role="form" th:object="${form}" action="/match/new" method="post"> <!-- match form -->
+  <form role="form" th:object="${form}" action="/match/new" method="post"> <!-- matching form -->
     <div class="form-group">
       <label th:for="matchTitle">매치 이름: </label>
       <input id="matchTitle" type="text" class="form-control" th:field="${form.matchTitle}"
@@ -58,7 +58,7 @@
              placeholder="입력해주세요."/>
       <div class="field-error" th:errors="${form.matchPlace}"></div>
     </div>
-    <button type="submit" class="button-submit" id="match-submit">매치생성</button>
+    <button type="submit" class="button-submit" id="matching-submit">매치생성</button>
   </form> <!-- matchAdd form end -->
 </div> <!-- matchAdd body end -->
 

@@ -1,7 +1,7 @@
 package myweb.secondboard.service;
 
 import lombok.RequiredArgsConstructor;
-import myweb.secondboard.domain.Match;
+import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.MatchSaveForm;
 import myweb.secondboard.repository.MatchRepository;
@@ -17,8 +17,8 @@ public class MatchService {
 
   @Transactional
   public Long addMatch(MatchSaveForm form, Member member) {
-    Match match = Match.createMatch(form, member);
-    matchRepository.save(match);
-    return match.getId();
+    Matching matching = Matching.createMatch(form, member);
+    matchRepository.save(matching);
+    return matching.getId();
   }
 }

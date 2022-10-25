@@ -3,7 +3,6 @@ package myweb.secondboard.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import myweb.secondboard.dto.BoardSaveForm;
 import myweb.secondboard.dto.MatchSaveForm;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Match {
+public class Matching {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,17 +55,17 @@ public class Match {
   @JoinColumn(name = "member_id")
   private Member member;
 
-  public static Match createMatch(MatchSaveForm form, Member member) {
-    Match match = new Match();
+  public static Matching createMatch(MatchSaveForm form, Member member) {
+    Matching matching = new Matching();
 
-    match.setMatchTitle(form.getMatchTitle());
-    match.setMatchDate(form.getMatchDate());
-    match.setMatchTime(form.getMatchTime());
-    match.setMatchType(form.getMatchType());
-    match.setCourtType(form.getCourtType());
-    match.setMatchPlace(form.getMatchPlace());
-    match.setMember(member);
-    return match;
+    matching.setMatchTitle(form.getMatchTitle());
+    matching.setMatchDate(form.getMatchDate());
+    matching.setMatchTime(form.getMatchTime());
+    matching.setMatchType(form.getMatchType());
+    matching.setCourtType(form.getCourtType());
+    matching.setMatchPlace(form.getMatchPlace());
+    matching.setMember(member);
+    return matching;
   }
 
 }
