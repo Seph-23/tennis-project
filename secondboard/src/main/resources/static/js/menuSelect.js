@@ -12,7 +12,7 @@ $(document).ready(function(){
         e.preventDefault();
         var selectedCategory = $(this).attr("title");
         $(".card_area").fadeOut("fast");
-        if (selectedCategory == "all") {
+        if (selectedCategory === "all") {
             $(".card_area").fadeIn("slow");
         }
         else {
@@ -20,7 +20,6 @@ $(document).ready(function(){
         }
     });
 });
-
 
 
 

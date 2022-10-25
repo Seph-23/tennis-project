@@ -78,7 +78,7 @@
   <div class="category_area">
     <ul class="category_list" >
       <li id="list_all" class="category active" title="all">전체</li>
-      <li class="category"  th:each="local:${local}"
+      <li class="category"  th:each="local:${locals}"
           th:id="${local.id}" th:title="${local.id}" th:text="${local.name}"></li>
     </ul>
   </div>
