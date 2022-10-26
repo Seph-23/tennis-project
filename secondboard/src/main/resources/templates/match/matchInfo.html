@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header(~{::link})}">
+  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+</head>
+<body>
+  <h4>매치 상세 페이지</h4>
+    <table border='1'>
+      <tr>
+        <th>매치이름</th><td th:text="${match.matchTitle}"></td>
+      </tr>
+      <tr>
+        <th>매치날짜</th><td th:text="${match.matchDate}"></td>
+      </tr>
+      <tr>
+        <th>매치장소</th><td th:text="${match.matchPlace}"></td>
+      </tr>
+      <tr>
+        <th>참여인원</th> <td th:text="1명"></td>
+      </tr>
+      <tr>
+        <th>매치종류</th><td th:text="${match.matchType}"></td>
+      </tr>
+      <tr>
+        <th>코트종류</th><td th:text="${match.courtType}"></td>
+      </tr>
+    </table>
+
+    <div th:if="${session.loginMember != null}">
+      <th th:if="${session.loginMember.id == match.member.id}">
+        <button th:onclick="deleteMatch([[${match.id}]])">매치 삭제</button>
+      </th>
+      <th th:if="${session.loginMember.id == match.member.id}">
+        <form class="col" role="form" th:action="@{/match/update/{id} (id=${match.id})}"
+              method="get">
+          <button type="submit">매치 수정</button>
+        </form>
+      </th>
+    </div>
+</body>
+</html>

@@ -66,15 +66,15 @@ public class MatchController {
     }
 
     Long matchId = matchService.addMatch(form, member);
-    return "redirect:/match/detail/"+matchId;
+    return "redirect:/match/home/";
   }
 
-  @GetMapping("/detail/{matchId}")
-  public String boardDetail(@PathVariable("matchId") Long matchId, Model model) {
+  @GetMapping("/info/{matchId}")
+  public String matchDetail(@PathVariable("matchId") Long matchId, Model model) {
 
     Matching matching = matchService.findOne(matchId);
     model.addAttribute("match", matching);
-    return "/match/matchDetail";
+    return "/match/matchInfo";
   }
 
 
