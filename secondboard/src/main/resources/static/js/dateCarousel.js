@@ -1,4 +1,4 @@
-let items = document.querySelectorAll('#recipeCarousel .carousel-item')
+let items = document.querySelectorAll('#dateCarousel .carousel-item')
 
 items.forEach((el) => {
     const minPerSlide = 6
