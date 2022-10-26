@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
+import org.springframework.core.annotation.Order;
 
 @SpringBootApplication
 public class SecondboardApplication {
@@ -37,6 +38,7 @@ public class SecondboardApplication {
 		SpringApplication.run(SecondboardApplication.class, args);
 	}
 
+	@Order(1)
 	@Bean
 	public CommandLineRunner initData(MemberRepository memberRepository,
 									  BoardRepository boardRepository,
@@ -107,7 +109,7 @@ public class SecondboardApplication {
 		return r;
 	}
 
-
+	@Order(2)
 	@Bean
 	public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
 		return args -> {
