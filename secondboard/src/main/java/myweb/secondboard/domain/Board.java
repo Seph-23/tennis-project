@@ -3,6 +3,7 @@ package myweb.secondboard.domain;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,8 +15,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +43,7 @@ public class Board {
   private String title;
 
   @NotNull
-  @Column(length = 145)
+  @Column(length = 1000000000)
   private String content;
 
   @NotNull
@@ -95,5 +98,4 @@ public class Board {
   public void updateView(Board board) {
     board.setViews(board.getViews() + 1);
   }
-
 }
