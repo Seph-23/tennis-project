@@ -12,12 +12,77 @@
 </head>
 <body>
 <header>
-
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/images/slide1.jpg" class="d-block w-100" alt="slideImg">
+      </div>
+      <div class="carousel-item">
+        <img src="/images/slide2.jpg" class="d-block w-100" alt="slideImg">
+      </div>
+      <div class="carousel-item">
+        <img src="/images/slide9.jpg" class="d-block w-100" alt="slideImg">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 </header>
 
 <main>
-  <button type="button" th:onclick="|location.href='@{/match/matchAdd}'|"
-          th:if="${session.loginMember != null}">매치 생성</button>
+  <div class="match-main"> <!-- Board Main Start -->
+    <h3>매치 페이지</h3>
+    <button type="button" th:onclick="|location.href='@{/match/matchAdd}'|"
+            th:if="${session.loginMember != null}">매치 생성</button>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>번호</th>
+        <th>매치이름</th>
+        <th>매치날짜</th>
+        <th>매치시간</th>
+        <th>닉네임</th>
+        <th>매치종류</th>
+        <th>코트종류</th>
+        <th>매치장소</th>
+        <th>매치상태</th>>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each = "match:${matchList}">
+        <td th:text="${match.id}"></td>
+        <td th:text="${match.matchTitle}"></td>
+        <td th:text="${match.matchDate}"></td>
+        <td th:text="${match.matchTime}"></td>
+        <td th:text="${match.member.nickname}"></td>
+        <td th:text="${match.matchType}"></td>
+        <td th:text="${match.courtType}"></td>
+        <td th:text="${match.matchPlace}"></td>
+        <td><button>신청</button></td>
+        <td><button type="button" th:onclick="|location.href='@{/match/detail}'|"
+                    th:if="${session.loginMember != null}">참가</button></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+      <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+         th:text ="${page}"></a>
+      <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
+    </th:block>
+
+  </div> <!-- Board Main End -->
 </main>
 
 <footer>

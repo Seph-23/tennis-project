@@ -4,11 +4,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MatchSaveForm;
+import myweb.secondboard.web.CourtType;
+import myweb.secondboard.web.MatchType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -26,26 +31,23 @@ public class Matching {
   @Column(length = 31)
   private String matchTitle;
 
-  @NotNull
   @CreatedDate
   @Column(length = 40)
-  private String matchDate;
+  private LocalDate matchDate;
 
   @LastModifiedDate
   @Column(length = 40)
-  private String modifiedDate;
+  private LocalDate modifiedDate;
 
   @NotNull
   @Column(length = 20)
-  private String matchTime;
+  private LocalTime matchTime;
 
-  @NotNull
-  @Column(length = 10)
-  private String matchType;
+  @Enumerated(EnumType.STRING)
+  private MatchType matchType;
 
-  @NotNull
-  @Column(length = 10)
-  private String courtType;
+  @Enumerated(EnumType.STRING)
+  private CourtType courtType;
 
   @NotNull
   @Column(length = 30)
@@ -54,6 +56,12 @@ public class Matching {
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
+
+  @Column(columnDefinition = "integer default 0")
+  private Integer playerNumber;
+
+
+  private Boolean matchCondition;
 
   public static Matching createMatch(MatchSaveForm form, Member member) {
     Matching matching = new Matching();
