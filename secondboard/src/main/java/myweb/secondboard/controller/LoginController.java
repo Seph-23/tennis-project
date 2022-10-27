@@ -37,10 +37,7 @@ public class LoginController {
       log.info("errors = {}", bindingResult);
       return "/login/loginPage";
     }
-    System.out.println("ccab " +  loginForm.getLoginId()); // 값은 넘어옴..
-    System.out.println("ccab " + loginForm.getPassword());
 
-    //TODO : 검증 시 터짐
     Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
     if (loginMember == null) {
       bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");

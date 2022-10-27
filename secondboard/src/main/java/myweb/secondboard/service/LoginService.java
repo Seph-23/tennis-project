@@ -1,6 +1,7 @@
 package myweb.secondboard.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.repository.MemberRepository;
@@ -19,12 +20,16 @@ public class LoginService {
   public Member login(String loginId, String password) throws NoSuchAlgorithmException {
     PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
     String encryptedPassword = passwordEncrypt.encrypt(password);
-    System.out.println(encryptedPassword + "암호화된 암호");
-//    return memberRepository.findByLoginId(loginId).filter(m -> m.getPassword()
-//      .equals(encryptedPassword)).orElse(null);
-    System.out.println("왜 터질까요?"); // 찍힘
 
-    return memberRepository.findByLoginId(loginId).filter(m -> m.getPassword()
-        .equals(password)).orElse(null);
+
+    //== 아이디가 없는 회원 로그인 검증==//
+    List<Member> members = memberRepository.findAll();
+    for (Member member : members) {
+      if (member.getLoginId().equals(loginId)) {
+        return memberRepository.findByLoginId(loginId).filter(m -> m.getPassword()
+        .equals(encryptedPassword)).orElse(null);
+      }
+    }
+    return null;
   }
 }

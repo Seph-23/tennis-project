@@ -20,15 +20,9 @@ public class MemberRepositoryImpl implements MemberRepositoryInterface {
   }
 
   public Optional<Member> findByLoginId(String loginId) {
-    return Optional.ofNullable(
-        findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findFirst().orElse(null));
-//    List<Member> members = findAll();
-//    for (Member member : members) {
-//      if (member.getLoginId().equals(loginId)) {
-//        return Optional.ofNullable(member);
-//      }
-//    }
-//    return null;
+    return findAll().stream()
+        .filter(m -> m.getLoginId().equals(loginId))
+        .findFirst();
   }
 
   public Optional<Member> findByNickname(String nickname) {

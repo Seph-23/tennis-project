@@ -33,7 +33,7 @@ public class Member implements Serializable {
   @Column(name = "member_id")
   private Long id;
 
-  @Column(unique = true, length = 16)
+  @Column(unique = true, length = 40)
   private String loginId;
 
   @Column(unique = true, length = 64)
@@ -79,6 +79,7 @@ public class Member implements Serializable {
     member.setProvider(Provider.KAKAO);
     member.setNickname(userInfo.get("nickname").toString());
     member.setEmail(userInfo.get("email").toString());
+    member.setLoginId(userInfo.get("email").toString()); //KAKAO 회원인 경우 email을 loginId로 set
 
     if (userInfo.get("has_gender").toString().equals("true")) {
        member.setGender(Gender.valueOf(userInfo.get("gender").toString().toUpperCase()));
