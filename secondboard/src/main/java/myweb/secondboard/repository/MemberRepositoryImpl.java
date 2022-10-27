@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberRepositoryImpl {
+public class MemberRepositoryImpl implements MemberRepositoryInterface {
 
   @PersistenceContext
   private final EntityManager em;
@@ -20,7 +20,15 @@ public class MemberRepositoryImpl {
   }
 
   public Optional<Member> findByLoginId(String loginId) {
-    return findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findFirst();
+    return Optional.ofNullable(
+        findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findFirst().orElse(null));
+//    List<Member> members = findAll();
+//    for (Member member : members) {
+//      if (member.getLoginId().equals(loginId)) {
+//        return Optional.ofNullable(member);
+//      }
+//    }
+//    return null;
   }
 
   public Optional<Member> findByNickname(String nickname) {

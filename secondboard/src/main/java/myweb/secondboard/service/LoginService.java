@@ -19,7 +19,12 @@ public class LoginService {
   public Member login(String loginId, String password) throws NoSuchAlgorithmException {
     PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
     String encryptedPassword = passwordEncrypt.encrypt(password);
+    System.out.println(encryptedPassword + "암호화된 암호");
+//    return memberRepository.findByLoginId(loginId).filter(m -> m.getPassword()
+//      .equals(encryptedPassword)).orElse(null);
+    System.out.println("왜 터질까요?"); // 찍힘
+
     return memberRepository.findByLoginId(loginId).filter(m -> m.getPassword()
-      .equals(encryptedPassword)).orElse(null);
+        .equals(password)).orElse(null);
   }
 }
