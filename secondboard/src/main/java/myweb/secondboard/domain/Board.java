@@ -25,6 +25,10 @@ import myweb.secondboard.dto.BoardUpdateForm;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+/**
+ * 댓글 도메인
+ * @since 2022-10-05
+ */
 @Entity
 @Getter @Setter
 @NoArgsConstructor

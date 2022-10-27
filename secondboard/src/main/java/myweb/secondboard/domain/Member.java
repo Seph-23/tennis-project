@@ -18,6 +18,12 @@ import myweb.secondboard.web.Gender;
 import myweb.secondboard.web.PasswordEncrypt;
 import myweb.secondboard.web.Provider;
 
+
+/**
+ * 회원 도메인
+ * @since 2022-10-05
+ * @serial
+ */
 @Entity
 @Getter @Setter
 @NoArgsConstructor

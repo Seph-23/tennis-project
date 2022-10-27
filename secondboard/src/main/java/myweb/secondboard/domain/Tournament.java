@@ -17,6 +17,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+/**
+ * 대회 도메인
+ * @author hwang-uichan
+ * @since 2022-10-25
+ */
+
 @Entity
 @Getter
 @Setter

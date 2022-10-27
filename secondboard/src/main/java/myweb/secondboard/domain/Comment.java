@@ -11,6 +11,10 @@ import javax.validation.constraints.NotNull;
 
 import static javax.persistence.FetchType.*;
 
+/**
+ * 댓글 도메인
+ * @since 2022-10-09
+ */
 @Entity
 @Getter @Setter
 @NoArgsConstructor
