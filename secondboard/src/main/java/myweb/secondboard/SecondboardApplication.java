@@ -133,8 +133,7 @@ public class SecondboardApplication {
 				tournament.setApplicationStartDate(LocalDate.now());
 				tournament.setApplicationEndDate(LocalDate.now());
 				String url = "https://mdbootstrap.com/img/new/standard/nature";
-				Random random = new Random();
-				int a = random.nextInt(6) + 184;
+				int a = new Random().nextInt(6) + 184;
 				tournament.setImage(url + "/" + a + ".jpg");
 				tournament.setPlace("올림픽공원");
 				tournament.setTitle("대회명" + i);

@@ -11,6 +11,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 지역 도메인
+ * @since 2022-10-25
+ */
 @Entity
 @Getter
 @Setter
