@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter @Setter
 public class BoardUpdateForm {
 
-
   private Long id;
 
   @NotNull @Size(min = 1, max = 30, message = "제목은 1 ~ 30 자 이내여야 합니다.")

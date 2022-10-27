@@ -3,7 +3,9 @@ package myweb.secondboard.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.MatchSaveForm;
+import myweb.secondboard.dto.MatchUpdateForm;
 import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.MatchType;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +15,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -74,6 +78,19 @@ public class Matching {
     matching.setMatchPlace(form.getMatchPlace());
     matching.setMember(member);
     return matching;
+  }
+
+  public void updateMatch(Matching matching, MatchUpdateForm form, Member member) {
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+    matching.setId(form.getId());
+    matching.setMatchTitle(form.getMatchTitle());
+    matching.setMatchDate(form.getMatchDate());
+    matching.setMatchTime(form.getMatchTime());
+    matching.setMatchType(form.getMatchType());
+    matching.setCourtType(form.getCourtType());
+    matching.setMatchPlace(form.getMatchPlace());
+    matching.setMember(member);
   }
 
 }

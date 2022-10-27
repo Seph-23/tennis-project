@@ -12,36 +12,38 @@
 </head>
 <body>
   <h4>매치 상세 페이지</h4>
-    <table border='1'>
+    <table>
       <tr>
-        <th>매치이름</th><td th:text="${match.matchTitle}"></td>
+        <th>매치이름</th><td th:text="${form.matchTitle}"></td>
       </tr>
       <tr>
-        <th>매치날짜</th><td th:text="${match.matchDate}"></td>
+        <th>매치날짜</th><td th:text="${form.matchDate}"></td>
       </tr>
       <tr>
-        <th>매치장소</th><td th:text="${match.matchPlace}"></td>
+        <th>매치장소</th><td th:text="${form.matchPlace}"></td>
       </tr>
       <tr>
         <th>참여인원</th> <td th:text="1명"></td>
       </tr>
       <tr>
-        <th>매치종류</th><td th:text="${match.matchType}"></td>
+        <th>매치종류</th><td th:text="${form.matchType}"></td>
       </tr>
       <tr>
-        <th>코트종류</th><td th:text="${match.courtType}"></td>
+        <th>코트종류</th><td th:text="${form.courtType}"></td>
       </tr>
     </table>
 
     <div th:if="${session.loginMember != null}">
-      <th th:if="${session.loginMember.id == match.member.id}">
-        <button th:onclick="deleteMatch([[${match.id}]])">매치 삭제</button>
-      </th>
-      <th th:if="${session.loginMember.id == match.member.id}">
-        <form class="col" role="form" th:action="@{/match/update/{id} (id=${match.id})}"
-              method="get">
-          <button type="submit">매치 수정</button>
-        </form>
+      <th th:if="${session.loginMember.id == form.member.id}">
+        <table>
+          <form class="col" role="form" th:action="@{/match/update/{id} (id=${form.id})}" method="get">
+            <button type="submit">매치 수정</button>
+          </form>
+          <form class="col" role="form" th:action="@{/match/delete/{id} (id=${form.id})}" method="get">
+            <button type="submit">매치 삭제</button>
+          </form>
+        </table>
+        <button type="button" th:onclick="|location.href='@{/match/home}'|">뒤로가기</button>
       </th>
     </div>
 </body>

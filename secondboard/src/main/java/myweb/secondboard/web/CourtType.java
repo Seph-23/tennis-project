@@ -1,5 +1,14 @@
 package myweb.secondboard.web;
 
-public enum CourtType {
-  INDOOR, OUTDOOR
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public enum CourtType implements CourtMapperType{
+  INDOOR("실내"),
+  OUTDOOR("실외");
+
+  @Getter
+  private final String title;
+
 }

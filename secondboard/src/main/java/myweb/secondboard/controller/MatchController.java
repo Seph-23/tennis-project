@@ -6,7 +6,9 @@ import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.BoardSaveForm;
+import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.MatchSaveForm;
+import myweb.secondboard.dto.MatchUpdateForm;
 import myweb.secondboard.service.MatchService;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
@@ -32,7 +34,7 @@ public class MatchController {
 
   @GetMapping("/home")
   public String matchHome(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
-                            Pageable pageable, Model model) {
+                          Pageable pageable, Model model) {
 
     Page<Matching> matchList = matchService.getMatchList(pageable);
     int nowPage = matchList.getPageable().getPageNumber() + 1;
@@ -49,7 +51,7 @@ public class MatchController {
 
   @GetMapping("/matchAdd")
   public String matchAddForm(Model model) {
-    model.addAttribute("match", new MatchSaveForm());
+    model.addAttribute("form", new MatchSaveForm());
     return "/match/matchAddForm";
   }
 
@@ -73,9 +75,51 @@ public class MatchController {
   public String matchDetail(@PathVariable("matchId") Long matchId, Model model) {
 
     Matching matching = matchService.findOne(matchId);
-    model.addAttribute("match", matching);
+    model.addAttribute("form", matching);
     return "/match/matchInfo";
   }
 
+  @GetMapping("/update/{matchId}")
+  public String matchUpdateForm(@PathVariable("matchId") Long matchId, Model model) {
 
+    Matching matching = matchService.findOne(matchId);
+
+    MatchUpdateForm form = new MatchUpdateForm();
+    form.setId(matching.getId());
+    form.setMatchTitle(matching.getMatchTitle());
+    form.setMatchDate(matching.getMatchDate());
+    form.setMatchTime(matching.getMatchTime());
+    form.setMatchType(matching.getMatchType());
+    form.setCourtType(matching.getCourtType());
+    form.setMatchPlace(matching.getMatchPlace());
+    model.addAttribute("form", form);
+
+    return "/match/matchUpdateForm";
+  }
+
+  @PostMapping("/update/{matchId}")
+  public String matchUpdate(@Validated @ModelAttribute("form") MatchUpdateForm form,
+                            BindingResult bindingResult, HttpServletRequest request,
+                            @PathVariable("matchId") Long matchId) {
+
+    Member member = (Member) request.getSession(false)
+      .getAttribute(SessionConst.LOGIN_MEMBER);
+
+    if (bindingResult.hasErrors()) {
+      log.info("errors = {}", bindingResult);
+      return "/match/matchUpdateForm";
+    }
+
+    matchService.update(form, member);
+    return "redirect:/match/info/" + matchId;
+  }
+
+  @GetMapping("/delete/{matchId}")
+  public String matchDelete(@PathVariable("matchId") Long matchId) {
+
+    matchService.deleteById(matchId);
+
+    return "redirect:/match/home";
+
+  }
 }

@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.MatchSaveForm;
+import myweb.secondboard.dto.MatchUpdateForm;
 import myweb.secondboard.repository.MatchRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,4 +36,15 @@ public class MatchService {
     return matchRepository.findAll(pageable);
   }
 
+  @Transactional
+  public void update(MatchUpdateForm form, Member member) {
+    Matching matching = matchRepository.findOne(form.getId()); //조회한 board 엔티티는 영속 상태
+    matching.updateMatch(matching, form, member);
+
+  }
+
+  public void deleteById(Long matchId) {
+    matchRepository.deleteById(matchId);
+
+  }
 }
