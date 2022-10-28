@@ -69,7 +69,7 @@
         <td th:text="${match.matchType}"></td>
         <td th:text="${match.courtType}"></td>
         <td th:text="${match.matchPlace}"></td>
-        <td>신청가능</td>
+        <td th:text="${match.matchCondition.toString()}"></td>
         <td >
           <a th:href="@{/match/info/{id} (id=${match.id})}"
              th:if="${session.loginMember != null}">보기</a>
