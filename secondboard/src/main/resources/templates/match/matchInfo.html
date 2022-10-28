@@ -33,18 +33,41 @@
       </tr>
     </table>
 
-    <div th:if="${session.loginMember != null}">
-      <th th:if="${session.loginMember.id == form.member.id}">
-        <table>
-          <form class="col" role="form" th:action="@{/match/update/{id} (id=${form.id})}" method="get">
-            <button type="submit">매치 수정</button>
-          </form>
-          <form class="col" role="form" th:action="@{/match/delete/{id} (id=${form.id})}" method="get">
-            <button type="submit">매치 삭제</button>
-          </form>
-        </table>
-        <button type="button" th:onclick="|location.href='@{/match/home}'|">뒤로가기</button>
-      </th>
-    </div>
+  <div th:if="${session.loginMember != null}">
+    <form th:object="${playerAddForm}" action="/match/player/add" method="post">
+      <input hidden name="memberId" th:value="${session.loginMember.id}"></input>
+      <input hidden name="matchId" th:value="${form.id}"></input>
+      <div th:if="${form.matchCondition.toString() == 'AVAILABLE'}">
+        <td th:each="a:${playersA}">
+          <a th:text="${a.getMember().nickname}"></a>
+          <div th:if="${playersA.size() < 2}">
+            <input type="radio" th:field="${playerAddForm.team}" value="A">A
+          </div>
+        </td>
+        <td th:each="b:${playersB}">
+          <a th:text="${b.getMember().nickname}"></a>
+          <div th:if="${playersB.size() < 2}">
+            <input type="radio" th:field="${playerAddForm.team}" value="B">B
+          </div>
+        </td>
+      </div>
+      <button type="submit">매치 조인</button>
+    </form>
+  </div>
+
+
+  <div th:if="${session.loginMember != null}">
+    <th th:if="${session.loginMember.id == form.member.id}">
+      <table>
+        <form class="col" role="form" th:action="@{/match/update/{id} (id=${form.id})}" method="get">
+          <button type="submit">매치 수정</button>
+        </form>
+        <form class="col" role="form" th:action="@{/match/delete/{id} (id=${form.id})}" method="get">
+          <button type="submit">매치 삭제</button>
+        </form>
+      </table>
+      <button type="button" th:onclick="|location.href='@{/match/home}'|">뒤로가기</button>
+    </th>
+  </div>
 </body>
 </html>

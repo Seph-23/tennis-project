@@ -1,15 +1,19 @@
 package myweb.secondboard.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.Player;
 import myweb.secondboard.dto.BoardSaveForm;
 import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.MatchSaveForm;
 import myweb.secondboard.dto.MatchUpdateForm;
+import myweb.secondboard.dto.PlayerAddForm;
 import myweb.secondboard.service.MatchService;
+import myweb.secondboard.service.PlayerService;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,10 +35,12 @@ import javax.servlet.http.HttpServletResponse;
 public class MatchController {
 
   private final MatchService matchService;
+  private final PlayerService playerService;
 
   @GetMapping("/home")
-  public String matchHome(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
-                          Pageable pageable, Model model) {
+  public String matchHome(
+    @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
+    Pageable pageable, Model model) {
 
     Page<Matching> matchList = matchService.getMatchList(pageable);
     int nowPage = matchList.getPageable().getPageNumber() + 1;
@@ -57,7 +63,7 @@ public class MatchController {
 
   @PostMapping("/new")
   public String matchAdd(@Validated @ModelAttribute("match") MatchSaveForm form,
-                         BindingResult bindingResult, HttpServletRequest request) {
+    BindingResult bindingResult, HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
@@ -76,6 +82,18 @@ public class MatchController {
 
     Matching matching = matchService.findOne(matchId);
     model.addAttribute("form", matching);
+
+    //TODO 매치 신청
+    List<Player> players = playerService.findAllByMatchingId(matchId);
+    List<Player> playersA = players.stream().filter(m -> m.getTeam().toString().equals("A"))
+      .toList();
+    List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B"))
+      .toList();
+
+    model.addAttribute("playersA", playersA);
+    model.addAttribute("playersB", playersB);
+    model.addAttribute("playerAddForm", new PlayerAddForm());
+
     return "/match/matchInfo";
   }
 
@@ -99,8 +117,8 @@ public class MatchController {
 
   @PostMapping("/update/{matchId}")
   public String matchUpdate(@Validated @ModelAttribute("form") MatchUpdateForm form,
-                            BindingResult bindingResult, HttpServletRequest request,
-                            @PathVariable("matchId") Long matchId) {
+    BindingResult bindingResult, HttpServletRequest request,
+    @PathVariable("matchId") Long matchId) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
@@ -121,5 +139,16 @@ public class MatchController {
 
     return "redirect:/match/home";
 
+  }
+
+  @PostMapping("/player/add")
+  public String matchPlayerAdd(@ModelAttribute("playerAddForm") PlayerAddForm form) {
+
+    System.out.println("form.getMatchId() = " + form.getMatchId());
+    System.out.println("form.getMemberId() = " + form.getMemberId());
+    System.out.println("form.getTeam() = " + form.getTeam());
+    playerService.matchPlayerAdd(form);
+
+    return "redirect:/match/home";
   }
 }

@@ -7,6 +7,7 @@ import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.MatchSaveForm;
 import myweb.secondboard.dto.MatchUpdateForm;
 import myweb.secondboard.web.CourtType;
+import myweb.secondboard.web.MatchCondition;
 import myweb.secondboard.web.MatchType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -64,8 +65,8 @@ public class Matching {
   @Column(columnDefinition = "integer default 0")
   private Integer playerNumber;
 
-
-  private Boolean matchCondition;
+  @Enumerated(EnumType.STRING)
+  private MatchCondition matchCondition;
 
   public static Matching createMatch(MatchSaveForm form, Member member) {
     Matching matching = new Matching();
@@ -77,6 +78,7 @@ public class Matching {
     matching.setCourtType(form.getCourtType());
     matching.setMatchPlace(form.getMatchPlace());
     matching.setMember(member);
+    matching.setMatchCondition(MatchCondition.AVAILABLE);
     return matching;
   }
 

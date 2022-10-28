@@ -3,6 +3,7 @@ package myweb.secondboard;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,16 +12,24 @@ import java.util.concurrent.ThreadLocalRandom;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Local;
+import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.Player;
 import myweb.secondboard.domain.Tournament;
 import myweb.secondboard.repository.BoardRepository;
 import myweb.secondboard.repository.CommentRepository;
 import myweb.secondboard.repository.LocalRepository;
+import myweb.secondboard.repository.MatchRepository;
 import myweb.secondboard.repository.MemberRepository;
+import myweb.secondboard.repository.PlayerRepository;
 import myweb.secondboard.repository.TournamentRepository;
+import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.Gender;
+import myweb.secondboard.web.MatchCondition;
+import myweb.secondboard.web.MatchType;
 import myweb.secondboard.web.PasswordEncrypt;
 import myweb.secondboard.web.Provider;
+import myweb.secondboard.web.Team;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,11 +47,10 @@ public class SecondboardApplication {
 		SpringApplication.run(SecondboardApplication.class, args);
 	}
 
-	@Order(1)
 	@Bean
 	public CommandLineRunner initData(MemberRepository memberRepository,
-									  BoardRepository boardRepository,
-									  CommentRepository commentRepository){
+		BoardRepository boardRepository,
+		CommentRepository commentRepository){
 
 		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
 			try {
@@ -109,7 +117,6 @@ public class SecondboardApplication {
 		return r;
 	}
 
-	@Order(2)
 	@Bean
 	public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
 		return args -> {
@@ -146,4 +153,42 @@ public class SecondboardApplication {
 		};
 
 	}
+	@Order(3)
+	@Bean
+	public CommandLineRunner initMatching(MatchRepository matchRepository,
+		MemberRepository memberRepository, PlayerRepository playerRepository) {
+		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
+			Matching matching = new Matching();
+			Player player = new Player();
+			Member member = memberRepository.findById(Long.valueOf(i)).get();
+			if (i % 2 == 0) {
+				matching.setMatchTitle("매치 test" + i);
+				matching.setMatchDate(LocalDate.of(2022, 12, 12));
+				matching.setMatchTime(LocalTime.of(16, 30));
+				matching.setMatchType(MatchType.DOUBLE);
+				matching.setCourtType(CourtType.INDOOR);
+				matching.setMatchPlace("서울올림픽 경기장");
+				matching.setMember(member);
+				matching.setMatchCondition(MatchCondition.AVAILABLE);
+
+			} else if (i % 2 == 1) {
+				matching.setMatchTitle("매치 test" + i);
+				matching.setMatchDate(LocalDate.of(2022, 12, 12));
+				matching.setMatchTime(LocalTime.of(16, 30));
+				matching.setMatchType(MatchType.SINGLE);
+				matching.setCourtType(CourtType.OUTDOOR);
+				matching.setMatchPlace("수원올림픽 경기장");
+				matching.setMember(member);
+				matching.setMatchCondition(MatchCondition.AVAILABLE);
+			}
+			matchRepository.save(matching);
+
+			player.setMatching(matching);
+			player.setMember(member);
+			player.setTeam(Team.A);
+			playerRepository.save(player);
+
+		});
+	}
+
 }
