@@ -1,0 +1,56 @@
+@media (max-width: 767px) {
+    #dateCarousel .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    #dateCarousel .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+}
+
+#dateCarousel {
+    width: 75%;
+    align-items: center;
+}
+
+#dateCarousel .carousel-control-prev {
+    transform: translateX(-7em);
+}
+#dateCarousel .carousel-control-next {
+    transform: translateX(7em);
+}
+
+#dateCarousel .carousel-control-prev-icon {
+    background-image: url("../images/arrow-left-circle.svg");
+}
+
+#dateCarousel .carousel-control-next-icon {
+    background-image: url('../images/arrow-right-circle.svg');
+}
+
+
+
+#dateCarousel .carousel-inner .carousel-item.active,
+#dateCarousel .carousel-inner .carousel-item-next,
+#dateCarousel .carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* medium and up screens */
+@media (min-width: 768px) {
+
+    #dateCarousel .carousel-inner .carousel-item-end.active,
+    #dateCarousel .carousel-inner .carousel-item-next {
+        transform: translateX(25%);
+    }
+
+    #dateCarousel .carousel-inner .carousel-item-start.active,
+    #dateCarousel .carousel-inner .carousel-item-prev {
+        transform: translateX(-25%);
+    }
+}
+
+#dateCarousel .carousel-inner .carousel-item-end,
+#dateCarousel .carousel-inner .carousel-item-start {
+    transform: translateX(0);
+}
+

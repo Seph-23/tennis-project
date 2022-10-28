@@ -1,5 +1,8 @@
 package myweb.secondboard.domain;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,5 +51,25 @@ public class Comment {
     public void setBoard(Board board) {
         this.board = board;
         board.getComments().add(this);
+    }
+
+    //생성 메서드
+    public static Comment createComment(Map<String, Object> param, Board board, Member member) {
+        Comment comment = new Comment();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+        comment.setAuthor(member.getNickname());
+        comment.setContent(param.get("content").toString());
+        comment.setBoard(board);
+        comment.setMember(member);
+        comment.setCreatedDate(LocalDateTime.now().format(dtf));
+        comment.setModifiedDate(LocalDateTime.now().format(dtf));
+        return comment;
+    }
+
+    public void updateComment(Long commentId, Map<String, Object> param, Comment comment) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+        comment.setContent(param.get("content").toString());
+        comment.setModifiedDate(LocalDateTime.now().format(dtf));
     }
 }

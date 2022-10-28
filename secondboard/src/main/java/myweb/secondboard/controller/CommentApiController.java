@@ -78,7 +78,7 @@ public class CommentApiController {
 
     commentService.updateCommentCancel(commentId);
 
-    result.put("result", "sucess");
+    result.put("result", "success");
     return result;
   }
 }

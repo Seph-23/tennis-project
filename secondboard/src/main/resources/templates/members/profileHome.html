@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header(~{::link})">
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
   <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
   <link rel="shortcut icon" href="#">
   <!-- jQuery -->

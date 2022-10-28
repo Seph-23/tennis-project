@@ -20,10 +20,10 @@ public class TournamentController {
   @GetMapping("/tournament")
   public String tournament(Model model) {
     List<Tournament> list = tournamentService.getTournamentList();
-    List<Local> local = tournamentService.getLocalList();
+    List<Local> locals = tournamentService.getLocalList();
 
     model.addAttribute("list", list);
-    model.addAttribute("local", local);
+    model.addAttribute("locals", locals);
     return "/tournament/tournament";
   }
 
