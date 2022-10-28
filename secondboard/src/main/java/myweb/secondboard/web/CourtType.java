@@ -11,4 +11,5 @@ public enum CourtType implements CourtMapperType{
   @Getter
   private final String title;
 
+
 }
