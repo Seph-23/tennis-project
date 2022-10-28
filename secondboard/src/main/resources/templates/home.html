@@ -25,7 +25,7 @@
     </button>
     <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#" th:text="#{menu.match}">매치</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/match/home}" th:text="#{menu.match}">매치</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/tournament}" th:text="#{menu.tournament}">대회</a></li>
         <li class="nav-item"><a class="nav-link" href="#" th:text="#{menu.rank}">랭킹</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}" th:text="#{menu.community}">커뮤니티</a></li>
@@ -182,7 +182,7 @@
   <!-- 빈 공간 -->
   <div class="col-12 p-3"></div>
 
-  <!-- match table -->
+  <!-- matching table -->
   <table class="table table-hover">
     <thead>
     <tr>
