@@ -33,5 +33,7 @@ public class MatchSaveForm {
   @NotNull @Size(min = 1, max = 30, message = "장소는 1 ~ 30 자 이내여야 합니다.")
   private String matchPlace;
 
+  private Integer playerNumber;
+
   private String team;
 }

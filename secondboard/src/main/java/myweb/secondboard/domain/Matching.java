@@ -9,6 +9,7 @@ import myweb.secondboard.dto.MatchUpdateForm;
 import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.MatchCondition;
 import myweb.secondboard.web.MatchType;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -25,6 +26,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@DynamicInsert
 public class Matching {
 
   @Id
@@ -62,7 +64,7 @@ public class Matching {
   @JoinColumn(name = "member_id")
   private Member member;
 
-  @Column(columnDefinition = "integer default 0")
+  @Column(columnDefinition = "integer default 1")
   private Integer playerNumber;
 
   @Enumerated(EnumType.STRING)
@@ -79,6 +81,7 @@ public class Matching {
     matching.setMatchPlace(form.getMatchPlace());
     matching.setMember(member);
     matching.setMatchCondition(MatchCondition.AVAILABLE);
+    matching.setPlayerNumber(form.getPlayerNumber());
     return matching;
   }
 
