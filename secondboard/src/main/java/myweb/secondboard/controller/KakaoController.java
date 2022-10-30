@@ -54,6 +54,6 @@ public class KakaoController {
     if (session != null) {
       session.invalidate();
     }
-    return "home";
+    return "redirect:/";
   }
 }
