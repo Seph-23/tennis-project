@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.dto.FindPasswordForm;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.service.MemberService;
 import org.springframework.stereotype.Controller;
@@ -53,4 +54,39 @@ public class MemberController {
     model.addAttribute("member", member);
     return "/members/profileHome";
   }
+
+  //==비밀번호 찾기==//
+  @GetMapping("/find/password")
+  public String findPassword(Model model) {
+    model.addAttribute("form", new FindPasswordForm());
+    return "/members/findPassword";
+  }
+
+  //==비밀번호 인증 : 휴대폰 인증 사용==//
+  @PostMapping("/find")
+  public String findPassword(Model model, @ModelAttribute("form") FindPasswordForm form, BindingResult bindingResult) {
+    System.out.println("form.getLoginId() = " + form.getLoginId());
+
+    Optional<Member> findByLoginId = memberService.findByLoginId(form.getLoginId());
+    if (findByLoginId.isEmpty()) {
+      bindingResult.reject("NotFoundLoginMember", "입력하신 아이디를 찾을 수 없습니다.");
+      return  "/members/findPassword";
+    }
+    String phoneNumber = findByLoginId.get().getPhoneNumber();
+    //01012341234 -> *1*1*
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < phoneNumber.length(); i++) {
+      if (i % 3 == 0) {
+        builder.append(phoneNumber.charAt(i));
+      }
+      else {
+        builder.append('*');
+      }
+    }
+    model.addAttribute("phoneNum",builder.toString());
+
+    return "/members/memberAuthentication";
+  }
+
+
 }

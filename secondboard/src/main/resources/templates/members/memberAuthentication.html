@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::link}, ~{:://head/script})}">
+
+  <link href="/css/header-style.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/login.css">
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body>
+<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div th:object="${form}">
+  <div th:text="${form.loginId}">찾으려는 아이디</div>
+  <div th:text="${phoneNum}">휴대전화번호</div>
+
+</div>
+
+
+  <div>
+    <input type="number" id="input-phone-number">
+    <button type="button" id="send-phone-number">인증번호 전송</button>
+  </div>
+
+<div>
+  <input type="number" id="inputCertifiedNumber" placeholder="인증번호 입력해주세요">
+  <button type="button" id="checkBtn">인증번호</button>
+</div>
+
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<script type="text/javascript">
+  $("#send-phone-number").click(function () {
+    let phoneNumber = $("#input-phone-number").val();
+
+    alert("성공")
+
+    $.ajax({
+      type: "GET",
+      url: "/api/sms/check/sendSMS",
+      data: {
+        "phoneNumber": phoneNumber
+      },
+      success: function (res) {
+        $("#checkBtn").click(function () {
+          if ($.trim(res) === $("#inputCertifiedNumber").val()) {
+            // Swal.fire(
+            //     '인증성공!',
+            //     '휴대폰 인증이 정상적으로 완료되었습니다.',
+            //     'success'
+            // )
+            alert("성공");
+            $.ajax({
+              type: "GET",
+              url: "/",
+              data: {
+                "phoneNumber" : $('#inputPhoneNumber').val()
+              }
+            })
+
+          } else {
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: '인증오류',
+            //   text: '인증번호가 올바르지 않습니다!',
+            //   footer: '<a href="/home">다음에 인증하기</a>'
+            // })
+            alert("인증번호가 틀립니다");
+          }
+        })
+
+      }
+    })
+  });
+</script>
+</body>
+
+</html>
