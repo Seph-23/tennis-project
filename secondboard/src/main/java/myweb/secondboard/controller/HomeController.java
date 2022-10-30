@@ -8,6 +8,7 @@ import myweb.secondboard.dto.LoginForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Slf4j
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 public class HomeController {
 
   @GetMapping("/")
-  public String home(Model model) {
+  public String home(Model model, @ModelAttribute("loginForm")LoginForm loginForm) {
     model.addAttribute("loginForm", new LoginForm()); //Modal창 용
     return "home";
   }
