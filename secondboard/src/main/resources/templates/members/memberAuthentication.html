@@ -18,17 +18,17 @@
 <br>
 <br>
 
-<div th:object="${form}">
-  <div th:text="${form.loginId}">찾으려는 아이디</div>
-  <div th:text="${phoneNum}">휴대전화번호</div>
-
+<input type="hidden" id="updateMemberLoginId" th:value="${updateMemberLoginId}"/>
+<div >
+  <div th:text="'GOGOTENNIS 아이디 : ' + ${loginId}">찾으려는 아이디</div>
+  <div th:text="'휴대전화 : ' + ${phoneNum}">휴대전화번호</div>
 </div>
 
 
-  <div>
-    <input type="number" id="input-phone-number">
-    <button type="button" id="send-phone-number">인증번호 전송</button>
-  </div>
+<div>
+  <input type="text" id="input-phone-number" placeholder="휴대폰 번호">
+  <button type="button" id="send-phone-number">인증번호 전송</button>
+</div>
 
 <div>
   <input type="number" id="inputCertifiedNumber" placeholder="인증번호 입력해주세요">
@@ -58,15 +58,19 @@
             //     'success'
             // )
             alert("성공");
+            let Id = $("#updateMemberLoginId").val();
+            let url = "/members/update/password/" + Id;
+            location.replace(url);
             $.ajax({
               type: "GET",
-              url: "/",
+              url: "/members/update/password",
               data: {
                 "phoneNumber" : $('#inputPhoneNumber').val()
               }
             })
 
           } else {
+            <!-- 인증 실패 시 처리 -->
             // Swal.fire({
             //   icon: 'error',
             //   title: '인증오류',

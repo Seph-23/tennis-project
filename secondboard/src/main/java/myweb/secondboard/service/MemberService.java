@@ -6,7 +6,9 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.MemberSaveForm;
+import myweb.secondboard.dto.UpdatePasswordForm;
 import myweb.secondboard.repository.MemberRepository;
+import myweb.secondboard.web.PasswordEncrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +52,13 @@ public class MemberService {
   @Transactional
   public void renewAccessToken(Member member, String access_token) {
     member.setAccessToken(access_token);
+  }
+
+  @Transactional
+  public void updatePassword(UpdatePasswordForm form, Member member) throws NoSuchAlgorithmException {
+    PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+    System.out.println("form. getUpdatePassword " + form.getUpdatePassword());
+    member.setPassword(passwordEncrypt.encrypt(form.getUpdatePassword()));
+    memberRepository.save(member);
   }
 }
