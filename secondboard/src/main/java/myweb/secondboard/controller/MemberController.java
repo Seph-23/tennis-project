@@ -66,15 +66,27 @@ public class MemberController {
 
   //==비밀번호 인증 : 휴대폰 인증 사용==//
   @PostMapping("/find")
-  public String findPassword(Model model, @ModelAttribute("form") FindPasswordForm form, BindingResult bindingResult) {
-    System.out.println("form.getLoginId() = " + form.getLoginId());
+  public String findPassword(@Valid @ModelAttribute("form") FindPasswordForm form, BindingResult bindingResult) {
 
-    Optional<Member> findByLoginId = memberService.findByLoginId(form.getLoginId());
-    if (findByLoginId.isEmpty()) {
+    System.out.println("form.getLoginId() = " + form.getLoginId());
+    Optional<Member> findMemberByLoginId = memberService.findByLoginId(form.getLoginId());
+    Long updateMemberLoginId;
+    if (findMemberByLoginId.isPresent()) {
+      updateMemberLoginId = findMemberByLoginId.get().getId();
+    } else {
       bindingResult.reject("NotFoundLoginMember", "입력하신 아이디를 찾을 수 없습니다.");
       return  "/members/findPassword";
     }
-    String phoneNumber = findByLoginId.get().getPhoneNumber();
+
+    return "redirect:/members/find/"+ updateMemberLoginId;
+  }
+
+  @GetMapping("/find/{updateMemberLoginId}")
+  public String AuthenticateMember(Model model, @ModelAttribute("form") FindPasswordForm form, BindingResult bindingResult,
+      @PathVariable("updateMemberLoginId") Long updateMemberLoginId) {
+    Member updateMember = memberService.findById(updateMemberLoginId);
+    String phoneNumber = updateMember.getPhoneNumber();
+
     //01012341234 -> *1*1*
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < phoneNumber.length(); i++) {
@@ -85,36 +97,14 @@ public class MemberController {
         builder.append('*');
       }
     }
+    model.addAttribute("loginId",updateMember.getLoginId());
     model.addAttribute("phoneNum",builder.toString());
-
-    return "/members/memberAuthentication";
-  }
-
-  @GetMapping("/find/{updateMemberLoginId}")
-  public String AuthenticateMember(Model model, @ModelAttribute("form") FindPasswordForm form,
-      BindingResult bindingResult,
-      @PathVariable("updateMemberLoginId") Long updateMemberLoginId) {
-    Member updateMember = memberService.findById(updateMemberLoginId);
-    String phoneNumber = updateMember.getPhoneNumber();
-
-    //01012341234 -> *1*1*
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < phoneNumber.length(); i++) {
-      if (i % 3 == 0) {
-        builder.append(phoneNumber.charAt(i));
-      } else {
-        builder.append('*');
-      }
-    }
-    model.addAttribute("loginId", updateMember.getLoginId());
-    model.addAttribute("phoneNum", builder.toString());
     model.addAttribute("updateMemberLoginId", updateMemberLoginId);
     return "/members/memberAuthentication";
   }
 
   @GetMapping("/update/password/{updateMemberLoginId}")
-  public String updatePassword(Model model,
-      @PathVariable("updateMemberLoginId") Long updateMemberLoginId) {
+  public String updatePassword(Model model,@PathVariable("updateMemberLoginId") Long updateMemberLoginId ) {
     UpdatePasswordForm form = new UpdatePasswordForm();
     form.setId(updateMemberLoginId); // 155
     System.out.println("form.getId() = " + form.getId());
@@ -124,8 +114,7 @@ public class MemberController {
   }
 
   @PostMapping("/update")
-  public String updatePassword(@Valid @ModelAttribute("form") UpdatePasswordForm form,
-      BindingResult bindingResult)
+  public String updatePassword(@Valid @ModelAttribute("form") UpdatePasswordForm form, BindingResult bindingResult)
       throws NoSuchAlgorithmException {
     //==비밀번호 업데이트 로직==//
 
@@ -150,6 +139,8 @@ public class MemberController {
 
     return "redirect:/";
   }
+//==TODO:비밀번호 찾기 UI 구현==//
+
 
 
 }
