@@ -5,6 +5,8 @@
   <!-- loginPage 에서만 쓸 link-->
   <link href="/css/header-style.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/login.css">
+  <!-- icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
@@ -33,8 +35,6 @@
       </div>
 
 
-
-
       <div class="login_id">
         <label th:for="loginId"></label>
         <input id="login_id" type="text" class="form-control" th:field="${loginForm.loginId}"
@@ -52,7 +52,7 @@
       <div class="login_etc">
         <div class="checkbox">
           <input type="checkbox" name="checkId" id="saveId"> Id 저장
-          <label for="saveId"></label>
+          <label th:for="saveId"></label>
         </div>
 
         <div class="register">
@@ -67,10 +67,9 @@
       <button type="submit" class="submit" id="submit">로그인</button>
     </form>
     <!-- TODO -->
-    <a class="p-2"
-       href="https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code">
-      <img th:src="@{/images/kakao_login_medium_narrow.png}">
-    </a>
+    <button type="submit" class="submit" style="background: #FEE500"
+            href="https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code">
+      <i class="bi bi-chat-fill" style="color:   #000000"></i>카카오 로그인</button>
   </div>
 </div> <!--wrap end-->
 <footer th:replace="fragments/footer :: footer"></footer>
