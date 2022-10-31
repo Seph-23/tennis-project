@@ -14,6 +14,7 @@
   <!-- CSS -->
   <link href="/css/styles.css" rel="stylesheet" />
   <link href="/css/dateCarousel.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/login.css">
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -29,14 +30,18 @@
         <li class="nav-item"><a class="nav-link" th:href="@{/tournament}" th:text="#{menu.tournament}">대회</a></li>
         <li class="nav-item"><a class="nav-link" href="#" th:text="#{menu.rank}">랭킹</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}" th:text="#{menu.community}">커뮤니티</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" th:text="#{menu.club}">동호회</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/club}" th:text="#{menu.club}">동호회</a></li>
       </ul>
       <div class="gap-2 d-md-flex">
         <div th:if="${session.loginMember == null}">
           <button type="button" class="btn btn-outline-primary"
                   th:onclick="|location.href='@{/members/new}'|" th:text="#{member.join}">회원가입</button>
-          <button type="button" class="btn btn-outline-primary"
-                  th:onclick="|location.href='@{/login}'|" th:text="#{member.login}">로그인</button>
+          <!--          <button type="button" class="btn btn-outline-primary"-->
+          <!--                  th:onclick="|location.href='@{/login}'|" th:text="#{member.login}">로그인</button>-->
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal"
+                  th:onclick="|location.href='@{/#}'|" th:text="#{member.login}">로그인</button>
+
+
         </div>  <!-- TODO : 로그인 modal 창 구현 -->
         <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
           <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
@@ -70,15 +75,66 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <!--Login Form -->
+        <div class="wrap">
+          <div class="login">
+            <h3 class="hit">테니스가 치고 싶을땐</h3>
+            <h3 class="hit2">GOGOTENNIS</h3>
+            <form class="login-form" role="form" action="/login" method="post"
+                  th:object="${loginForm}" onsubmit="return frm_check()">
+
+
+              <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+              </div>
+
+              </br>
+
+              <div class="login_id">
+                <label th:for="loginId"></label>
+                <input id="login_id" type="text" class="form-control" th:field="${loginForm.loginId}"
+                       placeholder="아이디를 입력해주세요."/>
+                <div class="field-error" th:errors="${loginForm.loginId}"></div>
+              </div>
+
+              <div class="login_pw">
+                <label th:for="password"></label>
+                <input id="password" type="password" class="form-control" th:field="${loginForm.password}"
+                       placeholder="비밀번호를 입력해주세요."/>
+                <div class="field-error" th:errors="${loginForm.password}"></div>
+              </div>
+
+              <div class="login_etc">
+                <div class="checkbox">
+                  <input type="checkbox" name="checkId" id="saveId"> Id 저장
+                  <label for="saveId"></label>
+                </div>
+
+                <div class="register">
+                  <a href="/members/new">회원가입</a>
+                </div>
+
+                <div class="forgot_pw">
+                  <a href="/members/find/password">비밀번호 찾기</a>
+                </div>
+              </div> <!--login_etc end-->
+
+              <button type="submit" class="submit" id="submit">로그인</button>
+            </form>
+            <!-- TODO -->
+            <a class="p-2"
+               href="https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code">
+              <img src="/images/kakao_login_medium_wide.png">
+            </a>
+          </div>
+        </div> <!--wrap end-->
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
+
     </div>
   </div>
-</div>
+</div> <!-- modal end-->
+
+
 <!-- Main Carousel -->
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -229,6 +285,6 @@
 <!-- JS-->
 <script src="/js/mainNavbar.js"></script>
 <script src="/js/dateCarousel.js"></script>
-
+<script th:src="@{/js/IdSave.js}"></script>
 </body>
 </html>
