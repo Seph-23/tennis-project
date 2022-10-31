@@ -81,14 +81,12 @@ public class MatchController {
   public String matchDetail(@PathVariable("matchId") Long matchId, Model model) {
 
     Matching matching = matchService.findOne(matchId);
-    model.addAttribute("form", matching);
+    model.addAttribute("match", matching);
 
     //TODO 매치 신청
     List<Player> players = playerService.findAllByMatchingId(matchId);
-    List<Player> playersA = players.stream().filter(m -> m.getTeam().toString().equals("A"))
-      .toList();
-    List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B"))
-      .toList();
+    List<Player> playersA = players.stream().filter(m -> m.getTeam().toString().equals("A")).toList();
+    List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B")).toList();
 
     model.addAttribute("playersA", playersA);
     model.addAttribute("playersB", playersB);
@@ -136,19 +134,15 @@ public class MatchController {
   public String matchDelete(@PathVariable("matchId") Long matchId) {
 
     matchService.deleteById(matchId);
-
     return "redirect:/match/home";
 
   }
 
   @PostMapping("/player/add")
   public String matchPlayerAdd(@ModelAttribute("playerAddForm") PlayerAddForm form) {
-
-    System.out.println("form.getMatchId() = " + form.getMatchId());
-    System.out.println("form.getMemberId() = " + form.getMemberId());
-    System.out.println("form.getTeam() = " + form.getTeam());
     playerService.matchPlayerAdd(form);
-
+    matchService.increasePlayerNumber(Long.valueOf(form.getMatchId()));
+    matchService.updateMatchCondition(Long.valueOf(form.getMatchId()));
     return "redirect:/match/home";
   }
 }

@@ -50,6 +50,13 @@ public class MatchService {
 
   public void deleteById(Long matchId) {
     matchRepository.deleteById(matchId);
+  }
 
+  public void increasePlayerNumber(Long matchId) {
+    matchRepository.increasePlayerNumber(matchId);
+  }
+
+  public void updateMatchCondition(Long matchId) {
+    matchRepository.updateMatchCondition(matchId);
   }
 }

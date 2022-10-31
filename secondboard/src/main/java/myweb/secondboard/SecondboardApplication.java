@@ -98,7 +98,7 @@ public class SecondboardApplication {
 //			}
 //		});
 //	}
-
+//
 //	public static int rand(int min, int max)
 //	{
 //		if (min > max || (max - min + 1 > Integer.MAX_VALUE)) {
@@ -116,7 +116,7 @@ public class SecondboardApplication {
 //
 //		return r;
 //	}
-
+//
 //	@Bean
 //	public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
 //		return args -> {

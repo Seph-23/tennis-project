@@ -6,4 +6,8 @@ import myweb.secondboard.domain.Matching;
 public interface MatchRepositoryInterface {
 
   Matching findOne(Long matchId);
+
+  void increasePlayerNumber(Long matchId);
+
+  void updateMatchCondition(Long matchId);
 }

@@ -57,7 +57,7 @@
         <th>코트종류</th>
         <th>매치장소</th>
         <th>인원수</th>
-        <th>매치상태</th>>
+        <th>매치상태</th>
       </tr>
       </thead>
       <tbody>
@@ -71,7 +71,7 @@
         <td th:text="${match.courtType.title}"></td>
         <td th:text="${match.matchPlace}"></td>
         <td th:text="${match.playerNumber}"></td>
-        <td th:text="${match.matchCondition}"></td>
+        <td th:text="${match.matchCondition.title}"></td>
         <td >
           <a th:href="@{/match/info/{id} (id=${match.id})}"
              th:if="${session.loginMember != null}">보기</a>
@@ -83,12 +83,13 @@
     </table>
 
     <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-      <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+      <a th:if="${page != nowPage}" th:href="@{/match/home(page=${page-1})}"
          th:text ="${page}"></a>
       <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
     </th:block>
 
   </div> <!-- Board Main End -->
+  <button type="button" th:onclick="|location.href='@{/}'|">이전</button>
 </main>
 </div>
 

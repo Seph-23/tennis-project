@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 @Repository
 @RequiredArgsConstructor
-public class MatchRepositoryImpl {
+public class MatchRepositoryImpl implements MatchRepositoryInterface {
 
   @PersistenceContext
   private final EntityManager em;
@@ -19,4 +19,17 @@ public class MatchRepositoryImpl {
   public Matching findOne(Long matchId) {
     return em.find(Matching.class, matchId);
   }
+
+
+  public void increasePlayerNumber(Long matchId) {
+    Matching matching = findOne(matchId);
+    matching.increasePlayer(matching);
+  }
+
+  @Override
+  public void updateMatchCondition(Long matchId) {
+    Matching matching = findOne(matchId);
+    matching.updateMatchStatus(matching);
+  }
+
 }

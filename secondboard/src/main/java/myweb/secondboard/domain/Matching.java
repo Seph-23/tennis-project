@@ -24,7 +24,8 @@ import java.time.format.DateTimeFormatter;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @DynamicInsert
 public class Matching {
@@ -38,17 +39,15 @@ public class Matching {
   @Column(length = 31)
   private String matchTitle;
 
-  @CreatedDate
-  @Column(length = 40)
+  @NotNull
+  @Column(length = 31)
   private LocalDate matchDate;
 
-  @LastModifiedDate
-  @Column(length = 40)
-  private LocalDate modifiedDate;
 
   @NotNull
-  @Column(length = 20)
+  @Column(length = 31)
   private LocalTime matchTime;
+
 
   @Enumerated(EnumType.STRING)
   private MatchType matchType;
@@ -56,19 +55,19 @@ public class Matching {
   @Enumerated(EnumType.STRING)
   private CourtType courtType;
 
+  @Enumerated(EnumType.STRING)
+  private MatchCondition matchCondition;
+
+  @Column(columnDefinition = "integer default 1")
+  private Integer playerNumber;
+
   @NotNull
-  @Column(length = 30)
+  @Column(length = 31)
   private String matchPlace;
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
-
-  @Column(columnDefinition = "integer default 1")
-  private Integer playerNumber;
-
-  @Enumerated(EnumType.STRING)
-  private MatchCondition matchCondition;
 
   public static Matching createMatch(MatchSaveForm form, Member member) {
     Matching matching = new Matching();
@@ -79,9 +78,9 @@ public class Matching {
     matching.setMatchType(form.getMatchType());
     matching.setCourtType(form.getCourtType());
     matching.setMatchPlace(form.getMatchPlace());
-    matching.setMember(member);
     matching.setMatchCondition(MatchCondition.AVAILABLE);
     matching.setPlayerNumber(form.getPlayerNumber());
+    matching.setMember(member);
     return matching;
   }
 
@@ -98,4 +97,16 @@ public class Matching {
     matching.setMember(member);
   }
 
+  public void increasePlayer(Matching matching) {
+    matching.setPlayerNumber(matching.getPlayerNumber() + 1);
+  }
+
+  public void updateMatchStatus(Matching matching) {
+    if (matching.getPlayerNumber() == 2 && matching.getMatchType().getTitle() == "단식") {
+      matching.setMatchCondition(MatchCondition.DONE);
+    }
+    if (matching.getPlayerNumber() == 4 && matching.getMatchType().getTitle() == "복식") {
+      matching.setMatchCondition(MatchCondition.DONE);
+    }
+  }
 }
