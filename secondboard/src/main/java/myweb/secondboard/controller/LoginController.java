@@ -1,7 +1,10 @@
 package myweb.secondboard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +44,40 @@ public class LoginController {
     if (loginMember == null) {
       bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
       return "login/loginPage";
+    }
+    //세션에 로그인 객체 저장.
+    request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+    return "redirect:/";
+  }
+
+  @PostMapping("/login/modal")
+  public String loginModal(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
+      BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response)
+      throws NoSuchAlgorithmException, IOException {
+    if (bindingResult.hasErrors()) {
+      log.info("errors = {}", bindingResult);
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+
+      out.println("<script language='javascript'>");
+      out.println("alert('아이디와 비밀번호를 입력해 주세요.')");
+      out.println("</script>");
+
+      out.flush();
+      return "home";
+    }
+    Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
+    if (loginMember == null) {
+      bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+
+      out.println("<script language='javascript'>");
+      out.println("alert('아이디 또는 비밀번호가 맞지 않습니다.')");
+      out.println("</script>");
+
+      out.flush();
+      return "home";
     }
     //세션에 로그인 객체 저장.
     request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, loginMember);

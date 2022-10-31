@@ -34,7 +34,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
-  /*ackground: rgba(0, 0, 0, 0.1);b*/
+  /*background: rgba(0, 0, 0, 0.1);*/
 }
 
 h3 {
@@ -66,17 +66,18 @@ h3 {
 
 .login-form {
   width: 80%;
+
 }
 
 .login h3.hit {
+  font-weight: bold;
+  margin-right: 12rem;
   font-size: 1.25rem;
-  text-align: left !important;
 }
 
 .login h3.hit2 {
-  margin-left: 20px;
+  margin-right: 15.3rem;
   font-size: 1.25rem;
-  text-align: left !important;
   color: #74DF00;
 }
 
