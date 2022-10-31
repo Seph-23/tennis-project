@@ -5,6 +5,10 @@
   <!-- loginPage 에서만 쓸 link-->
   <link href="/css/header-style.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/login.css">
+  <!-- icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+  <!-- script -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
@@ -55,10 +59,6 @@
           <label for="saveId"></label>
         </div>
 
-        <div class="register">
-          <a href="/members/new">회원가입</a>
-        </div>
-
         <div class="forgot_pw">
           <a href="#">비밀번호 찾기</a>
         </div>
@@ -66,11 +66,9 @@
 
       <button type="submit" class="submit" id="submit">로그인</button>
     </form>
-    <!-- TODO -->
-    <a class="p-2"
-       href="https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code">
-      <img th:src="@{/images/kakao_login_medium_narrow.png}">
-    </a>
+    <button type="submit" class="submit" id="kakao"
+            href="https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code">
+      <i class="bi bi-chat-fill"></i>카카오 로그인</button>
   </div>
 </div> <!--wrap end-->
 <footer th:replace="fragments/footer :: footer"></footer>
