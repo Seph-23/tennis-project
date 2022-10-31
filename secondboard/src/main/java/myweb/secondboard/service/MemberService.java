@@ -54,10 +54,11 @@ public class MemberService {
     member.setAccessToken(access_token);
   }
 
+
+
   @Transactional
   public void updatePassword(UpdatePasswordForm form, Member member) throws NoSuchAlgorithmException {
     PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-    System.out.println("form. getUpdatePassword " + form.getUpdatePassword());
     member.setPassword(passwordEncrypt.encrypt(form.getUpdatePassword()));
     memberRepository.save(member);
   }

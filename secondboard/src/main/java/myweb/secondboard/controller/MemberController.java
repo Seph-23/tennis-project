@@ -1,8 +1,9 @@
 package myweb.secondboard.controller;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import myweb.secondboard.dto.FindPasswordForm;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.UpdatePasswordForm;
 import myweb.secondboard.service.MemberService;
+import myweb.secondboard.web.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -139,12 +140,6 @@ public class MemberController {
 
     return "redirect:/";
   }
-//==TODO:비밀번호 찾기 UI 구현==//
-
-
-
-
-
 
 
 }

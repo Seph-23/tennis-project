@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
+import myweb.secondboard.dto.UpdatePasswordForm;
 import myweb.secondboard.web.Gender;
 import myweb.secondboard.web.PasswordEncrypt;
 import myweb.secondboard.web.Provider;
@@ -81,6 +82,12 @@ public class Member implements Serializable {
 
     member.setAccessToken(access_token);
 
+    return member;
+  }
+
+  public static Member updatePassword(UpdatePasswordForm form) {
+    Member member = new Member();
+    member.setPassword(form.getUpdatePassword());
     return member;
   }
 }

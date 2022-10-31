@@ -8,12 +8,15 @@ import lombok.Setter;
 @Getter @Setter
 public class UpdatePasswordForm {
 
-  Long id;
+
+  private Long id;
 
   @NotNull @Size(min = 9, max = 24, message = "비밀번호는 9 ~ 24자 이내여야 합니다.")
-  String updatePassword;
+  private String updatePassword;
 
   @NotNull @Size(min = 9, max = 24, message = "비밀번호는 9 ~ 24자 이내여야 합니다.")
-  String updatePasswordCheck;
+  private String updatePasswordCheck;
+
+
 
 }
