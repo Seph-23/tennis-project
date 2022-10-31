@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.dto.LoginForm;
 import myweb.secondboard.service.KaKaoService;
 import myweb.secondboard.service.MemberService;
 import myweb.secondboard.web.SessionConst;
@@ -48,12 +49,12 @@ public class KakaoController {
   }
 
   @GetMapping("/kakao/logout")
-  public String logout(HttpServletRequest request) {
-
+  public String logout(HttpServletRequest request, Model model) {
+    model.addAttribute("loginForm", new LoginForm()); //카카오 로그인 용
     HttpSession session = request.getSession(false);
     if (session != null) {
       session.invalidate();
     }
-    return "home";
+    return "redirect:/";
   }
 }

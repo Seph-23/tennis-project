@@ -4,7 +4,7 @@
 
   <!-- loginPage 에서만 쓸 link-->
   <link href="/css/header-style.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="/css/loginForm.css">
   <!-- icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
@@ -67,8 +67,9 @@
       <button type="submit" class="submit" id="submit">로그인</button>
     </form>
     <button type="submit" class="submit" id="kakao"
-            href="https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code">
-      <i class="bi bi-chat-fill"></i>카카오 로그인</button>
+            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code}'|">
+      <i class="bi bi-chat-fill"></i>카카오 로그인
+    </button>
   </div>
 </div> <!--wrap end-->
 <footer th:replace="fragments/footer :: footer"></footer>

@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.login {
+  width: 580px;
+  height: 37.5rem;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+li {
+  list-style: none;
+}
+
+.wrap {
+  width: 100%;
+  /*height: 95vh;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*ackground: rgba(0, 0, 0, 0.1);b*/
+}
+
+h3 {
+  color: black;
+  font-size: 2em;
+}
+
+.login_sns {
+  padding: 20px;
+  display: flex;
+}
+
+.login_sns li {
+  padding: 0px 15px;
+}
+
+.login_sns a {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50px;
+  background: white;
+  font-size: 20px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+  width: 80%;
+}
+
+.login h3.hit {
+  margin-right: 17.5rem;
+  font-size: 1.25rem;
+}
+
+.login h3.hit2 {
+  margin-right: 20.6rem;
+  font-size: 1.25rem;
+  color: #74DF00;
+}
+
+.login_id {
+  margin-top: 20px;
+  width: 100%;
+}
+
+
+.login_id input {
+  width: 100%;
+  height: 50px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.login_pw {
+  /*margin-top: 20px;*/
+  width: 100%;
+
+}
+
+.login_pw input {
+  width: 100%;
+  height: 50px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.login_etc {
+  padding: 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.submit {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.submit {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: #74DF00;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+#kakao {
+  margin-top: 15px;
+  background: #FEE500;
+  color: #000000;
+  font-weight: 700;
+  width: 80%;
+}
+
+#kakao i {
+  color: #000000;
+  margin-right: 1rem;
+}
