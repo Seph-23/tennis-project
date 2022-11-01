@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum CourtType implements CourtMapperType{
+public enum MatchingCondition implements MatchingConditionMapper{
 
-  INDOOR("실내"),
-  OUTDOOR("실외");
+  AVAILABLE("신청가능"),
+  DONE("신청마감");
 
   @Getter
   private final String title;
-
 
 }

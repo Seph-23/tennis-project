@@ -9,36 +9,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import myweb.secondboard.domain.Board;
-import myweb.secondboard.domain.Comment;
-import myweb.secondboard.domain.Local;
-import myweb.secondboard.domain.Matching;
-import myweb.secondboard.domain.Member;
-import myweb.secondboard.domain.Player;
-import myweb.secondboard.domain.Tournament;
-import myweb.secondboard.repository.BoardRepository;
-import myweb.secondboard.repository.CommentRepository;
-import myweb.secondboard.repository.LocalRepository;
-import myweb.secondboard.repository.MatchRepository;
-import myweb.secondboard.repository.MemberRepository;
-import myweb.secondboard.repository.PlayerRepository;
-import myweb.secondboard.repository.TournamentRepository;
-import myweb.secondboard.web.CourtType;
-import myweb.secondboard.web.Gender;
-import myweb.secondboard.web.MatchCondition;
-import myweb.secondboard.web.MatchType;
-import myweb.secondboard.web.PasswordEncrypt;
-import myweb.secondboard.web.Provider;
-import myweb.secondboard.web.Team;
+
+import myweb.secondboard.domain.*;
+import myweb.secondboard.repository.*;
+import myweb.secondboard.web.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
-import org.springframework.core.annotation.Order;
+
+import static myweb.secondboard.web.MatchingType.SINGLE;
 
 @SpringBootApplication
 public class SecondboardApplication {
@@ -49,8 +34,9 @@ public class SecondboardApplication {
 
 	@Bean
 	public CommandLineRunner initData(MemberRepository memberRepository,
-		BoardRepository boardRepository,
-		CommentRepository commentRepository){
+									  BoardRepository boardRepository,
+									  CommentRepository commentRepository,
+																		MatchingRepository matchingRepository){
 
 		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
 			try {
@@ -66,33 +52,46 @@ public class SecondboardApplication {
 				member.setProvider(Provider.GOGOTENNIS);
 				memberRepository.save(member);
 
-				Board board = new Board();
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
-				board.setTitle("test" + i);
-				board.setAuthor(member.getNickname());
-				board.setContent("test" + i + "게시글 내용 입니다....");
-				board.setViews(0);
-				board.setCreatedDate(LocalDateTime.now().format(dtf));
-				board.setModifiedDate(LocalDateTime.now().format(dtf));
-				board.setMember(member);
-
-				Comment comment = new Comment();
-				comment.setContent("testtest" + i);
-				comment.setAuthor(member.getNickname());
-				comment.setCreatedDate(LocalDateTime.now().format(dtf));
-				comment.setModifiedDate(LocalDateTime.now().format(dtf));
-				comment.setMember(member);
-				comment.setBoard(board);
-
-				board.setComments(commentRepository.findComments(board.getId()));
-
-				boardRepository.save(board);
-				commentRepository.save(comment);
-
-
-
-
-
+//				Board board = new Board();
+//				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+//				board.setTitle("test" + i);
+//				board.setAuthor(member.getNickname());
+//				board.setContent("test" + i + "게시글 내용 입니다....");
+//				board.setViews(0);
+//				board.setCreatedDate(LocalDateTime.now().format(dtf));
+//				board.setModifiedDate(LocalDateTime.now().format(dtf));
+//				board.setMember(member);
+//
+//				Comment comment = new Comment();
+//				comment.setContent("testtest" + i);
+//				comment.setAuthor(member.getNickname());
+//				comment.setCreatedDate(LocalDateTime.now().format(dtf));
+//				comment.setModifiedDate(LocalDateTime.now().format(dtf));
+//				comment.setMember(member);
+//				comment.setBoard(board);
+//
+//				//==Matching (매칭) 테스트 데이터==//
+//				Matching matching = new Matching();
+//				matching.setTitle("매칭테스트" + i);
+//				matching.setPlace("test장소" + i);
+//				matching.setAuthor(member.getNickname());
+//				matching.setMatchingDate(LocalDate.parse("2022-10-20"));
+//				matching.setMatchingTime(LocalTime.parse("04:40:00"));
+//				matching.setCreatedDate(LocalDateTime.now().format(dtf));
+//				matching.setCourtType(CourtType.OUTDOOR);
+//				matching.setMatchingType(MatchingType.SINGLE);
+//				matching.setMember(member);
+//
+//				board.setComments(commentRepository.findComments(board.getId()));
+//
+//				boardRepository.save(board);
+//				commentRepository.save(comment);
+//				matchingRepository.save(matching);
+//
+//
+//
+//
+//
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -117,6 +116,36 @@ public class SecondboardApplication {
 		return r;
 	}
 
+//	@Bean
+//	public CommandLineRunner initData2(MatchingRepository matchingRepository,
+//		MemberRepository memberRepository){
+//
+// 		//==Matching (매칭) 테스트 데이터==//
+//		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
+//			try {
+//				Matching matching = new Matching();
+//				Member member = memberRepository.findById(Long.valueOf(i)).get();
+//				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+//
+//				matching.setTitle("매칭테스트" + i);
+//				matching.setPlace("test장소" + i);
+//				matching.setAuthor("test" + i);
+//				matching.setMatchingDate(LocalDate.parse("2022-10-20"));
+//				matching.setMatchingTime(LocalTime.parse("04:40:00"));
+//				matching.setCreatedDate(LocalDateTime.now().format(dtf));
+//				matching.setCourtType(CourtType.OUTDOOR);
+//				matching.setMatchingType(MatchingType.SINGLE);
+//				matching.setMember(member);
+//
+//				matchingRepository.save(matching);
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		});
+//	}
+//
+//
 	@Bean
 	public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
 		return args -> {
@@ -153,42 +182,4 @@ public class SecondboardApplication {
 		};
 
 	}
-	@Order(3)
-	@Bean
-	public CommandLineRunner initMatching(MatchRepository matchRepository,
-		MemberRepository memberRepository, PlayerRepository playerRepository) {
-		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
-			Matching matching = new Matching();
-			Player player = new Player();
-			Member member = memberRepository.findById(Long.valueOf(i)).get();
-			if (i % 2 == 0) {
-				matching.setMatchTitle("매치 test" + i);
-				matching.setMatchDate(LocalDate.of(2022, 12, 12));
-				matching.setMatchTime(LocalTime.of(16, 30));
-				matching.setMatchType(MatchType.DOUBLE);
-				matching.setCourtType(CourtType.INDOOR);
-				matching.setMatchPlace("서울올림픽 경기장");
-				matching.setMember(member);
-				matching.setMatchCondition(MatchCondition.AVAILABLE);
-
-			} else if (i % 2 == 1) {
-				matching.setMatchTitle("매치 test" + i);
-				matching.setMatchDate(LocalDate.of(2022, 12, 12));
-				matching.setMatchTime(LocalTime.of(16, 30));
-				matching.setMatchType(MatchType.SINGLE);
-				matching.setCourtType(CourtType.OUTDOOR);
-				matching.setMatchPlace("수원올림픽 경기장");
-				matching.setMember(member);
-				matching.setMatchCondition(MatchCondition.AVAILABLE);
-			}
-			matchRepository.save(matching);
-
-			player.setMatching(matching);
-			player.setMember(member);
-			player.setTeam(Team.A);
-			playerRepository.save(player);
-
-		});
-	}
-
 }

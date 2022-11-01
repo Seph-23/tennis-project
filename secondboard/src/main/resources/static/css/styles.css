@@ -3034,8 +3034,8 @@ textarea.form-control-lg {
 
 .btn-primary {
   color: #fff;
-  background-color: #3db370;
-  border-color: #3db370;
+  background-color: #64a19d;
+  border-color: #64a19d;
 }
 .btn-primary:hover {
   color: #fff;
@@ -7696,6 +7696,10 @@ textarea.form-control-lg {
 
 .pt-5 {
   padding-top: 3rem !important;
+}
+
+.pt-6 {
+  padding-top: 4.6rem !important;
 }
 
 .pe-0 {

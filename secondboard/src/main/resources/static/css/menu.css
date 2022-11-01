@@ -41,4 +41,5 @@
 
 .card-body ul li {
   list-style: none;
+  text-align: left;
 }
