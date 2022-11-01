@@ -1,6 +1,5 @@
 package myweb.secondboard.web;
 
-public interface MatchMapperType {
-
+public interface MatchingConditionMapper {
   String getTitle();
 }
