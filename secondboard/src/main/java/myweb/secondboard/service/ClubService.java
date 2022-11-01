@@ -8,6 +8,8 @@ import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.repository.ClubMemberRepository;
 import myweb.secondboard.repository.ClubRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,8 @@ public class ClubService {
   private final ClubRepository clubRepository;
   private final ClubMemberRepository clubMemberRepository;
 
-  public List<Club> getClubList() {
-    return clubRepository.findAll();
+  public Page<Club> getClubList(Pageable pageable) {
+    return clubRepository.findAll(pageable);
   }
 
   public Club findOne(Long clubId) {
@@ -75,5 +77,16 @@ public class ClubService {
   public void deleteClub(Long clubId) {
     clubMemberRepository.deleteAllInBatch(getClubMemberList(clubId));
     clubRepository.deleteById(clubId);
+  }
+
+  public List<Club> searchClubs(String keyword) {
+    // 검색 키워드가 지역 이름이랑 같거나, 클럽 이름에 포함되었을 때
+    return clubRepository.findAll().stream()
+      .filter(searchClubs -> searchClubs.getLocal().getName().contains(keyword)
+        || searchClubs.getName().contains(keyword)).toList();
+  }
+
+  public ClubMember get(Long id) {
+    return clubMemberRepository.findOne(id);
   }
 }

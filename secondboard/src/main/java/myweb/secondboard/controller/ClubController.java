@@ -12,6 +12,9 @@ import myweb.secondboard.service.ClubService;
 import myweb.secondboard.service.TournamentService;
 import myweb.secondboard.web.SessionConst;
 import myweb.secondboard.web.Status;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +22,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Slf4j
@@ -32,10 +38,17 @@ public class ClubController {
 
 
   @GetMapping("/club")
-  public String clubList(Model model) {
+  public String clubList(@PageableDefault(page = 0, size = 3) Pageable pageable, Model model) {
 
-    List<Club> clubs = clubService.getClubList();
+    Page<Club> clubs = clubService.getClubList(pageable);
+    int nowPage = clubs.getPageable().getPageNumber() + 1;
+    int startPage = Math.max(nowPage - 4, 1);
+    int endPage = Math.min(nowPage + 9, clubs.getTotalPages());
+
     model.addAttribute("clubs", clubs);
+    model.addAttribute("nowPage", nowPage);
+    model.addAttribute("startPage", startPage);
+    model.addAttribute("endPage", endPage);
 
     // 클럽 생성 모달
     ClubSaveForm clubForm = new ClubSaveForm();
@@ -45,6 +58,22 @@ public class ClubController {
     model.addAttribute("locals", locals);
 
     return "/club/clubList"; // 동호회 리스트 페이지
+  }
+
+  @GetMapping("/club/search")
+  public String search(@RequestParam(value = "keyword") String keyword,
+                       Model model) {
+    List<Club> clubs = clubService.searchClubs(keyword);
+
+    model.addAttribute("clubs", clubs);
+
+    // 클럽 생성 모달
+    ClubSaveForm clubForm = new ClubSaveForm();
+    model.addAttribute("form", clubForm);
+
+    List<Local> locals = tournamentService.getLocalList();
+    model.addAttribute("locals", locals);
+    return "/club/clubList";
   }
 
   @GetMapping("/club/detail/{clubId}")
@@ -99,9 +128,21 @@ public class ClubController {
   }
 
   @PostMapping("/club/join")
-  public String joinClub(HttpServletRequest request, Long id) {
+  public String joinClub(HttpServletRequest request, Long id, HttpServletResponse response) throws IOException {
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     Club club = clubService.findOne(id);
+
+    if (club.getStatus().name() != "RECRUITING") {
+      response.setContentType("text/html; charset=utf-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script language = 'javascript'>");
+      out.println("alert('모집 마감된 클럽입니다.')");
+      out.println("</script>");
+      out.flush();
+
+      return "home";
+    }
+
     club.setMemberCount(club.getMemberCount() + 1);
     Long clubId = clubService.addClubMember(club, member).getClub().getId();
 
@@ -135,5 +176,15 @@ public class ClubController {
   public String clubDelete(Long id) {
     clubService.deleteClub(clubService.findOne(id).getId());
     return "redirect:/club";
+  }
+
+  @PostMapping("/club/memberBan/{id}")
+  public String clubMemberBan(@PathVariable("id") Long id, HttpServletRequest request) {
+    ClubMember clubMember = clubService.get(id);
+    Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
+    if (clubMember.getClub().getLeader().equals(member.getNickname())) {
+      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
+    }
+    return "redirect:/club/detail/" + clubMember.getClub().getId();
   }
 }
