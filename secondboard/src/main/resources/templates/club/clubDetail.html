@@ -63,9 +63,17 @@
       <div class="col-5" style="height: 250px;">
         <div class="p-3 h-100 border bg-light" style="overflow: scroll">
           <h4>선수명단</h4>
-          <ul th:each="clubMember:${memberList}">
-            <li th:text="${clubMember.member.nickname}"></li>
-          </ul>
+          <table>
+            <tr th:each="clubMember:${memberList}">
+              <td th:text="${clubMember.member.nickname}"></td>
+              <td th:if="${session.loginMember.nickname == club.leader
+              and clubMember.member.id != session.loginMember.id}">
+                <form th:action="@{/club/memberBan/{id} (id=${clubMember.id})}" method="POST">
+                  <button type="submit" class="btn btn-danger p-1">추방</button>
+                </form>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
