@@ -66,11 +66,13 @@
           <table>
             <tr th:each="clubMember:${memberList}">
               <td th:text="${clubMember.member.nickname}"></td>
-              <td th:if="${session.loginMember.nickname == club.leader
+              <td th:if="${session.loginMember != null}">
+                <div th:if="${session.loginMember.nickname == club.leader
               and clubMember.member.id != session.loginMember.id}">
                 <form th:action="@{/club/memberBan/{id} (id=${clubMember.id})}" method="POST">
                   <button type="submit" class="btn btn-danger p-1">추방</button>
                 </form>
+                </div>
               </td>
             </tr>
           </table>
