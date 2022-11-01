@@ -9,6 +9,7 @@ import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.service.ClubService;
+import myweb.secondboard.service.LocalService;
 import myweb.secondboard.service.TournamentService;
 import myweb.secondboard.web.SessionConst;
 import myweb.secondboard.web.Status;
@@ -34,7 +35,7 @@ import java.util.List;
 public class ClubController {
 
   private final ClubService clubService;
-  private final TournamentService tournamentService;
+  private final LocalService localService;
 
 
   @GetMapping("/club")
@@ -54,7 +55,7 @@ public class ClubController {
     ClubSaveForm clubForm = new ClubSaveForm();
     model.addAttribute("form", clubForm);
 
-    List<Local> locals = tournamentService.getLocalList();
+    List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
     return "/club/clubList"; // 동호회 리스트 페이지
@@ -71,7 +72,7 @@ public class ClubController {
     ClubSaveForm clubForm = new ClubSaveForm();
     model.addAttribute("form", clubForm);
 
-    List<Local> locals = tournamentService.getLocalList();
+    List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
     return "/club/clubList";
   }
@@ -106,7 +107,7 @@ public class ClubController {
     Status[] statuses = Status.values();
     model.addAttribute("statuses", statuses);
 
-    List<Local> locals = tournamentService.getLocalList();
+    List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
     return "/club/clubDetail";
