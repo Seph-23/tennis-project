@@ -30,9 +30,16 @@
       <div class="field-error" th:errors="${form.matchDate}"></div>
     </div>
     <div class="form-group">
-      <label th:for="matchTime">매치 시간: </label>
-      <input id="matchTime" type="time" class="form-control" th:field="${form.matchTime}"/>
-      <div class="field-error" th:errors="${form.matchTime}"></div>
+      <label th:for="startTime">매치 시작시간 : </label>
+      <input id="startTime" type="time" class="form-control" th:field="${form.startTime}"
+             placeholder=" 입력해주세요."/>
+      <div class="field-error" th:errors="${form.startTime}"></div>
+    </div>
+    <div class="form-group">
+      <label th:for="endTime">매치 종료시간 : </label>
+      <input id="endTime" type="time" class="form-control" th:field="${form.endTime}"
+             placeholder=" 입력해주세요."/>
+      <div class="field-error" th:errors="${form.endTime}"></div>
     </div>
     <div class="form-group">
       <label th:for="matchType">매치 종류: </label>

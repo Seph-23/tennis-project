@@ -9,54 +9,64 @@
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
+  <title>매치생성</title>
 </head>
 <body>
-<header>
 
-</header>
+<div class="container">
+  <h2>매치생성</h2>
+  <div class="matchAdd">  <!-- matchAdd body start -->
+    <form role="form" th:object="${form}" action="/match/new" method="post"> <!-- matchAdd form -->
+      <div class="form-group">
+        <label th:for="matchTitle">매치 이름 : </label>
+        <input id="matchTitle" type="text" class="form-control" th:field="${form.matchTitle}"
+               placeholder="입력해주세요."/>
+        <div class="field-error" th:errors="${form.matchTitle}"></div>
+      </div>
 
-<div class="matchAdd">  <!-- matchAdd body start -->
-  <h4>매치 생성 페이지</h4>
-  <form role="form" th:object="${form}" action="/match/new" method="post"> <!-- matching form -->
-    <div class="form-group">
-      <label th:for="matchTitle">매치 이름: </label>
-      <input id="matchTitle" type="text" class="form-control" th:field="${form.matchTitle}"
-             placeholder="입력해주세요."/>
-      <div class="field-error" th:errors="${form.matchTitle}"></div>
-    </div>
-    <div class="form-group">
-      <label th:for="matchDate">매치 날짜: </label>
-      <input id="matchDate" type="date" class="form-control" th:field="${form.matchDate}"
-             placeholder="입력해주세요."/>
-      <div class="field-error" th:errors="${form.matchDate}"></div>
-    </div>
-    <div class="form-group">
-      <label th:for="matchTime">매치 시간: </label>
-      <input id="matchTime" type="time" class="form-control" th:field="${form.matchTime}"
-             placeholder="입력해주세요."/>
-      <div class="field-error" th:errors="${form.matchTime}"></div>
-    </div>
-    <div class="form-group">
-      <label th:for="matchType">매치 종류: </label>
-      <input type="radio" th:field="${form.matchType}" value="SINGLE">단식
-      <input type="radio" th:field="${form.matchType}" value="DOUBLE">복식
-      <div class="field-error" th:errors="${form.matchType}"></div>
-    </div>
-    <div class="form-group">
-      <label th:for="courtType">코트 종류: </label>
-      <input type="radio" th:field="${form.courtType}" value="INDOOR">실내
-      <input type="radio" th:field="${form.courtType}" value="OUTDOOR">실외
-      <div class="field-error" th:errors="${form.courtType}"></div>
-    </div>
-    <div class="form-group">
-      <label th:for="matchPlace">매치 장소: </label>
-      <input id="matchPlace" type="text" class="form-control" th:field="${form.matchPlace}"
-             placeholder="입력해주세요."/>
-      <div class="field-error" th:errors="${form.matchPlace}"></div>
-    </div>
-    <button type="submit" class="button-submit" id="matching-submit">매치생성</button>
-  </form> <!-- matchAdd form end -->
-</div> <!-- matchAdd body end -->
+      <div class="form-group">
+        <label th:for="matchDate">매치 날짜: </label>
+        <input id="matchDate" type="date" class="form-control" th:field="${form.matchDate}"
+               placeholder="입력해주세요."/>
+        <div class="field-error" th:errors="${form.matchDate}"></div>
+      </div>
 
+      <div class="form-group">
+        <label th:for="startTime">매치 시작시간: </label>
+        <input id="startTime" type="time" class="form-control" th:field="${form.startTime}"
+               placeholder=" 입력해주세요."/>
+        <div class="field-error" th:errors="${form.startTime}"></div>
+      </div>
+
+      <div class="form-group">
+        <label th:for="endTime">매치 종료시간: </label>
+        <input id="endTime" type="time" class="form-control" th:field="${form.endTime}"
+               placeholder=" 입력해주세요."/>
+        <div class="field-error" th:errors="${form.endTime}"></div>
+      </div>
+      <div class="form-group">
+        <label th:for="matchType">매치 종류 :</label>
+        <input type="radio" th:field="${form.matchType}" value="SINGLE">단식
+        <input type="radio" th:field="${form.matchType}" value="DOUBLE">복식
+        <div class="field-error" th:errors="${form.matchType}"></div>
+      </div>
+      <div class="form-group">
+        <label th:for="courtType">코트 종류 :</label>
+        <input type="radio" th:field="${form.courtType}" value="INDOOR">실내
+        <input type="radio" th:field="${form.courtType}" value="OUTDOOR">실외
+        <div class="field-error" th:errors="${form.courtType}"></div>
+      </div>
+
+      <div class="form-group">
+        <label th:for="matchPlace">매치 장소 : </label>
+        <input id="matchPlace" type="text" class="form-control" th:field="${form.matchPlace}"
+               placeholder="입력해주세요."/>
+        <div class="field-error" th:errors="${form.matchPlace}"></div>
+      </div>
+      <button type="submit" class="button-submit" id="matchAdd-submit">매치생성</button>
+    </form> <!-- signup form end -->
+  </div> <!-- signup body end -->
+</div>
+<script th:src="@{/js/matchDate.js}"></script>
 </body>
 </html>

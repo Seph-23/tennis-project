@@ -2,109 +2,143 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
-  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
-  <link rel="shortcut icon" href="#">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap" rel="stylesheet">
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.1.js"
-          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-          crossorigin="anonymous"></script>
+    <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="#">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
 </head>
 <body>
-  <h4>매치 상세 페이지</h4>
-    <table>
-      <tr>
-        <th>매치이름</th><td th:text="${match.matchTitle}"></td>
-      </tr>
-      <tr>
-        <th>매치날짜</th><td th:text="${match.matchDate}"></td>
-      </tr>
-      <tr>
-        <th>매치장소</th><td th:text="${match.matchPlace}"></td>
-      </tr>
-      <tr>
-        <th>참여인원</th><td th:text="${match.playerNumber} + 명"></td>
-      </tr>
-      <tr>
-        <th>매치종류</th><td th:text="${match.matchType}"></td>
-      </tr>
-      <tr>
-        <th>코트종류</th><td th:text="${match.courtType}"></td>
-      </tr>
-    </table>
-
-  <div th:if="${session.loginMember != null}">
-    <th th:if="${session.loginMember.id == match.member.id}">
-      <table>
-        <form class="col" role="form" th:action="@{/match/update/{id} (id=${match.id})}" method="get">
-          <button type="submit">매치 수정</button>
-        </form>
-        <form class="col" role="form" th:action="@{/match/delete/{id} (id=${match.id})}" method="get">
-          <button type="submit">매치 삭제</button>
-        </form>
-      </table>
-    </th>
-  </div>
-
-  <div th:if="${session.loginMember.id != match.member.id}">
-    <form th:object="${playerAddForm}" action="/match/player/add" method="post">
-      <input hidden name="memberId" th:value="${session.loginMember.id}">
-      <input hidden name="matchId" th:value="${match.id}">
-      </div>
-      <div th:if="${match.playerNumber == 2} and ${match.matchType.title == '단식'}">
-        <br>
-        <h4>마감된 매치입니다.</h4>
-        <br>
-      </div>
-      <div th:if="${match.playerNumber != 2} and ${match.matchType.title == '단식'}">
-        <br>
-        <table>A팀 맴버 정보
-          <td th:each="a:${playersA}">
-            <a th:text="${a.getMember().nickname}"></a>
-          </td>
+<div class="container">
+    <div class="matching-detail"> <!-- Matching Detail Start -->
+        <h4>매치 상세 페이지</h4>
+        <table class="table table-sm w-25">
+            <tr>
+                <th>매치이름</th><td th:text="${match.matchTitle}"></td>
+            </tr>
+            <tr>
+                <th>매치날짜</th><td th:text="${match.matchDate}"></td>
+            </tr>
+            <tr>
+                <th>시작시간</th><td th:text="${match.startTime}"></td>
+            </tr>
+            <tr>
+                <th>종료시간</th><td th:text="${match.endTime}"></td>
+            </tr>
+            <tr>
+                <th>매치장소</th><td th:text="${match.matchPlace}"></td>
+            </tr>
+            <tr>
+                <th>참여인원</th><td th:text="${match.playerNumber} + 명"></td>
+            </tr>
+            <tr>
+                <th>매치종류</th><td th:text="${match.matchType}"></td>
+            </tr>
+            <tr>
+                <th>코트종류</th><td th:text="${match.courtType}"></td>
+            </tr>
         </table>
-        <table>B팀 맴버 정보
-          <td th:each="b:${playersB}">
-            <a th:text="${b.getMember().nickname}"></a>
-          </td>
-        </table>
-        <br>
-        <div th:if="${playersA.size() < 1}">
-          <input type="radio" th:field="${playerAddForm.team}" value="A">A
-        </div>
-        <div th:if="${playersB.size() < 1}">
-          <input type="radio" th:field="${playerAddForm.team}" value="B">B
-        </div>
-        <button type="submit">매치 참가</button>
-      </div>
 
-      <div th:if="${match.playerNumber == 4} and ${match.matchType.title == '복식'}">
-        <br>
-        <h4>마감된 매치입니다.</h4>
-        <br>
-      </div>
-      <div th:if="${match.playerNumber != 4} and ${match.matchType.title == '복식'}">
-        <table>A팀 맴버 정보
-          <td th:each="a:${playersA}">
-            <a th:text="${a.getMember().nickname}"></a>
-          </td>
-        </table>
-        <table>B팀 맴버 정보
-          <td th:each="b:${playersB}">
-            <a th:text="${b.getMember().nickname}"></a>
-          </td>
-        </table>
-        <div th:if="${playersA.size() < 2}">
-          <input type="radio" th:field="${playerAddForm.team}" value="A">A
+        <div th:if="${session.loginMember != null}">
+            <th th:if="${session.loginMember.id == match.member.id}">
+                <table>
+                    <form class="col" role="form" th:action="@{/match/update/{id} (id=${match.id})}" method="get">
+                        <button type="submit">매치 수정</button>
+                    </form>
+                    <form class="col" role="form" th:action="@{/match/delete/{id} (id=${match.id})}" method="post">
+                        <button type="submit">매치 삭제</button>
+                    </form>
+                </table>
+            </th>
         </div>
-        <div th:if="${playersB.size() < 2}">
-          <input type="radio" th:field="${playerAddForm.team}" value="B">B
-        </div>
-        <button type="submit">매치 참가</button>
-      </div>
-    </form>
-  </div>
-  <button type="button" th:onclick="|location.href='@{/match/home}'|">뒤로가기</button>
 
+        <div th:if="${session.loginMember.id != match.member.id}">
+            <form th:object="${playerAddForm}" action="/match/player/add" method="post">
+                <input hidden name="memberId" th:value="${session.loginMember.id}">
+                <input hidden name="matchId" th:value="${match.id}">
+                <div th:if="${playerCheck != null}">
+                    <br>
+                    <h4>이미 등록한 매치입니다.</h4>
+                    <br>
+                </div>
+                <div th:if="${match.playerNumber == 2} and ${match.matchType.title == '단식'}">
+                    <br>
+                    <h4>마감된 매치입니다.</h4>
+                    <br>
+                </div>
+
+                <div th:if="${match.playerNumber != 2} and ${match.matchType.title == '단식'}">
+                    <br>
+                    <table>A팀 맴버 정보
+                        <td th:each="a:${playersA}">
+                            <a th:text="${a.getMember().nickname}"></a>
+                        </td>
+                    </table>
+                    <table>B팀 맴버 정보
+                        <td th:each="b:${playersB}">
+                            <a th:text="${b.getMember().nickname}"></a>
+                        </td>
+                    </table>
+                    <br>
+                    <div th:if="${playerCheck == null}">
+                        <div th:if="${playersA.size() < 1}">
+                            <input type="radio" th:field="${playerAddForm.team}" value="A">A
+                            <div class="field-error" th:errors="${playerAddForm.team}"></div>
+                        </div>
+                        <div th:if="${playersB.size() < 1}">
+                            <input type="radio" th:field="${playerAddForm.team}" value="B">B
+                            <div class="field-error" th:errors="${playerAddForm.team}"></div>
+                        </div>
+                        <button type="submit">매치 참가</button>
+                        <div class="field-error" th:errors="${playerAddForm.team}"></div>
+                    </div>
+                </div>
+
+                <div th:if="${match.playerNumber == 4} and ${match.matchType.title == '복식'}">
+                    <br>
+                    <h4>마감된 매치입니다.</h4>
+                    <br>
+                </div>
+                <div th:if="${match.playerNumber != 4} and ${match.matchType.title == '복식'}">
+                    <table>A팀 맴버 정보
+                        <td th:each="a:${playersA}">
+                            <a th:text="${a.getMember().nickname}"></a>
+                        </td>
+                    </table>
+                    <table>B팀 맴버 정보
+                        <td th:each="b:${playersB}">
+                            <a th:text="${b.getMember().nickname}"></a>
+                        </td>
+                    </table>
+                    <div th:if="${playerCheck == null}">
+                        <div th:if="${playersA.size() < 2}">
+                            <input type="radio" th:field="${playerAddForm.team}" value="A">A
+                            <div class="field-error" th:errors="${playerAddForm.team}"></div>
+                        </div>
+                        <div th:if="${playersB.size() < 2}">
+                            <input type="radio" th:field="${playerAddForm.team}" value="B">B
+                            <div class="field-error" th:errors="${playerAddForm.team}"></div>
+                        </div>
+                        <button type="submit">매치 참가</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div th:if="${session.loginMember.id != match.member.id}">
+            <div th:if="${playerCheck != null}">
+                <form th:action="@{/match/playerDelete}" method="POST">
+                    <input type="hidden" th:field="${match.id}">
+                    <button type="submit">매치 취소</button>
+                </form>
+            </div>
+        </div>
+
+        <button type="button" th:onclick="|location.href='@{/match/home}'|">뒤로가기</button>
+    </div>
+</div>
 </body>
 </html>

@@ -19,7 +19,6 @@
 <div class="container">   <!-- Container Start -->
 
   <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
-
   <br/>
   <br/>
   <br/>
@@ -40,59 +39,60 @@
   </div>
 </header>
 
-<main>
-  <div class="match-main"> <!-- Board Main Start -->
-    <h4>매치 페이지</h4>
-    <button type="button" th:onclick="|location.href='@{/match/matchAdd}'|"
-            th:if="${session.loginMember != null}">매치 생성</button>
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th>번호</th>
-        <th>매치이름</th>
-        <th>매치날짜</th>
-        <th>매치시간</th>
-        <th>닉네임</th>
-        <th>매치종류</th>
-        <th>코트종류</th>
-        <th>매치장소</th>
-        <th>인원수</th>
-        <th>매치상태</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each = "match:${matchList}">
-        <td th:text="${match.id}"></td>
-        <td th:text="${match.matchTitle}"></td>
-        <td th:text="${match.matchDate}"></td>
-        <td th:text="${match.matchTime}"></td>
-        <td th:text="${match.member.nickname}"></td>
-        <td th:text="${match.matchType.title}"></td>
-        <td th:text="${match.courtType.title}"></td>
-        <td th:text="${match.matchPlace}"></td>
-        <td th:text="${match.playerNumber}"></td>
-        <td th:text="${match.matchCondition.title}"></td>
-        <td >
-          <a th:href="@{/match/info/{id} (id=${match.id})}"
-             th:if="${session.loginMember != null}">보기</a>
-        </td>
-<!--        <td><button type="button" th:onclick="|location.href='@{/match/detail}'|"-->
-<!--                    th:if="${session.loginMember != null}">보기</button></td>-->
-      </tr>
-      </tbody>
-    </table>
+  <div class = "container">
+    <div class="match-main"> <!-- Board Main Start -->
+      <h4>매치 페이지</h4>
+      <button type="button" th:onclick="|location.href='@{/match/matchAdd}'|" class="btn btn-primary p-2 float-end mb-3"
+              th:if="${session.loginMember != null}">매치 생성</button>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>번호</th>
+          <th>매치이름</th>
+          <th>매치날짜</th>
+          <th>매치 시작시간</th>
+          <th>매치 종료시간</th>
+          <th>닉네임</th>
+          <th>매치종류</th>
+          <th>코트종류</th>
+          <th>매치장소</th>
+          <th>인원수</th>
+          <th>매치상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "match:${matchList}">
+          <td th:text="${match.id}"></td>
+          <td th:text="${match.matchTitle}"></td>
+          <td th:text="${match.matchDate}"></td>
+          <td th:text="${match.startTime}"></td>
+          <td th:text="${match.endTime}"></td>
+          <td th:text="${match.member.nickname}"></td>
+          <td th:text="${match.matchType.title}"></td>
+          <td th:text="${match.courtType.title}"></td>
+          <td th:text="${match.matchPlace}"></td>
+          <td th:text="${match.playerNumber}"></td>
+          <td th:text="${match.matchCondition.title}"></td>
+          <td >
+            <a th:href="@{/match/info/{id} (id=${match.id})}"
+               th:if="${session.loginMember != null}">보기</a>
+          </td>
+  <!--        <td><button type="button" th:onclick="|location.href='@{/match/detail}'|"-->
+  <!--                    th:if="${session.loginMember != null}">보기</button></td>-->
+        </tr>
+        </tbody>
+      </table>
 
-    <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-      <a th:if="${page != nowPage}" th:href="@{/match/home(page=${page-1})}"
-         th:text ="${page}"></a>
-      <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
-    </th:block>
+      <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/match/home(page=${page-1})}"
+           th:text ="${page}"></a>
+        <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
+      </th:block>
 
-  </div> <!-- Board Main End -->
-  <button type="button" th:onclick="|location.href='@{/}'|">이전</button>
-</main>
+    </div> <!-- Board Main End -->
+    <button type="button" th:onclick="|location.href='@{/}'|">이전</button>
+  </div>
 </div>
-
 </body>
 
 </html>

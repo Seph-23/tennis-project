@@ -1,14 +1,12 @@
 package myweb.secondboard.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.Player;
-import myweb.secondboard.dto.BoardSaveForm;
-import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.MatchSaveForm;
 import myweb.secondboard.dto.MatchUpdateForm;
 import myweb.secondboard.dto.PlayerAddForm;
@@ -26,7 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @Slf4j
@@ -38,9 +36,8 @@ public class MatchController {
   private final PlayerService playerService;
 
   @GetMapping("/home")
-  public String matchHome(
-    @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
-    Pageable pageable, Model model) {
+  public String matchHome(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
+                          Pageable pageable, Model model) {
 
     Page<Matching> matchList = matchService.getMatchList(pageable);
     int nowPage = matchList.getPageable().getPageNumber() + 1;
@@ -62,7 +59,7 @@ public class MatchController {
   }
 
   @PostMapping("/new")
-  public String matchAdd(@Validated @ModelAttribute("match") MatchSaveForm form,
+  public String matchAdd(@Validated @ModelAttribute("form") MatchSaveForm form,
     BindingResult bindingResult, HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
@@ -74,12 +71,11 @@ public class MatchController {
     }
 
     Long matchId = matchService.addMatch(form, member);
-    return "redirect:/match/home/";
+    return "redirect:/match/info/" + matchId;
   }
 
   @GetMapping("/info/{matchId}")
-  public String matchDetail(@PathVariable("matchId") Long matchId, Model model) {
-
+  public String matchDetail(@PathVariable("matchId") Long matchId, Model model, HttpServletRequest request) {
     Matching matching = matchService.findOne(matchId);
     model.addAttribute("match", matching);
 
@@ -92,6 +88,14 @@ public class MatchController {
     model.addAttribute("playersB", playersB);
     model.addAttribute("playerAddForm", new PlayerAddForm());
 
+    HttpSession session = request.getSession(false);
+
+    if (session != null) {
+      Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+      Player playerCheck = matchService.playerCheck(matchId, member.getId());
+      model.addAttribute("playerCheck", playerCheck);
+    }
+
     return "/match/matchInfo";
   }
 
@@ -103,8 +107,8 @@ public class MatchController {
     MatchUpdateForm form = new MatchUpdateForm();
     form.setId(matching.getId());
     form.setMatchTitle(matching.getMatchTitle());
-    form.setMatchDate(matching.getMatchDate());
-    form.setMatchTime(matching.getMatchTime());
+    form.setStartTime(matching.getStartTime());
+    form.setEndTime(matching.getEndTime());
     form.setMatchType(matching.getMatchType());
     form.setCourtType(matching.getCourtType());
     form.setMatchPlace(matching.getMatchPlace());
@@ -130,19 +134,36 @@ public class MatchController {
     return "redirect:/match/info/" + matchId;
   }
 
-  @GetMapping("/delete/{matchId}")
+  @PostMapping("/delete/{matchId}")
   public String matchDelete(@PathVariable("matchId") Long matchId) {
-
-    matchService.deleteById(matchId);
+    List<Player> players = playerService.findAllByMatchingId(matchId);
+    matchService.deleteById(matchId, players);
     return "redirect:/match/home";
 
   }
 
   @PostMapping("/player/add")
-  public String matchPlayerAdd(@ModelAttribute("playerAddForm") PlayerAddForm form) {
+  public String matchPlayerAdd(@Validated @ModelAttribute("playerAddForm") PlayerAddForm form, BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      String matchId = form.getMatchId();
+      return "redirect:/match/info/" + matchId;
+    }
+
     playerService.matchPlayerAdd(form);
     matchService.increasePlayerNumber(Long.valueOf(form.getMatchId()));
     matchService.updateMatchCondition(Long.valueOf(form.getMatchId()));
-    return "redirect:/match/home";
+    String matchId = form.getMatchId();
+    return "redirect:/match/info/" + matchId;
+  }
+
+  @PostMapping("/playerDelete")
+  public String matchDeletePlayer(HttpServletRequest request, Long id) {
+    Long matchingId = matchService.findOne(id).getId();
+    Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
+    Long memberId = member.getId();
+    matchService.deleteMatchPlayer(matchingId, memberId);
+    return "redirect:/match/info/" + matchingId;
+
   }
 }

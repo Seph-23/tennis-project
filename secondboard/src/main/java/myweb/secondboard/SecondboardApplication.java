@@ -164,7 +164,8 @@ public class SecondboardApplication {
 //			if (i % 2 == 0) {
 //				matching.setMatchTitle("매치 test" + i);
 //				matching.setMatchDate(LocalDate.of(2022, 12, 12));
-//				matching.setMatchTime(LocalTime.of(16, 30));
+//				matching.setStartTime(LocalTime.of(16, 30));
+//				matching.setEndTime(LocalTime.of(17, 00));
 //				matching.setMatchType(MatchType.DOUBLE);
 //				matching.setCourtType(CourtType.INDOOR);
 //				matching.setMatchPlace("서울올림픽 경기장");
@@ -174,7 +175,8 @@ public class SecondboardApplication {
 //			} else if (i % 2 == 1) {
 //				matching.setMatchTitle("매치 test" + i);
 //				matching.setMatchDate(LocalDate.of(2022, 12, 12));
-//				matching.setMatchTime(LocalTime.of(16, 30));
+//				matching.setStartTime(LocalTime.of(16, 30));
+//				matching.setEndTime(LocalTime.of(17, 00));
 //				matching.setMatchType(MatchType.SINGLE);
 //				matching.setCourtType(CourtType.OUTDOOR);
 //				matching.setMatchPlace("수원올림픽 경기장");

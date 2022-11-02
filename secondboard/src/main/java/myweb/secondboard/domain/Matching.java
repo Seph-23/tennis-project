@@ -12,6 +12,7 @@ import myweb.secondboard.web.MatchType;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,11 +44,11 @@ public class Matching {
   @Column(length = 31)
   private LocalDate matchDate;
 
+  @NotNull
+  private LocalTime startTime;
 
   @NotNull
-  @Column(length = 31)
-  private LocalTime matchTime;
-
+  private LocalTime endTime;
 
   @Enumerated(EnumType.STRING)
   private MatchType matchType;
@@ -74,12 +75,13 @@ public class Matching {
 
     matching.setMatchTitle(form.getMatchTitle());
     matching.setMatchDate(form.getMatchDate());
-    matching.setMatchTime(form.getMatchTime());
+    matching.setStartTime(form.getStartTime());
+    matching.setEndTime(form.getEndTime());
     matching.setMatchType(form.getMatchType());
     matching.setCourtType(form.getCourtType());
     matching.setMatchPlace(form.getMatchPlace());
     matching.setMatchCondition(MatchCondition.AVAILABLE);
-    matching.setPlayerNumber(form.getPlayerNumber());
+    matching.setPlayerNumber(matching.getPlayerNumber());
     matching.setMember(member);
     return matching;
   }
@@ -90,7 +92,8 @@ public class Matching {
     matching.setId(form.getId());
     matching.setMatchTitle(form.getMatchTitle());
     matching.setMatchDate(form.getMatchDate());
-    matching.setMatchTime(form.getMatchTime());
+    matching.setStartTime(form.getStartTime());
+    matching.setEndTime(form.getEndTime());
     matching.setMatchType(form.getMatchType());
     matching.setCourtType(form.getCourtType());
     matching.setMatchPlace(form.getMatchPlace());

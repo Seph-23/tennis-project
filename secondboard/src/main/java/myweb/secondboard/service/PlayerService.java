@@ -21,10 +21,6 @@ public class PlayerService {
   private final MemberRepository memberRepository;
   private final MatchRepository matchRepository;
 
-  public Long findNumPlayers(Long matchId) {
-    return playerRepository.playerCount(matchId);
-  }
-
   public List<Player> findAllByMatchingId(Long matchId) {
     return playerRepository.findAllByMatchingId(matchId);
   }

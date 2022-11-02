@@ -15,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -48,7 +51,9 @@ public class MatchService {
 
   }
 
-  public void deleteById(Long matchId) {
+  @Transactional
+  public void deleteById(Long matchId, List<Player> players) {
+    playerRepository.deleteAllInBatch(players);
     matchRepository.deleteById(matchId);
   }
 
@@ -58,5 +63,20 @@ public class MatchService {
 
   public void updateMatchCondition(Long matchId) {
     matchRepository.updateMatchCondition(matchId);
+  }
+
+  public Player playerCheck(Long matchId, Long memberId) {
+    Optional<Player> result = playerRepository.exist(matchId, memberId);
+    if (result.isEmpty()) {
+      return null;
+    }
+    return result.get();
+  }
+
+  public void deleteMatchPlayer(Long matchingId, Long memberId) {
+    Player player = playerCheck(matchingId, memberId);
+    playerRepository.delete(player);
+    Matching matching = matchRepository.findOne(matchingId);
+    matching.setPlayerNumber(matching.getPlayerNumber() - 1);
   }
 }
