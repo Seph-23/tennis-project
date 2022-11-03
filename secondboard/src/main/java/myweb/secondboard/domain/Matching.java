@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.dto.MatchingUpdateForm;
+import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.web.CourtType;
+import myweb.secondboard.web.GameResult;
 import myweb.secondboard.web.MatchingCondition;
 import myweb.secondboard.web.MatchingType;
 import org.hibernate.annotations.DynamicInsert;
@@ -69,7 +71,6 @@ public class Matching {
   @Column(columnDefinition = "integer default 1")
   private Integer playerNumber;
 
-
   @Enumerated(EnumType.STRING)
   private CourtType courtType;
 
@@ -83,6 +84,8 @@ public class Matching {
   @JoinColumn(name = "member_id")
   private Member member;
 
+  @Enumerated(EnumType.STRING)
+  private GameResult gameResult;
 
   public static Matching createMatching(MatchingSaveForm form, Member member) {
     Matching matching = new Matching();
@@ -131,5 +134,10 @@ public class Matching {
     if (matching.getPlayerNumber() == 4 && matching.getMatchingType().getTitle() == "복식") {
       matching.setMatchingCondition(MatchingCondition.DONE);
     }
+  }
+
+  public void updateMatchingResult(ResultAddForm resultAddForm, Matching matching) {
+    matching.setId(resultAddForm.getId());
+    matching.setGameResult(resultAddForm.getGameResult());
   }
 }

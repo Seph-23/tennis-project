@@ -10,12 +10,12 @@ import javax.validation.constraints.Size;
 public class PlayerAddForm {
 
   @NotNull
-  String memberId;
+  private String memberId;
 
   @NotNull
-  String team;
+  private String team;
 
   @NotNull
-  String matchingId;
+  private String matchingId;
 
 }

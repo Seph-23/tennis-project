@@ -3,13 +3,9 @@ package myweb.secondboard.domain;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,7 +49,11 @@ public class Member implements Serializable {
 
   private String accessToken;
 
-  public static Member createMember(MemberSaveForm form) throws NoSuchAlgorithmException {
+  @OneToOne
+  @JoinColumn(name = "record_id")
+  private Record record;
+
+  public static Member createMember(MemberSaveForm form, Record record) throws NoSuchAlgorithmException {
     Member member = new Member();
     PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
     member.setLoginId(form.getLoginId());
@@ -65,6 +65,7 @@ public class Member implements Serializable {
     member.setPhoneNumber(form.getPhoneNumber());
     member.setGender(Gender.valueOf(form.getGender()));
     member.setProvider(Provider.GOGOTENNIS);
+    member.setRecord(record);
     return member;
   }
 

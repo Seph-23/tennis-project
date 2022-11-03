@@ -8,9 +8,11 @@ import myweb.secondboard.domain.Player;
 import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.dto.PlayerAddForm;
+import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.service.MatchingService;
 import myweb.secondboard.service.PlayerService;
 import myweb.secondboard.web.CourtType;
+import myweb.secondboard.web.GameResult;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -88,6 +90,9 @@ public class MatchingController {
     model.addAttribute("playersA", playersA);
     model.addAttribute("playersB", playersB);
     model.addAttribute("playerAddForm", new PlayerAddForm());
+    model.addAttribute("resultForm", new ResultAddForm());
+    GameResult[] results = GameResult.values();
+    model.addAttribute("results", results);
 
     HttpSession session = request.getSession(false);
 
@@ -97,6 +102,7 @@ public class MatchingController {
       Player playerMemberCheck = matchingService.playerMemberCheck(matchingId, member.getId());
       model.addAttribute("playerMemberCheck", playerMemberCheck);
     }
+
 
     return "/matching/matchingDetail";
   }
@@ -150,9 +156,8 @@ public class MatchingController {
     return "redirect:/matching/detail/" + matchingId;
   }
 
-
   @PostMapping("/player/add")
-  public String matchingPlayerAdd(@Validated @ModelAttribute("playerAddForm")PlayerAddForm form,
+  public String matchingPlayerAdd(@Validated @ModelAttribute("playerAddForm") PlayerAddForm form,
                                   BindingResult bindingResult, Long matchingId) {
 
     if (bindingResult.hasErrors()) {
@@ -167,4 +172,13 @@ public class MatchingController {
 
     return "redirect:/matching/detail/" + matchingId;
   }
+
+  @PostMapping("/result")
+  public String matchingResult(@ModelAttribute("result") ResultAddForm result) {
+
+    matchingService.updateGameResult(result);
+
+    return "redirect:/matching/home";
+  }
+
 }
