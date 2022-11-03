@@ -10,6 +10,7 @@ import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.dto.PlayerAddForm;
 import myweb.secondboard.service.MatchingService;
 import myweb.secondboard.service.PlayerService;
+import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -123,7 +125,8 @@ public class MatchingController {
     form.setPlace(matching.getPlace());
     form.setCourtType(matching.getCourtType());
     form.setMatchingDate(matching.getMatchingDate());
-    form.setMatchingTime(matching.getMatchingTime());
+    form.setMatchingStartTime(matching.getMatchingStartTime());
+    form.setMatchingEndTime(matching.getMatchingEndTime());
     form.setMatchingType(matching.getMatchingType());
     model.addAttribute("form", form);
 
@@ -149,10 +152,19 @@ public class MatchingController {
 
 
   @PostMapping("/player/add")
-  public String matchingPlayerAdd(@ModelAttribute("playerAddForm")PlayerAddForm form, Long matchingId) {
+  public String matchingPlayerAdd(@Validated @ModelAttribute("playerAddForm")PlayerAddForm form,
+                                  BindingResult bindingResult, Long matchingId) {
+
+    if (bindingResult.hasErrors()) {
+//      log.info("errors = {}", bindingResult);
+      return "redirect:/matching/detail/" + matchingId;
+    }
+
     playerService.matchingPlayerAdd(form);
     matchingService.increasePlayerNumber(Long.valueOf(form.getMatchingId()));
     matchingService.matchingCondtionCheck(Long.valueOf(form.getMatchingId()));
+
+
     return "redirect:/matching/detail/" + matchingId;
   }
 }

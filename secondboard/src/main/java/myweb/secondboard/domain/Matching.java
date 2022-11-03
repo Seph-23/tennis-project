@@ -52,7 +52,11 @@ public class Matching {
 
   @NotNull
   @Column(length = 40)
-  private LocalTime matchingTime;
+  private String matchingStartTime;
+
+  @NotNull
+  @Column(length = 40)
+  private String matchingEndTime;
 
   @CreatedDate
   @Column(length = 40)
@@ -88,7 +92,8 @@ public class Matching {
     matching.setPlace(form.getPlace());
     matching.setAuthor(member.getNickname());
     matching.setMatchingDate(form.getMatchingDate());
-    matching.setMatchingTime(form.getMatchingTime());
+    matching.setMatchingStartTime(form.getMatchingStartTime());
+    matching.setMatchingEndTime(form.getMatchingEndTime());
     matching.setCreatedDate(LocalDateTime.now().format(dtf));
     matching.setCourtType(form.getCourtType());
     matching.setMatchingType(form.getMatchingType());
@@ -106,7 +111,8 @@ public class Matching {
     matching.setPlace(form.getPlace());
     matching.setAuthor(member.getNickname());
     matching.setMatchingDate(form.getMatchingDate());
-    matching.setMatchingTime(form.getMatchingTime());
+    matching.setMatchingStartTime(form.getMatchingStartTime());
+    matching.setMatchingEndTime(form.getMatchingEndTime());
     matching.setCourtType(form.getCourtType());
     matching.setMatchingType(form.getMatchingType());
     matching.setModifiedDate(LocalDateTime.now().format(dtf));

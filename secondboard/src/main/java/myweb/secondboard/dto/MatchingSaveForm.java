@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.MatchingType;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -21,18 +23,21 @@ public class MatchingSaveForm {
   private String place;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-  @NotNull
+  @NotNull(message = "매칭 날짜를 선택해주세요.")
   private LocalDate matchingDate;
 
-  @DateTimeFormat(pattern = "HH:mm")
-  @NotNull
-  private LocalTime matchingTime;
+  @NotNull(message = "매칭 시작 시간을 선택해주세요.")
+  private String matchingStartTime;
 
-  @NotNull
+  @NotNull(message = "매칭 종료 시간을 선택해주세요.")
+  private String matchingEndTime;
+
+  @NotNull(message = "매칭 종류를 선택해주세요.")
   private MatchingType matchingType;
 
-  @NotNull
+  @NotNull(message = "코트 종류를 선택해주세요.")
   private CourtType courtType;
+
 
   private String team;
 

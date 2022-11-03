@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $(".category").click(function () {
-        const card = document.getElementsByClassName("card_area");
+    $(".courtType").click(function () {
+        const matching = document.getElementsByClassName("matching_area");
         const selectedCategory = $(this).attr("title");
 
         Array.from(document.getElementsByClassName("category")).forEach(category => category.classList.remove("active"));
@@ -15,3 +15,11 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
+
+
+
+
+
