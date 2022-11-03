@@ -78,7 +78,7 @@
     </div>
 </nav>
 <hr>
-<div class="container">
+<div id="test" class="container">
     <div class="border border-success p-2 mb-2">
         <div class="matching-detail"> <!-- Matching Detail Start -->
             <h6 class="p-3 mb-2 bg-primary text-white">매칭 상세 정보</h6>
@@ -109,8 +109,12 @@
                         <td><a th:text="${matching.matchingDate}"></a></td>
                     </tr>
                     <tr>
-                        <th>매칭 시간</th>
-                        <td><a th:text="${matching.matchingTime}"></a></td>
+                        <th>시작 시간</th>
+                        <td><a id="start" th:text="${matching.matchingStartTime}"></a></td>
+                    </tr>
+                    <tr>
+                        <th>종료 시간</th>
+                        <td><a id="end" th:text="${matching.matchingEndTime}"></a></td>
                     </tr>
                     <tr>
                         <th>매칭 종류</th>
@@ -192,9 +196,11 @@
                                 <div th:if="${playerMemberCheck == null}"> <!--매칭에 참가된 인원이 아닐 경우-->
                                     <div th:if="${playersA.size() < 1}">
                                         <input type="radio" th:field="${playerAddForm.team}" value="A">A
+                                        <div class="field-error" th:errors="${playerAddForm.team}"></div>
                                     </div>
                                     <div th:if="${playersB.size() < 1}">
                                         <input type="radio" th:field="${playerAddForm.team}" value="B">B
+                                        <div class="field-error" th:errors="${playerAddForm.team}"></div>
                                     </div>
                                     <button type="submit">매치 참가</button>
                                 </div>
@@ -221,9 +227,11 @@
                                 <div th:if="${playerMemberCheck == null}"> <!--매칭에 참가된 인원이 아닐 경우-->
                                     <div th:if="${playersA.size() < 2}">
                                         <input type="radio" th:field="${playerAddForm.team}" value="A">A
+                                        <div class="field-error" th:errors="${playerAddForm.team}"></div>
                                     </div>
                                     <div th:if="${playersB.size() < 2}">
                                         <input type="radio" th:field="${playerAddForm.team}" value="B">B
+                                        <div class="field-error" th:errors="${playerAddForm.team}"></div>
                                     </div>
                                     <button type="submit">매치 참가</button>
                                 </div>
@@ -245,5 +253,39 @@
         </div> <!-- matching Detail End -->
     </div>
 </div>
+<script type="text/javascript">
+    // start = document.getElementById('start').value;
+    // s_hour = start.getHours();
+    // s_min = start.getMinutes();
+    // s_sec = start.getSeconds();
+    // end = document.getElementById('end').value;
+    // e_hour = end.getHours();
+    // e_min = end.getMinutes();
+    // e_sec = end.getSeconds();
+    // console.log(e_hour, e_min, e_sec)
+
+    // if (s_hour < c_hour && c_hour < e_hour && s_min < c_min && c_min < e_min)
+    // {
+    //     document.getElementById("test").style.display="none";
+    // }
+    // else
+    // {
+    //     document.getElementById("test").style.display="block";
+    // }
+
+    today = new Date();
+    c_hour = today.getHours();
+    c_min = today.getMinutes();
+    c_sec = today.getSeconds();
+    console.log(c_hour, c_min, c_sec)
+    // if (c_hour >8 && c_hour <20 )
+    // {
+    //     document.getElementById("test").style.display="none";
+    // }
+    // else
+    // {
+    //     document.getElementById("test").style.display="block";
+    // }
+</script>
 </body>
 </html>

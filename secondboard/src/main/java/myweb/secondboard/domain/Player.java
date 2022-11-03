@@ -33,6 +33,7 @@ public class Player {
   @JoinColumn(name = "member_id")
   private Member member;
 
+  @NotNull
   @Enumerated(EnumType.STRING)
   private Team team;
 

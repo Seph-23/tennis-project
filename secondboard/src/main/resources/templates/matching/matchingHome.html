@@ -15,6 +15,9 @@
     <link href="/css/styles.css" rel="stylesheet"/>
     <link href="/css/banner.css" rel="stylesheet"/>
     <link href="/css/menu.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
+    <script type="application/javascript"
+            src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
 </head>
 <body class="pt-6">
 <!-- Navigation-->
@@ -87,59 +90,93 @@
     <img src="/images/tournament_banner3.jpg" alt="Contact US 배너 이미지">
 </div>
 
-
-
 <div class="col-12 p-5"></div>
 <div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
         <h3>매칭</h3>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">매칭 날짜</th>
-                <th scope="col">매칭 시간</th>
-                <th scope="col">매칭 지역</th>
-                <th scope="col">매칭 이름</th>
-                <th scope="col">매칭 타입</th>
-                <th scope="col">코트 타입</th>
-                <th scope="col">참여자</th>
-                <th scope="col">생성자</th>
-                <th scope="col">매칭상태</th>
-                <th scope="col">
-                    <button type="button" th:onclick="|location.href='@{/matching/matchingAdd}'|"
-                            th:if="${session.loginMember != null}">매치 등록
-                    </button>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="matching:${matchingList}">
-                <td th:text="${matching.matchingDate}"></td>
-                <td th:text="${matching.matchingTime}"></td>
-                <td th:text="${matching.place}"></td>
-                <td th:text="${matching.title}"></td>
-                <td th:text="${matching.matchingType.title}"></td>
-                <td th:text="${matching.courtType.title}"></td>
-                <td th:if="${matching.matchingType.title.equals('단식')}"
-                    th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
-                <td th:if="${matching.matchingType.title.equals('복식')}"
-                    th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
-                <td th:text="${matching.author}"></td>
-                <td th:text="${matching.matchingCondition.title}"></td>
-                <td>
-                    <button type="button" th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|"
-                            th:if="${session.loginMember != null}">상세보기
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">매칭 날짜</th>
+                    <th scope="col">시작 시간</th>
+                    <th scope="col">종료 시간</th>
+                    <th scope="col">매칭 지역</th>
+                    <th scope="col">매칭 이름</th>
+                    <th scope="col">매칭 타입</th>
+                    <th scope="col">코트 타입</th>
+                    <th scope="col">참여자</th>
+                    <th scope="col">생성자</th>
+                    <th scope="col">매칭상태</th>
+                    <th scope="col">
+                        <button type="button" th:onclick="|location.href='@{/matching/matchingAdd}'|"
+                                th:if="${session.loginMember != null}">매치 등록
+                        </button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="matching:${matchingList}">
+                    <td th:text="${matching.matchingDate}"></td>
+                    <td th:text="${matching.matchingStartTime}"></td>
+                    <td th:text="${matching.matchingEndTime}"></td>
+                    <td th:text="${matching.place}"></td>
+                    <td th:text="${matching.title}"></td>
+                    <td th:text="${matching.matchingType.title}"></td>
+                    <td th:text="${matching.courtType.title}"></td>
+                    <td th:if="${matching.matchingType.title.equals('단식')}"
+                        th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
+                    <td th:if="${matching.matchingType.title.equals('복식')}"
+                        th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
+                    <td th:text="${matching.author}"></td>
+                    <td th:text="${matching.matchingCondition.title}"></td>
+                    <td>
+                        <button type="button"
+                                th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|"
+                                th:if="${session.loginMember != null}">상세보기
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
             <a th:if="${page != nowPage}" th:href="@{/matching/home(page=${page-1})}"
                th:text="${page}"></a>
             <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
         </th:block>
+    </div>
+</div>
+<div class="courtType_area">
+    <select class="courtType_select">
+        <option id="option_all" class="courtType active" title="all">전체</option>
+        <option class="courtType">단식</option>
+        <option class="courtType">복식</option>
+    </select>
+</div>
+
+<!--test-->
+<div class="matching_area" th:each="matching:${matchingList}">
+    <div class="matching">
+        <div class="matching_body">
+            <td class="matching" th:text="${matching.matchingDate}"></td>
+            <td class="matching" th:text="${matching.matchingStartTime}"></td>
+            <td class="matching" th:text="${matching.matchingEndTime}"></td>
+            <td class="matching" th:text="${matching.place}"></td>
+            <td class="matching" th:text="${matching.title}"></td>
+            <td class="matching" th:text="${matching.matchingType.title}"></td>
+            <td class="matching" th:text="${matching.courtType.title}"></td>
+            <td class="matching" th:if="${matching.matchingType.title.equals('단식')}"
+                th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
+            <td class="matching" th:if="${matching.matchingType.title.equals('복식')}"
+                th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
+            <td class="matching" th:text="${matching.author}"></td>
+            <td class="matching" th:text="${matching.matchingCondition.title}"></td>
+            <td>
+                <button type="button"
+                        th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|"
+                        th:if="${session.loginMember != null}">상세보기
+                </button>
+            </td>
+        </div>
     </div>
 </div>
 <!-- Footer-->
@@ -155,6 +192,6 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <!-- JS-->
-<script src="js/menuSelect.js"></script>
+<script src="/js/test.js"></script>
 </body>
 </html>

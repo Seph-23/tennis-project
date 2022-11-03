@@ -31,9 +31,9 @@ import static myweb.secondboard.web.MatchingType.SINGLE;
 @SpringBootApplication
 public class SecondboardApplication {
 
-	public static void main(String[] args){
-		SpringApplication.run(SecondboardApplication.class, args);
-	}
+  public static void main(String[] args){
+    SpringApplication.run(SecondboardApplication.class, args);
+  }
 
 
 	@Order(1)

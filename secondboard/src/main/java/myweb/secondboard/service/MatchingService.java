@@ -8,6 +8,7 @@ import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.repository.MatchingRepository;
 import myweb.secondboard.repository.PlayerRepository;
+import myweb.secondboard.web.CourtType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,7 @@ public class MatchingService {
     Matching matching = matchingRepository.findOne(matchingId);
     matching.setPlayerNumber(matching.getPlayerNumber() - 1);
   }
+
 }
 
 
