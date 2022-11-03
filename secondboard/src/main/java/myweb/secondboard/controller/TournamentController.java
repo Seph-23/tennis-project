@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Local;
 import myweb.secondboard.domain.Tournament;
+import myweb.secondboard.service.LocalService;
 import myweb.secondboard.service.TournamentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TournamentController {
 
   private final TournamentService tournamentService;
+  private final LocalService localService;
 
   @GetMapping("/tournament")
   public String tournament(Model model) {
     List<Tournament> list = tournamentService.getTournamentList();
-    List<Local> locals = tournamentService.getLocalList();
+    List<Local> locals = localService.getLocalList();
 
     model.addAttribute("list", list);
     model.addAttribute("locals", locals);

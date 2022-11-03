@@ -35,7 +35,7 @@
 
 <div class="container">
 
-  <form class="col-4 m-auto" th:action="@{/club/search}">
+  <form class="col-4 m-auto" th:action="@{/club}">
     <div class="input-group mb-4 border rounded-pill p-1">
       <input name="keyword" type="search" placeholder="What're you searching for?"
              class="form-control bg-none border-0 rounded-circle search">
@@ -82,7 +82,7 @@
     </table>
   </div>
   <!-- 페이징 시작 -->
-  <nav th:if="${startPage != null}" aria-label="Page navigation example">
+  <nav aria-label="Page navigation example">
     <ul class="pagination pagination-circle justify-content-center">
       <li class="page-item">
         <a class="page-link" aria-label="Previous" th:href="@{/club(page=${nowPage}-2)}">

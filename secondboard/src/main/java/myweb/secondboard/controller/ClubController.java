@@ -9,6 +9,7 @@ import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.service.ClubService;
+import myweb.secondboard.service.LocalService;
 import myweb.secondboard.service.TournamentService;
 import myweb.secondboard.web.SessionConst;
 import myweb.secondboard.web.Status;
@@ -34,13 +35,19 @@ import java.util.List;
 public class ClubController {
 
   private final ClubService clubService;
-  private final TournamentService tournamentService;
+  private final LocalService localService;
 
 
   @GetMapping("/club")
-  public String clubList(@PageableDefault(page = 0, size = 3) Pageable pageable, Model model) {
+  public String clubList(@PageableDefault(page = 0, size = 3) Pageable pageable, Model model, String keyword) {
 
-    Page<Club> clubs = clubService.getClubList(pageable);
+    Page<Club> clubs = null;
+    if (keyword == null) {
+      clubs = clubService.getClubList(pageable);
+    } else {
+      clubs = clubService.searchByKeyword(keyword, pageable);
+    }
+
     int nowPage = clubs.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, clubs.getTotalPages());
@@ -54,27 +61,27 @@ public class ClubController {
     ClubSaveForm clubForm = new ClubSaveForm();
     model.addAttribute("form", clubForm);
 
-    List<Local> locals = tournamentService.getLocalList();
+    List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
     return "/club/clubList"; // 동호회 리스트 페이지
   }
 
-  @GetMapping("/club/search")
-  public String search(@RequestParam(value = "keyword") String keyword,
-                       Model model) {
-    List<Club> clubs = clubService.searchClubs(keyword);
-
-    model.addAttribute("clubs", clubs);
-
-    // 클럽 생성 모달
-    ClubSaveForm clubForm = new ClubSaveForm();
-    model.addAttribute("form", clubForm);
-
-    List<Local> locals = tournamentService.getLocalList();
-    model.addAttribute("locals", locals);
-    return "/club/clubList";
-  }
+//  @GetMapping("/club/search")
+//  public String search(@RequestParam(value = "keyword") String keyword,
+//                       Model model) {
+//    List<Club> clubs = clubService.searchClubs(keyword);
+//
+//    model.addAttribute("clubs", clubs);
+//
+//    // 클럽 생성 모달
+//    ClubSaveForm clubForm = new ClubSaveForm();
+//    model.addAttribute("form", clubForm);
+//
+//    List<Local> locals = localService.getLocalList();
+//    model.addAttribute("locals", locals);
+//    return "/club/clubList";
+//  }
 
   @GetMapping("/club/detail/{clubId}")
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
@@ -106,7 +113,7 @@ public class ClubController {
     Status[] statuses = Status.values();
     model.addAttribute("statuses", statuses);
 
-    List<Local> locals = tournamentService.getLocalList();
+    List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
     return "/club/clubDetail";

@@ -6,10 +6,10 @@ $(document).ready(function () {
         Array.from(document.getElementsByClassName("category")).forEach(category => category.classList.remove("active"));
         document.getElementById($(this).attr("id")).classList.add("active");
 
-        card.hide();
+        $(card).hide();
 
         if (selectedCategory === $("#list_all").attr("title")) {
-            card.show();
+            $(card).show();
         } else {
             $(".card_area[title=" + selectedCategory + "]").show();
         }
