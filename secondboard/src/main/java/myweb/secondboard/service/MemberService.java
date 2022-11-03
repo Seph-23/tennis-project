@@ -5,9 +5,11 @@ import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.UpdatePasswordForm;
 import myweb.secondboard.repository.MemberRepository;
+import myweb.secondboard.repository.RecordRepository;
 import myweb.secondboard.web.PasswordEncrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +21,13 @@ public class MemberService {
 
   private final MemberRepository memberRepository;
 
+  private final RecordRepository recordRepository;
+
   @Transactional
   public Long signUp(MemberSaveForm form) throws NoSuchAlgorithmException {
-    Member member = Member.createMember(form);
+    Record record = Record.createRecord();
+    recordRepository.save(record);
+    Member member = Member.createMember(form, record);
     memberRepository.save(member);
     return member.getId();
   }

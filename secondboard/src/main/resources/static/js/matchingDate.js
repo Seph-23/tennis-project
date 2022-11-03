@@ -25,6 +25,7 @@ $('#matchingEndTime').mouseover(function () {
     var sNewTime = sgetTime[0] +":"+sminutes;
     console.log(sNewTime);
     $('#matchingEndTime').timepicker('option', 'minTime', sNewTime);
+    $('#matchingEndTime').timepicker('option', 'startTime', sNewTime);
 });
 
 $("#matchingEndTime").mouseover(function(){
