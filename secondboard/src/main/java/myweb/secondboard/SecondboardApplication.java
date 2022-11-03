@@ -25,7 +25,9 @@ import java.util.stream.IntStream;
 
 import static myweb.secondboard.web.MatchingType.SINGLE;
 
-
+/**
+ * 11월1일자 복구
+ */
 @SpringBootApplication
 public class SecondboardApplication {
 
