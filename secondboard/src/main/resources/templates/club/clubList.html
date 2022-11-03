@@ -35,7 +35,7 @@
 
 <div class="container">
 
-  <form class="col-4 m-auto" th:action="@{/club}">
+  <form class="col-4 m-auto" th:action="@{/club/search}">
     <div class="input-group mb-4 border rounded-pill p-1">
       <input name="keyword" type="search" placeholder="What're you searching for?"
              class="form-control bg-none border-0 rounded-circle search">
@@ -82,19 +82,19 @@
     </table>
   </div>
   <!-- 페이징 시작 -->
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example" th:if="${startPage != null}">
     <ul class="pagination pagination-circle justify-content-center">
-      <li class="page-item">
-        <a class="page-link" aria-label="Previous" th:href="@{/club(page=${nowPage}-2)}">
+      <li class="page-item" th:if="${nowPage!=startPage}">
+        <a class="page-link" aria-label="Previous" th:href="@{/club(page=${nowPage -2})}">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
       <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
-        <a class="page-link" th:if="${page != nowPage}" th:href="@{/club(page=${page}-1)}"
+        <a class="page-link" th:if="${page != nowPage}" th:href="@{/club(page=${page -1})}"
            th:text="${page}"></a>
         <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
       </th:block>
-      <li class="page-item">
+      <li class="page-item" th:if="${nowPage!=endPage}">
         <a class="page-link" aria-label="Next" th:href="@{/club(page=${nowPage})}">
           <span aria-hidden="true">&raquo;</span>
         </a>
