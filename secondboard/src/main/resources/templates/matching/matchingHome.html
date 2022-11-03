@@ -145,40 +145,6 @@
         </th:block>
     </div>
 </div>
-<div class="courtType_area">
-    <select class="courtType_select">
-        <option id="option_all" class="courtType active" title="all">전체</option>
-        <option class="courtType">단식</option>
-        <option class="courtType">복식</option>
-    </select>
-</div>
-
-<!--test-->
-<div class="matching_area" th:each="matching:${matchingList}">
-    <div class="matching">
-        <div class="matching_body">
-            <td class="matching" th:text="${matching.matchingDate}"></td>
-            <td class="matching" th:text="${matching.matchingStartTime}"></td>
-            <td class="matching" th:text="${matching.matchingEndTime}"></td>
-            <td class="matching" th:text="${matching.place}"></td>
-            <td class="matching" th:text="${matching.title}"></td>
-            <td class="matching" th:text="${matching.matchingType.title}"></td>
-            <td class="matching" th:text="${matching.courtType.title}"></td>
-            <td class="matching" th:if="${matching.matchingType.title.equals('단식')}"
-                th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
-            <td class="matching" th:if="${matching.matchingType.title.equals('복식')}"
-                th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
-            <td class="matching" th:text="${matching.author}"></td>
-            <td class="matching" th:text="${matching.matchingCondition.title}"></td>
-            <td>
-                <button type="button"
-                        th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|"
-                        th:if="${session.loginMember != null}">상세보기
-                </button>
-            </td>
-        </div>
-    </div>
-</div>
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">
     <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
@@ -192,6 +158,6 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <!-- JS-->
-<script src="/js/test.js"></script>
+
 </body>
 </html>

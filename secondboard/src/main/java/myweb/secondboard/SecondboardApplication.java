@@ -156,7 +156,8 @@ public class SecondboardApplication {
 				matching.setTitle("매치 test" + i);
 				matching.setAuthor(member.getNickname());
 				matching.setMatchingDate(LocalDate.of(2022, 12, 12));
-				matching.setMatchingTime(LocalTime.of(16, 30));
+				matching.setMatchingStartTime("16:30");
+				matching.setMatchingEndTime("18:30");
 				matching.setMatchingType(MatchingType.DOUBLE);
 				matching.setCourtType(CourtType.INDOOR);
 				matching.setPlace("서울올림픽 경기장");
@@ -167,7 +168,8 @@ public class SecondboardApplication {
 				matching.setTitle("매치 test" + i);
 				matching.setAuthor(member.getNickname());
 				matching.setMatchingDate(LocalDate.of(2022, 12, 12));
-				matching.setMatchingTime(LocalTime.of(16, 30));
+				matching.setMatchingStartTime("13:30");
+				matching.setMatchingEndTime("15:30");
 				matching.setMatchingType(MatchingType.SINGLE);
 				matching.setCourtType(CourtType.OUTDOOR);
 				matching.setPlace("수원올림픽 경기장");
