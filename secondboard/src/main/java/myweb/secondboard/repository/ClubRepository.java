@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClubRepository extends JpaRepository<Club, Long>, ClubRepositoryInterface{
 
-  Page<Club> findByNameContaining(String keyword, Pageable pageable);
+//  Page<Club> findByNameContaining(String keyword, Pageable pageable);
 }
