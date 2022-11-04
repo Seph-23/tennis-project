@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
+  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+<div class="container">   <!-- Container Start -->
+
+  <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div class="board"> <!-- board start -->
+    <div class="side-menu-left"> <!-- Left Side Menu Start -->
+      <h3>Community</h3>
+      <ul>
+        <li><a href="#">자유게시판</a></li>
+        <li><a href="#">공지사항</a></li>
+        <li><a href="#">Q&A</a></li>
+        <li><a href="#">레슨 찾아요</a></li>
+        <li><a href="#">동호회</a></li>
+      </ul>
+    </div> <!-- Left Side Menu End -->
+
+    <div class="board-main"> <!-- Board Main Start -->
+      <h3>자유 게시판</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>글번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "board:${boardList}">
+          <td th:text="${board.id}">1</td>
+          <td >
+            <a th:text="${board.title}" th:href="@{/boards/detail/{id} (id=${board.id})}"></a>
+          </td>
+          <td th:text="${board.author}"></td>
+          <td th:text="${board.createdDate}"></td>
+          <td th:text="${board.views}"></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+           th:text ="${page}"></a>
+        <strong th:if="${page==nowPage}" th:text ="${page}" style="color:red"></strong>
+      </th:block>
+      <button type="button" th:onclick="|location.href='@{/boards/boardAdd}'|"
+              th:if="${session.loginMember != null}">게시글 등록</button>
+    </div> <!-- Board Main End -->
+
+    <div class="side-menu-right"> <!-- Right Side Menu Start -->
+
+    </div> <!-- Right Side Menu End -->
+  </div> <!-- board end -->
+  <footer th:replace="fragments/footer :: footer"></footer>
+</div> <!-- Container End -->
+</body>
+<script type="text/javascript" th:src="@{/js/slideShow.js}"></script>
+</html>
