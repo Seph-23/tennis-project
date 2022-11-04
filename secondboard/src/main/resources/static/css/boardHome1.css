@@ -146,13 +146,13 @@
 		margin: 0 -1rem;
 	}
 	.card-item {
-		width: 50%;
+		width: 100%;
 		padding: 0 1rem;
 	}
 }
 
 @media (min-width: 1200px) {
 	.card-item {
-		width: 33.33333%;
+		width:100%;
 	}
 }
