@@ -11,55 +11,92 @@
 	background: black;
 	transition: 0.5s;
 }
-.menu-item:hover {
-	/* flex-grow: 1.5; */
-	width: 35%;
-	background: greenyellow;
-}
-.menu-link {
-	display: block;
-	padding: 1em;
-	font-size: 1.2rem;
-	font-weight: bold;
-	color: whitesmoke;
-	text-decoration: none;
-	text-align: center;
-}
-.menu-link:hover {
-	color: white;
-}
 
-/* search */
-.search-form {
-	display: flex;
-	height: 40px;
-}
-.search-form input[type="search"] {
-	flex: 1;
-	min-width: 0;
-	margin-right: 10px;
-	border: 0;
-	border-radius: 0.3em;
-	font-size: 1rem;
-}
-.search-form input[type="submit"] {
-	width: 4em;
-	border: 0;
-	border-radius: 0.3em;
-	font-size: 1rem;
-	background: gold;
-}
+/*.menu-link {*/
+/*	display: block;*/
+/*	padding: 1em;*/
+/*	font-size: 1.2rem;*/
+/*	font-weight: bold;*/
+/*	color: whitesmoke;*/
+/*	text-decoration: none;*/
+/*	text-align: center;*/
+/*}*/
+/*.menu-link:hover {*/
+/*	color: white;*/
+/*}*/
+
+
+
+/*!* search *!*/
+/*.search-form {*/
+/*	display: flex;*/
+/*	height: 40px;*/
+/*}*/
+/*.search-form input[type="search"] {*/
+/*	flex: 1;*/
+/*	min-width: 0;*/
+/*	margin-right: 10px;*/
+/*	border: 0;*/
+/*	border-radius: 0.3em;*/
+/*	font-size: 1rem;*/
+/*}*/
+/*.search-form input[type="submit"] {*/
+/*	width: 4em;*/
+/*	border: 0;*/
+/*	border-radius: 0.3em;*/
+/*	font-size: 1rem;*/
+/*	background: gold;*/
+/*}*/
+
+/*.board_banner_area {*/
+/*	position: relative;*/
+/*	width: 100%;*/
+/*}*/
+
+/*.board_banner_text {*/
+/*	position: absolute;*/
+/*	font-family: Nunito;*/
+/*	top: 35%;*/
+/*	left: 50%;*/
+/*	transform: translate(-50%,-50%);*/
+/*	z-index: 99;*/
+/*	width: 100%;*/
+/*	text-align: -webkit-center;*/
+/*	letter-spacing: 0.0625em;*/
+/*}*/
+
+/*.board_banner_text span {*/
+/*	color: #FFF;*/
+/*	font-size: 4.2vw;*/
+/*	font-weight: 600;*/
+/*	text-align: center;*/
+/*	display: block;*/
+/*}*/
+
+/*.board_banner_text span .s1 {*/
+
+/*	font-size: 25px;*/
+/*	font-weight: bold;*/
+/*	display: block;*/
+/*}*/
+
+/*.board_banner_area img {*/
+/*	width: 100%;*/
+/*	max-height: 259.48px;*/
+/*	display: block;*/
+/*}*/
 
 /* bullet list */
 .info-list {
 	margin-bottom: 2rem;
 }
 .info-list-item {
+	font-size: 17px;
 	display: flex;
 	margin: 0.5em 0;
 }
 .info-list-item:before {
-	content: "⌘";
+	content: "";
 	margin-right: 0.5em;
 }
 
