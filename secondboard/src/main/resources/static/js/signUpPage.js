@@ -44,6 +44,7 @@ $("#id-dup-button").click(function () {
     }
   });
 });
+
 $("#nick-dup-button").click(function () {
   $("#signup-submit").attr("type", "button");
   let nick = {
@@ -69,6 +70,7 @@ $("#nick-dup-button").click(function () {
     }
   })
 });
+
 $("#email-dup-button").click(function () {
   $("#signup-submit").attr("type", "button");
   let email = {
