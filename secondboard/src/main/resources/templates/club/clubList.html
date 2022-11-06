@@ -91,11 +91,13 @@
         </a>
       </li>
       <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
+        <div th:if="${endPage != 0}">
         <a class="page-link" th:if="${page != nowPage}" th:href="@{/club(page=${page -1})}"
            th:text="${page}"></a>
         <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
+        </div>
       </th:block>
-      <li class="page-item" th:if="${nowPage!=endPage}">
+      <li class="page-item" th:if="${nowPage!=endPage && endPage != 0}">
         <a class="page-link" aria-label="Next" th:href="@{/club(page=${nowPage})}">
           <span aria-hidden="true">&raquo;</span>
         </a>
