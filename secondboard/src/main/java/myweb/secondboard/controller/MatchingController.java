@@ -74,7 +74,7 @@ public class MatchingController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "redirect:/matching/home";
+      return "/matching/matchingAddForm";
     }
 
     Long matchingId = matchingService.addMatching(form, member);

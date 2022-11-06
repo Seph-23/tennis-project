@@ -1,0 +1,36 @@
+button{
+  border-radius: 40px;
+}
+
+#board_title_box {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: lightgrey;
+  padding: 15px;
+}
+
+#board_update_button {
+  color: grey;
+}
+
+#board_delete_button {
+  color: lightgrey;
+}
+
+#board_content_box {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: lightgrey;
+}
+
+#comment-submit {
+  border-radius: 0;
+  width: 25%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  background: white;
+  color: black;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
