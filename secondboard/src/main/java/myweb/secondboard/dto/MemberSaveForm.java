@@ -1,6 +1,7 @@
 package myweb.secondboard.dto;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class MemberSaveForm {
   @NotNull(message = "닉네임을 입력 하세요.") @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 이내여야 합니다.")
   private String nickname;
 
-  @NotNull(message = "이메일을 입력 하세요.") @Email
+  @NotEmpty(message = "이메일을 입력 하세요.")
   private String email;
 
   //생년월일
@@ -27,7 +28,7 @@ public class MemberSaveForm {
   private String month;
   private String day;
 
-  @NotNull(message = "핸드폰 번호를 입력 하세요.")
+  @NotNull(message = "핸드폰 번호를 입력 하세요.") @Size(min=11, max=11, message = "잘못된 전화번호 입니다.")
   private String phoneNumber;
 
   @NotNull(message = "성별을 선택 하세요.")
