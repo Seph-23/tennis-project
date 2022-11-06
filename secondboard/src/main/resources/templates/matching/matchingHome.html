@@ -116,7 +116,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="matching:${matchingList}" 
+                <tr th:each="matching:${matchingList}"
                     th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|" role="button">
                     <td class="py-5"></td>
                     <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>
