@@ -40,7 +40,7 @@
           <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
           <a th:text="${board.views}"></a>
         </div>
-        <div>
+        <div th:if="${session.loginMember != null}">
           <div th:if="${session.loginMember.id == board.member.id}" style="display: inline-block">
             <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
                   method="get">
