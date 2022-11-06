@@ -138,14 +138,15 @@
                             <table>
                                 <form class="col" role="form"
                                       th:action="@{/matching/delete/{id} (id=${matching.id})}"
-                                      method="post">
-                                    <button type="submit">매칭 삭제</button>
+                                      method="post" >
+                                    <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-start float-lg-start" >
+                                        <button type="submit" class="btn btn-primary px-4 py-3">매칭 삭제</button>
+                                    </div>
                                 </form>
-                                <form class="col" role="form"
-                                      th:action="@{/matching/update/{id} (id=${matching.id})}"
-                                      method="get">
-                                    <button type="submit">매칭 수정</button>
-                                </form>
+                                <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-start ">
+                                    <a type="button" class="btn btn-primary px-4 py-3"
+                                       data-bs-toggle="modal" data-bs-target="#matchUpdateModal">매치 수정</a>
+                                </div>
                             </table>
                             <br>
                             <table>A팀 맴버 정보
@@ -256,7 +257,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- 매치결과 Modal -->
 <div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -285,7 +286,70 @@
         </div>
     </div>
 </div>
-<!-- 모달 끝 -->
+<!-- 매치결과 모달 끝 -->
+
+<!-- 매치수정 모달 -->
+<div class="modal fade" id="matchUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-2" id="matchUpdateModalLabel">매치 생성</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form th:action="@{/matching/update/{id} (id=${matchingForm.id})}" th:object="${matchingForm}" method="POST">
+                    <input type="hidden" th:field="${matchingForm.id}">
+                    <div class="mb-3">
+                        <label for="matchingTitle" class="form-label">매칭 이름<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matchingForm.title}" id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
+                        <div th:errors="${matchingForm.title}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingDate" class="form-label">매칭 날짜<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" th:field="${matchingForm.matchingDate}" id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
+                        <div th:errors="${matchingForm.matchingDate}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
+                        <input type="time" class="form-control" th:field="${matchingForm.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required>
+                        <div th:errors="${matchingForm.matchingStartTime}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required>
+                        <div th:errors="${matchingForm.matchingEndTime}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">매칭 종류<span class="text-danger">*</span></div>
+                        <div th:each="match : ${matchTypes}" class="form-check form-check-inline">
+                            <input type="radio" th:field="*{matchingType}" th:value="${match.name()}" class="form-check-input">
+                            <label th:for="${#ids.prev('matchingType')}" th:text="${match.title}" class="form-check-label"></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">코트 종류<span class="text-danger">*</span></div>
+                        <div th:each="court : ${courtTypes}" class="form-check form-check-inline">
+                            <input type="radio" th:field="*{courtType}" th:value="${court.name()}" class="form-check-input">
+                            <label th:for="${#ids.prev('courtType')}" th:text="${court.title}" class="form-check-label"></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matchingForm.place}" id="matchingPlace" placeholder="매창 장소를 입력해주세요" required>
+                        <div th:errors="${matchingForm.place}" class="text-danger"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">등록하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 매치수정 모달 끝 -->
 
 
 

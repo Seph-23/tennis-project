@@ -97,8 +97,8 @@
 <div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
         <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-end">
-            <a type="button" class="btn btn-primary px-3 py-2"
-               th:onclick="|location.href='@{/matching/matchingAdd}'|">매치등록</a>
+            <a type="button" class="btn btn-primary px-4 py-3"
+               data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>
         </div>
         <div class="my-4">
             <table class="table table-hover align-middle bg-white">
@@ -170,6 +170,68 @@
         </li>
     </ul>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="matchAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-2" id="matchAddModalLabel">매치 생성</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form th:action="@{/matching/new}" th:object="${matching}" method="POST">
+                    <div class="mb-3">
+                        <label for="matchingTitle" class="form-label">매칭 이름<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matching.title}" id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
+                        <div th:errors="${matching.title}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingDate" class="form-label">매칭 날짜<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" th:field="${matching.matchingDate}" id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
+                        <div th:errors="${matching.matchingDate}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matching.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required>
+                        <div th:errors="${matching.matchingStartTime}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matching.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required>
+                        <div th:errors="${matching.matchingEndTime}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">매칭 종류<span class="text-danger">*</span></div>
+                        <div th:each="match : ${matchTypes}" class="form-check form-check-inline">
+                            <input type="radio" th:field="*{matchingType}" th:value="${match.name()}" class="form-check-input">
+                            <label th:for="${#ids.prev('matchingType')}" th:text="${match.title}" class="form-check-label"></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">코트 종류<span class="text-danger">*</span></div>
+                        <div th:each="court : ${courtTypes}" class="form-check form-check-inline">
+                            <input type="radio" th:field="*{courtType}" th:value="${court.name()}" class="form-check-input">
+                            <label th:for="${#ids.prev('courtType')}" th:text="${court.title}" class="form-check-label"></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matching.place}" id="matchingPlace" placeholder="매창 장소를 입력해주세요" required>
+                        <div th:errors="${matching.place}" class="text-danger"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">등록하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 모달 끝 -->
+
 
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">
