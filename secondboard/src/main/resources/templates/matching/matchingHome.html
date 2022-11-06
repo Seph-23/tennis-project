@@ -11,6 +11,8 @@
     <!-- CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- CSS -->
     <link href="/css/styles.css" rel="stylesheet"/>
     <link href="/css/banner.css" rel="stylesheet"/>
@@ -87,64 +89,88 @@
         <h1>Matching</h1>
         <p>Check out the Matching schedule!</p>
     </div>
-    <img src="/images/tournament_banner3.jpg" alt="Contact US 배너 이미지">
+    <img src="/images/matching_banner_4.png" alt="Contact US 배너 이미지">
 </div>
 
-<div class="col-12 p-5"></div>
+<div class="col-12 p-4"></div>
+
 <div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
-        <h3>매칭</h3>
-            <table class="table table-hover">
-                <thead>
+        <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-end">
+            <a type="button" class="btn btn-primary px-3 py-2"
+               th:onclick="|location.href='@{/matching/matchingAdd}'|">매치등록</a>
+        </div>
+        <div class="my-4">
+            <table class="table table-hover align-middle bg-white">
+                <thead class="bg-light">
                 <tr>
-                    <th scope="col">매칭 날짜</th>
-                    <th scope="col">시작 시간</th>
-                    <th scope="col">종료 시간</th>
-                    <th scope="col">매칭 지역</th>
-                    <th scope="col">매칭 이름</th>
-                    <th scope="col">매칭 타입</th>
-                    <th scope="col">코트 타입</th>
-                    <th scope="col">참여자</th>
-                    <th scope="col">생성자</th>
-                    <th scope="col">매칭상태</th>
-                    <th scope="col">
-                        <button type="button" th:onclick="|location.href='@{/matching/matchingAdd}'|"
-                                th:if="${session.loginMember != null}">매치 등록
-                        </button>
-                    </th>
+                    <th></th>
+                    <th class="text-center">매칭 날짜</th>
+                    <th class="text-center">매칭 시간</th>
+                    <th class="text-center">매칭 지역</th>
+                    <th class="text-center">매칭 이름</th>
+                    <th class="text-center">코트 타입</th>
+                    <th class="text-center">참여자</th>
+                    <th class="text-center">생성자</th>
+                    <th class="text-center">매칭상태</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="matching:${matchingList}">
-                    <td th:text="${matching.matchingDate}"></td>
-                    <td th:text="${matching.matchingStartTime}"></td>
-                    <td th:text="${matching.matchingEndTime}"></td>
-                    <td th:text="${matching.place}"></td>
-                    <td th:text="${matching.title}"></td>
-                    <td th:text="${matching.matchingType.title}"></td>
-                    <td th:text="${matching.courtType.title}"></td>
-                    <td th:if="${matching.matchingType.title.equals('단식')}"
-                        th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
-                    <td th:if="${matching.matchingType.title.equals('복식')}"
-                        th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></td>
-                    <td th:text="${matching.author}"></td>
-                    <td th:text="${matching.matchingCondition.title}"></td>
-                    <td>
-                        <button type="button"
-                                th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|"
-                                th:if="${session.loginMember != null}">상세보기
-                        </button>
+                <tr th:each="matching:${matchingList}"
+                    th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|" role="button">
+                    <td class="py-5"></td>
+                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>
+                    <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span
+                            th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
+                    <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span
+                            th:text="${matching.place}"></span></td>
+                    <td class="text-center" th:text="${matching.title}"></td>
+                    <td class="text-center" th:text="${matching.courtType.title}"></td>
+                    <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i
+                            class="bi bi-people-fill text-muted me-1"></i>
+                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
+                    </td>
+                    <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i
+                            class="bi bi-people-fill text-muted me-1"></i>
+                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
+                    </td>
+                    <td class="text-center" th:text="${matching.author}"></td>
+                    <td class="text-center">
+                <span th:if="${matching.matchingCondition.title == '신청가능'}"
+                      th:text="${matching.matchingCondition.title}"
+                      class="badge text-bg-success rounded-pill d-inline"></span>
+                        <span th:if="${matching.matchingCondition.title == '신청마감'}"
+                              th:text="${matching.matchingCondition.title}"
+                              class="badge text-bg-danger rounded-pill d-inline"></span>
                     </td>
                 </tr>
                 </tbody>
             </table>
-        <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-            <a th:if="${page != nowPage}" th:href="@{/matching/home(page=${page-1})}"
-               th:text="${page}"></a>
-            <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
-        </th:block>
+        </div>
     </div>
 </div>
+
+<!-- Paging -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-circle justify-content-center">
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous" th:href="@{/matching/home(page=${nowPage}-4)}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" th:if="${page != nowPage}" th:href="@{/matching/home(page=${page}-1)}"
+               th:text="${page}"></a>
+            <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
+        </th:block>
+        <li class="page-item">
+            <a class="page-link" aria-label="Next" th:href="@{/matching/home(page=${nowPage})}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">
     <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>

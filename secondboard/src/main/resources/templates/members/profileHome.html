@@ -1,45 +1,296 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
-  <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
-  <link rel="shortcut icon" href="#">
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.1.js"
-          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-          crossorigin="anonymous"></script>
-
-  <title>Profile Home</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Tennis</title>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet"/>
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <!-- CSS -->
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <link href="/css/menu.css" rel="stylesheet"/>
+    <link href="/css/profileHome.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
+    <script type="application/javascript"
+            src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
 </head>
-<body>
+<body class="pt-6">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" th:href="@{/}">GOGOtennis</a>
+        <!-- <a class="navbar-brand" th:href="@{/}">
+             <img src="img/logo2.png" alt="logo" width="100">
+         </a>-->
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+        </button>
+        <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/matching/home}">매치</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/tournament}">대회</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}">커뮤니티</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/club}">동호회</a></li>
+            </ul>
 
-<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+            <div class="gap-2 d-md-flex">
+                <div th:if="${session.loginMember == null}">
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/members/new}'|">회원가입
+                    </button>
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/login}'|">로그인
+                    </button>
+                </div>  <!-- TODO : 로그인 modal 창 구현 -->
+                <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
+                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">
+                        로그아웃
+                    </button>
 
-<div class="container">   <!-- Container Start -->
-  <div ></div>
-  <div class="board"> <!-- board start -->
-    <div class="side-menu-left"> <!-- Left Side Menu Start -->
-      <br/>
-      <br/>
-      <br/>
-      <h3>My Page</h3>
-      <ul>
-        <li><a href="#">내 정보</a></li>
-        <li><a href="#">내 정보 수정</a></li>
-        <li><a href="#">최근 전적 현황</a></li>
-      </ul>
-    </div> <!-- Left Side Menu End -->
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
+                        정보
+                    </button>
+                </div>
 
-   <div class="member-profile">
+                <!-- 카카오 로그아웃-->
+                <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">
+                        로그아웃
+                    </button>
 
-   </div>
+                    <!-- TODO:내 정보 UI 구현-->
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
+                        정보
+                    </button>
+                </div>
 
-    <div class="side-menu-right"> <!-- Right Side Menu Start -->
+            </div> <!--gap-2 d-md-flex END-->
 
-    </div> <!-- Right Side Menu End -->
-  </div> <!-- board end -->
+        </div>
+    </div>
+</nav>
 
-  <footer th:replace="fragments/footer :: footer"></footer>
+<div class="about">
+    <h1>MyPage</h1>
+    <hr>
+    <div class="d-flex">
+        <div class="contact">
+            <div class="box" style="background: #BDBDBD;">
+                <li><img class="profile" src="/images/profileimg.jpg" alt=""/></li>
+            </div>
+            <li class="py-2"></li>
+            <li><h3><span th:text="${member.nickname}"></span></h3></li>
+            <li class="mb-1"><span th:text="${member.birthday}"></span>
+                <i th:if="${member.gender.name() == 'MALE'}" class="bi bi-gender-male"></i>
+                <i th:if="${member.gender.name() == 'FEMALE'}" class="bi bi-gender-female"></i>
+            </li>
+            <li class="mb-1"><span th:text="${member.phoneNumber}"></span></li>
+            <li><span th:text="${member.email}"></span></li>
+        </div>
+        <div class="story">
+            <h3 class="py-3">자기소개</h3>
+            <div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-2"></div>
+
+<div class="section">
+    <hr>
+    <h2 class="py-3">등급</h2>
+    <i class="bi bi-question-circle float-end fa-lg" type="button"
+       data-bs-toggle="modal" data-bs-target="#readMore"></i>
+    <div class="d-flex">
+        <div class="contact">
+            <div class="text-center">
+                <img class="profile me-5 img-fluid" src="/images/challenger.png" alt=""/>
+                <h3><span>Challenger</span></h3>
+            </div>
+        </div>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col total">
+                    <h3><strong>총 전적</strong></h3>
+                    <li style="list-style: none">202승 0무 12패</li>
+                </div>
+                <div class="col total">
+                    <h3><strong>승점</strong></h3>
+                    <li style="list-style: none">2909점</li>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Level Info Modal -->
+<div class="modal fade" id="readMore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-2" id="readMoreLabel">등급 산정 방법</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>티어</h4>
+                <h7>랭크 티어는 우뚝 솟은 단 하나의 꼭대기보다는 높이가 다양한 여러 산맥에 가깝습니다. 각각의 봉우리가 영광스러운 목표가 되죠!</h7>
+                <img class="level_info" src="/images/level_info.png" alt=""/>
+                <hr>
+                <h4>단계</h4>
+                <h7>각 티어는 목적지보다는 여정에 가까우며 단계는 그 여정의 이정표 역할을 합니다.</h7>
+                <div>
+                    <h8>기본 점수; 100점</h8>
+                </div>
+                <div>
+                    <h8>승리시 : 10 점</h8>
+                </div>
+                <div>
+                    <h8>패배시 : -7 점</h8>
+                </div>
+                <img class="level_info" src="/images/level_info_2.png" alt=""/>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Level Info Modal End -->
+
+<div class="py-2"></div>
+
+<div class="section">
+    <hr>
+    <h2 class="py-3">최근 전적 현황</h2>
+    <div>
+        <table class="table table-hover align-middle bg-white">
+            <thead class="bg-light">
+            <tr>
+                <th></th>
+                <th class="text-center">승/패</th>
+                <th class="text-center">매칭 상대</th>
+                <th class="text-center">경기 날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="py-5"></td>
+                <td class="text-center"><span>승</span></td>
+                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
+                <td class="text-center">2022-10-25</td>
+            </tr>
+            <tr>
+                <td class="py-5"></td>
+                <td class="text-center"><span>승</span></td>
+                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
+                <td class="text-center">2022-10-25</td>
+            </tr>
+            <tr>
+                <td class="py-5"></td>
+                <td class="text-center"><span>승</span></td>
+                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
+                <td class="text-center">2022-10-25</td>
+            </tr>
+            <tr>
+                <td class="py-5"></td>
+                <td class="text-center"><span>승</span></td>
+                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
+                <td class="text-center">2022-10-25</td>
+            </tr>
+            <tr>
+                <td class="py-5"></td>
+                <td class="text-center"><span>승</span></td>
+                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
+                <td class="text-center">2022-10-25</td>
+            </tr>
+            <tr>
+                <td class="py-5"></td>
+                <td class="text-center"><span>승</span></td>
+                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
+                <td class="text-center">2022-10-25</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="py-3"></div>
+<div class="d-md-flex justify-content-md-center">
+    <a type="button" class="btn btn-primary px-3 py-2 me-lg-1"
+            data-bs-toggle="modal" data-bs-target="#profileUpdateModal">정보 수정
+    </a>
+        <a type="button" class="btn btn-primary px-3 py-2">회원탈퇴</a>
+</div>
+
+<!-- profile update Modal -->
+<div class="modal fade" id="profileUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-2" id="profileUpdateModalLabel">프로필 정보 수정</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form role="form" th:object="${member}" action="/members/profileUpdate" method="post"> <!-- signup form -->
+                    <input type="hidden" th:field="${member.id}" >
+                    <div class="form-group">
+                        <label th:for="nickname" class="d-sm-block">닉네임</label>
+                        <input id="nickname" type="text" class="form-control w-75 d-sm-inline" th:field="${member.nickname}"/>
+                        <button type="button" id="nick-dup-button" class="dup-check-button">중복확인</button>
+                        <div class="field-error" th:errors="${member.nickname}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profileImg" class="form-label">프로필 이미지</label>
+                        <input type="file" class="form-control" id="profileImg">
+                    </div>
+                    <div class="mb-3">
+                        <label for="selfIntroduction" class="form-label">자기 소개</label>
+                        <textarea class="form-control" id="selfIntroduction" rows="6"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary py-2">수정하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--profile update modal end-->
+
+
+<!-- Footer-->
+<footer class="footer bg-white small text-center text-black-50">
+    <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
+</footer>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+        crossorigin="anonymous"></script>
+<!-- JS Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
 </div> <!-- Container End -->
-
 </body>
 </html>

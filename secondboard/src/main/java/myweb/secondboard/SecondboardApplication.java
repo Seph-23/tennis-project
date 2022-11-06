@@ -185,7 +185,11 @@ public class SecondboardApplication {
 //
 //		});
 //	}
+<<<<<<< HEAD
 //
+=======
+
+>>>>>>> 13ca3173399ac0077068607e878e262282b8e357
 
 
 }
