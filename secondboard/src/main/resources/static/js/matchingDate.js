@@ -15,7 +15,6 @@ $('#matchingStartTime').timepicker({
     dynamic: false,
     dropdown: true,
     scrollbar: true,
-    zindex: 9999
 });
 
 $('#matchingEndTime').mouseover(function () {
@@ -47,7 +46,6 @@ $('#matchingEndTime').timepicker({
     dynamic: false,
     dropdown: true,
     scrollbar: true,
-    zindex: 9999
 });
 
 

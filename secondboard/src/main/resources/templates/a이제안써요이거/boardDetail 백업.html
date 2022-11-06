@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
+  <link rel="shortcut icon" href="#">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
+        rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container"> <!-- Container Start -->
+
+  <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+  <div class="board"> <!-- board start -->
+    <div class="side-menu-left"> <!-- Left Side Menu Start -->
+      <h3>Community</h3>
+      <ul>
+        <li><a href="#">자유게시판</a></li>
+        <li><a href="#">공지사항</a></li>
+        <li><a href="#">Q&A</a></li>
+        <li><a href="#">레슨 찾아요</a></li>
+        <li><a href="#">동호회</a></li>
+      </ul>
+    </div> <!-- Left Side Menu End -->
+
+    <div class="board-detail"> <!-- Board Detail Start -->
+      <h6>자유게시판</h6>
+      <div class="board-header"> <!-- 게시글 헤더 -->
+        <h3 th:text="${board.title}"></h3>
+        <table>
+          <thead>
+          <tr>
+            <th>
+              <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
+              <a th:text="${board.author}"></a>
+            </th>
+            <th>
+              <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
+              <a th:text="${board.createdDate}"></a>
+            </th>
+            <th>
+              <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
+              <a th:text="${board.views}"></a>
+            </th>
+            <div th:if="${session.loginMember != null}">
+              <th th:if="${session.loginMember.id == board.member.id}">
+                <button th:onclick="deleteBoard([[${board.id}]])">게시글 삭제</button>
+              </th>
+              <th th:if="${session.loginMember.id == board.member.id}">
+                <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
+                      method="get">
+                  <button type="submit">게시글 수정</button>
+                </form>
+              </th>
+            </div>
+          </tr>
+          </thead>
+        </table>
+      </div> <!-- 게시글 헤더 끝 -->
+      <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
+        <p th:utext="${board.content}"></p>
+      </div> <!-- 게시글 본문 끝 -->
+    </div> <!-- Board Detail End -->
+
+    <div class="comment">
+      <div class="comment-body">
+        <table th:if="${!comments.isEmpty()}">
+          <thead>
+          <tr>
+            <th>작성자</th>
+            <th>내용</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each = "comment : ${comments}">
+            <td th:text="${comment.author}"></td>
+            <td>
+              <input th:id="'comment-content-'+${comment.id}" disabled
+                     th:value="${comment.content}">
+            </td>
+            <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
+              <td>
+                <div th:if="${session.loginMember.id == comment.member.id}">
+                  <button th:onclick="updateComment([[${comment.id}]])"
+                          th:id="'comment-update-'+${comment.id}">수정</button>
+                  <button th:id="'comment-delete-'+${comment.id}"
+                          th:onclick="deleteComment([[${comment.id}]])">삭제</button>
+                </div>
+                <div>
+                  <button hidden th:id="'comment-update-confirm-'+${comment.id}"
+                          th:onclick="updateCommentConfirm([[${comment.id}]])">확인</button>
+                  <button hidden th:id="'comment-update-cancel-'+${comment.id}"
+                          th:onclick="updateCommentCancel([[${comment.id}]])">취소</button>
+                </div>
+              </td>
+            </div>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
+        <div class="comment-input-body">
+          <input hidden id="board-id" th:value="${board.id}">
+          <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+        </div>
+        <button id="comment-submit" type="submit">등록</button>
+      </div>
+    </div>
+
+  </div> <!-- board end -->
+  <footer th:replace="fragments/footer :: footer"></footer>
+</div> <!-- Container End -->
+</body>
+<script th:src="@{/js/boardDetailPage.js}"></script>
+</html>

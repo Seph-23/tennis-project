@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Tennis</title>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+</head>
+<body class="pt-6">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" th:href="@{/}">GOGOtennis</a>
+        <!-- <a class="navbar-brand" th:href="@{/}">
+             <img src="img/logo2.png" alt="logo" width="100">
+         </a>-->
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+        </button>
+        <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/matching/home}">매치</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/tournament}">대회</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">랭킹</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}">커뮤니티</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/other}">동호회</a></li>
+            </ul>
+
+            <div class="gap-2 d-md-flex">
+                <div th:if="${session.loginMember == null}">
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/members/new}'|">회원가입
+                    </button>
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/login}'|">로그인
+                    </button>
+                </div>  <!-- TODO : 로그인 modal 창 구현 -->
+                <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
+                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">
+                        로그아웃
+                    </button>
+
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
+                        정보
+                    </button>
+                </div>
+
+                <!-- 카카오 로그아웃-->
+                <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">
+                        로그아웃
+                    </button>
+
+                    <!-- TODO:내 정보 UI 구현-->
+                    <button type="button" class="btn btn-outline-primary"
+                            th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
+                        정보
+                    </button>
+                </div>
+
+            </div> <!--gap-2 d-md-flex END-->
+
+        </div>
+    </div>
+</nav>
+<hr>
+<div class="container">
+    <div class="matching-main"> <!-- Matching Main Start -->
+        <h4>매치 생성</h4>
+        <form role="form" th:object="${matching}" action="/matching/new" method="post">
+            <div class="form-group">
+                <label th:for="title">매칭 이름:</label>
+                <input id="title" type="text" class="form-control" th:field="${matching.title}"
+                       placeholder="입력해주세요."/>
+                <div class="field-error" th:errors="${matching.title}"></div>
+            </div>
+            <div class="form-group">
+                <label th:for="matchingDate">매칭 날짜:</label>
+
+                <input id="matchingDate" type="date" class="form-control" th:field="${matching.matchingDate}"/>
+                <div class="field-error" th:errors="${matching.matchingDate}"></div>
+            </div>
+            <div class="form-group">
+                <label th:for="matchingTime">시작 시간:</label>
+                <input id="matchingStartTime" type="text" class="form-control" readonly th:field="${matching.matchingStartTime}"
+                       placeholder="입력해주세요."/>
+                <div class="field-error" th:errors="${matching.matchingStartTime}"></div>
+            </div>
+            <div class="form-group">
+                <label th:for="matchingTime">종료 시간:</label>
+                <input id="matchingEndTime" type="text" class="form-control" readonly th:field="${matching.matchingEndTime}"
+                       placeholder="입력해주세요."/>
+                <div class="field-error" th:errors="${matching.matchingEndTime}"></div>
+            </div>
+            <div class="form-group">
+                <label th:for="matchingType">매칭 종류: </label>
+                <input type="radio" th:field="${matching.matchingType}" value="SINGLE">단식
+                <input type="radio" th:field="${matching.matchingType}" value="DOUBLE">복식
+                <div class="field-error" th:errors="${matching.matchingType}"></div>
+            </div>
+            <div class="form-group">
+                <label th:for="courtType">코트 종류: </label>
+                <input type="radio" th:field="${matching.courtType}" value="INDOOR">실내
+                <input type="radio" th:field="${matching.courtType}" value="OUTDOOR">실외
+                <div class="field-error" th:errors="${matching.courtType}"></div>
+            </div>
+            <div class="form-group">
+                <label th:for="place">매칭 장소:</label>
+                <input id="place" type="text" class="form-control" th:field="${matching.place}"
+                       placeholder="입력해주세요."/>
+                <div class="field-error" th:errors="${matching.place}"></div>
+            </div>
+            <button type="submit" class="matching-submit" id="matching-submit">매칭 생성</button>
+        </form>
+        <button type="button" th:onclick="|location.href='@{/matching/home}'|">취소</button>
+    </div> <!-- Matching Main End -->
+</div>
+<script th:src="@{/js/matchingDate.js}"></script>
+</body>
+</html>
