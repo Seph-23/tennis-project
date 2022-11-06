@@ -1,54 +1,55 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CSS Grid</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Community</title>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet"/>
     <link rel="stylesheet" href="/css/default.css">
+<!--    <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>-->
     <link rel="stylesheet" href="/css/boardHome1.css">
     <link rel="stylesheet" href="/css/boardHome2.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="/css/banner.css" rel="stylesheet"/>
+    <!-- icon -->
+    <!-- CSS Bootstrap -->
 
-    <style>
-        .card-list {
+    <!-- CSS -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
 
-        }
-    </style>
 </head>
+
+
 <body>
-<input type="checkbox" id="modal-switch">
-<label for="modal-switch">
-    <span>로그인</span>
-</label>
+
+<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
 <div class="page">
-    <header class="header">
-        <a class="navbar-brand" href="#page-top">GOGOtennis</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-        </button>
 
 
-    </header>
 
-    <ul class="menu">
-        <li class="menu-item"><a class="menu-link" th:href="@{/matching/home}" th:text="#{menu.match}">매치</a></li>
-        <li class="menu-item"><a class="menu-link" th:href="@{/tournament}" th:text="#{menu.tournament}">대회</a></li>
-        <li class="menu-item"><a class="menu-link" href="#" th:text="#{menu.rank}">랭킹</a></li>
-        <li class="menu-item"><a class="menu-link" th:href="@{/boards/home}" th:text="#{menu.community}">커뮤니티</a></li>
-        <li class="menu-item"><a class="menu-link" th:href="@{/club}" th:text="#{menu.club}">동호회</a></li>
-    </ul>
+    <div class="banner">
+        <div class="board_banner_text">
+            <h1 style="font-family: Nunito">Community</h1>
+            <p style="font-family: Nunito">come and join!</p>
+        </div>
+        <img src="/images/community.jpg" alt="배너 이미지" class="board_banner_area">
+    </div>
 
 
     <!-- <div class="content-container"> -->
     <section class="primary">
-    <h1> 자유게시판 </h1>
+        <h2> 자유게시판 </h2>
         </br>
         <form class="col-4 m-auto" th:action="@{/boards/home}">
             <div class="input-group mb-4 border rounded-pill p-1">
-                <input name="keyword" type="search" placeholder="검색어?"
+                <input name="keyword" type="search" placeholder="search"
                        class="form-control bg-none border-0 rounded-circle search">
                 <button type="submit" class="border-0" style="background: none">
                     <i class="mx-3 mt-2 mb-1 bi bi-search"></i>
@@ -59,53 +60,43 @@
         </br>
         </br>
 
-        <ul class="card-list">
+        <div class="my-4">
+            <table class="table table-hover align-middle bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>글번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board:${boardList}">
+                    <td th:text="${board.id}">1</td>
+                    <td>
+                        <a th:text="${board.title}" th:href="@{/boards/detail/{id} (id=${board.id})}"></a>
+                    </td>
+                    <td th:text="${board.author}"></td>
+                    <td th:text="${board.createdDate}"></td>
+                    <td th:text="${board.views}"></td>
+                </tr>
+                </tbody>
+            </table>
 
-            <li class="card-item">
 
 
+            <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+                <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+                   th:text="${page}"></a>
+                <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
+            </th:block>
+            <button type="button" th:onclick="|location.href='@{/boards/boardAdd}'|"
+                    th:if="${session.loginMember != null}">게시글 등록
+            </button>
+        </div> <!-- Board Main End -->
 
-                <div class="card-desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam!
-                </div>
-            </li>
-            <li class="card-item">
 
-                <div class="card-desc">
-                    Lorem ipsum.
-                </div>
-            </li>
-            <li class="card-item">
-
-                <div class="card-desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam!
-                </div>
-            </li>
-            <li class="card-item">
-
-                <div class="card-desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam!
-                </div>
-            </li>
-            <li class="card-item">
-
-                <div class="card-desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam!
-                </div>
-            </li>
-            <li class="card-item">
-
-                <div class="card-desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam!
-                </div>
-            </li>
-            <li class="card-item">
-
-                <div class="card-desc">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit libero in ratione dicta nihil corporis illo odio, voluptatem a nam!
-                </div>
-            </li>
-        </ul>
         </br>
         </br>
         </br>
@@ -135,38 +126,39 @@
 
     <aside class="secondary secondary-b">
         </br>
-        <h3>랭킹</h3>
+        <h3>RANK</h3>
         </br>
         </br>
         <ul class="user-list message-list">
             <li class="user-item message-item">
                 <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    1위
+                     USER 1
+                </p>
+
+            </li>
+            <li class="user-item message-item">
+                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
+                <p class="message-content">
+                    USER 2
                 </p>
             </li>
             <li class="user-item message-item">
                 <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    2위
+                    USER 3
                 </p>
             </li>
             <li class="user-item message-item">
                 <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    3위
+                    USER 4
                 </p>
             </li>
             <li class="user-item message-item">
                 <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    4위
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
-                <p class="message-content">
-                    5위
+                    USER 5
                 </p>
             </li>
         </ul>
@@ -186,7 +178,7 @@
 
 <div class="modal">
     <div class="dialog">
-       로그인
+        로그인
     </div>
 </div>
 </body>

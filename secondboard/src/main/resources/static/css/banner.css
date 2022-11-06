@@ -4,24 +4,27 @@
 }
 
 .board_banner_text {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   z-index: 99;
   width: 100%;
-  text-align: center;
+  text-align: revert;
+
 }
 
 .board_banner_text h1 {
-  color: #FFF;
+  color: white;
   font-size: 4.2vw;
   font-weight: 600;
   text-align: center;
 }
 
 .board_banner_text p {
-  color: #FFF;
+  color: white;
   font-size: 1.2vw;
   font-weight: 200;
   text-align: center;
@@ -30,6 +33,6 @@
 
 .board_banner_area img {
   width: 100%;
-  max-height: 470px;
+  max-height: 259.48px;
   display: block;
 }
