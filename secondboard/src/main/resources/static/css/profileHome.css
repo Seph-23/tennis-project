@@ -1,0 +1,105 @@
+.box {
+  width: 180px;
+  height: 180px;
+  border-radius: 70%;
+  overflow: hidden;
+  align-content: center;
+  margin-left: 25px;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin: 0px auto;
+}
+
+.about {
+  border-radius: 10px;
+  width: 950px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.about h1 {
+  margin-bottom: 4px;
+  margin-top: 2px;
+}
+
+.about h2 {
+  line-height: 20px;
+  margin-bottom: 14px;
+}
+
+.story {
+  line-height: 30px;
+  width: 700px;
+  float: left;
+  padding-left: 90px;
+  padding-right: 90px;
+}
+
+.story div {
+  height: 200px;
+  border: solid 1px green;
+  border-radius: 30px;
+}
+
+.story div p {
+  margin: 10px;
+}
+
+.contact {
+  width: 230px;
+  padding-right: 32px;
+  list-style-type: none;
+  line-height: 20px;
+}
+
+.contact li {
+  width: 230px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.contact li span {
+  font-weight: bold;
+}
+
+.section {
+  width: 950px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  width: 100%;
+  padding-right: 30px;
+  padding-left: 10px;
+  padding-top: 0;
+  line-height: 22px;
+
+}
+
+.section .item {
+  width: 900px;
+  height: 50px;
+  padding-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  border: solid 1px green;
+  text-align: center;
+  border-radius: 30px;
+}
+
+.total {
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 10px;
+  height: 90px;
+  border: solid 1px green;
+  border-radius: 10px;
+}
+
+.level_info {
+  width: 100%;
+}
