@@ -7,17 +7,13 @@
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
     <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet"/>
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"/>
     <link rel="stylesheet" href="/css/default.css">
-<!--    <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>-->
     <link rel="stylesheet" href="/css/boardHome1.css">
     <link rel="stylesheet" href="/css/boardHome2.css">
     <link href="/css/banner.css" rel="stylesheet"/>
-    <!-- icon -->
-    <!-- CSS Bootstrap -->
 
-    <!-- CSS -->
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
@@ -31,9 +27,6 @@
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
 <div class="page">
-
-
-
     <div class="banner">
         <div class="board_banner_text">
             <h1 style="font-family: Nunito">Community</h1>
@@ -45,20 +38,23 @@
 
     <!-- <div class="content-container"> -->
     <section class="primary">
-        <h2> 자유게시판 </h2>
-        </br>
-        <form class="col-4 m-auto" th:action="@{/boards/home}">
-            <div class="input-group mb-4 border rounded-pill p-1">
-                <input name="keyword" type="search" placeholder="search"
-                       class="form-control bg-none border-0 rounded-circle search">
-                <button type="submit" class="border-0" style="background: none">
-                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>
-                </button>
-            </div>
-        </form>
-        </br>
-        </br>
-        </br>
+        <br>
+        <div class="d-flex justify-content-between">
+            <h2> 자유게시판 </h2>
+            <button class="btn-white border-0 shadow" type="button"
+                    th:onclick="|location.href='@{/boards/boardAdd}'|"
+                    th:if="${session.loginMember != null}">글쓰기
+            </button>
+        </div>
+<!--        <form class="col-4 m-auto" th:action="@{/boards/home}">-->
+<!--            <div class="input-group mb-4 border rounded-pill p-1">-->
+<!--                <input name="keyword" type="search" placeholder="search"-->
+<!--                       class="form-control bg-none border-0 rounded-circle search">-->
+<!--                <button type="submit" class="border-0" style="background: none">-->
+<!--                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
 
         <div class="my-4">
             <table class="table table-hover align-middle bg-white">
@@ -72,11 +68,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="board:${boardList}">
+                <tr th:each="board:${boardList}"
+                    th:onclick="|location.href='@{/boards/detail/{id} (id=${board.id})}'|" role="button">
                     <td th:text="${board.id}">1</td>
-                    <td>
-                        <a th:text="${board.title}" th:href="@{/boards/detail/{id} (id=${board.id})}"></a>
-                    </td>
+                    <td th:text="${board.title}"></td>
                     <td th:text="${board.author}"></td>
                     <td th:text="${board.createdDate}"></td>
                     <td th:text="${board.views}"></td>
@@ -84,16 +79,17 @@
                 </tbody>
             </table>
 
-
-
-            <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-                <a th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
-                   th:text="${page}"></a>
-                <strong th:if="${page==nowPage}" th:text="${page}" style="color:red"></strong>
-            </th:block>
-            <button type="button" th:onclick="|location.href='@{/boards/boardAdd}'|"
-                    th:if="${session.loginMember != null}">게시글 등록
-            </button>
+            <!-- 페이징 시작 -->
+            <nav aria-label="Page navigation example" th:if="${startPage != null}">
+                <ul class="pagination pagination-circle justify-content-center">
+                    <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
+                        <a class="page-link" th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+                           th:text="${page}"></a>
+                        <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
+                    </th:block>
+                </ul>
+            </nav>
+            <!-- 페이징 끝 -->
         </div> <!-- Board Main End -->
 
 
@@ -106,7 +102,6 @@
     <aside class="secondary secondary-a">
         </br>
         <h3> Community </h3>
-        </br>
         </br>
         <ul class="info-list">
             <li class="info-list-item">
@@ -126,39 +121,32 @@
 
     <aside class="secondary secondary-b">
         </br>
-        <h3>RANK</h3>
-        </br>
+        <h3>핫 게시물</h3>
         </br>
         <ul class="user-list message-list">
             <li class="user-item message-item">
-                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                     USER 1
-                </p>
-
-            </li>
-            <li class="user-item message-item">
-                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
-                <p class="message-content">
-                    USER 2
+                    1번 게시글
                 </p>
             </li>
             <li class="user-item message-item">
-                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    USER 3
+                    2번 게시글
                 </p>
             </li>
             <li class="user-item message-item">
-                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    USER 4
+                    3번 게시글
                 </p>
             </li>
             <li class="user-item message-item">
-                <figure class="user-photo" style="background-image: url(/images/user.png);"></figure>
                 <p class="message-content">
-                    USER 5
+                    4번 게시글
+                </p>
+            </li>
+            <li class="user-item message-item">
+                <p class="message-content">
+                    5번 게시글
                 </p>
             </li>
         </ul>
@@ -168,19 +156,15 @@
     <!-- Footer-->
 
     <footer class="footer bg-white small text-center text-black-50">
-        </br>
-        </br>
+        <br>
+        <br>
         <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
     </footer>
-    </br>
-    </br>
+    <br>
+    <br>
 </div>
 
-<div class="modal">
-    <div class="dialog">
-        로그인
-    </div>
-</div>
+
 </body>
 </html>
 
