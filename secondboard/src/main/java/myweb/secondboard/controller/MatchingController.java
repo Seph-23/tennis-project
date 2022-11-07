@@ -62,6 +62,8 @@ public class MatchingController {
     CourtType[] courtTypes = CourtType.values();
     model.addAttribute("courtTypes", courtTypes);
 
+    model.addAttribute("lat", null);
+
     return "/matching/matchingHome";
   }
 
@@ -183,4 +185,19 @@ public class MatchingController {
     return "redirect:/matching/home";
   }
 
+//  @PostMapping("/new")
+  public String matchingFormAddLocation(@Validated @ModelAttribute("matching") MatchingSaveForm form,
+    BindingResult bindingResult, HttpServletRequest request, Model model) {
+
+    Member member = (Member) request.getSession(false)
+      .getAttribute(SessionConst.LOGIN_MEMBER);
+
+    if (bindingResult.hasErrors()) {
+      log.info("errors = {}", bindingResult);
+      return "redirect:/matching/home";
+    }
+
+    model.addAttribute("form", form);
+    return "/matching/matchingLocationAdd";
+  }
 }

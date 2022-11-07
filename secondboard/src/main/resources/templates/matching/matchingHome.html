@@ -28,6 +28,45 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+    <!-- 카카오 지도 -->
+    <style>
+        .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+        .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+        .map_wrap {position:relative;width:100%;height:500px;}
+        #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+        .bg_white {background:#fff;}
+        #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+        #menu_wrap .option{text-align: center;}
+        #menu_wrap .option p {margin:10px 0;}
+        #menu_wrap .option button {margin-left:5px;}
+        #placesList li {list-style: none;}
+        #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+        #placesList .item span {display: block;margin-top:4px;}
+        #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+        #placesList .item .info{padding:10px 0 10px 55px;}
+        #placesList .info .gray {color:#8a8a8a;}
+        #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+        #placesList .info .tel {color:#009900;}
+        #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+        #placesList .item .marker_1 {background-position: 0 -10px;}
+        #placesList .item .marker_2 {background-position: 0 -56px;}
+        #placesList .item .marker_3 {background-position: 0 -102px}
+        #placesList .item .marker_4 {background-position: 0 -148px;}
+        #placesList .item .marker_5 {background-position: 0 -194px;}
+        #placesList .item .marker_6 {background-position: 0 -240px;}
+        #placesList .item .marker_7 {background-position: 0 -286px;}
+        #placesList .item .marker_8 {background-position: 0 -332px;}
+        #placesList .item .marker_9 {background-position: 0 -378px;}
+        #placesList .item .marker_10 {background-position: 0 -423px;}
+        #placesList .item .marker_11 {background-position: 0 -470px;}
+        #placesList .item .marker_12 {background-position: 0 -516px;}
+        #placesList .item .marker_13 {background-position: 0 -562px;}
+        #placesList .item .marker_14 {background-position: 0 -608px;}
+        #placesList .item .marker_15 {background-position: 0 -654px;}
+        #pagination {margin:10px auto;text-align: center;}
+        #pagination a {display:inline-block;margin-right:10px;}
+        #pagination .on {font-weight: bold; cursor: default;color:#777;}
+    </style>
 </head>
 <body class="pt-6">
 <!-- Navigation-->
@@ -105,7 +144,7 @@
 <div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
         <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-end">
-            <a type="button" class="btn btn-primary px-4 py-3"
+            <a type="button" class="btn btn-primary px-4 py-3" id="match_modal_toggle"
                data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>
         </div>
         <div class="my-4">
@@ -191,47 +230,71 @@
 
                 <form th:action="@{/matching/new}" th:object="${matching}" method="POST">
                     <div class="mb-3">
-                        <label for="matchingTitle" class="form-label">매칭 이름<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.title}" id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
+                        <label for="matchingTitle" class="form-label">매칭 이름<span
+                            class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matching.title}"
+                               id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
                         <div th:errors="${matching.title}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
                         <label for="matchingDate" class="form-label">매칭 날짜<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" th:field="${matching.matchingDate}" id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
+                        <input type="date" class="form-control" th:field="${matching.matchingDate}"
+                               id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
                         <div th:errors="${matching.matchingDate}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required>
+                        <label for="matchingStartTime" class="form-label">시작 시간<span
+                            class="text-danger">*</span></label>
+                        <input type="text" class="form-control"
+                               th:field="${matching.matchingStartTime}" id="matchingStartTime"
+                               placeholder="시작 시간을 입력해주세요" required>
                         <div th:errors="${matching.matchingStartTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required>
+                        <label for="matchingEndTime" class="form-label">종료 시간<span
+                            class="text-danger">*</span></label>
+                        <input type="text" class="form-control"
+                               th:field="${matching.matchingEndTime}" id="matchingEndTime"
+                               placeholder="종료 시간을 입력해주세요" required>
                         <div th:errors="${matching.matchingEndTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">매칭 종류<span class="text-danger">*</span></div>
                         <div th:each="match : ${matchTypes}" class="form-check form-check-inline">
-                            <input type="radio" th:field="*{matchingType}" th:value="${match.name()}" class="form-check-input">
-                            <label th:for="${#ids.prev('matchingType')}" th:text="${match.title}" class="form-check-label"></label>
+                            <input type="radio" th:field="*{matchingType}"
+                                   th:value="${match.name()}" class="form-check-input">
+                            <label th:for="${#ids.prev('matchingType')}" th:text="${match.title}"
+                                   class="form-check-label"></label>
                         </div>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">코트 종류<span class="text-danger">*</span></div>
                         <div th:each="court : ${courtTypes}" class="form-check form-check-inline">
-                            <input type="radio" th:field="*{courtType}" th:value="${court.name()}" class="form-check-input">
-                            <label th:for="${#ids.prev('courtType')}" th:text="${court.title}" class="form-check-label"></label>
+                            <input type="radio" th:field="*{courtType}" th:value="${court.name()}"
+                                   class="form-check-input">
+                            <label th:for="${#ids.prev('courtType')}" th:text="${court.title}"
+                                   class="form-check-label"></label>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.place}" id="matchingPlace" placeholder="매창 장소를 입력해주세요" required>
+                        <label for="matchingPlace" class="form-label">매칭 장소<span
+                            class="text-danger">*</span></label>
+                        <input type="text" class="form-control" th:field="${matching.place}"
+                               id="matchingPlace" placeholder="매창 장소를 입력해주세요"
+                               data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
+                               required>
                         <div th:errors="${matching.place}" class="text-danger"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary">등록하기</button>
+                        <!--                        <a type="button" class="btn btn-primary px-4 py-3"-->
+                        <!--                           data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>-->
+                        <div th:if="${lat != null}">
+                            <a th:value="${lat}"></a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                취소
+                            </button>
+                            <button type="submit" class="btn btn-primary">등록하기</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -240,11 +303,52 @@
 </div>
 <!-- 모달 끝 -->
 
+<div class="modal fade" id="matchAddLocationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-2" id="matchAddLocationModalLabel">장소 등록</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
+                        <div th:errors="${matching.place}" class="text-danger"></div>
+                        <div class="map_wrap">
+                            <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+                            <div id="menu_wrap" class="bg_white">
+                                <div class="option">
+                                    <div>
+                                        <form onsubmit="searchPlaces(); return false;">
+                                            키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+                                            <button type="submit">검색하기</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <hr>
+                                <ul id="placesList"></ul>
+                                <div id="pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"
+                                data-bs-toggle="modal" data-bs-target="#matchAddModal">위치 등록</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">
     <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
 </footer>
 <!-- JS-->
 <script th:src="@{/js/matchingDate.js}"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
+<script th:src="@{/js/kakaoMap.js}"></script>
 </body>
 </html>
