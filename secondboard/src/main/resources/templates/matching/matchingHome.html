@@ -16,10 +16,18 @@
     <!-- CSS -->
     <link href="/css/styles.css" rel="stylesheet"/>
     <link href="/css/banner.css" rel="stylesheet"/>
-    <link href="/css/menu.css" rel="stylesheet"/>
-    <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
-    <script type="application/javascript"
-            src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <!-- JS Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <!--TimePicker-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
 </head>
 <body class="pt-6">
 <!-- Navigation-->
@@ -232,20 +240,11 @@
 </div>
 <!-- 모달 끝 -->
 
-
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">
     <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
 </footer>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.1.js"
-        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-        crossorigin="anonymous"></script>
-<!-- JS Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
 <!-- JS-->
-
+<script th:src="@{/js/matchingDate.js}"></script>
 </body>
 </html>

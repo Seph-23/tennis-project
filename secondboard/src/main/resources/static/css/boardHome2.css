@@ -33,19 +33,13 @@
 }
 
 .secondary-a {
-    background: white;
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-right-color: lightgrey;
+    background: #F1F1F1;
 }
 
 .secondary-b {
-    color: black;
-    background: white;
+    color: white;
+    background: #777777;
     text-decoration: #4b7976;
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-left-color: lightgrey;
 }
 
 .footer {

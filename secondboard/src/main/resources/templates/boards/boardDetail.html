@@ -4,30 +4,36 @@
   <link rel="shortcut icon" href="#">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
         rel="stylesheet">
-  <link rel="stylesheet" href="/css/boardHome1.css">
-  <link rel="stylesheet" href="/css/boardHome2.css">
-  <link rel="stylesheet" href="/css/boardDetail.css">
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
 </head>
 <body>
-<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+<div class="container"> <!-- Container Start -->
 
-<div class="page">
-  <div class="banner">
-    <div class="board_banner_text">
-      <h1 style="font-family: Nunito">Community</h1>
-      <p style="font-family: Nunito">come and join!</p>
-    </div>
-    <img src="/images/community.jpg" alt="배너 이미지" class="board_banner_area">
-  </div>
+  <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 
-  <!-- <div class="content-container"> -->
-  <section class="primary">
+  <div class="board"> <!-- board start -->
+    <div class="side-menu-left"> <!-- Left Side Menu Start -->
+      <h3>Community</h3>
+      <ul>
+        <li><a href="#">자유게시판</a></li>
+        <li><a href="#">공지사항</a></li>
+        <li><a href="#">Q&A</a></li>
+        <li><a href="#">레슨 찾아요</a></li>
+        <li><a href="#">동호회</a></li>
+      </ul>
+    </div> <!-- Left Side Menu End -->
 
+<<<<<<< HEAD
     <div class="container">
       <br>
       <h3 style="text-align: center" th:text="${board.title}"></h3>
@@ -40,7 +46,7 @@
           <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
           <a th:text="${board.views}"></a>
         </div>
-        <div>
+        <div th:if="${session.loginMember != null}">
           <div th:if="${session.loginMember.id == board.member.id}" style="display: inline-block">
             <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
                   method="get">
@@ -54,22 +60,50 @@
           </div>
         </div>
       </div>
+=======
+    <div class="board-detail"> <!-- Board Detail Start -->
+      <h6>자유게시판</h6>
+      <div class="board-header"> <!-- 게시글 헤더 -->
+        <h3 th:text="${board.title}"></h3>
+        <table>
+          <thead>
+          <tr>
+            <th>
+              <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
+              <a th:text="${board.author}"></a>
+            </th>
+            <th>
+              <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
+              <a th:text="${board.createdDate}"></a>
+            </th>
+            <th>
+              <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
+              <a th:text="${board.views}"></a>
+            </th>
+            <div th:if="${session.loginMember != null}">
+              <th th:if="${session.loginMember.id == board.member.id}">
+                <button th:onclick="deleteBoard([[${board.id}]])">게시글 삭제</button>
+              </th>
+              <th th:if="${session.loginMember.id == board.member.id}">
+                <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
+                      method="get">
+                  <button type="submit">게시글 수정</button>
+                </form>
+              </th>
+            </div>
+          </tr>
+          </thead>
+        </table>
+      </div> <!-- 게시글 헤더 끝 -->
+      <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
+        <p th:utext="${board.content}"></p>
+      </div> <!-- 게시글 본문 끝 -->
+    </div> <!-- Board Detail End -->
+>>>>>>> parent of 6857d4c (boardHome, boardDetail front 수정)
 
-      <br>
-      <br>
-
-      <div class="d-flex justify-content-center" id="board_content_box">
-        <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-          <p th:utext="${board.content}"></p>
-          <br>
-          <br>
-        </div> <!-- 게시글 본문 끝 -->
-      </div>
-
-
-
-      <div class="d-flex justify-content-center">
-        <table th:if="${!comments.isEmpty()}" class="table table-hover align-middle bg-white">
+    <div class="comment">
+      <div class="comment-body">
+        <table th:if="${!comments.isEmpty()}">
           <thead>
           <tr>
             <th>작성자</th>
@@ -80,30 +114,22 @@
           <tr th:each = "comment : ${comments}">
             <td th:text="${comment.author}"></td>
             <td>
-              <input class="border-0" style="width: 100%; background: white" th:id="'comment-content-'+${comment.id}"
-                     disabled th:value="${comment.content}">
+              <input th:id="'comment-content-'+${comment.id}" disabled
+                     th:value="${comment.content}">
             </td>
             <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
               <td>
                 <div th:if="${session.loginMember.id == comment.member.id}">
                   <button th:onclick="updateComment([[${comment.id}]])"
-                          th:id="'comment-update-'+${comment.id}"
-                          class="btn-outline-success border-0 shadow-sm"
-                          style="background: none">수정</button>
+                          th:id="'comment-update-'+${comment.id}">수정</button>
                   <button th:id="'comment-delete-'+${comment.id}"
-                          th:onclick="deleteComment([[${comment.id}]])"
-                          class="btn-outline-danger border-0 shadow-sm"
-                          style="background: none">삭제</button>
+                          th:onclick="deleteComment([[${comment.id}]])">삭제</button>
                 </div>
                 <div>
                   <button hidden th:id="'comment-update-confirm-'+${comment.id}"
-                          th:onclick="updateCommentConfirm([[${comment.id}]])"
-                          class="btn-outline-success border-0 shadow-sm"
-                          style="background: none">확인</button>
+                          th:onclick="updateCommentConfirm([[${comment.id}]])">확인</button>
                   <button hidden th:id="'comment-update-cancel-'+${comment.id}"
-                          th:onclick="updateCommentCancel([[${comment.id}]])"
-                          class="btn-outline-danger border-0 shadow-sm"
-                          style="background: none">취소</button>
+                          th:onclick="updateCommentCancel([[${comment.id}]])">취소</button>
                 </div>
               </td>
             </div>
@@ -112,92 +138,18 @@
         </table>
       </div>
 
-      <div class="w-100">
-        <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
-          <div class="comment-input-body">
-            <input hidden id="board-id" th:value="${board.id}">
-            <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
-          </div>
-          <br>
-          <div class="d-flex justify-content-end">
-            <button class="shadow-sm" id="comment-submit" type="submit">등록</button>
-          </div>
+      <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
+        <div class="comment-input-body">
+          <input hidden id="board-id" th:value="${board.id}">
+          <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
         </div>
+        <button id="comment-submit" type="submit">등록</button>
       </div>
     </div>
 
-
-    <br>
-    <br>
-    <br>
-    <br>
-  </section>
-
-  <aside class="secondary secondary-a">
-    <br>
-    <h3> Community </h3>
-    <br>
-    <ul class="info-list">
-      <li class="info-list-item">
-        <a href="#" class="info-list-a">자유게시판</a>
-      </li>
-      <li class="info-list-item">
-        <a href="#" class="info-list-a">공지사항</a>
-      </li>
-      <li class="info-list-item">
-        <a href="#" class="info-list-a">레슨 찾아요</a>
-      </li>
-      <li class="info-list-item">
-        <a href="#" class="info-list-a">동호회</a>
-      </li>
-    </ul>
-  </aside>
-
-  <aside class="secondary secondary-b">
-    <br>
-    <h3>핫 게시물</h3>
-    <br>
-    <ul class="user-list message-list">
-      <li class="user-item message-item">
-        <p class="message-content">
-          1번 게시글
-        </p>
-
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          2번 게시글
-        </p>
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          3번 게시글
-        </p>
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          4번 게시글
-        </p>
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          5번 게시글
-        </p>
-      </li>
-    </ul>
-  </aside>
-  <!-- </div> -->
-
-  <!-- Footer-->
-
-  <footer class="footer bg-white small text-center text-black-50">
-    <br>
-    <br>
-    <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
-  </footer>
-  <br>
-  <br>
-</div>
+  </div> <!-- board end -->
+  <footer th:replace="fragments/footer :: footer"></footer>
+</div> <!-- Container End -->
 </body>
 <script th:src="@{/js/boardDetailPage.js}"></script>
 </html>
