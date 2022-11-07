@@ -35,7 +35,7 @@ public class SecondboardApplication {
     SpringApplication.run(SecondboardApplication.class, args);
   }
 
-//
+
 //	@Order(1)
 //	@Bean
 //	public CommandLineRunner initData(MemberRepository memberRepository,

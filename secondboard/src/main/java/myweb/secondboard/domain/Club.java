@@ -41,6 +41,9 @@ public class Club implements Serializable {
   @Column(length = 256)
   private String img;
 
+  @Column
+  private String imgPath;
+
   @NotNull
   @CreatedDate
   @Column(length = 40)

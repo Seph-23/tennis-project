@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -7,165 +8,225 @@
   <!-- Google fonts-->
   <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
   <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet"/>
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
   <!-- CSS Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link href="/css/styles.css" rel="stylesheet"/>
+  <link href="/css/clubDetail_title.css" rel="stylesheet"/>
+  <!-- fontAwsome-->
+  <script src="https://kit.fontawesome.com/3e2d44114c.js" crossorigin="anonymous"></script>
+
 </head>
 <body class="pt-6">
+
 <!-- Navigation-->
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
-<div class="container text-start">
-  <div class="row align-items-center">
-    <h3>동호회 정보</h3>
-    <div class="row gx-5 gy-3">
-      <div class="col-3">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv_clQkjRnTiKk7zFdWjcoiLm-7jBYDbezzQ&usqp=CAU"
-             class="img-thumbnail" alt="이미지">
-      </div>
-      <div class="col-4">
-        <h4 th:text="${club.name}">동호회 이름</h4>
-        <p th:text="${club.createdDate}">동호회 생성일</p>
-        <ul>
-          <li>지역 :</li>
-          <li th:text="${club.local.name}"></li>
-          <li>모집 상태</li>
-          <li th:text="${club.status.title}"></li>
-          <li>팀원 수 :</li>
-          <li th:text="${club.memberCount}"></li>
-        </ul>
-      </div>
-      <div class="col-5" style="height: 250px;">
-        <div class="p-3 h-100 border bg-light" style="overflow: scroll">
-          <h4>팀소개</h4>
-          <p th:text="${club.introduction}">
-          </p>
+<div class="board_banner_area">
+  <div class="board_banner_text">
+    <h1 th:text="${club.name}">동호회 이름</h1>
+    <p th:text="${club.createdDate}">동호회 생성일 </p>
+  </div>
+  <img class="d-block w-100" style="background-size: cover; " src="https://source.unsplash.com/1500x370/?tennis" alt="배너 이미지">
+</div>
 
-        </div>
-      </div>
+<!-- 띄움 -->
+<div class="col-12 p-3"></div>
+
+<!-- layout만 나눠보기 -->
+<div class="container">
+  <div class="row">
+    <div class="col-8 p-3" >
+      <section class="border_shape" style="background-color: #F0FFF0">
+        <div class="row p-4 gx-3 gy-3">
+          <div class="col">
+            <h2><span th:if="${club.status.name() == 'RECRUITING'}" th:text="${club.status.title}" class="badge text-bg-success rounded-pill d-inline"></span></h2>
+            <h2><span th:if="${club.status.name() == 'END'}" th:text="${club.status.title}" class="badge text-bg-danger rounded-pill d-inline"></span></h2>
+          </div>
+        </div> <!-- 모집상태 -->
+
+        <div class="row px-5">
+          <div class="col-5">
+            <img th:src="@{${club.getImgPath()}}"
+                 class="img-thumbnail" alt="대표이미지">
+          </div>
+          <div class="col-7">
+            <ul>
+              <div style="font-size:x-large; text-indent: 15px;">
+                <i class="bi bi-geo-alt-fill text-muted me-1"></i><span th:text="${club.local.name}"></span>
+              </div>
+            </ul>
+            <ul>
+              <div style="font-size: x-large; text-indent: 15px;">
+                <i class="bi bi-people-fill text-muted me-1"></i><span th:text="${club.memberCount}"></span>
+              </div>
+            </ul>
+            <ul>
+              <div class="p-3" style="height :150px; overflow-y: auto;" >
+                <p th:text="${club.introduction}">
+              </div>
+            </ul>
+          </div>
+        </div> <!-- row-2(대표이미지, 자세한 소개) -->
+      </section>
+
+      <section class="border_shape p-3 my-4 border-black" style="background-color:#F0FFF0">
+
+        <h4 style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">
+          <i class="fa-solid fa-ranking-star fa-l p-3"></i>개인 경기 기록 top10</h4>
+        <table style="text-indent: 25px;">
+          <tr>
+            <td><p> <i class="fa-regular fa-circle-1"></i></p>  </td>
+            <td>윤모양</td>
+          </tr>
+        </table>
+
+      </section>
     </div>
 
-    <div class="row gx-5 gy-3">
-      <div class="col-7" style="height: 250px;">
-        <div class="p-3 h-100 border bg-light" style="overflow: scroll">
-          <h4>개인 경기 기록 top10</h4>
-          <ul>
-            <ol>윤모양</ol>
-            <ol>최모양</ol>
-            <ol>김모양</ol>
-          </ul>
-        </div>
-      </div>
-      <div class="col-5" style="height: 250px;">
-        <div class="p-3 h-100 border bg-light" style="overflow: scroll">
-          <h4>선수명단</h4>
-          <table>
-            <tr th:each="clubMember:${memberList}">
-              <td th:text="${clubMember.member.nickname}"></td>
-              <td th:if="${session.loginMember != null}">
-                <div th:if="${session.loginMember.nickname == club.leader
-              and clubMember.member.id != session.loginMember.id}">
+    <!-- 선수명단 -->
+    <div class="col-4 py-3" >
+      <section class="border_shape p-3" style="height : 300px; overflow-y: auto; background-color: #F0FFF0;">
+        <h3 style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder"><i class="fa-solid fa-medal fa-l p-2"></i>선수 명단</h3>
+        <HR>
+        <table class="align-middle">
+          <tr th:each="clubMember:${memberList}">
+            <td>
+              <div th:if="${clubMember.member.nickname==club.leader}" style="text-indent: 25px;">
+                <i class="fa-sharp fa-solid fa-crown fa-xl"></i>
+              </div>
+            </td>
+            <td class="py-2" th:text="${clubMember.member.nickname}" style="text-indent: 40px; font-size: large"></td>
+            <td class="py-2" th:if="${session.loginMember != null}">
+              <div th:if="${session.loginMember.nickname == club.leader
+              and clubMember.member.id != session.loginMember.id}" style="text-indent: 40px;">
                 <form th:action="@{/club/memberBan/{id} (id=${clubMember.id})}" method="POST">
-                  <button type="submit" class="btn btn-danger p-1">추방</button>
+                  <button type="submit" class="btn btn-success p-1"
+                          style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">추방</button>
                 </form>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <!--가입 신청 대기목록-->
+
+      <section class="my-3 text-center d-grid"> <!-- 버튼! -->
+        <!-- 버튼들 -->
+        <div th:if="${session.loginMember != null}">
+          <ul>
+            <!-- 회원이면서 클럽장인 사람-->
+            <div th:if="${clubMemberCheck != null}">
+              <div th:if="${clubMemberCheck.member.nickname == club.leader}">
+                <form th:action="@{/club/delete}" method="POST">
+                  <input type="hidden" th:field="*{club.id}">
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-outline-success border my-3"
+                            style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">동호회 삭제</button>
+                  </div>
+                </form>
+                <div class="d-grid">
+                  <div class="d-grid">
+                    <button type="button" class="btn btn-outline-success border"
+                            data-bs-toggle="modal" data-bs-target="#clubUpdateModal"
+                            style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">정보 수정
+                    </button>
+                  </div>
                 </div>
-              </td>
-            </tr>
-          </table>
+              </div>
+
+              <!-- 회원이면서 클럽에 가입된 사람 -->
+              <div th:if="${clubMemberCheck.member.nickname != club.leader}">
+                <form th:action="@{/club/memberDelete}" method="POST">
+                  <input type="hidden" th:field="*{club.id}">
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-outline-success border"
+                            style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">동호회 탈퇴</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- 클럽멤버 검증-->
+            <div th:if="${clubMemberCheck == null}" class="d-grid">
+              <form th:action="@{/club/join}" method="POST">
+                <input type="hidden" th:field="*{club.id}">
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-outline-success border"
+                          style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">가입하기</button>
+                </div>
+              </form>
+            </div>
+          </ul><!-- 로그인 검증-->
+        </div>
+      </section>
+
+      <!-- 버튼 끈-->
+    </div>
+  </div> <!-- 전체 줄 -->
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="clubUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fs-2" id="clubUpdateModalLabel">CLUB UPDATE</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form th:action="@{/club/update}" th:object="${form}" method="POST">
+            <input type="hidden" th:field="${form.id}" >
+            <div class="mb-3">
+              <label for="clubName" class="form-label">동호회 이름<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" th:field="${form.name}" id="clubName" required>
+              <div th:errors="${form.name}" class="text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="clubLocal" class="form-label">동호회 활동 지역<span class="text-danger">*</span></label>
+              <select th:field="${form.local}" th:value="${form.local}" id="clubLocal" class="form-control">
+                <option th:each="local:${locals}"  th:text="${local.name}" th:value="${local.id}">
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="clubImg" class="form-label">동호회 대표 이미지</label>
+              <input type="file" class="form-control" th:field="${form.img}" id="clubImg">
+            </div>
+            <div class="mb-3">
+              <label for="clubIntroduction" class="form-label">동호회 소개</label>
+              <textarea class="form-control" th:field="${form.introduction}" id="clubIntroduction" rows="3"></textarea>
+              <div th:errors="${form.introduction}" class="text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <div class="form-label">모집 상태</div>
+              <div th:each="mojib : ${statuses}" class="form-check form-check-inline">
+                <input type="radio" th:field="*{status}" th:value="${mojib.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('status')}" th:text="${mojib.title}" class="form-check-label"></label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="submit" class="btn btn-primary">수정하기</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
-
-  <div th:if="${session.loginMember != null}">
-    <!-- 회원이면서 클럽장인 사람-->
-    <div th:if="${clubMemberCheck != null}">
-
-      <div th:if="${clubMemberCheck.member.nickname == club.leader}">
-        <form th:action="@{/club/delete}" method="POST">
-          <input type="hidden" th:field="*{club.id}">
-          <button type="submit" class="btn btn-success">동호회 삭제</button>
-        </form>
-        <button type="button" class="btn btn-success"
-                data-bs-toggle="modal" data-bs-target="#clubUpdateModal">정보 수정
-        </button>
-      </div>
-
-      <!-- 회원이면서 클럽에 가입된 사람 -->
-      <div th:if="${clubMemberCheck.member.nickname != club.leader}">
-        <form th:action="@{/club/memberDelete}" method="POST">
-          <input type="hidden" th:field="*{club.id}">
-          <button type="submit" class="btn btn-success">동호회 탈퇴</button>
-        </form>
-      </div>
-
-    </div> <!-- 클럽멤버 검증-->
-
-    <div th:if="${clubMemberCheck == null}">
-      <form th:action="@{/club/join}" method="POST">
-        <input type="hidden" th:field="*{club.id}">
-        <button type="submit" class="btn btn-success">가입하기</button>
-      </form>
-    </div>
-  </div> <!-- 로그인 검증-->
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="clubUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title fs-2" id="clubUpdateModalLabel">CLUB UPDATE</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <form th:action="@{/club/update}" th:object="${form}" method="POST">
-          <input type="hidden" th:field="${form.id}" >
-          <div class="mb-3">
-            <label for="clubName" class="form-label">동호회 이름<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" th:field="${form.name}" id="clubName" required>
-            <div th:errors="${form.name}" class="text-danger"></div>
-          </div>
-          <div class="mb-3">
-            <label for="clubLocal" class="form-label">동호회 활동 지역<span class="text-danger">*</span></label>
-            <select th:field="${form.local}" th:value="${form.local}" id="clubLocal" class="form-control">
-              <option th:each="local:${locals}"  th:text="${local.name}" th:value="${local.id}">
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="clubImg" class="form-label">동호회 대표 이미지</label>
-            <input type="file" class="form-control" th:field="${form.img}" id="clubImg">
-          </div>
-          <div class="mb-3">
-            <label for="clubIntroduction" class="form-label">동호회 소개</label>
-            <textarea class="form-control" th:field="${form.introduction}" id="clubIntroduction" rows="3"></textarea>
-            <div th:errors="${form.introduction}" class="text-danger"></div>
-          </div>
-          <div class="mb-3">
-            <div class="form-label">모집 상태</div>
-            <div th:each="mojib : ${statuses}" class="form-check form-check-inline">
-              <input type="radio" th:field="*{status}" th:value="${mojib.name()}" class="form-check-input">
-              <label th:for="${#ids.prev('status')}" th:text="${mojib.title}" class="form-check-label"></label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-primary">수정하기</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!--모달 끝-->
-
+  <!--모달 끝-->
 
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">

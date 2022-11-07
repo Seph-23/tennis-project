@@ -15,6 +15,8 @@ public class ClubSaveForm {
 
   private String img;
 
+  private String imgPath;
+
   @Size(min=1, max=256, message = "소개글은 256자 이내여야합니다")
   private String introduction;
 
