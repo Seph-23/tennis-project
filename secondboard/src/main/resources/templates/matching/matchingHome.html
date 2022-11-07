@@ -286,9 +286,8 @@
                         <div th:errors="${matching.place}" class="text-danger"></div>
                         <!--                        <a type="button" class="btn btn-primary px-4 py-3"-->
                         <!--                           data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>-->
-                        <div th:if="${lat != null}">
-                            <a th:value="${lat}"></a>
-                        </div>
+                        <input hidden id="matching_lat" th:field="${matching.lat}">
+                        <input hidden id="matching_lng" th:field="${matching.lng}">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 취소

@@ -29,7 +29,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter @Setter
 @NoArgsConstructor
 @DynamicInsert
-public class Matching {
+public class
+Matching {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -87,6 +88,9 @@ public class Matching {
   @Enumerated(EnumType.STRING)
   private GameResult gameResult;
 
+  private String lat;
+  private String lng;
+
   public static Matching createMatching(MatchingSaveForm form, Member member) {
     Matching matching = new Matching();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
@@ -103,6 +107,12 @@ public class Matching {
     matching.setMatchingCondition(MatchingCondition.AVAILABLE);
     matching.setPlayerNumber(matching.getPlayerNumber());
     matching.setMember(member);
+
+    //TODO
+    if (form.getLat() != null) {
+      matching.setLat(form.getLat());
+      matching.setLng(form.getLng());
+    }
     return matching;
   }
 

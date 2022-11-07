@@ -41,4 +41,7 @@ public class MatchingSaveForm {
 
   private String team;
 
+  private String lat;
+  private String lng;
+
 }

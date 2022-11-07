@@ -39,6 +39,9 @@ public class MatchingUpdateForm {
   @NotNull(message = "코트 종류를 선택해주세요.")
   private CourtType courtType;
 
+  private String lat;
+  private String lng;
+
   @Override
   public String toString() {
     return "MatchingUpdateForm{" +
