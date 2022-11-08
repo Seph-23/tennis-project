@@ -13,4 +13,8 @@ public interface MatchingRepositoryInterface {
   void increasePlayerNumber(Long matchingId);
 
   void matchingCondtionCheck(Long matchingId);
+
+  void matchingOngoingCheck(Long matchingId);
+
+  void matchingAfterCheck(Long matchingId);
 }

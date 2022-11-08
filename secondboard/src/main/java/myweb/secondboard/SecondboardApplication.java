@@ -18,6 +18,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +31,8 @@ import static myweb.secondboard.web.MatchingType.SINGLE;
  * 11월1일자 복구
  */
 @SpringBootApplication
+@EnableScheduling
+@EnableAsync
 public class SecondboardApplication {
 
   public static void main(String[] args){

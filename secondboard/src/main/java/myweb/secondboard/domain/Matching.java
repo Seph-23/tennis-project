@@ -7,10 +7,7 @@ import lombok.Setter;
 import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.dto.ResultAddForm;
-import myweb.secondboard.web.CourtType;
-import myweb.secondboard.web.GameResult;
-import myweb.secondboard.web.MatchingCondition;
-import myweb.secondboard.web.MatchingType;
+import myweb.secondboard.web.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -81,6 +78,9 @@ Matching {
   @Enumerated(EnumType.STRING)
   private MatchingCondition matchingCondition;
 
+  @Enumerated(EnumType.STRING)
+  private MatchingStatus matchingStatus;
+
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
@@ -105,6 +105,7 @@ Matching {
     matching.setCourtType(form.getCourtType());
     matching.setMatchingType(form.getMatchingType());
     matching.setMatchingCondition(MatchingCondition.AVAILABLE);
+    matching.setMatchingStatus(MatchingStatus.BEFORE);
     matching.setPlayerNumber(matching.getPlayerNumber());
     matching.setMember(member);
     matching.setLat(form.getLat());
@@ -147,5 +148,13 @@ Matching {
   public void updateMatchingResult(ResultAddForm resultAddForm, Matching matching) {
     matching.setId(resultAddForm.getId());
     matching.setGameResult(resultAddForm.getGameResult());
+  }
+
+  public void matchingOngoingCheck(Matching matching) {
+    matching.setMatchingStatus(MatchingStatus.ONGOING);
+  }
+
+  public void matchingAfterCheck(Matching matching) {
+    matching.setMatchingStatus(MatchingStatus.AFTER);
   }
 }
