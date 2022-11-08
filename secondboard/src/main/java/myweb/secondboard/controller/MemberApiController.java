@@ -77,4 +77,16 @@ public class MemberApiController {
     result.put("result", "duplicate");
     return result;            //중복회원
   }
+
+  @GetMapping("/checkPhoneNum")
+  public JSONObject checkPhoneNum(@RequestParam Map<String, Object> param) {
+    JSONObject result = new JSONObject();
+    Optional<Member> member = memberService.findByPhoneNum(param.get("phoneNum").toString());
+    if (member.isEmpty()) {
+      result.put("result", "ok");
+      return result;       //가입가능
+    }
+    result.put("result", "duplicate");
+    return result;            //중복회원
+  }
 }

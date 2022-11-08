@@ -66,4 +66,8 @@ public class MemberService {
     member.setPassword(passwordEncrypt.encrypt(form.getUpdatePassword()));
     memberRepository.save(member);
   }
+
+  public Optional<Member> findByPhoneNum(String phoneNum) {
+    return memberRepository.findByPhoneNum(phoneNum);
+  }
 }

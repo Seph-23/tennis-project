@@ -17,80 +17,165 @@ $(document).ready(function(){
   $("#year  > option[value="+year+"]").attr("selected", "true");
   $("#month  > option[value="+mon+"]").attr("selected", "true");
   $("#day  > option[value="+day+"]").attr("selected", "true");
-})
-
-$("#id-dup-button").click(function () {
-  $("#signup-submit").attr("type", "button");
-  let id = {
-    loginId: $("#login-id").val()
-  }
-  $.ajax({
-    type: "get",
-    async: false,
-    url: "/api/members/checkId",
-    data: id,
-    success: function (data) {
-      if (data.result === "duplicate") {
-        alert("이미 가입된 아이디 입니다.");
-      } else if (data.result === "ok") {
-        alert("사용 가능한 아이디 입니다.");
-        $("#signup-submit").attr("type", "submit");
-      } else if (data.result === "validate") {
-        alert("아이디는 8 ~ 15 자 이내여야 합니다.");
-      }
-    },
-    error: function () {
-      alert("서버 에러!");
-    }
-  });
 });
 
-$("#nick-dup-button").click(function () {
-  $("#signup-submit").attr("type", "button");
+let validationStatus = {
+  id: "",
+  password: "",
+  nickname: "",
+  email: "",
+  phone: ""
+}
+
+$("#login-id").on("focusout", function () {
+  let id = {
+    loginId: $("#login-id").val(),
+  };
+  if (id.loginId.length < 8 || id.loginId.length > 15) {
+    $("#login_id_dup_check").attr("hidden", true);
+    $("#login_id_validate").removeAttr("hidden");
+    validationStatus.id = "";
+    validationStatusCheck();
+  } else {
+    $.ajax({
+      type: "get",
+      url: "/api/members/checkId",
+      data: id,
+      success: function (data) {
+        if (data.result === "duplicate") {
+          $("#login_id_dup_check").removeAttr("hidden");
+          $("#login_id_validate").attr("hidden", true);
+          validationStatus.id = "";
+          validationStatusCheck();
+        } else if (data.result === "ok") {
+          $("#login_id_dup_check").attr("hidden", true);
+          $("#login_id_validate").attr("hidden", true);
+          validationStatus.id = "ok";
+          validationStatusCheck();
+        }
+      },
+      error: function () {
+      },
+    });
+  }
+});
+
+$("#password").on("focusout", function () {
+  let password = $("#password").val();
+  if (password.length < 9 || password.length > 24) {
+    $("#password_validate").removeAttr("hidden");
+    validationStatus.password = "";
+    validationStatusCheck();
+  } else {
+    $("#password_validate").attr("hidden", true);
+  }
+});
+
+$("#password_check").on("focusout", function () {
+  let password = $("#password").val();
+  let passwordCheck = $("#password_check").val();
+  if (password !== passwordCheck) {
+    $("#password_check_message").removeAttr("hidden");
+    validationStatus.password = "";
+    validationStatusCheck();
+  } else {
+    $("#password_check_message").attr("hidden", true);
+    validationStatus.password = "ok";
+    validationStatusCheck();
+  }
+});
+
+$("#nickname").on("focusout", function () {
   let nick = {
     nickname: $("#nickname").val()
   }
-  $.ajax({
-    type: "get",
-    async: false,
-    url: "/api/members/checkNick",
-    data: nick,
-    success: function (data) {
-      if (data.result === "duplicate") {
-        alert("이미 사용중인 닉네임 입니다.");
-      } else if (data.result === "ok") {
-        alert("사용 가능한 닉네임 입니다.");
-        $("#signup-submit").attr("type", "submit");
-      } else if (data.result === "validate") {
-        alert("닉네임은 4 ~ 10 자 이내여야 합니다.");
-      }
-    },
-    error: function () {
-      alert("서버 에러!");
-    }
-  })
+  if (nick.nickname.length < 4 || nick.nickname.length > 10) {
+    $("#nickname_validate").removeAttr("hidden");
+    $("#nickname_dup_check").attr("hidden", true);
+    validationStatus.nickname = "";
+    validationStatusCheck();
+  } else {
+    $.ajax({
+      type: "get",
+      url: "/api/members/checkNick",
+      data: nick,
+      success: function (data) {
+        if (data.result === "duplicate") {
+          $("#nickname_dup_check").removeAttr("hidden");
+          $("#nickname_validate").attr("hidden", true);
+          validationStatus.nickname = "";
+          validationStatusCheck();
+        } else if (data.result === "ok") {
+          $("#nickname_validate").attr("hidden", true);
+          $("#nickname_dup_check").attr("hidden", true);
+          validationStatus.nickname = "ok";
+          validationStatusCheck();
+        }
+      },
+      error: function () {
+      },
+    });
+  }
 });
 
-$("#email-dup-button").click(function () {
-  $("#signup-submit").attr("type", "button");
+$("#email").on("focusout", function () {
   let email = {
-    email: $("#email").val()
+    email: $("#email").val(),
   }
   $.ajax({
     type: "get",
-    async: false,
     url: "/api/members/checkEmail",
     data: email,
     success: function (data) {
       if (data.result === "duplicate") {
-        alert("이미 사용중인 이메일 입니다.");
+        $("#email_duplicate").removeAttr("hidden");
+        validationStatus.email = "";
+        validationStatusCheck();
       } else if (data.result === "ok") {
-        alert("사용 가능한 이메일 입니다.");
-        $("#signup-submit").attr("type", "submit");
+        $("#email_duplicate").attr("hidden", true);
+        validationStatus.email = "ok";
+        validationStatusCheck();
       }
     },
-    error: function () {
-      alert("서버 에러!");
-    }
-  })
+  });
 });
+
+$("#phone-number").on("focusout", function () {
+  let phoneNum = {
+    phoneNum: $("#phone-number").val(),
+  }
+  if (phoneNum.phoneNum.length !== 11) {
+    $("#phone_validate").removeAttr("hidden");
+    validationStatus.phone = "";
+    validationStatusCheck();
+  } else {
+    $.ajax({
+      type: "get",
+      url: "/api/members/checkPhoneNum",
+      data: phoneNum,
+      success: function (data) {
+        if (data.result === "duplicate") {
+          $("#phone_duplicate").removeAttr("hidden");
+          $("#phone_validate").attr("hidden", true);
+          validationStatus.phone = "";
+          validationStatusCheck();
+        } else if (data.result === "ok") {
+          $("#phone_duplicate").attr("hidden", true);
+          $("#phone_validate").attr("hidden", true);
+          validationStatus.phone = "ok";
+          validationStatusCheck();
+        }
+      },
+    });
+  }
+});
+
+function validationStatusCheck() {
+  if (validationStatus.id === "ok" && validationStatus.password === "ok"
+      && validationStatus.nickname === "ok" && validationStatus.email === "ok"
+      && validationStatus.phone === "ok") {
+    $("#signup-submit").removeAttr("disabled");
+  } else {
+    $("#signup-submit").attr("disabled", true);
+  }
+}

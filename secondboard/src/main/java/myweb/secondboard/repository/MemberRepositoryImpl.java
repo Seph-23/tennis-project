@@ -30,4 +30,8 @@ public class MemberRepositoryImpl {
   public Optional<Member> findByEmail(String email) {
     return findAll().stream().filter(m -> m.getEmail().equals(email)).findFirst();
   }
+
+  public Optional<Member> findByPhoneNum(String phoneNum) {
+    return findAll().stream().filter(m -> m.getPhoneNumber().equals(phoneNum)).findFirst();
+  }
 }
