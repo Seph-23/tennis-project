@@ -34,4 +34,14 @@ public class MatchingRepositoryImpl implements MatchingRepositoryInterface{
     Matching matching = findOne(matchingId);
     matching.matchingConditionCheck(matching);
   }
+
+  public void matchingOngoingCheck(Long matchingId) {
+    Matching matching = findOne(matchingId);
+    matching.matchingOngoingCheck(matching);
+  }
+
+  public void matchingAfterCheck(Long matchingId) {
+    Matching matching = findOne(matchingId);
+    matching.matchingAfterCheck(matching);
+  }
 }
