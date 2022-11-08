@@ -286,5 +286,4 @@ $("#matchingPlace").click(function () {
     map.relayout();
     map.setCenter(new kakao.maps.LatLng(37.566826, 126.9786567));
   }, 200);
-
 });
