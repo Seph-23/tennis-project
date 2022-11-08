@@ -37,7 +37,6 @@ import java.util.List;
 public class MatchingController {
 
   private final MatchingService matchingService;
-
   private final PlayerService playerService;
 
   @GetMapping("/home")
@@ -124,6 +123,8 @@ public class MatchingController {
     matchingForm.setMatchingStartTime(matching.getMatchingStartTime());
     matchingForm.setMatchingEndTime(matching.getMatchingEndTime());
     matchingForm.setMatchingType(matching.getMatchingType());
+    matchingForm.setLat(matching.getLat());
+    matchingForm.setLng(matching.getLng());
     model.addAttribute("matchingForm", matchingForm);
 
     return "/matching/matchingDetail";

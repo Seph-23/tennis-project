@@ -107,12 +107,9 @@ Matching {
     matching.setMatchingCondition(MatchingCondition.AVAILABLE);
     matching.setPlayerNumber(matching.getPlayerNumber());
     matching.setMember(member);
+    matching.setLat(form.getLat());
+    matching.setLng(form.getLng());
 
-    //TODO
-    if (form.getLat() != null) {
-      matching.setLat(form.getLat());
-      matching.setLng(form.getLng());
-    }
     return matching;
   }
 
@@ -130,7 +127,8 @@ Matching {
     matching.setMatchingType(form.getMatchingType());
     matching.setModifiedDate(LocalDateTime.now().format(dtf));
     matching.setMember(member);
-
+    matching.setLat(form.getLat());
+    matching.setLng(form.getLng());
   }
 
   public void increasePlayerNumber(Matching matching) {
