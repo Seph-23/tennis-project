@@ -17,6 +17,8 @@ $(document).ready(function(){
   $("#year  > option[value="+year+"]").attr("selected", "true");
   $("#month  > option[value="+mon+"]").attr("selected", "true");
   $("#day  > option[value="+day+"]").attr("selected", "true");
+
+  $("#inlineRadio1").prop("checked", true);
 });
 
 let validationStatus = {
