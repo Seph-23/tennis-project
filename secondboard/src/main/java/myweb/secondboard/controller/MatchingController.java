@@ -179,9 +179,12 @@ public class MatchingController {
   }
 
   @PostMapping("/result")
-  public String matchingResult(@ModelAttribute("result") ResultAddForm result) {
+  public String matchingResult(@ModelAttribute("result") ResultAddForm result, HttpServletRequest request) {
 
-    matchingService.updateGameResult(result);
+    Member member = (Member) request.getSession(false)
+      .getAttribute(SessionConst.LOGIN_MEMBER);
+
+    matchingService.resultTempAdd(result, member);
 
     return "redirect:/matching/home";
   }
