@@ -4,14 +4,20 @@ $(document).ready(function () {
     var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
     // document.getElementById("matchingDate").setAttribute("min", today);
     $("#matchingDate").attr({"min" : today });
+    $("#single_btn").prop("checked", true);
+    if ($("#teamASize").val() === "2") {
+        $("#double_btnB").prop("checked", true);
+    } else {
+        $("#double_btnA").prop("checked", true);
+    }
 });
 
 
 $('#matchingStartTime').timepicker({
     timeFormat: 'HH:mm',
     interval: 10,
-    minTime: '00:00',
-    maxTime: '23:50',
+    minTime: '01:00',
+    maxTime: '21:50',
     dynamic: false,
     dropdown: true,
     scrollbar: true,
@@ -27,9 +33,7 @@ $('#matchingEndTime').mouseover(function () {
     console.log(sNewTime);
     $('#matchingEndTime').timepicker('option', 'minTime', sNewTime);
     $('#matchingEndTime').timepicker('option', 'startTime', sNewTime);
-});
 
-$("#matchingEndTime").mouseover(function(){
     // 시작 시간 선택 후 종료시간 최대 +2시간 설정
     var time = $('#matchingStartTime').val();
     var getTime = time.split(":"); //split time by colon
@@ -39,7 +43,13 @@ $("#matchingEndTime").mouseover(function(){
     //set time picker
     console.log(newTime);
     $("#matchingEndTime").timepicker('option','maxTime', newTime);
-})
+
+    // 시작 시간 1시간 전 설정
+    var beforeHour = (parseInt(getTime[0])-1) +":"+getTime[1];
+    beforeHour = String(beforeHour).padStart(5, "0");
+    $("#beforeHour").val(beforeHour);
+});
+
 
 $('#matchingEndTime').timepicker({
     timeFormat: 'HH:mm',
@@ -49,5 +59,13 @@ $('#matchingEndTime').timepicker({
     scrollbar: true,
     zindex: 9999
 });
+
+
+
+
+
+
+
+
 
 

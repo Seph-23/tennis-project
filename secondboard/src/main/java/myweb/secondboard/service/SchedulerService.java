@@ -31,16 +31,29 @@ public class SchedulerService {
     List<Matching> lists = matchingRepository.findAll();
 
     for (int i = 0; i < lists.size(); i++) {
-      if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingStartTime().equals(currentTime)) {
+
+
+      if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeHour().equals(currentTime)) {
+        Matching matching = lists.get(i);
+        matchingRepository.matchingBeforeHourCheck(matching.getId());
+      }
+      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingStartTime().equals(currentTime)) {
         Matching matching = lists.get(i);
         matchingRepository.matchingOngoingCheck(matching.getId());
       }
-      if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingEndTime().equals(currentTime)) {
+      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingEndTime().equals(currentTime)) {
         Matching matching = lists.get(i);
         matchingRepository.matchingAfterCheck(matching.getId());
       }
+      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingEndTime().equals(currentTime)) {
+        Matching matching = lists.get(i);
+        matchingRepository.matchingAfterCheck(matching.getId());
+      }
+      else if (lists.get(i).getMatchingDate().plusDays(7).equals(currentDate)) {
+        Matching matching = lists.get(i);
+        matchingRepository.matchingAfterWeek(matching.getId());
+      }
     }
-
     System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Schedule 실행됨");
   }
 }

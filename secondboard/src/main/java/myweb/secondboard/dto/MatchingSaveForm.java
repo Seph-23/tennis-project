@@ -38,6 +38,8 @@ public class MatchingSaveForm {
   @NotNull(message = "코트 종류를 선택해주세요.")
   private CourtType courtType;
 
+  private String beforeHour;
+
 
   private String team;
 

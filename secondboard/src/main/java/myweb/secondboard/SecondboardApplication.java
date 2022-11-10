@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import myweb.secondboard.domain.*;
+import myweb.secondboard.domain.Record;
 import myweb.secondboard.repository.*;
 import myweb.secondboard.web.*;
 import org.springframework.boot.CommandLineRunner;
@@ -39,7 +40,7 @@ public class SecondboardApplication {
     SpringApplication.run(SecondboardApplication.class, args);
   }
 
-//
+
 //	@Order(1)
 //	@Bean
 //	public CommandLineRunner initData(MemberRepository memberRepository,
@@ -189,6 +190,6 @@ public class SecondboardApplication {
 //
 //		});
 //	}
-//
+
 
 }

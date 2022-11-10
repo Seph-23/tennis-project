@@ -185,12 +185,12 @@
                     <button type="submit" class="btn btn-primary">매칭 참가 취소</button>
                 </div>
             </form>
-            <div th:if="${session.loginMember.id == matching.member.id}">
+            <div th:if="${matching.matchingStatus.equals('AFTER') and session.loginMember == playerMemberCheck}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resultModal">매치 결과 등록</button>
             </div>
         </div>
 
-        <div class="col-4 d-flex justify-content-end gap-2" th:if="${session.loginMember.id == matching.member.id}">
+        <div class="col-4 d-flex justify-content-end gap-2" th:if="${session.loginMember.id == matching.member.id and matching.matchingStatus.equals('BEFORE')}">
             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#matchUpdateModal">수정</a>
             <form th:action="@{/matching/delete/{id} (id=${matching.id})}" method="post">
                 <button type="submit" class="btn btn-primary">삭제</button>
@@ -215,10 +215,20 @@
                 <form th:object="${playerAddForm}" th:action="@{/matching/player/add}" method="post">
                     <input hidden name="memberId" th:value="${session.loginMember.id}"/>
                     <input hidden name="matchingId" th:value="${matching.id}"/>
-                    <div class="mb-3">
+                    <input hidden id="teamASize" th:value="${playersA.size()}"/>
+                    <input hidden id="teamBSize" th:value="${playersB.size()}"/>
+                    <div th:if="${matching.matchingType.title.equals('단식')}" class="mb-3">
                         <div class="form-label">팀</div>
-                        <input type="radio" th:field="${playerAddForm.team}" value="A">A
-                        <input type="radio" th:field="${playerAddForm.team}" value="B">B
+                        <input type="radio" th:field="${playerAddForm.team}" value="B" id="single_btn">B
+                    </div>
+                    <div th:if="${matching.matchingType.title.equals('복식')}" class="mb-3">
+                        <div class="form-label">팀</div>
+                        <div th:if="${playersA.size() < 2}">
+                            <input type="radio" th:field="${playerAddForm.team}" id="double_btnA" value="A">A
+                        </div>
+                        <div th:if="${playersB.size() < 2}">
+                            <input type="radio" th:field="${playerAddForm.team}" id="double_btnB" value="B">B
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -287,12 +297,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matchingForm.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required>
+                        <input type="text" class="form-control" th:field="${matchingForm.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required readonly>
                         <div th:errors="${matchingForm.matchingStartTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required>
+                        <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required readonly>
                         <div th:errors="${matchingForm.matchingEndTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
@@ -314,7 +324,7 @@
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
-                               required>
+                               required readonly>
                         <div th:errors="${matchingForm.place}" class="text-danger"></div>
                     </div>
                     <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
