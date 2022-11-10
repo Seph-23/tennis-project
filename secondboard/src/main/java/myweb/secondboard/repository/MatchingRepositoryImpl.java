@@ -44,4 +44,14 @@ public class MatchingRepositoryImpl implements MatchingRepositoryInterface{
     Matching matching = findOne(matchingId);
     matching.matchingAfterCheck(matching);
   }
+
+  public void matchingBeforeHourCheck(Long matchingId) {
+    Matching matching = findOne(matchingId);
+    matching.matchingBeforeHourCheck(matching);
+  }
+
+  public void matchingAfterWeek(Long matchingId) {
+    Matching matching = findOne(matchingId);
+    matching.matchingAfterWeek(matching);
+  }
 }

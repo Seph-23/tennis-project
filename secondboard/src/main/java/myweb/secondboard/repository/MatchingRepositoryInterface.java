@@ -17,4 +17,8 @@ public interface MatchingRepositoryInterface {
   void matchingOngoingCheck(Long matchingId);
 
   void matchingAfterCheck(Long matchingId);
+
+  void matchingBeforeHourCheck(Long matchingId);
+
+  void matchingAfterWeek(Long matchingId);
 }

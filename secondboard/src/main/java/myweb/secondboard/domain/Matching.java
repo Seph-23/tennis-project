@@ -81,6 +81,8 @@ Matching {
   @Enumerated(EnumType.STRING)
   private MatchingStatus matchingStatus;
 
+  private String beforeHour;
+
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
@@ -106,6 +108,7 @@ Matching {
     matching.setMatchingType(form.getMatchingType());
     matching.setMatchingCondition(MatchingCondition.AVAILABLE);
     matching.setMatchingStatus(MatchingStatus.BEFORE);
+    matching.setBeforeHour(form.getBeforeHour());
     matching.setPlayerNumber(matching.getPlayerNumber());
     matching.setMember(member);
     matching.setLat(form.getLat());
@@ -156,5 +159,11 @@ Matching {
 
   public void matchingAfterCheck(Matching matching) {
     matching.setMatchingStatus(MatchingStatus.AFTER);
+  }
+
+  public void matchingBeforeHourCheck(Matching matching) { matching.setMatchingStatus(MatchingStatus.HOURBEFORE);
+  }
+
+  public void matchingAfterWeek(Matching matching) { matching.setMatchingStatus(MatchingStatus.WEEKAFTER);
   }
 }
