@@ -1,6 +1,17 @@
 $("#send-phone-number").click(function () {
+
   let phoneNumber = $("#input-phone-number").val();
-  swal('인증번호를 발송했습니다.')
+  let Id =  $("#updateMemberLoginId").val();
+  let pattern = /^[0-9]{11}$/ //숫자만 + 휴대전화 번호 11자
+
+  if (phoneNumber === "" || !pattern.test(phoneNumber)) {
+    swal('휴대폰 번호 입력 부탁드립니다.').then(function () {
+      location.href="/members/find/" + Id;
+    })
+  } else if (typeof phoneNumber === 'string') {
+    swal('인증번호를 발송했습니다.')
+  }
+
 
   $.ajax({
     type: "GET",
@@ -20,7 +31,7 @@ $("#send-phone-number").click(function () {
 
           $.ajax({
             type: "GET",
-            url: "/members/update/password" + Id,
+            url: "/members/update/password/" + Id,
             data: {
               "phoneNumber" : $('#inputPhoneNumber').val()
             }
