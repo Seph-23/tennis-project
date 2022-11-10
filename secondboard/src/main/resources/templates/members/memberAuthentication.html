@@ -4,13 +4,13 @@
 
   <!-- loginPage 에서만 쓸 link-->
   <link href="/css/header-style.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/updatepassword.css">
+  <link rel="stylesheet" href="/css/updateAuthenticate.css">
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 </head>
+
 <body>
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
@@ -24,25 +24,20 @@
     <h3 class="hit" th:text="'GOGOTENNIS 아이디 : ' + ${loginId}">로그인Id</h3>
     <h3 class="hit2" th:text="'휴대전화 : ' + ${phoneNum}">휴대전화번호</h3>
     <input type="hidden" id="updateMemberLoginId" th:value="${updateMemberLoginId}"/>
-    <form class="login-form" role="form" action="/members/update" method="post" th:object="${form}" >
 
+
+    <form class="login-form" role="form" action="/members/update" method="post" th:object="${form}" >
 
       <div class="login_id">
         <label th:for="text"></label>
-        <input id="input-phone-number" type="text" class="form-control" placeholder="휴대폰 번호">
-      </div>
-
-      <div>
-        <button type="button" id="send-phone-number">인증번호 전송</button>
+        <input id="input-phone-number" type="text" class="form-control" placeholder="가입할 때 사용한 휴대폰 번호를 입력해주세요.">
+        <input type="button" id="send-phone-number" value="인증번호 전송">
       </div>
 
       <div class="login_pw">
         <label th:for="passwordcheck"></label>
-        <input id="inputCertifiedNumber" type="text" class="form-control" placeholder="인증번호 입력해주세요"/>
-      </div>
-
-      <div>
-        <button type="button" id="checkBtn">인증번호</button>
+        <input id="inputCertifiedNumber" type="text" class="form-control" placeholder="인증번호를 입력해주세요."/>
+        <input type="button" id="checkBtn" value="인증번호">
       </div>
 
     </form>
