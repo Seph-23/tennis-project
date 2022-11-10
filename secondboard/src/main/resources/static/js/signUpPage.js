@@ -33,19 +33,18 @@ $("#login-id").on("focusout", function () {
   let id = {
     loginId: $("#login-id").val(),
   };
-
   let idval = $('#login-id').val()
-  let idvalcheck =  /^[A-za-z]/g;
-  // !idvalcheck.test(idval)
-
-
-  if (!idvalcheck.test(idval)) {
-    $("#login_id_format").removeAttr("hidden");
-  }
+  let idvalcheck = /^[A-za-z]/g;
 
   if (id.loginId.length < 8 || id.loginId.length > 15) {
     $("#login_id_dup_check").attr("hidden", true);
     $("#login_id_validate").removeAttr("hidden");
+    $("#login_id_format").attr("hidden", true);
+    validationStatus.id = "";
+    validationStatusCheck();
+  } else if (!idvalcheck.test(idval)) {
+    $("#login_id_format").removeAttr("hidden");
+    $("#login_id_validate").attr("hidden", true);
     validationStatus.id = "";
     validationStatusCheck();
   } else {
@@ -62,6 +61,7 @@ $("#login-id").on("focusout", function () {
         } else if (data.result === "ok") {
           $("#login_id_dup_check").attr("hidden", true);
           $("#login_id_validate").attr("hidden", true);
+          $("#login_id_format").attr("hidden", true);
           validationStatus.id = "ok";
           validationStatusCheck();
         }
