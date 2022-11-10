@@ -202,26 +202,30 @@
     </div>
 </div>
 
-<!-- Paging -->
-<nav aria-label="Page navigation example">
+<!-- paging Start -->
+<nav aria-label="Page navigation example" th:if="${startPage != null}">
     <ul class="pagination pagination-circle justify-content-center">
-        <li class="page-item">
-            <a class="page-link" aria-label="Previous" th:href="@{/matching/home(page=${nowPage}-4)}">
+        <li class="page-item" th:if="${nowPage!=startPage}">
+            <a class="page-link" aria-label="Previous" th:href="@{/matching/home(page=${nowPage -2})}">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
         <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
-            <a class="page-link" th:if="${page != nowPage}" th:href="@{/matching/home(page=${page}-1)}"
-               th:text="${page}"></a>
-            <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
+            <div th:if="${endPage != 0}">
+                <a class="page-link" th:if="${page != nowPage}" th:href="@{/matching/home(page=${page -1})}"
+                   th:text="${page}"></a>
+                <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
+            </div>
         </th:block>
-        <li class="page-item">
+        <li class="page-item" th:if="${nowPage!=endPage && endPage != 0}">
             <a class="page-link" aria-label="Next" th:href="@{/matching/home(page=${nowPage})}">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
     </ul>
 </nav>
+<!-- paging End -->
+
 
 <!-- Modal -->
 <div class="modal fade" id="matchAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -251,7 +255,7 @@
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span
                             class="text-danger">*</span></label>
-                        <input readonly type="text" class="form-control"
+                        <input  type="text" class="form-control"
                                th:field="${matching.matchingStartTime}" id="matchingStartTime"
                                placeholder="시작 시간을 입력해주세요" required>
                         <div th:errors="${matching.matchingStartTime}" class="text-danger"></div>
@@ -259,7 +263,7 @@
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span
                             class="text-danger">*</span></label>
-                        <input readonly type="text" class="form-control"
+                        <input  type="text" class="form-control"
                                th:field="${matching.matchingEndTime}" id="matchingEndTime"
                                placeholder="종료 시간을 입력해주세요" required>
                         <div th:errors="${matching.matchingEndTime}" class="text-danger"></div>
@@ -288,7 +292,7 @@
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
-                               required readonly>
+                               required>
                         <div th:errors="${matching.place}" class="text-danger"></div>
                         <!--                        <a type="button" class="btn btn-primary px-4 py-3"-->
                         <!--                           data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>-->

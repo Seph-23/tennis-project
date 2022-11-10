@@ -1,16 +1,16 @@
 package myweb.secondboard.service;
 
 import lombok.RequiredArgsConstructor;
-import myweb.secondboard.domain.Matching;
-import myweb.secondboard.domain.Member;
-import myweb.secondboard.domain.Player;
+import myweb.secondboard.domain.*;
 import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.repository.MatchingRepository;
 import myweb.secondboard.repository.PlayerRepository;
+import myweb.secondboard.repository.ResultTempRepository;
 import myweb.secondboard.web.CourtType;
+import myweb.secondboard.web.GameResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,8 @@ public class MatchingService {
   private final MatchingRepository matchingRepository;
 
   private final PlayerRepository playerRepository;
+
+  private final ResultTempRepository resultTempRepository;
 
   public Matching findOne(Long matchingId) {
     return matchingRepository.findOne(matchingId);
@@ -87,37 +89,99 @@ public class MatchingService {
     matching.setPlayerNumber(matching.getPlayerNumber() - 1);
   }
 
-  public void updateGameResult(ResultAddForm result) {
-    List<Player> players = playerRepository.findAllByMatchingId(result.getId());
+//  public void updateGameResult(Matching matching) {
+//    List<Player> players = playerRepository.findAllByMatchingId(matching.getId());
+//
+//    for (Player player : players) {
+//      if (player.getTeam().toString().equals("A")) {
+//        if (matching.getGameResult().getTitle().equals("승리")) {
+//          player.getMember().getRecord().setWin(player.getMember().getRecord().getWin() + 1);
+//          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() + 10);
+//        } else {
+//          player.getMember().getRecord().setLose(player.getMember().getRecord().getLose() + 1);
+//          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 7);
+//        }
+//
+//      } else {
+//        if (matching.getGameResult().getTitle().equals("승리")) {
+//          player.getMember().getRecord().setLose(player.getMember().getRecord().getLose() + 1);
+//          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 7);
+//        } else {
+//          player.getMember().getRecord().setWin(player.getMember().getRecord().getWin() + 1);
+//          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() + 10);
+//        }
+//      }
+//      player.getMember().getRecord().setRate((double) (player.getMember().getRecord().getWin()) / (double)(player.getMember().getRecord().getWin() + player.getMember().getRecord().getLose()) * 100);
+//    }
+//  }
 
-    for (Player player : players) {
-      if (player.getTeam().toString().equals("A")) {
-        if (result.getGameResult().getTitle().equals("승리")) {
-          player.getMember().getRecord().setWin(player.getMember().getRecord().getWin() + 1);
-          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() + 10);
-        } else {
-          player.getMember().getRecord().setLose(player.getMember().getRecord().getLose() + 1);
-          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 7);
-        }
-
-      } else {
-        if (result.getGameResult().getTitle().equals("승리")) {
-          player.getMember().getRecord().setLose(player.getMember().getRecord().getLose() + 1);
-          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 7);
-        } else {
-          player.getMember().getRecord().setWin(player.getMember().getRecord().getWin() + 1);
-          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() + 10);
-        }
-      }
-      player.getMember().getRecord().setRate((double) (player.getMember().getRecord().getWin()) / (double)(player.getMember().getRecord().getWin() + player.getMember().getRecord().getLose()) * 100);
-    }
-
-    Matching matching = matchingRepository.findOne(result.getId());
-    matching.updateMatchingResult(result, matching);
-
-
+  @Transactional
+  public void resultTempAdd(ResultAddForm result, Member member) {
+    Optional<Player> player = playerRepository.exist(result.getId(), member.getId());
+    resultTempRepository.save(ResultTemp.createResultTemp(result, player.get()));
   }
 
+//  @Transactional
+//  public void validateResult(Player player) {
+//    List<ResultTemp> list = resultTempRepository.findResultTempMatching(player.getMatching().getId());
+//    List<ResultTemp> teamA = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("A")).toList();
+//    List<ResultTemp> teamB = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("B")).toList();
+//    Integer count = list.size();
+//    if (count == 4) {
+//      countFour(player, teamA, teamB);
+//    } else if (count == 3) {
+//      countThree(player, teamA, teamB);
+//    } else if (count == 2) {
+//      countTwo(player, list, teamA);
+//    } else if (count == 1) {
+//      player.getMatching().setGameResult(list.get(0).getGameResult());
+//    } else if (count == 0) {
+//      player.getMatching().setGameResult(GameResult.NORECORD);
+//    }
+//    updateGameResult(player.getMatching());
+//  }
+//
+//  private static void countThree(Player player, List<ResultTemp> teamA, List<ResultTemp> teamB) {
+//    if (teamA.size() == 2) {
+//      if (teamA.get(0).getGameResult() == teamA.get(1).getGameResult() && teamA.get(0).getGameResult() != teamB.get(0).getGameResult()) {
+//        player.getMatching().setGameResult(teamA.get(0).getGameResult());
+//      } else {
+//        player.getMatching().setGameResult(GameResult.PENALTY);
+//      }
+//    } else {
+//      if (teamB.get(0).getGameResult() == teamB.get(1).getGameResult() && teamA.get(0).getGameResult() != teamB.get(0).getGameResult()) {
+//        player.getMatching().setGameResult(teamA.get(0).getGameResult());
+//      } else {
+//        player.getMatching().setGameResult(GameResult.PENALTY);
+//      }
+//    }
+//  }
+//
+//  private static void countTwo(Player player, List<ResultTemp> list, List<ResultTemp> teamA) {
+//    if (list.get(0).getPlayer().getTeam() == list.get(1).getPlayer().getTeam()) {
+//      if (list.get(0).getGameResult() == list.get(1).getGameResult()) {
+//        player.getMatching().setGameResult(list.get(0).getGameResult());
+//      } else {
+//        player.getMatching().setGameResult(GameResult.PENALTY);
+//      }
+//    } else {
+//      if (list.get(0).getGameResult() != list.get(1).getGameResult()) {
+//        player.getMatching().setGameResult(teamA.get(0).getGameResult());
+//      } else {
+//        player.getMatching().setGameResult(GameResult.PENALTY);
+//      }
+//    }
+//  }
+//
+//  private static void countFour(Player player, List<ResultTemp> teamA, List<ResultTemp> teamB) {
+//    if (teamA.get(0).getGameResult().toString().equals(teamA.get(1).getGameResult().toString())
+//      && teamB.get(0).getGameResult().toString().equals(teamB.get(1).getGameResult().toString())
+//      && !teamA.get(0).getGameResult().toString().equals(teamB.get(0).getGameResult().toString())) {
+//      player.getMatching().setGameResult(teamA.get(0).getGameResult());
+//    } else {
+//      player.getMatching().setGameResult(GameResult.PENALTY);
+//    }
+//  }
 }
 
 

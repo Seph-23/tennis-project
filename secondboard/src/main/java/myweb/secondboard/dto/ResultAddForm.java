@@ -15,5 +15,6 @@ public class ResultAddForm {
   @NotNull
   private GameResult gameResult;
 
+  // 매칭 아이디
   private Long id;
 }
