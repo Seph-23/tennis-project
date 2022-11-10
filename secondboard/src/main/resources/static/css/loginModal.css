@@ -120,7 +120,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  margin-left: 20px;
+  margin-left: 3px;
   margin-right: 20px;
 }
 
@@ -140,6 +140,10 @@ h3 {
   font-size: 1.2em;
   font-weight: 700;
   letter-spacing: 2px;
+}
+
+.forgot_pw {
+  margin-right: -20px;
 }
 
 #kakao {

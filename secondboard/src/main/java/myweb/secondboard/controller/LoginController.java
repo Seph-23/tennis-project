@@ -40,8 +40,6 @@ public class LoginController {
   }
 
 
-
-
   @GetMapping("/login")
   public String loginPage(Model model) {
     model.addAttribute("loginForm", new LoginForm());
