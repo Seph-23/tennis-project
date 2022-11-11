@@ -48,7 +48,8 @@
                       type="submit" id="board_update_button">게시글 수정</button>
             </form>
           </div>
-          <div th:if="${session.loginMember.id == board.member.id}" style="display: inline-block">
+          <div th:if="${session.loginMember.id == board.member.id} or ${session.loginMember.role.toString() == 'ADMIN'}"
+               style="display: inline-block">
             <button class="btn-outline-danger border-0 shadow-sm" style="background: none"
                     th:onclick="deleteBoard([[${board.id}]])" id="board_delete_button">게시글 삭제</button>
           </div>

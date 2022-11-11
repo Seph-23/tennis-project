@@ -13,6 +13,6 @@ public class BoardSaveForm {
   private String title;
 
   @NotNull
-  @Size(min = 1, max = 1000000000, message = "게시글 용량이 너무 큽니다.")
+  @Size(min = 1, max = 2147483647, message = "게시글 용량이 너무 큽니다.")
   private String content;
 }
