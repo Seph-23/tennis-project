@@ -11,23 +11,21 @@
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-<body>
+<body class="pt-6">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
-
-<div class="page">
-  <div class="banner">
-    <div class="board_banner_text">
-      <h1 style="font-family: Nunito">Community</h1>
-      <p style="font-family: Nunito">come and join!</p>
-    </div>
-    <img src="/images/community.jpg" alt="배너 이미지" class="board_banner_area">
+<div class="board_banner_area">
+  <div class="board_banner_text">
+    <h1 style="font-family: Nunito">Community</h1>
+    <p style="font-family: Nunito">come and join!</p>
   </div>
-
+  <img src="/images/community_narrow.jpeg" alt="배너 이미지" class="">
+</div>
+<div class="page">
 
   <!-- <div class="content-container"> -->
   <section class="primary">
-
     <div class="container">
       <br>
       <h3 style="text-align: center" th:text="${board.title}"></h3>
@@ -68,70 +66,128 @@
       </div>
 
 
+      <!--요기요기요기 -->
+      <div class="container my-5 py-5">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-12 col-lg-10">
+            <div class="card text-dark">
+              <div class="card-body p-4">
+                <thead>
+                <tr>
+                  <th>Recent Comment</th>
+                </tr> <!-- 여기부터 댓글시작 -->
+                <tr th:each="comment : ${comments}" class="fw-bold mb-1">
+                  <hr class="my-0"/>
+                  <div class="card-body p-4"><!-- 몸통 -->
+                    <div class="d-flex flex-start">
+                      <img class="rounded-circle shadow-1-strong me-3"
+                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
+                           alt="avatar" width="60"
+                           height="60"/> <!-- 사진 -->
+                      <div style="width: 100%"> <!-- 시간 -->
+                        <h6 th:text="${comment.author}" class="fw-bold mb-1"></h6>
+                        <div class="d-flex align-items-center mb-3">
+                          <p th:text="${comment.modifiedDate}" class="mb-0"></p>
+                          <!-- 시간옆 아이콘자리 -->
+                          <a href="#!" class="link-muted"><i
+                                  class="fas fa-pencil-alt ms-2"></i></a>
+                          <a href="#!" class="text-success"><i
+                                  class="fas fa-redo-alt ms-2"></i></a>
+                          <a href="#!" class="link-danger"><i
+                                  class="fas fa-heart ms-2"></i></a>
+                          <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
+                            <td>
+                              <div class="button-group">
+                                <!-- 시간옆 공간주기-->
+                                <div th:if="${session.loginMember.id == comment.member.id}">
+                                  <button th:onclick="updateComment([[${comment.id}]])"
+                                          th:id="'comment-update-'+${comment.id}"
+                                          class=" btm_image"
+                                          style="border: none; background: none">
+                                    <img src="/images/tnwjd.gif"
+                                         th:src="@{/images/tnwjd.gif}"
+                                         width="19" height="21"
+                                         style="border: none">
+                                  </button>
+                                  <button th:id="'comment-delete-'+${comment.id}"
+                                          th:onclick="deleteComment([[${comment.id}]])"
+                                          class=" btm_image"
+                                          style="border: none; background: none">
+                                    <img src="/images/trash.gif"
+                                         th:src="@{/images/trash.gif}"
+                                         width="19" height="21"
+                                         style="border: none">
+                                  </button>
+                                </div>
 
-      <div class="d-flex justify-content-center">
-        <table th:if="${!comments.isEmpty()}" class="table table-hover align-middle bg-white">
-          <thead>
-          <tr>
-            <th>작성자</th>
-            <th>내용</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each = "comment : ${comments}">
-            <td th:text="${comment.author}"></td>
-            <td>
-              <input class="border-0" style="width: 100%; background: white" th:id="'comment-content-'+${comment.id}"
-                     disabled th:value="${comment.content}">
-            </td>
-            <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
-              <td>
-                <div th:if="${session.loginMember.id == comment.member.id}">
-                  <button th:onclick="updateComment([[${comment.id}]])"
-                          th:id="'comment-update-'+${comment.id}"
-                          class="btn-outline-success border-0 shadow-sm"
-                          style="background: none">수정</button>
-                  <button th:id="'comment-delete-'+${comment.id}"
-                          th:onclick="deleteComment([[${comment.id}]])"
-                          class="btn-outline-danger border-0 shadow-sm"
-                          style="background: none">삭제</button>
+
+                                <div>
+                                  <button hidden
+                                          th:id="'comment-update-confirm-'+${comment.id}"
+                                          th:onclick="updateCommentConfirm([[${comment.id}]])"
+                                          class=" btm_image"
+                                          style="border: none; background: none">
+                                    <img src="/images/check.gif"
+                                         th:src="@{/images/check.gif}"
+                                         width="19" height="21"
+                                         style="border: none">
+                                  </button>
+                                  <button hidden
+                                          th:id="'comment-update-cancel-'+${comment.id}"
+                                          th:onclick="updateCommentCancel([[${comment.id}]])"
+                                          class=" btm_image"
+                                          style="border: none; background: none">
+                                    <img src="/images/cancel.gif"
+                                         th:src="@{/images/cancel.gif}"
+                                         width="19" height="21"
+                                         style="border: none">
+                                  </button>
+                                </div>
+                              </div>
+                            </td>
+                          </div>
+                        </div>
+                        <table th:if="${!comments.isEmpty()}">
+                          <tbody>
+                          <td>
+                    <textarea style="resize: none;
+                                border: none;
+                                background: white;
+                                width: 400px;
+                                height: 70px"
+                              th:id="'comment-content-'+${comment.id}"
+                              disabled
+                              th:text="${comment.content}"></textarea>
+                          </td>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="my-0" style="height: 1px;"/>
+
+                </tr>
+                <br>
+                <div class="w-100">
+                  <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
+                    <div class="comment-input-body">
+                      <input hidden id="board-id" th:value="${board.id}">
+                      <textarea id="comment" class="form-control" rows="4"
+                                placeholder="댓글을 입력하세요"></textarea>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-end">
+                      <button class="shadow-sm" id="comment-submit" type="submit">등록</button>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <button hidden th:id="'comment-update-confirm-'+${comment.id}"
-                          th:onclick="updateCommentConfirm([[${comment.id}]])"
-                          class="btn-outline-success border-0 shadow-sm"
-                          style="background: none">확인</button>
-                  <button hidden th:id="'comment-update-cancel-'+${comment.id}"
-                          th:onclick="updateCommentCancel([[${comment.id}]])"
-                          class="btn-outline-danger border-0 shadow-sm"
-                          style="background: none">취소</button>
-                </div>
-              </td>
-            </div>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="w-100">
-        <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
-          <div class="comment-input-body">
-            <input hidden id="board-id" th:value="${board.id}">
-            <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
-          </div>
-          <br>
-          <div class="d-flex justify-content-end">
-            <button class="shadow-sm" id="comment-submit" type="submit">등록</button>
-          </div>
-        </div>
-      </div>
-    </div>
+              </div>
 
 
-    <br>
-    <br>
-    <br>
-    <br>
+              <br>
+              <br>
+              <br>
+              <br>
   </section>
 
   <aside class="secondary secondary-a">
@@ -153,7 +209,6 @@
       </li>
     </ul>
   </aside>
-
   <aside class="secondary secondary-b">
     <br>
     <h3>핫 게시물</h3>
