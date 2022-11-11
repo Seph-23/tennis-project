@@ -13,6 +13,7 @@ import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.web.Gender;
 import myweb.secondboard.web.PasswordEncrypt;
 import myweb.secondboard.web.Provider;
+import myweb.secondboard.web.Role;
 
 @Entity
 @Getter @Setter
@@ -49,6 +50,9 @@ public class Member implements Serializable {
 
   private String accessToken;
 
+  @Enumerated(EnumType.STRING)
+  private Role role;
+
   @OneToOne
   @JoinColumn(name = "record_id")
   private Record record;
@@ -66,6 +70,7 @@ public class Member implements Serializable {
     member.setGender(Gender.valueOf(form.getGender()));
     member.setProvider(Provider.GOGOTENNIS);
     member.setRecord(record);
+    member.setRole(Role.MEMBER);
     return member;
   }
 
