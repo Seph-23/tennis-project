@@ -50,6 +50,10 @@ public class MatchingRepositoryImpl implements MatchingRepositoryInterface{
     matching.matchingBeforeHourCheck(matching);
   }
 
+  public void matchingBeforeTwoHourCheck(Long matchingId) {
+    Matching matching = findOne(matchingId);
+    matching.matchingBeforeTwoHourCheck(matching);
+  }
   public void matchingAfterWeek(Long matchingId) {
     Matching matching = findOne(matchingId);
     matching.matchingAfterWeek(matching);

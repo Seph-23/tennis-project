@@ -173,7 +173,8 @@
         </div>
 
         <div class="col-4 d-flex justify-content-center gap-3">
-            <div th:if="${playerMemberCheck == null and matching.matchingCondition.title == '신청가능'}">
+            <div th:if="${playerMemberCheck == null and matching.matchingCondition.title == '신청가능'
+             and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teamModal">매치 신청</button>
             </div>
             <!--매칭에 참가된 인원이면서 매칭 마감이 안된 경우-->
@@ -181,7 +182,8 @@
                 <input hidden name="memberId" th:value="${session.loginMember.id}"/>
                 <input hidden name="matchingId" th:value="${matching.id}"/>
                 <!--매칭에 참가된 인원이면서 매칭 마감이 안된 경우-->
-                <div th:if="${playerMemberCheck != null and matching.matchingCondition.title == '신청가능' and session.loginMember.id != matching.member.id}">
+                <div th:if="${playerMemberCheck != null and matching.matchingCondition.title == '신청가능' and session.loginMember.id != matching.member.id
+                and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">
                     <button type="submit" class="btn btn-primary">매칭 참가 취소</button>
                 </div>
             </form>
@@ -190,7 +192,7 @@
             </div>
         </div>
 
-        <div class="col-4 d-flex justify-content-end gap-2" th:if="${session.loginMember.id == matching.member.id and matching.matchingStatus.equals('BEFORE')}">
+        <div class="col-4 d-flex justify-content-end gap-2" th:if="${session.loginMember.id == matching.member.id and matching.matchingStatus.name().equals('BEFORE')}">
             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#matchUpdateModal">수정</a>
             <form th:action="@{/matching/delete/{id} (id=${matching.id})}" method="post">
                 <button type="submit" class="btn btn-primary">삭제</button>
@@ -304,13 +306,6 @@
                         <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required readonly>
                         <div th:errors="${matchingForm.matchingEndTime}" class="text-danger"></div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">매칭 종류<span class="text-danger">*</span></div>
-                        <div th:each="match : ${matchTypes}" class="form-check form-check-inline">
-                            <input type="radio" th:field="*{matchingType}" th:value="${match.name()}" class="form-check-input">
-                            <label th:for="${#ids.prev('matchingType')}" th:text="${match.title}" class="form-check-label"></label>
-                        </div>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">코트 종류<span class="text-danger">*</span></div>
