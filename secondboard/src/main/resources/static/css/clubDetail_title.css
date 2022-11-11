@@ -39,6 +39,12 @@
   border-radius: 40px 40px;
 }
 
+.border_shape img{
+  height : 300px;
+  width: 300px;
+  object-fit: cover;
+}
+
 
 section::-webkit-scrollbar {
   width:10px;
@@ -52,4 +58,16 @@ section::-webkit-scrollbar-track {
 section::-webkit-scrollbar-thumb{
   background:  linear-gradient(#c2e59c, #64b3f4);
   border-radius: 5px;
+}
+
+.profile_img{
+  margin: 0;
+  padding-bottom: 20px;
+  padding-right: 10px;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 15%;
+
 }

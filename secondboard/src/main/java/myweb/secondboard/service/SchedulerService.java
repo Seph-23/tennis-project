@@ -28,8 +28,8 @@ public class SchedulerService {
   private final ResultTempRepository resultTempRepository;
   private final PlayerRepository playerRepository;
   @Async
-//  @Scheduled(cron = "0 0/30 * * * *")
-  @Scheduled(cron = "0/10 * * * * *")
+  @Scheduled(cron = "0 0/10 * * * *")
+//  @Scheduled(cron = "0/10 * * * * *")
   @Transactional
   public void matchScheduleCheck() {
 

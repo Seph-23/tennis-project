@@ -54,8 +54,8 @@
 
         <div class="row px-5">
           <div class="col-5">
-            <img th:src="@{${club.getImgPath()}}"
-                 class="img-thumbnail" alt="대표이미지">
+            <img th:if="${club.file==null}" src="/images/1.png" alt="기본 이미지">
+            <img th:if="${club.file!=null}" th:src="'data:image/jpg;base64,'+${src}" class="profile_img">
           </div>
           <div class="col-7">
             <ul>
@@ -186,7 +186,7 @@
         </div>
         <div class="modal-body">
 
-          <form th:action="@{/club/update}" th:object="${form}" method="POST">
+          <form th:action="@{/club/update}" th:object="${form}" method="POST" ENCTYPE="multipart/form-data">
             <input type="hidden" th:field="${form.id}" >
             <div class="mb-3">
               <label for="clubName" class="form-label">동호회 이름<span class="text-danger">*</span></label>
@@ -201,8 +201,8 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="clubImg" class="form-label">동호회 대표 이미지</label>
-              <input type="file" class="form-control" th:field="${form.img}" id="clubImg">
+              <label for="file" class="form-label">동호회 대표 이미지</label>
+              <input type="file" class="form-control" name="file" id="file">
             </div>
             <div class="mb-3">
               <label for="clubIntroduction" class="form-label">동호회 소개</label>
@@ -228,18 +228,18 @@
 
   <!--모달 끝-->
 
-<!-- Footer-->
-<footer class="footer bg-white small text-center text-black-50">
-  <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
-</footer>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.1.js"
-        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-        crossorigin="anonymous"></script>
-<!-- JS Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+  <!-- Footer-->
+  <footer class="footer bg-white small text-center text-black-50">
+    <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
+  </footer>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+          crossorigin="anonymous"></script>
 
 </body>
 </html>
