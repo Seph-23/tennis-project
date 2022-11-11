@@ -43,7 +43,9 @@ public class ClubService {
     File file = File.createImg(fileService.ImgSave(photoImg));
     fileRepository.save(file);
 
-    Club club = Club.createClub(form, file);
+    // case : 사진 업로드 안할때 -> view에서 src로 기본사진 불러옴.
+
+    Club club = Club.createClub(form, file, member);
     clubRepository.save(club);
 
     ClubMember clubMember = ClubMember.createClubMember(club, member);
