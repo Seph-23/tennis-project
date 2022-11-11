@@ -2,9 +2,11 @@
 .menu {
 	display: flex;
 }
+
 .menu-name {
 	background-position: center;
 }
+
 .menu-item {
 	/* flex-grow: 1; */
 	width: 25%;
@@ -24,7 +26,6 @@
 /*.menu-link:hover {*/
 /*	color: white;*/
 /*}*/
-
 
 
 /*!* search *!*/
@@ -89,12 +90,15 @@
 /* bullet list */
 .info-list {
 	margin-bottom: 2rem;
+	font-family: 'Ubuntu Condensed', "Noto Sans Korean";
 }
+
 .info-list-item {
 	font-size: 17px;
 	display: flex;
 	margin: 0.5em 0;
 }
+
 .info-list-item:before {
 	content: "";
 	margin-right: 0.5em;
@@ -104,10 +108,12 @@
 .user-list {
 	margin-bottom: 2rem;
 }
+
 .user-item {
 	display: flex;
 	margin-bottom: 1.5em;
 }
+
 .user-photo {
 	flex-shrink: 0;
 	width: 50px;
@@ -125,6 +131,7 @@
 .friend-item {
 	align-items: center;
 }
+
 .user-name {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -143,6 +150,7 @@
 	bottom: 0;
 	background: rgba(0, 0, 0, 0.3);
 }
+
 .dialog {
 	width: 50vw;
 	padding: 2em;
@@ -150,38 +158,49 @@
 	background: white;
 }
 
-/* card list */
-.card-item {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 2rem;
+
+.comment-delete- .animated {
+	display: none
 }
-.card-image {
-	height: 0;
-	padding-bottom: 60%;
-	background-color: lightgray;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+
+.comment-delete-:hover .animated {
+	display: inline
 }
-.card-image img {
-	display: none;
+
+.comment-delete-:hover .static {
+	display: none
 }
-.card-desc {
-	flex: 1 1 auto;
-	padding: 1em;
-	background: white;
-}
+
+/*.comment-update- .animated {*/
+/*	display: none*/
+/*}*/
+
+/*.comment-update-:hover .animated {*/
+/*	display: inline*/
+/*}*/
+
+/*.comment-update-:hover .static {*/
+/*	display: none*/
+/*}*/
+
+
+/*.comment-update- a:hover {*/
+/*	background-image: url(edit.png);*/
+/*	background-position: 0 0;*/
+/*	animation:  1s steps(1) 4 forwards;*/
+/*}*/
 
 @media (min-width: 600px) {
 	.card-list-con {
 		overflow-x: hidden;
 	}
+
 	.card-list {
 		display: flex;
 		flex-wrap: wrap;
 		margin: 0 -1rem;
 	}
+
 	.card-item {
 		width: 100%;
 		padding: 0 1rem;
@@ -190,6 +209,6 @@
 
 @media (min-width: 1200px) {
 	.card-item {
-		width:100%;
+		width: 100%;
 	}
 }
