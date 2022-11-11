@@ -28,11 +28,18 @@
           <button type="button" class="btn btn-outline-primary"
                   th:onclick="|location.href='@{/login}'|" th:text="#{member.login}">로그인</button>
         </div>  <!-- TODO : 로그인 modal 창 구현 -->
-        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
+        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'} and ${session.loginMember.role.toString() == 'MEMBER'}">
           <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
 
           <button type="button" class="btn btn-outline-primary"
                   th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" ) th:text="#{member.profile}">내 정보</button>
+        </div>
+
+        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'} and ${session.loginMember.role.toString() == 'ADMIN'}">
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
+
+          <button type="button" class="btn btn-outline-primary"
+                  th:onclick="|location.href='@{/manager/profile}'|" th:text="#{admin.profile}">회원 정보</button>
         </div>
 
         <!-- 카카오 로그아웃-->

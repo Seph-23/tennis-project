@@ -28,7 +28,7 @@ public class SchedulerService {
   private final ResultTempRepository resultTempRepository;
   private final PlayerRepository playerRepository;
   @Async
-//  @Scheduled(cron = "0 0/10 * * * *")
+  @Scheduled(cron = "0 0/10 * * * *")
 //  @Scheduled(cron = "0/10 * * * * *")
   @Transactional
   public void matchScheduleCheck() {
@@ -42,7 +42,10 @@ public class SchedulerService {
     for (int i = 0; i < lists.size(); i++) {
       Matching matching = lists.get(i);
 
-      if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeHour().equals(currentTime)) {
+      if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeTwoHour().equals(currentTime)) {
+        matchingRepository.matchingBeforeTwoHourCheck(matching.getId());
+      }
+      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeHour().equals(currentTime)) {
         matchingRepository.matchingBeforeHourCheck(matching.getId());
       }
       else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingStartTime().equals(currentTime)) {
@@ -129,6 +132,9 @@ public class SchedulerService {
         } else if (matching.getGameResult().getTitle().equals("패배")){
           player.getMember().getRecord().setLose(player.getMember().getRecord().getLose() + 1);
           player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 7);
+        } else if (matching.getGameResult().getTitle().equals("무효")){
+          player.getMember().getRecord().setPenalty(player.getMember().getRecord().getPenalty() + 1);
+          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 10);
         }
 
       } else {
@@ -138,6 +144,9 @@ public class SchedulerService {
         } else if (matching.getGameResult().getTitle().equals("패배")){
           player.getMember().getRecord().setWin(player.getMember().getRecord().getWin() + 1);
           player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() + 10);
+        } else if (matching.getGameResult().getTitle().equals("무효")){
+          player.getMember().getRecord().setPenalty(player.getMember().getRecord().getPenalty() + 1);
+          player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 10);
         }
       }
       player.getMember().getRecord().setRate((double) (player.getMember().getRecord().getWin()) / (double)(player.getMember().getRecord().getWin() + player.getMember().getRecord().getLose()) * 100);

@@ -23,6 +23,8 @@ public class Record implements Serializable {
 
   private Integer lose;
 
+  private Integer penalty;
+
   private Double rate;
 
   private Integer points;
@@ -31,6 +33,7 @@ public class Record implements Serializable {
     Record record = new Record();
     record.setWin(0);
     record.setLose(0);
+    record.setPenalty(0);
     record.setPoints(100);
     return record;
   }

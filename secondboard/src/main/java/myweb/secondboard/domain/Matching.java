@@ -83,6 +83,8 @@ Matching {
 
   private String beforeHour;
 
+  private String beforeTwoHour;
+
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
@@ -109,6 +111,7 @@ Matching {
     matching.setMatchingCondition(MatchingCondition.AVAILABLE);
     matching.setMatchingStatus(MatchingStatus.BEFORE);
     matching.setBeforeHour(form.getBeforeHour());
+    matching.setBeforeTwoHour(form.getBeforeTwoHour());
     matching.setPlayerNumber(matching.getPlayerNumber());
     matching.setMember(member);
     matching.setLat(form.getLat());
@@ -128,7 +131,6 @@ Matching {
     matching.setMatchingStartTime(form.getMatchingStartTime());
     matching.setMatchingEndTime(form.getMatchingEndTime());
     matching.setCourtType(form.getCourtType());
-    matching.setMatchingType(form.getMatchingType());
     matching.setModifiedDate(LocalDateTime.now().format(dtf));
     matching.setMember(member);
     matching.setLat(form.getLat());
@@ -161,7 +163,12 @@ Matching {
     matching.setMatchingStatus(MatchingStatus.AFTER);
   }
 
-  public void matchingBeforeHourCheck(Matching matching) { matching.setMatchingStatus(MatchingStatus.HOURBEFORE);
+  public void matchingBeforeHourCheck(Matching matching) {
+    matching.setMatchingStatus(MatchingStatus.HOURBEFORE);
+    matching.setMatchingCondition(MatchingCondition.FAIL);
+  }
+
+  public void matchingBeforeTwoHourCheck(Matching matching) { matching.setMatchingStatus(MatchingStatus.TWOHOURBEFORE);
   }
 
   public void matchingAfterWeek(Matching matching) { matching.setMatchingStatus(MatchingStatus.WEEKAFTER);

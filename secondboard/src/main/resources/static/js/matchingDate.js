@@ -1,22 +1,23 @@
-// $(document).ready(function () {
-//     var now_utc = Date.now()
-//     var timeOff = new Date().getTimezoneOffset() * 60000;
-//     var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
-//     // document.getElementById("matchingDate").setAttribute("min", today);
-//     $("#matchingDate").attr({"min" : today });
-//     $("#single_btn").prop("checked", true);
-//     if ($("#teamASize").val() === "2") {
-//         $("#double_btnB").prop("checked", true);
-//     } else {
-//         $("#double_btnA").prop("checked", true);
-//     }
-// });
+$(document).ready(function () {
+    var now_utc = Date.now()
+    // var timeOff = new Date().getTimezoneOffset() * 60000;
+    var timeOff = new Date().getTimezoneOffset() * 120000;
+    var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
+    // document.getElementById("matchingDate").setAttribute("min", today);
+    $("#matchingDate").attr({"min" : today });
+    $("#single_btn").prop("checked", true);
+    if ($("#teamASize").val() === "2") {
+        $("#double_btnB").prop("checked", true);
+    } else {
+        $("#double_btnA").prop("checked", true);
+    }
+});
 
 
 $('#matchingStartTime').timepicker({
     timeFormat: 'HH:mm',
     interval: 10,
-    minTime: '01:00',
+    minTime: '02:00',
     maxTime: '21:50',
     dynamic: false,
     dropdown: true,
@@ -43,6 +44,11 @@ $('#matchingEndTime').mouseover(function () {
     //set time picker
     console.log(newTime);
     $("#matchingEndTime").timepicker('option','maxTime', newTime);
+
+    // 시작 시간 2시간 전 설정
+    var beforeTwoHour = (parseInt(getTime[0])-2) +":"+getTime[1];
+    beforeTwoHour = String(beforeTwoHour).padStart(5, "0");
+    $("#beforeTwoHour").val(beforeTwoHour);
 
     // 시작 시간 1시간 전 설정
     var beforeHour = (parseInt(getTime[0])-1) +":"+getTime[1];

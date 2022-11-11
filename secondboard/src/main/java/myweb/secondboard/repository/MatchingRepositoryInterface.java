@@ -20,5 +20,7 @@ public interface MatchingRepositoryInterface {
 
   void matchingBeforeHourCheck(Long matchingId);
 
+  void matchingBeforeTwoHourCheck(Long matchingId);
+
   void matchingAfterWeek(Long matchingId);
 }
