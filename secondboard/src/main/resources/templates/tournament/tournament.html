@@ -54,7 +54,6 @@
                   th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|"
                   th:text="#{member.logout}">로그아웃</button>
 
-          <!-- TODO:내 정보 UI 구현-->
           <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )
           th:text="#{member.profile}">내 정보</button>
         </div>

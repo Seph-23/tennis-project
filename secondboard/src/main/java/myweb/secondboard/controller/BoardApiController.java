@@ -32,7 +32,6 @@ public class BoardApiController {
   public JSONObject boardDelete(@PathVariable("boardId") Long boardId) {
     JSONObject result = new JSONObject();
 
-    //TODO: 이미지 삭제
     Board board = boardService.findOne(boardId);
     String content = board.getContent();
 
@@ -57,10 +56,6 @@ public class BoardApiController {
     for (String imageNumber : ImageNumbers) {
       System.out.println("imageNumber = " + imageNumber);
     }
-
-
-
-
 
     boardService.deleteById(boardId);
 
