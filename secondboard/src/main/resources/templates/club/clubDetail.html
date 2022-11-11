@@ -99,13 +99,13 @@
         <table class="align-middle">
           <tr th:each="clubMember:${memberList}">
             <td>
-              <div th:if="${clubMember.member.nickname==club.leader}" style="text-indent: 25px;">
+              <div th:if="${clubMember.member.nickname==club.member.id}" style="text-indent: 25px;">
                 <i class="fa-sharp fa-solid fa-crown fa-xl"></i>
               </div>
             </td>
             <td class="py-2" th:text="${clubMember.member.nickname}" style="text-indent: 40px; font-size: large"></td>
             <td class="py-2" th:if="${session.loginMember != null}">
-              <div th:if="${session.loginMember.nickname == club.leader
+              <div th:if="${session.loginMember == club.member
               and clubMember.member.id != session.loginMember.id}" style="text-indent: 40px;">
                 <form th:action="@{/club/memberBan/{id} (id=${clubMember.id})}" method="POST">
                   <button type="submit" class="btn btn-success p-1"
@@ -125,7 +125,7 @@
           <ul>
             <!-- 회원이면서 클럽장인 사람-->
             <div th:if="${clubMemberCheck != null}">
-              <div th:if="${clubMemberCheck.member.nickname == club.leader}">
+              <div th:if="${clubMemberCheck.member.nickname == club.member.nickname}">
                 <form th:action="@{/club/delete}" method="POST">
                   <input type="hidden" th:field="*{club.id}">
                   <div class="d-grid">
@@ -144,7 +144,7 @@
               </div>
 
               <!-- 회원이면서 클럽에 가입된 사람 -->
-              <div th:if="${clubMemberCheck.member.nickname != club.leader}">
+              <div th:if="${clubMemberCheck.member.nickname != club.member.nickname}">
                 <form th:action="@{/club/memberDelete}" method="POST">
                   <input type="hidden" th:field="*{club.id}">
                   <div class="d-grid">

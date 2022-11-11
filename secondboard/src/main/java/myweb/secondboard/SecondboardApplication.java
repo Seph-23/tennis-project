@@ -38,8 +38,8 @@ public class SecondboardApplication {
 
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
-		return "/Users/gst/git/tennis-project/secondboard/src/main/resources/static/images";
-	}
+		return "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/file";
+  }
 
 //	@Order(1)
 //	@Bean

@@ -49,10 +49,6 @@ public class Club implements Serializable {
   @Column(length = 40)
   private String createdDate;
 
-  @NotNull
-  @Column(length = 10)
-  private String leader;
-
   @Enumerated(EnumType.STRING)
   private Status status;
 
@@ -64,9 +60,12 @@ public class Club implements Serializable {
   @JoinColumn(name="file_id")
   private File file;
 
+  @NotNull
+  @OneToOne(fetch = LAZY)
+  @JoinColumn(name="member_id")
+  private Member member;
 
-
-  public static Club createClub(ClubSaveForm form, File file) {
+  public static Club createClub(ClubSaveForm form, File file, Member leader) {
     Club club = new Club();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
@@ -76,7 +75,7 @@ public class Club implements Serializable {
     club.setCreatedDate(LocalDateTime.now().format(dtf));
     club.setStatus(Status.RECRUITING);
     club.setLocal(form.getLocal());
-    club.setLeader(form.getLeader());
+    club.setMember(leader);
     club.setFile(file);
     return club;
   }
