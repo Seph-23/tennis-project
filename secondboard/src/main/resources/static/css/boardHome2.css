@@ -113,32 +113,39 @@ label[for="modal-switch"] span {
 
     .banner {
         grid-column: 1 / 4;
-        grid-row: 2 / 3;
+
     }
 
     .primary {
         grid-column: 2 / 3;
         grid-row: 3 / 4;
+        align-content: start;
     }
 
     .secondary-a {
         grid-column: 1 / 2;
         grid-row: 3 / 4;
+        align-content: start;
     }
 
     .secondary-b {
         grid-column: 3 / 4;
         grid-row: 3 / 4;
+        align-content: start;
     }
 
     .footer {
         grid-column: 1 / 4;
         grid-row: 4 / 5;
+
     }
 }
 
 @media (min-width: 1400px) {
     .page {
+        grid-row-gap: initial;
+        grid-row-start: initial;
         grid-template-columns: 250px 1fr 250px;
+        align-content: start;
     }
 }

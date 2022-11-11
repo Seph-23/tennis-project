@@ -1,5 +1,5 @@
 button{
-  border-radius: 40px;
+  /*border-radius: 40px;*/
 }
 
 #board_title_box {
@@ -25,7 +25,7 @@ button{
 
 #comment-submit {
   border-radius: 0;
-  width: 25%;
+  width: 20%;
   height: 50px;
   border: 0;
   outline: none;
@@ -33,4 +33,15 @@ button{
   color: black;
   font-size: 1.2em;
   letter-spacing: 2px;
+}
+.comment1 {
+  word-wrap: break-word;
+  word-break: break-word;
+  width: 300px;
+  height: 200px;
+  border: none;
+}
+
+.button-group {
+  border:none;
 }

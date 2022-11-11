@@ -72,7 +72,7 @@
         </td>
         <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span th:text="${club.local.name}"></span></td>
         <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span th:text="${club.memberCount}"></span></td>
-        <td class="text-center"th:text="${club.leader}"></td>
+        <td class="text-center"th:text="${club.member.nickname}"></td>
         <td class="text-center" th:text="${club.createdDate}"></td>
         <td class="text-center">
           <span th:if="${club.status.name() == 'RECRUITING'}" th:text="${club.status.title}" class="badge text-bg-success rounded-pill d-inline"></span>
