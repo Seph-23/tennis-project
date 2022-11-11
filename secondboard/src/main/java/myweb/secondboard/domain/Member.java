@@ -94,6 +94,7 @@ public class Member implements Serializable {
     member.setNickname(userInfo.get("nickname").toString());
     member.setEmail(userInfo.get("email").toString());
     member.setLoginId(userInfo.get("email").toString());
+    member.setRole(Role.MEMBER);
 
     //==임시로 휴대전화 번호 넣어줌==//
     member.setPhoneNumber("01012341234");
