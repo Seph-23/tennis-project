@@ -134,7 +134,7 @@ public class ClubController {
     }
 
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
-    form.setLeader(member.getNickname());
+    form.setMember(member);
 
     Long clubId = clubService.addClub(form, member, file).getId();
     return "redirect:/club/detail/" + clubId;
@@ -196,9 +196,10 @@ public class ClubController {
   public String clubMemberBan(@PathVariable("id") Long id, HttpServletRequest request) {
     ClubMember clubMember = clubService.get(id);
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
-    if (clubMember.getClub().getLeader().equals(member.getNickname())) {
-      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
-    }
+
+//    if (clubMember.getClub().getLeader().equals(member.getNickname())) {
+//      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
+//    }
     return "redirect:/club/detail/" + clubMember.getClub().getId();
   }
 }
