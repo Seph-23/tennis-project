@@ -122,6 +122,7 @@ function displayPlaces(places) {
                   console.log("lat = " + addLocation.lat)
                   console.log("lng = " + addLocation.lng)
                   $("#matchingPlace").val(title);
+                  $("#placeName").attr("placeholder", title);
                   $("#matching_lat").val(addLocation.lat);
                   $("#matching_lng").val(addLocation.lng);
                 }
@@ -259,4 +260,7 @@ $("#matchingPlace").click(function () {
     map.relayout();
     map.setCenter(new kakao.maps.LatLng(37.566826, 126.9786567));
   }, 200);
+
+
 });
+
