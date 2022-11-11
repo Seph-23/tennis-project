@@ -1,18 +1,18 @@
 package myweb.secondboard.domain;
 
-import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
+import myweb.secondboard.dto.MemberUpdateForm;
 import myweb.secondboard.web.Gender;
 import myweb.secondboard.web.PasswordEncrypt;
 import myweb.secondboard.web.Provider;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 @Entity
 @Getter @Setter
@@ -49,9 +49,15 @@ public class Member implements Serializable {
 
   private String accessToken;
 
+  private String introduction;
+
   @OneToOne
   @JoinColumn(name = "record_id")
   private Record record;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name="file_id")
+  private File file;
 
   public static Member createMember(MemberSaveForm form, Record record) throws NoSuchAlgorithmException {
     Member member = new Member();
@@ -67,6 +73,13 @@ public class Member implements Serializable {
     member.setProvider(Provider.GOGOTENNIS);
     member.setRecord(record);
     return member;
+  }
+
+  public void updateMember(MemberUpdateForm form, Member member ){
+    member.setId(form.getId());
+    member.setNickname(form.getNickname());
+    member.setIntroduction(form.getIntroduction());
+
   }
 
   public static Member createKakaoMember(Map<String, Object> userInfo, String access_token) {

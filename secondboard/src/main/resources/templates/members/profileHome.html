@@ -90,7 +90,11 @@
     <div class="d-flex">
         <div class="contact">
             <div class="box" style="background: #BDBDBD;">
-                <li><img class="profile" src="/images/profileimg.jpg" alt=""/></li>
+
+                <img th:if="${member.file==null}" src="/images/default_image.png" alt="기본 이미지">
+                <img th:if="${member.file!=null}" th:src="'data:image/jpg;base64,'+${src}"
+                     alt="대표이미지">
+
             </div>
             <li class="py-2"></li>
             <li><h3><span th:text="${member.nickname}"></span></h3></li>
@@ -104,11 +108,7 @@
         <div class="story">
             <h3 class="py-3">자기소개</h3>
             <div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip
-                    ex ea commodo consequat</p>
+                <p th:text="${member.introduction}"></p>
             </div>
         </div>
     </div>
@@ -237,9 +237,9 @@
 <div class="py-3"></div>
 <div class="d-md-flex justify-content-md-center">
     <a type="button" class="btn btn-primary px-3 py-2 me-lg-1"
-            data-bs-toggle="modal" data-bs-target="#profileUpdateModal">정보 수정
+       data-bs-toggle="modal" data-bs-target="#profileUpdateModal">정보 수정
     </a>
-        <a type="button" class="btn btn-primary px-3 py-2">회원탈퇴</a>
+    <a type="button" class="btn btn-primary px-3 py-2">회원탈퇴</a>
 </div>
 
 <!-- profile update Modal -->
@@ -251,21 +251,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form role="form" th:object="${member}" action="/members/profileUpdate" method="post"> <!-- signup form -->
-                    <input type="hidden" th:field="${member.id}" >
+                <form role="form" th:object="${form}" action="/members/profileUpdate" method="post" ENCTYPE="multipart/form-data"> <!-- signup form -->
+                    <input type="hidden" th:field="${form.id}" >
                     <div class="form-group">
                         <label th:for="nickname" class="d-sm-block">닉네임</label>
-                        <input id="nickname" type="text" class="form-control w-75 d-sm-inline" th:field="${member.nickname}"/>
+                        <input id="nickname" type="text" class="form-control w-75 d-sm-inline" th:field="${form.nickname}"/>
                         <button type="button" id="nick-dup-button" class="dup-check-button">중복확인</button>
-                        <div class="field-error" th:errors="${member.nickname}"></div>
+                        <div class="field-error" th:errors="${form.nickname}"></div>
                     </div>
                     <div class="mb-3">
                         <label for="profileImg" class="form-label">프로필 이미지</label>
-                        <input type="file" class="form-control" id="profileImg">
+                        <input type="file" class="form-control" name="file" id="profileImg">
                     </div>
                     <div class="mb-3">
                         <label for="selfIntroduction" class="form-label">자기 소개</label>
-                        <textarea class="form-control" id="selfIntroduction" rows="6"></textarea>
+                        <textarea class="form-control" th:field="${form.introduction}" id="selfIntroduction" rows="6"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>

@@ -2,9 +2,19 @@
   width: 180px;
   height: 180px;
   border-radius: 70%;
-  overflow: hidden;
   align-content: center;
   margin-left: 25px;
+}
+
+.box img{
+  width: 180px;
+  height: 180px;
+  border-radius: 70%;
+
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  object-position: center;
 }
 .profile {
   width: 100%;

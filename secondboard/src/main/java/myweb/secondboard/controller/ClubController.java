@@ -21,12 +21,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -88,7 +90,10 @@ public class ClubController {
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
 
     Club club = clubService.findOne(clubId);
+    String src = new String(club.getFile().getSaveImg(), StandardCharsets.UTF_8);
+
     model.addAttribute("club", club);
+    model.addAttribute("src", src);
 
     List<ClubMember> memberList = clubService.getClubMemberList(club.getId());
     model.addAttribute("memberList", memberList);
@@ -104,7 +109,6 @@ public class ClubController {
     // 정보 수정 모달용
     ClubUpdateForm form = new ClubUpdateForm();
     form.setId(club.getId());
-    form.setImg(club.getImg());
     form.setIntroduction(club.getIntroduction());
     form.setName(club.getName());
     form.setStatus(club.getStatus());
@@ -122,7 +126,7 @@ public class ClubController {
 
   @PostMapping("/club/save")
   public String clubSave(@Validated @ModelAttribute("form") ClubSaveForm form, BindingResult bindingResult,
-                         HttpServletRequest request) {
+                         HttpServletRequest request, MultipartFile file) throws IOException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
@@ -131,7 +135,8 @@ public class ClubController {
 
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     form.setLeader(member.getNickname());
-    Long clubId = clubService.addClub(form, member).getId();
+
+    Long clubId = clubService.addClub(form, member, file).getId();
     return "redirect:/club/detail/" + clubId;
   }
 
@@ -159,14 +164,15 @@ public class ClubController {
 
   @PostMapping("/club/update")
   public String clubUpdate(@Validated @ModelAttribute("form") ClubUpdateForm form,
-                           BindingResult bindingResult) {
+                           BindingResult bindingResult, Model model, MultipartFile file) throws IOException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
       return "/club/clubDetail";
     }
 
-    Long clubId = clubService.update(form);
+    Long clubId = clubService.update(form, file);
+    Club club = clubService.findOne(clubId);
 
     return "redirect:/club/detail/" + clubId;
   }
