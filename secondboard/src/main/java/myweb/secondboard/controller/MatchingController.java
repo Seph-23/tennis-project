@@ -122,7 +122,6 @@ public class MatchingController {
     matchingForm.setMatchingDate(matching.getMatchingDate());
     matchingForm.setMatchingStartTime(matching.getMatchingStartTime());
     matchingForm.setMatchingEndTime(matching.getMatchingEndTime());
-    matchingForm.setMatchingType(matching.getMatchingType());
     matchingForm.setLat(matching.getLat());
     matchingForm.setLng(matching.getLng());
     model.addAttribute("matchingForm", matchingForm);

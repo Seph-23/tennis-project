@@ -40,6 +40,7 @@ public class MatchingSaveForm {
 
   private String beforeHour;
 
+  private String beforeTwoHour;
 
   private String team;
 

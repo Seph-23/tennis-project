@@ -33,9 +33,6 @@ public class MatchingUpdateForm {
   @NotNull(message = "매칭 종료 시간을 선택해주세요.")
   private String matchingEndTime;
 
-  @NotNull(message = "매칭 종류를 선택해주세요.")
-  private MatchingType matchingType;
-
   @NotNull(message = "코트 종류를 선택해주세요.")
   private CourtType courtType;
 
@@ -51,7 +48,6 @@ public class MatchingUpdateForm {
       ", matchingDate='" + matchingDate + '\'' +
       ", matchingStartTime='" + matchingStartTime + '\'' +
       ", matchingEndTime='" + matchingEndTime + '\'' +
-      ", matchingType='" + matchingType + '\'' +
       ", courtType='" + courtType + '\'' +
       '}';
   }
