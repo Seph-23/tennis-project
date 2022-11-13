@@ -65,21 +65,73 @@
         </div>
     </div>
 </nav>
-<!--<div class="board_banner_area">-->
-<!--    <div class="board_banner_text">-->
-<!--        <h1>Ranking</h1>-->
-<!--        <p>명예의 전당</p>-->
-<!--    </div>-->
-<!--    <img src="/images/trophy5.webp" class="img-fluid" alt="배너 이미지">-->
-<!--</div>-->
-<div class="container">
-    <!--상단 이미지-->
-    <img src="/images/trophy5.webp" class="rounded mx-auto d-block" style="width:350px; height:350px" alt="이미지">
-<!--    <div class="col-12 p-3"></div>-->
 
-    <!--<div class="border border-success border-1 opacity-50 "></div>-->
-    <h2 class="grid text-center mt-3">명예의 전당</h2>
-    <div class="col-12 p-3"></div>
+<div class="board_banner_area">
+    <div class="board_banner_text">
+        <h1>Ranking</h1>
+        <p>Set your Goals and Go Higher!</p>
+    </div>
+    <img src="/images/trophy.jpeg" alt="Contact US 배너 이미지">
+</div>
+<div class="col-12 p-5"></div>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 mb-3 ms-5 text-center">
+        <div class="col">
+            <div class="card mb-4 rounded-3" style="width: 20rem;">
+                <div class="card-header py-3 text-bg-warning">
+                    <span class="text-white fs-2 my-0 fw-normal">
+                        <img src="/images/medal.png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                        User1
+                    </span>
+                </div>
+                <div class="card-body">
+                    <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <ul class="list-unstyled mt-1 mb-0 fw-bold">
+                        <li>165승 3패</li>
+                        <li>1920점</li>
+                        <li>82%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3" style="width: 20rem;">
+                <div class="card-header py-3 text-bg-danger">
+                    <span class="text-white fs-2 fmy-0 fw-normal">
+                        <img src="/images/medal%20(1).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                        User2
+                    </span>
+                </div>
+                <div class="card-body">
+                    <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <ul class="list-unstyled mt-1 mb-0 fw-bold">
+                        <li>165승 12패</li>
+                        <li>1702점</li>
+                        <li>72%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3" style="width: 20rem;">
+                <div class="card-header py-3 text-bg-primary">
+                    <span class="text-white fs-2 my-0 fw-normal">
+                        <img src="/images/medal%20(2).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                        User3
+                    </span>
+                </div>
+                <div class="card-body">
+                    <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <ul class="list-unstyled mt-1 mb-0 fw-bold">
+                        <li>135승 25패</li>
+                        <li>1502점</li>
+                        <li>68%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--페이징-->
     <nav aria-label="Page navigation example">
@@ -90,7 +142,7 @@
                 </a>
             </li>
             <th:block class="page-item h5">
-<!--                <a class="page-link" ></a>-->
+                <!--                <a class="page-link" ></a>-->
                 <span class="page-link">11월 1주차 주간랭킹</span>
             </th:block>
             <li class="page-item">
@@ -100,18 +152,7 @@
             </li>
         </ul>
     </nav>
-
-
-    <!--단식/복식 조건 Dropdown-->
-    <div class="btn-group d-md-grid justify-content-end h5">
-        <button class="btn btn-outline-primary dropdown-toggle px-2 py-2 fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            단식
-        </button>
-        <ul class="dropdown-menu btn btn-outline-primary px-2 py-2 m">
-            <li>복식</li>
-        </ul>
-    </div>
-<!--    <div class="col-12 p-3"></div>-->
+    <div class="col-12 p-3"></div>
 
     <!-- ranking table -->
     <table class="table table-hover align-middle text-center">
@@ -124,15 +165,6 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="table-warning">
-            <th scope="row">1</th><th><img src="/images/user.png" width="200" class="rounded-circle px-5 py-3" alt="프로필">User1</th><th class>2039</th><th>72%</th>
-        </tr>
-        <tr class="table-primary">
-            <th scope="row">2</th><th><img src="/images/user.png" width="200" class="rounded-circle px-5 py-3" alt="프로필">User2</th><th>1830</th><th>68%</th>
-        </tr>
-        <tr class="table-danger">
-            <th scope="row">3</th><th><img src="/images/user.png" width="200" class="rounded-circle px-5 py-3" alt="프로필">User3</th><th>1795</th><th>63%</th>
-        </tr>
         <tr>
             <td>4</td><td>User4</td><td>1682</td><td>61%</td>
         </tr>
@@ -154,6 +186,15 @@
         <tr>
             <td>10</td><td>User10</td><td>1290</td><td>51%</td>
         </tr>
+        <tr>
+            <td>11</td><td>User11</td><td>1128</td><td>49%</td>
+        </tr>
+        <tr>
+            <td>12</td><td>User12</td><td>1065</td><td>47%</td>
+        </tr>
+        <tr>
+            <td>13</td><td>User13</td><td>998</td><td>45%</td>
+        </tr>
         </tbody>
     </table>
 
@@ -171,5 +212,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="/js/localCategory.js"></script>
+
 </body>
 </html>
