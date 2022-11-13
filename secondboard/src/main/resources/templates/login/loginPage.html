@@ -13,7 +13,8 @@
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
-
+  <!-- naver -->
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 
 </head>
 <body>
@@ -72,6 +73,11 @@
             th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code}'|">
       <i class="bi bi-chat-fill"></i>카카오 로그인
     </button>
+    <button type="submit" class="submit" id="naverIdLogin"
+            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code}'|">
+      <i class="bi bi-chat-fill"></i>네이버 로그인
+    </button>
+
   </div>
 </div> <!--wrap end-->
 <footer th:replace="fragments/footer :: footer"></footer>
