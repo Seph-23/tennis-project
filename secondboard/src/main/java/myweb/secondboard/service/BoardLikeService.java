@@ -16,8 +16,9 @@ import java.util.Optional;
 public class BoardLikeService {
   private final BoardLikeRepository boardLikeRepository;
 
-  public int getLikeCount(Long boardId) {
-    return boardLikeRepository.findAll().stream().filter(like -> like.getBoard().getId() == boardId).toList().size();
+  public Long getLikeCount(Long boardId) {
+//    return boardLikeRepository.findAll().stream().filter(like -> like.getBoard().getId() == boardId).toList().size();
+    return boardLikeRepository.countByBoardId(boardId);
   }
 
   public String checkLike(Long boardId, Long memberId) {

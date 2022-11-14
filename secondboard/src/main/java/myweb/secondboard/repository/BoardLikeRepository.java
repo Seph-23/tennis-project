@@ -12,4 +12,6 @@ public interface BoardLikeRepository extends JpaRepository<BoardLike, Long>{
   Optional<BoardLike> find(@Param("boardId") Long boardId, @Param("memberId") Long memberId);
 
   void deleteAllByBoardId(Long id);
+
+  Long countByBoardId(Long id);
 }

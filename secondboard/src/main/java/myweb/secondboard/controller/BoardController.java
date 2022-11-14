@@ -97,10 +97,10 @@ public class BoardController {
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     String checkLike = boardLikeService.checkLike(board.getId(), member.getId());
     model.addAttribute("checkLike", checkLike);
-    int likeCount = boardLikeService.getLikeCount(board.getId());
+    Long likeCount = boardLikeService.getLikeCount(board.getId());
     model.addAttribute("likeCount", likeCount);
 
-    int reportCount = boardReportService.getReportCount(board.getId());
+    Long reportCount = boardReportService.getReportCount(board.getId());
     model.addAttribute("reportCount", reportCount);
     return "/boards/board/boardDetail";
   }
@@ -173,13 +173,13 @@ public class BoardController {
 
   @PostMapping("/like")
   @ResponseBody
-  public Map<String, Integer> like(Long boardId, HttpServletRequest request) {
+  public Map<String, Object> like(Long boardId, HttpServletRequest request) {
     Board board = boardService.findOne(boardId);
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     Integer result = boardLikeService.clickLike(board, member);
-    Map<String, Integer> map = new HashMap<>();
+    Map<String, Object> map = new HashMap<>();
     map.put("result", result);
-    Integer count = boardLikeService.getLikeCount(board.getId());
+    Long count = boardLikeService.getLikeCount(board.getId());
     map.put("count", count);
     return map;
   }
