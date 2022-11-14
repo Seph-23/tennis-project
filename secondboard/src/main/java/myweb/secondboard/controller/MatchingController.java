@@ -51,7 +51,7 @@ public class MatchingController {
     }
     model.addAttribute("carouselDays", carousel);
 
-    List<Matching> matchingList = matchingService.findAll();
+    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.now());
 
     model.addAttribute("matchingList", matchingList);
 
