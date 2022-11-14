@@ -18,6 +18,7 @@ public class HomeController {
   @GetMapping("/")
   public String home(Model model) {
     model.addAttribute("loginForm", new LoginForm()); //Modal창 용
+
     return "home";
   }
 }
