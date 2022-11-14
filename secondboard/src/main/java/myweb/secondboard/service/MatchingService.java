@@ -1,5 +1,6 @@
 package myweb.secondboard.service;
 
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.*;
 import myweb.secondboard.domain.Record;
@@ -97,6 +98,10 @@ public class MatchingService {
 
   public List<Matching> findAll() {
     return matchingRepository.findAll();
+  }
+
+  public List<Matching> findAllByDate(LocalDate date) {
+    return matchingRepository.findAllByDate(date);
   }
 }
 

@@ -13,3 +13,7 @@ items.forEach((el) => {
         next = next.nextElementSibling
     }
 })
+
+$(document).ready(function () {
+    $(".carousel-inner div:first-child").addClass("active");
+});

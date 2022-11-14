@@ -121,58 +121,12 @@
             </div>
             <div class="carouselElement">
                 <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
+                    <div class="carousel-item" th:each="day : ${carouselDays}">
                         <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(0)}"
-                                    th:onclick="updateMatchingHome([[${carouselDays.get(0)}]])"
-                                    class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(1)}"
-                                    th:onclick="updateMatchingHome([[${carouselDays.get(1)}]])"
-                                    class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(2)}" id="day3" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(3)}" id="day4" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(4)}" id="day5" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(5)}" id="day6" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(6)}" id="day7" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(7)}" id="day8" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(8)}" id="day9" class="btn btn-primary"><br></button>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="col-md-2">
-                            <button type="button" th:text="${carouselDays.get(9)}" id="day10" class="btn btn-primary"><br></button>
+                            <form th:action="@{/matching/matchingListUpdate/{date} (date=${day.toString()})}" method="post">
+                                <button type="submit" th:text="${day.toString()}"
+                                        class="btn btn-primary"><br></button>
+                            </form>
                         </div>
                     </div>
                 </div>

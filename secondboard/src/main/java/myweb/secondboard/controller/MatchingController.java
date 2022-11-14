@@ -1,5 +1,6 @@
 package myweb.secondboard.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.GameResult;
 import myweb.secondboard.web.MatchingType;
 import myweb.secondboard.web.SessionConst;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -69,7 +71,7 @@ public class MatchingController {
 
   @PostMapping("/new")
   public String matchingAdd(@Validated @ModelAttribute("matching") MatchingSaveForm form,
-                            BindingResult bindingResult, HttpServletRequest request) {
+    BindingResult bindingResult, HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
@@ -84,14 +86,17 @@ public class MatchingController {
   }
 
   @GetMapping("/detail/{matchingId}")
-  public String matchingDetail(@PathVariable("matchingId") Long matchingId, Model model, HttpServletRequest request) {
+  public String matchingDetail(@PathVariable("matchingId") Long matchingId, Model model,
+    HttpServletRequest request) {
 
     Matching matching = matchingService.findOne(matchingId);
     model.addAttribute("matching", matching);
 
     List<Player> players = playerService.findAllByMatchingId(matchingId);
-    List<Player> playersA = players.stream().filter(m -> m.getTeam().toString().equals("A")).toList();
-    List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B")).toList();
+    List<Player> playersA = players.stream().filter(m -> m.getTeam().toString().equals("A"))
+      .toList();
+    List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B"))
+      .toList();
 
     model.addAttribute("playersA", playersA);
     model.addAttribute("playersB", playersB);
@@ -146,8 +151,8 @@ public class MatchingController {
 
   @PostMapping("/update/{matchingId}")
   public String matchingUpdate(@Validated @ModelAttribute("matchingForm") MatchingUpdateForm form,
-                               BindingResult bindingResult, HttpServletRequest request,
-                               @PathVariable("matchingId") Long matchingId) {
+    BindingResult bindingResult, HttpServletRequest request,
+    @PathVariable("matchingId") Long matchingId) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
@@ -163,7 +168,7 @@ public class MatchingController {
 
   @PostMapping("/player/add")
   public String matchingPlayerAdd(@Validated @ModelAttribute("playerAddForm") PlayerAddForm form,
-                                  BindingResult bindingResult, Long matchingId) {
+    BindingResult bindingResult, Long matchingId) {
 
     if (bindingResult.hasErrors()) {
 //      log.info("errors = {}", bindingResult);
@@ -174,12 +179,12 @@ public class MatchingController {
     matchingService.increasePlayerNumber(Long.valueOf(form.getMatchingId()));
     matchingService.matchingCondtionCheck(Long.valueOf(form.getMatchingId()));
 
-
     return "redirect:/matching/detail/" + matchingId;
   }
 
   @PostMapping("/result")
-  public String matchingResult(@ModelAttribute("result") ResultAddForm result, HttpServletRequest request) {
+  public String matchingResult(@ModelAttribute("result") ResultAddForm result,
+    HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
@@ -189,8 +194,9 @@ public class MatchingController {
     return "redirect:/matching/home";
   }
 
-//  @PostMapping("/new")
-  public String matchingFormAddLocation(@Validated @ModelAttribute("matching") MatchingSaveForm form,
+  //  @PostMapping("/new")
+  public String matchingFormAddLocation(
+    @Validated @ModelAttribute("matching") MatchingSaveForm form,
     BindingResult bindingResult, HttpServletRequest request, Model model) {
 
     Member member = (Member) request.getSession(false)
@@ -204,4 +210,33 @@ public class MatchingController {
     model.addAttribute("form", form);
     return "/matching/matchingLocationAdd";
   }
+
+  @PostMapping("/matchingListUpdate/{date}")
+  public String matchingListUpdate(@PathVariable("date") String date, Model model) {
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    ArrayList<LocalDate> carousel = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      carousel.add(LocalDate.now().plusDays(i));
+    }
+    model.addAttribute("carouselDays", carousel);
+
+    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.parse(date, dtf));
+
+    model.addAttribute("matchingList", matchingList);
+
+    MatchingSaveForm matchingForm = new MatchingSaveForm();
+    model.addAttribute("matching", matchingForm);
+
+    MatchingType[] matchTypes = MatchingType.values();
+    model.addAttribute("matchTypes", matchTypes);
+
+    CourtType[] courtTypes = CourtType.values();
+    model.addAttribute("courtTypes", courtTypes);
+
+    model.addAttribute("lat", null);
+
+    return "/matching/matchingHome";
+  }
 }
+
