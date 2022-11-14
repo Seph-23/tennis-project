@@ -1,5 +1,6 @@
 package myweb.secondboard.controller;
 
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Matching;
@@ -40,17 +41,17 @@ public class MatchingController {
   private final PlayerService playerService;
 
   @GetMapping("/home")
-  public String home(@PageableDefault(page = 0, size = 10, sort = "createdDate", direction = Sort.Direction.DESC)
-                     Pageable pageable, Model model) {
-    Page<Matching> matchingList = matchingService.getMatchingList(pageable);
-    int nowPage = matchingList.getPageable().getPageNumber() + 1;
-    int startPage = Math.max(nowPage - 4, 1);
-    int endPage = Math.min(nowPage + 9, matchingList.getTotalPages());
+  public String home(Model model) {
+
+    ArrayList<LocalDate> carousel = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      carousel.add(LocalDate.now().plusDays(i));
+    }
+    model.addAttribute("carouselDays", carousel);
+
+    List<Matching> matchingList = matchingService.findAll();
 
     model.addAttribute("matchingList", matchingList);
-    model.addAttribute("nowPage", nowPage);
-    model.addAttribute("startPage", startPage);
-    model.addAttribute("endPage", endPage);
 
     MatchingSaveForm matchingForm = new MatchingSaveForm();
     model.addAttribute("matching", matchingForm);

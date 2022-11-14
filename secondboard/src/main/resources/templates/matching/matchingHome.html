@@ -35,6 +35,8 @@
 
     <link rel="stylesheet" href="/css/kakaoMapList.css">
 
+    <!-- TODO -->
+    <link href="/css/dateCarousel.css" rel="stylesheet" />
 </head>
 <body class="pt-6">
 <!-- Navigation-->
@@ -110,6 +112,81 @@
 <div class="col-12 p-4"></div>
 
 <div class="container">
+    <div class="row mx-auto my-auto justify-content-center">
+        <div id="dateCarousel" class="carousel slide">
+            <div class="carouselElement">
+                <a class="carousel-control-prev bg-transparent w-aut disableLink" href="#dateCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+            </div>
+            <div class="carouselElement">
+                <div class="carousel-inner" role="listbox">
+                    <div class="carousel-item active">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(0)}"
+                                    th:onclick="updateMatchingHome([[${carouselDays.get(0)}]])"
+                                    class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(1)}"
+                                    th:onclick="updateMatchingHome([[${carouselDays.get(1)}]])"
+                                    class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(2)}" id="day3" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(3)}" id="day4" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(4)}" id="day5" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(5)}" id="day6" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(6)}" id="day7" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(7)}" id="day8" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(8)}" id="day9" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="col-md-2">
+                            <button type="button" th:text="${carouselDays.get(9)}" id="day10" class="btn btn-primary"><br></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carouselElement">
+                <a class="carousel-control-next bg-transparent w-aut" id="nextIcon" href="#dateCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
         <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-end">
             <a type="button" class="btn btn-primary px-4 py-3" id="match_modal_toggle"
@@ -171,29 +248,29 @@
     </div>
 </div>
 
-<!-- paging Start -->
-<nav aria-label="Page navigation example" th:if="${startPage != null}">
-    <ul class="pagination pagination-circle justify-content-center">
-        <li class="page-item" th:if="${nowPage!=startPage}">
-            <a class="page-link" aria-label="Previous" th:href="@{/matching/home(page=${nowPage -2})}">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
-            <div th:if="${endPage != 0}">
-                <a class="page-link" th:if="${page != nowPage}" th:href="@{/matching/home(page=${page -1})}"
-                   th:text="${page}"></a>
-                <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
-            </div>
-        </th:block>
-        <li class="page-item" th:if="${nowPage!=endPage && endPage != 0}">
-            <a class="page-link" aria-label="Next" th:href="@{/matching/home(page=${nowPage})}">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
-<!-- paging End -->
+<!--&lt;!&ndash; paging Start &ndash;&gt;-->
+<!--<nav aria-label="Page navigation example" th:if="${startPage != null}">-->
+<!--    <ul class="pagination pagination-circle justify-content-center">-->
+<!--        <li class="page-item" th:if="${nowPage!=startPage}">-->
+<!--            <a class="page-link" aria-label="Previous" th:href="@{/matching/home(page=${nowPage -2})}">-->
+<!--                <span aria-hidden="true">&laquo;</span>-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">-->
+<!--            <div th:if="${endPage != 0}">-->
+<!--                <a class="page-link" th:if="${page != nowPage}" th:href="@{/matching/home(page=${page -1})}"-->
+<!--                   th:text="${page}"></a>-->
+<!--                <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>-->
+<!--            </div>-->
+<!--        </th:block>-->
+<!--        <li class="page-item" th:if="${nowPage!=endPage && endPage != 0}">-->
+<!--            <a class="page-link" aria-label="Next" th:href="@{/matching/home(page=${nowPage})}">-->
+<!--                <span aria-hidden="true">&raquo;</span>-->
+<!--            </a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->
+<!--&lt;!&ndash; paging End &ndash;&gt;-->
 
 
 <!-- Modal -->

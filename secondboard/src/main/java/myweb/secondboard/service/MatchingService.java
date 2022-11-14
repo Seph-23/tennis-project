@@ -94,6 +94,10 @@ public class MatchingService {
     Optional<Player> player = playerRepository.exist(result.getId(), member.getId());
     resultTempRepository.save(ResultTemp.createResultTemp(result, player.get()));
   }
+
+  public List<Matching> findAll() {
+    return matchingRepository.findAll();
+  }
 }
 
 
