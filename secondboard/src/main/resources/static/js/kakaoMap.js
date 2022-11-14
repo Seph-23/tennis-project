@@ -104,43 +104,44 @@ function displayPlaces(places) {
 
       //TODO
       kakao.maps.event.addListener(marker,'click', function () {
-          if (confirm("이 위치로 등록하시겠습니까?") === true) {
-            addLocation = {
-              lat: marker.getPosition().getLat(),
-              lng: marker.getPosition().getLng()
-            }
-            getAddr(addLocation.lat,addLocation.lng);
-            function getAddr(lat,lng){
-              let geocoder = new kakao.maps.services.Geocoder();
-
-              let coord = new kakao.maps.LatLng(lat, lng);
-              let callback = function(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                  console.log(typeof result);
-                  console.log(JSON.stringify(result));
-                  console.log(title);
-                  console.log("lat = " + addLocation.lat)
-                  console.log("lng = " + addLocation.lng)
-                  $("#matchingPlace").val(title);
-                  $("#placeName").attr("placeholder", title);
-                  $("#matching_lat").val(addLocation.lat);
-                  $("#matching_lng").val(addLocation.lng);
-                }
-              };
-              geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-            }
-          } else {
-            return false;
+        if (confirm("이 위치로 등록하시겠습니까?") === true) {
+          addLocation = {
+            lat: marker.getPosition().getLat(),
+            lng: marker.getPosition().getLng()
           }
-        });
+          getAddr(addLocation.lat,addLocation.lng);
+          function getAddr(lat,lng){
+            let geocoder = new kakao.maps.services.Geocoder();
 
-      itemEl.onmouseover =  function () {
+            let coord = new kakao.maps.LatLng(lat, lng);
+            let callback = function(result, status) {
+              if (status === kakao.maps.services.Status.OK) {
+                console.log(typeof result);
+                console.log(JSON.stringify(result));
+                console.log(title);
+                console.log("lat = " + addLocation.lat)
+                console.log("lng = " + addLocation.lng)
+                $("#matchingPlace").val(title);
+                $("#placeName").attr("placeholder", title);
+                $("#matching_lat").val(addLocation.lat);
+                $("#matching_lng").val(addLocation.lng);
+              }
+            };
+            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+          }
+        } else {
+          return false;
+        }
+      });
+
+      itemEl.onclick =  function () {
+        locationRegister(marker, title);
         displayInfowindow(marker, title);
       };
 
-      itemEl.onmouseout =  function () {
-        infowindow.close();
-      };
+      // itemEl.onmouseout =  function () {
+      //   infowindow.close();
+      // };
     })(marker, places[i].place_name);
 
     fragment.appendChild(itemEl);
@@ -259,8 +260,37 @@ $("#matchingPlace").click(function () {
   setTimeout(function () {
     map.relayout();
     map.setCenter(new kakao.maps.LatLng(37.566826, 126.9786567));
+    map.setLevel(9);
   }, 200);
-
-
 });
 
+function locationRegister(marker, title) {
+  if (confirm("이 위치로 등록하시겠습니까?") === true) {
+    addLocation = {
+      lat: marker.getPosition().getLat(),
+      lng: marker.getPosition().getLng()
+    }
+    getAddr(addLocation.lat,addLocation.lng);
+    function getAddr(lat,lng){
+      let geocoder = new kakao.maps.services.Geocoder();
+
+      let coord = new kakao.maps.LatLng(lat, lng);
+      let callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          console.log(typeof result);
+          console.log(JSON.stringify(result));
+          console.log(title);
+          console.log("lat = " + addLocation.lat)
+          console.log("lng = " + addLocation.lng)
+          $("#matchingPlace").val(title);
+          $("#placeName").attr("placeholder", title);
+          $("#matching_lat").val(addLocation.lat);
+          $("#matching_lng").val(addLocation.lng);
+        }
+      };
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+    }
+  } else {
+    return false;
+  }
+}
