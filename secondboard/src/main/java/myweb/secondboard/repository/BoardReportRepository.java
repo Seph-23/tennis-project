@@ -13,4 +13,6 @@ public interface BoardReportRepository extends JpaRepository<BoardReport, Long> 
   Optional<BoardReport> find(@Param("boardId") Long boardId, @Param("memberId") Long memberId);
 
   void deleteAllByBoardId(Long id);
+
+  Long countByBoardId(Long id);
 }
