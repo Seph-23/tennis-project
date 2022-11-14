@@ -1,6 +1,5 @@
 package myweb.secondboard.service;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
@@ -51,5 +50,11 @@ public class BoardService {
     Board board = boardRepository.findOne(form.getId()); //조회한 board 엔티티는 영속 상태
     board.updateBoard(board, form, member);
     // boardRepository.save(board); 트랜잭션 커밋 시점에 변경 감지(Dirty checking)
+  }
+
+  public Page<Board> searchBoards(String keyword, Pageable pageable) {
+    String title = keyword;
+    String author = keyword;
+    return boardRepository.findByTitleContainingOrAuthorContaining(title, author, pageable);
   }
 }

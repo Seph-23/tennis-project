@@ -6,13 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Member;
-import myweb.secondboard.domain.boards.Lesson;
-import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.domain.boards.Question;
-import myweb.secondboard.domain.comments.NoticeComment;
 import myweb.secondboard.domain.comments.QuestionComment;
-import myweb.secondboard.dto.NoticeSaveForm;
-import myweb.secondboard.dto.NoticeUpdateForm;
 import myweb.secondboard.dto.QuestionSaveForm;
 import myweb.secondboard.dto.QuestionUpdateForm;
 import myweb.secondboard.service.QuestionCommentService;
@@ -26,11 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -43,10 +34,16 @@ public class QuestionController {
 
 
   @GetMapping("/home")
-  public String home(@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
+  public String home(@RequestParam(required = false, value = "keyword") String keyword,
+                     @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
   Pageable pageable, Model model) {
 
-    Page<Question> questionList = questionService.getQuestionList(pageable);
+    Page<Question> questionList;
+    if (keyword != null) {
+      questionList = questionService.searchQuestions(keyword, pageable);
+    } else {
+      questionList = questionService.getQuestionList(pageable);
+    }
     int nowPage = questionList.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, questionList.getTotalPages());

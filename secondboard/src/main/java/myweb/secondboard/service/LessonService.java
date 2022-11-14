@@ -49,7 +49,10 @@ public class LessonService {
     lesson.updateLesson(lesson, form, member);
     // boardRepository.save(board); 트랜잭션 커밋 시점에 변경 감지(Dirty checking)
   }
-  
-  
 
+  public Page<Lesson> searchLessons(String keyword, Pageable pageable) {
+    String title = keyword;
+    String author = keyword;
+    return lessonRepository.findByTitleContainingOrAuthorContaining(title, author, pageable);
+  }
 }
