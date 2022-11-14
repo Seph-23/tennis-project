@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Community</title>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/boardHome1.css">
+    <link rel="stylesheet" href="/css/boardHome2.css">
+    <link href="/css/banner.css" rel="stylesheet"/>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+
+</head>
+
+
+<body>
+
+<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
+<div class="page">
+    <div class="banner">
+        <div class="board_banner_text">
+            <h1 style="font-family: Nunito">Community</h1>
+            <p style="font-family: Nunito">come and join!</p>
+        </div>
+        <img src="/images/community.jpg" alt="배너 이미지" class="board_banner_area">
+    </div>
+
+
+    <!-- <div class="content-container"> -->
+    <section class="primary">
+        <br>
+        <div class="d-flex justify-content-between">
+            <h2> 자유게시판 </h2>
+            <button class="btn-white border-0 shadow" type="button"
+                    th:onclick="|location.href='@{/boards/boardAdd}'|"
+                    th:if="${session.loginMember != null}">글쓰기
+            </button>
+        </div>
+<!--        <form class="col-4 m-auto" th:action="@{/boards/home}">-->
+<!--            <div class="input-group mb-4 border rounded-pill p-1">-->
+<!--                <input name="keyword" type="search" placeholder="search"-->
+<!--                       class="form-control bg-none border-0 rounded-circle search">-->
+<!--                <button type="submit" class="border-0" style="background: none">-->
+<!--                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+
+        <div class="my-4">
+            <table class="table table-hover align-middle bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>글번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="board:${boardList}"
+                    th:onclick="|location.href='@{/boards/detail/{id} (id=${board.id})}'|" role="button">
+                    <td th:text="${board.id}">1</td>
+                    <td th:text="${board.title}"></td>
+                    <td th:text="${board.author}"></td>
+                    <td th:text="${board.createdDate}"></td>
+                    <td th:text="${board.views}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이징 시작 -->
+            <nav aria-label="Page navigation example" th:if="${startPage != null}">
+                <ul class="pagination pagination-circle justify-content-center">
+                    <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
+                        <a class="page-link" th:if="${page != nowPage}" th:href="@{/boards/home(page=${page-1})}"
+                           th:text="${page}"></a>
+                        <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
+                    </th:block>
+                </ul>
+            </nav>
+            <!-- 페이징 끝 -->
+        </div> <!-- Board Main End -->
+
+
+        </br>
+        </br>
+        </br>
+        </br>
+    </section>
+
+    <aside class="secondary secondary-a">
+        </br>
+        <h3> Community </h3>
+        </br>
+        <ul class="info-list">
+            <li class="info-list-item">
+                <a class="info-list-a" th:onclick="|location.href='@{/notice/home}'|">자유게시판</a>
+            </li>
+            <li class="info-list-item">
+                <a class="info-list-a" th:onclick="|location.href='@{/notice/home}'|">공지사항</a>
+            </li>
+            <li class="info-list-item">
+                <a class="info-list-a" th:onclick="|location.href='@{/lesson/home}'|">레슨 찾아요</a>
+            </li>
+            <li class="info-list-item">
+                <a class="info-list-a" th:onclick="|location.href='@{/question/home}'|">Q&A</a>
+            </li>
+        </ul>
+    </aside>
+
+    <aside class="secondary secondary-b">
+        </br>
+        <h3>핫 게시물</h3>
+        </br>
+        <ul class="user-list message-list">
+            <li class="user-item message-item">
+                <p class="message-content">
+                    1번 게시글
+                </p>
+            </li>
+            <li class="user-item message-item">
+                <p class="message-content">
+                    2번 게시글
+                </p>
+            </li>
+            <li class="user-item message-item">
+                <p class="message-content">
+                    3번 게시글
+                </p>
+            </li>
+            <li class="user-item message-item">
+                <p class="message-content">
+                    4번 게시글
+                </p>
+            </li>
+            <li class="user-item message-item">
+                <p class="message-content">
+                    5번 게시글
+                </p>
+            </li>
+        </ul>
+    </aside>
+    <!-- </div> -->
+
+    <!-- Footer-->
+
+    <footer class="footer bg-white small text-center text-black-50">
+        <br>
+        <br>
+        <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
+    </footer>
+    <br>
+    <br>
+</div>
+
+
+</body>
+</html>
+
