@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -51,7 +51,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" th:href="@{/}">GOGOtennis</a>
+        <a class="navbar-brand" th:href="@{/static}">GOGOtennis</a>
         <!-- <a class="navbar-brand" th:href="@{/}">
              <img src="img/logo2.png" alt="logo" width="100">
          </a>-->
@@ -61,10 +61,10 @@
         <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" th:href="@{/matching/home}" th:text="#{menu.match}">매치</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/tournament}" th:text="#{menu.tournament}">대회</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/templates/tournament}" th:text="#{menu.tournament}">대회</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/ranking/home}" th:text="#{menu.rank}">랭킹</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}" th:text="#{menu.community}">커뮤니티</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/club}" th:text="#{menu.club}">동호회</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/templates/club}" th:text="#{menu.club}">동호회</a></li>
           </ul>
 
           <div class="gap-2 d-md-flex">
@@ -104,18 +104,18 @@
 
       <div class="board-main"> <!-- Board Main Start -->
         <h4>글쓰기</h4>
-        <form role="form" th:object="${board}" action="/boards/new" method="post">
+        <form role="form" th:object="${notice}" action="/notice/new" method="post">
           <div class="form-group">
             <label th:for="title"></label>
-            <input id="title" type="text" class="form-control" th:field="${board.title}"
+            <input id="title" type="text" class="form-control" th:field="${notice.title}"
                    placeholder="제목을 입력해주세요." />
-            <div class="field-error" th:errors="${board.title}"></div>
+            <div class="field-error" th:errors="${notice.title}"></div>
           </div>
           <div class="form-group">
             <label th:for="content"></label>
-            <textarea id="summernote" type="text" class="form-control" th:field="${board.content}"
+            <textarea id="summernote" type="text" class="form-control" th:field="${notice.content}"
                       placeholder="내용을 입력해주세요."></textarea>
-            <div class="field-error" th:errors="${board.content}"></div>
+            <div class="field-error" th:errors="${notice.content}"></div>
           </div>
           <button type="submit" class="button-submit" id="board-submit">등록하기</button>
         </form>

@@ -29,16 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
   private final LoginService loginService;
-  ScriptEngineManager scriptEngineMgr = new ScriptEngineManager();
-  ScriptEngine jsEngine= scriptEngineMgr.getEngineByName("JavaScript");
-
-  private static void initScriptValue(ScriptEngine jsEngine) throws ScriptException {
-
-    jsEngine.eval("<script language='javascript'>");
-    jsEngine.eval("alert('아이디와 비밀번호를 입력해 주세요.')");
-    jsEngine.eval("</script>");
-  }
-
 
   @GetMapping("/login")
   public String loginPage(Model model) {
@@ -50,7 +40,7 @@ public class LoginController {
   public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
     BindingResult bindingResult, HttpServletRequest request) throws NoSuchAlgorithmException {
     if (bindingResult.hasErrors()) {
-      log.info("errors = {}", bindingResult);
+      log.info("globalError = {}", bindingResult);
       return "/login/loginPage";
     }
     Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
@@ -106,8 +96,4 @@ public class LoginController {
     }
     return "redirect:/";
   }
-
-
-
-
 }

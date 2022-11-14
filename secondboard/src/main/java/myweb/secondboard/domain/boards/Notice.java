@@ -3,6 +3,8 @@ package myweb.secondboard.domain.boards;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.LAZY;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -15,9 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.BoardAbstract;
+import myweb.secondboard.domain.comments.NoticeComment;
+import myweb.secondboard.dto.NoticeSaveForm;
+import myweb.secondboard.dto.NoticeUpdateForm;
 
 @Entity
 @Getter @Setter
@@ -32,8 +38,36 @@ public class Notice extends BoardAbstract {
   @JoinColumn(name = "member_id")
   private Member member;
 
-  @OneToMany(mappedBy = "board", cascade = REMOVE)
-  private List<Comment> comments = new ArrayList<>();
+  @OneToMany(mappedBy = "notice", cascade = REMOVE)
+  private List<NoticeComment> comments = new ArrayList<>();
 
+  public static Notice createNotice(NoticeSaveForm form, Member member) {
+    Notice notice = new Notice();
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+    notice.setTitle(form.getTitle());
+    notice.setContent(form.getContent());
+    notice.setAuthor(member.getNickname());
+    notice.setViews(0);
+    notice.setCreatedDate(LocalDateTime.now().format(dtf));
+    notice.setModifiedDate(LocalDateTime.now().format(dtf));
+    notice.setMember(member);
+    return notice;
+  }
+
+  public void updateNotice(Notice notice, NoticeUpdateForm form, Member member) {
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+
+    notice.setId(form.getId());
+    notice.setTitle(form.getTitle());
+    notice.setContent(form.getContent());
+    notice.setAuthor(member.getNickname());
+    notice.setModifiedDate(LocalDateTime.now().format(dtf));
+    notice.setMember(member);
+  }
+
+  public void updateView(Notice notice) {
+    notice.setViews(notice.getViews() + 1);
+  }
 
 }

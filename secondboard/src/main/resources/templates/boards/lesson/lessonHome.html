@@ -40,9 +40,9 @@
     <section class="primary">
         <br>
         <div class="d-flex justify-content-between">
-            <h2> 자유게시판 </h2>
+            <h2> 레슨 찾아요 </h2>
             <button class="btn-white border-0 shadow" type="button"
-                    th:onclick="|location.href='@{/boards/boardAdd}'|"
+                    th:onclick="|location.href='@{/lesson/lessonAdd}'|"
                     th:if="${session.loginMember != null}">글쓰기
             </button>
         </div>
@@ -68,13 +68,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="board:${boardList}"
-                    th:onclick="|location.href='@{/boards/detail/{id} (id=${board.id})}'|" role="button">
-                    <td th:text="${board.id}">1</td>
-                    <td th:text="${board.title}"></td>
-                    <td th:text="${board.author}"></td>
-                    <td th:text="${board.createdDate}"></td>
-                    <td th:text="${board.views}"></td>
+                <tr th:each="lesson:${lessonList}"
+                    th:onclick="|location.href='@{/lesson/detail/{id} (id=${lesson.id})}'|" role="button">
+                    <td th:text="${lesson.id}">1</td>
+                    <td th:text="${lesson.title}"></td>
+                    <td th:text="${lesson.author}"></td>
+                    <td th:text="${lesson.createdDate}"></td>
+                    <td th:text="${lesson.views}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -105,16 +105,16 @@
         </br>
         <ul class="info-list">
             <li class="info-list-item">
-                <a href="#" class="info-list-a">자유게시판</a>
+                <a class="info-list-a" th:onclick="|location.href='@{/boards/home}'|">자유게시판</a>
             </li>
             <li class="info-list-item">
-                <a href="#" class="info-list-a">공지사항</a>
+                <a class="info-list-a" th:onclick="|location.href='@{/notice/home}'|">공지사항</a>
             </li>
             <li class="info-list-item">
-                <a href="#" class="info-list-a">레슨 찾아요</a>
+                <a class="info-list-a" th:onclick="|location.href='@{/lesson/home}'|">레슨 찾아요</a>
             </li>
             <li class="info-list-item">
-                <a href="#" class="info-list-a">Q&A</a>
+                <a class="info-list-a" th:onclick="|location.href='@{/question/home}'|">Q&A</a>
             </li>
         </ul>
     </aside>

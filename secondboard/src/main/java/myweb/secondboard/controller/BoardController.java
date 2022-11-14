@@ -1,6 +1,5 @@
 package myweb.secondboard.controller;
 
-import java.time.format.DateTimeFormatter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,6 @@ import myweb.secondboard.service.CommentService;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -30,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -55,13 +52,13 @@ public class BoardController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/boards/boardHome";
+    return "/boards/board/boardHome";
   }
 
   @GetMapping("/boardAdd")
   public String boardAddForm(Model model) {
     model.addAttribute("board", new BoardSaveForm());
-    return "/boards/boardAddForm";
+    return "/boards/board/boardAddForm";
   }
 
   @PostMapping("/new")
@@ -73,7 +70,7 @@ public class BoardController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/boardAddForm";
+      return "/boards/board/boardAddForm";
     }
 
     Long boardId = boardService.addBoard(form, member);
@@ -87,7 +84,7 @@ public class BoardController {
     Board board = boardService.findOne(boardId);
     viewLogic(boardId, request, response);
     boardDetailView(boardId, model, board);
-    return "/boards/boardDetail";
+    return "/boards/board/boardDetail";
   }
 
   @GetMapping("/update/{boardId}")
@@ -100,7 +97,7 @@ public class BoardController {
     form.setContent(board.getContent());
     model.addAttribute("form",form);
 
-    return "/boards/boardUpdateForm";
+    return "/boards/board/boardUpdateForm";
   }
 
   @PostMapping("/update/{boardId}")
@@ -113,7 +110,7 @@ public class BoardController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/boardUpdateForm";
+      return "/boards/board/boardUpdateForm";
     }
 
     boardService.update(form, member);
