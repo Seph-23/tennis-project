@@ -102,6 +102,7 @@ public class BoardController {
 
     int reportCount = boardReportService.getReportCount(board.getId());
     model.addAttribute("reportCount", reportCount);
+    System.out.println("reportCount = " + reportCount);
     return "/boards/board/boardDetail";
   }
 

@@ -6,7 +6,7 @@ function deleteText() {
 }
 
 function checkReport() {
-    let reportCount = $("#reportBtn").val()
+    let reportCount = $("#reportBtn").attr("value")
     console.log(reportCount)
     if (reportCount  >= 2) {
         deleteText();
