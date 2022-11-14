@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/css/boardHome1.css">
   <link rel="stylesheet" href="/css/boardHome2.css">
   <link rel="stylesheet" href="/css/boardDetail.css">
+  <link href="/css/likeReport.css" rel="stylesheet"/>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
@@ -27,6 +28,7 @@
   <!-- <div class="content-container"> -->
   <section class="primary">
     <div class="container">
+      <div id="reportText">
       <br>
       <h3 style="text-align: center" th:text="${board.title}"></h3>
       <div class="d-flex justify-content-between" id="board_title_box">
@@ -57,14 +59,22 @@
       <br>
       <br>
 
-      <div class="d-flex justify-content-center" id="board_content_box">
+      <div class="d-flex justify-content-center pb-5" id="board_content_box">
         <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
           <p th:utext="${board.content}"></p>
           <br>
           <br>
+            <div class="content heart-btn2">
+              <span class="heart"id="boardId" th:value="${board.id}"></span>
+              <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
+              <span hidden id="checkLike" th:value="${checkLike}"></span>
+            </div>
+            <div class="report-btn report-content">
+              <span id="reportBtn" class="report" th:value="${reportCount}">신고</span>
+            </div>
         </div> <!-- 게시글 본문 끝 -->
       </div>
-
+      </div>
 
       <!--요기요기요기 -->
       <div class="container my-5 py-5">
@@ -256,4 +266,8 @@
 </div>
 </body>
 <script th:src="@{/js/boardDetailPage.js}"></script>
+<script src="/js/like.js"></script>
+<script src="/js/report.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </html>

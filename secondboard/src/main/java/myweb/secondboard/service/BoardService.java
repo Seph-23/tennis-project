@@ -5,6 +5,8 @@ import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.BoardSaveForm;
 import myweb.secondboard.dto.BoardUpdateForm;
+import myweb.secondboard.repository.BoardLikeRepository;
+import myweb.secondboard.repository.BoardReportRepository;
 import myweb.secondboard.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
   private final BoardRepository boardRepository;
+  private final BoardLikeRepository boardLikeRepository;
+  private final BoardReportRepository boardReportRepository;
 
   public Board findOne(Long boardId) {
     return boardRepository.findOne(boardId);
@@ -42,6 +46,8 @@ public class BoardService {
 
   @Transactional
   public void deleteById(Long boardId) {
+    boardLikeRepository.deleteAllByBoardId(boardId);
+    boardReportRepository.deleteAllByBoardId(boardId);
     boardRepository.deleteById(boardId);
   }
 

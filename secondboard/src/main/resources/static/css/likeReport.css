@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+.heart-btn{
+
+    position: absolute;
+    /*top: 50%;*/
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.heart-btn2{
+
+    position: absolute;
+    /*top: 50%;*/
+    left: 50%;
+    transform: translate(-75%, -50%);
+}
+
+.report-btn{
+
+    position: absolute;
+    /*top: 50%;*/
+    left: 50%;
+    transform: translate(50%, -50%);
+}
+
+.content, .report-content{
+
+    border: 2px solid #eaeaea;
+    padding: 10px 13px;
+    border-radius: 5px;
+    display: flex;
+    cursor: pointer;
+}
+
+.content .heart{
+
+    height: 80px;
+    width: 80px;
+    background-image:  url("https://imagizer.imageshack.com/img922/4224/UkKFPz.png");
+    background-position: left;
+    background-size: 2900%;
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+.heart.heart-active{
+    background-position: right;
+    animation: animate .8s steps(28) 1;
+}
+
+@keyframes animate{
+
+    0%{
+        background-position: left;
+    }
+    100%{
+        background-position: right;
+    }
+}
+.like{
+
+    margin-left: 28px;
+    font-size: 16px;
+    font-family: 'Montserrat',sans-serif;
+    color: gray;
+}
+
+.report{
+    font-size: 16px;
+    font-family: 'Montserrat',sans-serif;
+    color: gray;
+}
+
+.like.heart-active{
+
+    color: black;
+
+}
