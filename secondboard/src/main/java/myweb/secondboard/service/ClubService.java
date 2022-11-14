@@ -110,9 +110,11 @@ public class ClubService {
         || searchClubs.getName().contains(keyword)).toList();
   }
 
-//  public Page<Club> searchByKeyword(String keyword, Pageable pageable) {
-//    return clubRepository.findByNameContaining(keyword, pageable);
-//  }
+  public Page<Club> searchClubs(String keyword, Pageable pageable) {
+    String localName = keyword;
+    String name = keyword;
+    return clubRepository.findByLocal_NameContainingOrNameContaining(localName, name, pageable);
+  }
 
   public ClubMember get(Long id) {
     return clubMemberRepository.findOne(id);
