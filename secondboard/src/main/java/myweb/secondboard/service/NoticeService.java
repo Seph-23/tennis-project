@@ -1,11 +1,8 @@
 package myweb.secondboard.service;
 
 import lombok.RequiredArgsConstructor;
-import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Notice;
-import myweb.secondboard.dto.BoardSaveForm;
-import myweb.secondboard.dto.BoardUpdateForm;
 import myweb.secondboard.dto.NoticeSaveForm;
 import myweb.secondboard.dto.NoticeUpdateForm;
 import myweb.secondboard.repository.NoticeRepository;
@@ -53,4 +50,9 @@ public class NoticeService {
     // boardRepository.save(board); 트랜잭션 커밋 시점에 변경 감지(Dirty checking)
   }
 
+  public Page<Notice> searchNotices(String keyword, Pageable pageable) {
+    String title = keyword;
+    String author = keyword;
+    return noticeRepository.findByTitleContainingOrAuthorContaining(title, author, pageable);
+  }
 }

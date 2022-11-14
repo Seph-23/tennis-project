@@ -2,10 +2,7 @@ package myweb.secondboard.service;
 
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
-import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.domain.boards.Question;
-import myweb.secondboard.dto.NoticeSaveForm;
-import myweb.secondboard.dto.NoticeUpdateForm;
 import myweb.secondboard.dto.QuestionSaveForm;
 import myweb.secondboard.dto.QuestionUpdateForm;
 import myweb.secondboard.repository.QuestionRepository;
@@ -53,5 +50,9 @@ public class QuestionService {
     question.updateQuestion(question, form, member);
     // boardRepository.save(board); 트랜잭션 커밋 시점에 변경 감지(Dirty checking)
   }
-
+  public Page<Question> searchQuestions(String keyword, Pageable pageable) {
+    String title = keyword;
+    String author = keyword;
+    return questionRepository.findByTitleContainingOrAuthorContaining(title, author, pageable);
+  }
 }

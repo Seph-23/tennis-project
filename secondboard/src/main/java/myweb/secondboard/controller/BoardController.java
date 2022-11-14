@@ -21,11 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,10 +35,16 @@ public class BoardController {
   private final CommentService commentService;
 
   @GetMapping("/home")
-  public String home(@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
+  public String home(@RequestParam(required = false, value = "keyword") String keyword,
+                     @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
   Pageable pageable, Model model) {
 
-    Page<Board> boardList = boardService.getBoardList(pageable);
+    Page<Board> boardList;
+    if (keyword != null) {
+      boardList = boardService.searchBoards(keyword, pageable);
+    } else {
+      boardList = boardService.getBoardList(pageable);
+    }
     int nowPage = boardList.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, boardList.getTotalPages());
