@@ -38,7 +38,7 @@ public class SecondboardApplication {
 
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
-		return "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/files";
+		return "/Users/hwang-uichan/Project/tennis-project/secondboard/src/main/resources/static/files";
   }
 
 //	@Order(1)
@@ -69,6 +69,7 @@ public class SecondboardApplication {
 //				board.setAuthor(member.getNickname());
 //				board.setContent("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.");
 //				board.setViews(0);
+//        board.setLikeCount(0L);
 //				board.setCreatedDate(LocalDateTime.now().format(dtf));
 //				board.setModifiedDate(LocalDateTime.now().format(dtf));
 //				board.setMember(member);

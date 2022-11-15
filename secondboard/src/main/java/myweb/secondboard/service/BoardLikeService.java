@@ -37,10 +37,16 @@ public class BoardLikeService {
     if (likeCheck == null) {
       BoardLike like = BoardLike.createLike(board, member);
       boardLikeRepository.save(like);
+      board.setLikeCount(board.getLikeCount() + 1);
       return 1;
     } else {
       boardLikeRepository.delete(likeCheck);
+      board.setLikeCount(board.getLikeCount() - 1);
       return 0;
     }
+  }
+
+  public void deleteById(Long boardId) {
+    boardLikeRepository.deleteById(boardId);
   }
 }

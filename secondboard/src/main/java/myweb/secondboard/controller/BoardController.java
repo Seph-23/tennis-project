@@ -94,9 +94,14 @@ public class BoardController {
     viewLogic(boardId, request, response);
     boardDetailView(boardId, model, board);
 
-    Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
-    String checkLike = boardLikeService.checkLike(board.getId(), member.getId());
-    model.addAttribute("checkLike", checkLike);
+    Member member = (Member) request.getSession(true).getAttribute(SessionConst.LOGIN_MEMBER);
+    if (member != null) { //회원
+      String checkLike = boardLikeService.checkLike(board.getId(), member.getId());
+      model.addAttribute("checkLike", checkLike);
+    }
+
+    //비회원
+    System.out.println("member = " + member);
     Long likeCount = boardLikeService.getLikeCount(board.getId());
     model.addAttribute("likeCount", likeCount);
 

@@ -57,7 +57,6 @@ public class BoardCommentApiController {
     @RequestParam Map<String, Object> param) {
     JSONObject result = new JSONObject();
     String content = param.get("content").toString();
-
     if (content.length() < 1 || content.length() > 100) {
       result.put("result", "validate");
       return result;

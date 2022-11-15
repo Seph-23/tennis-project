@@ -64,12 +64,12 @@
           <p th:utext="${board.content}"></p>
           <br>
           <br>
-            <div class="content heart-btn2">
+            <div class="content heart-btn2" th:if="${session.loginMember != null}">
               <span class="heart"id="boardId" th:value="${board.id}"></span>
               <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
               <span hidden id="checkLike" th:value="${checkLike}"></span>
             </div>
-            <div class="report-btn report-content">
+            <div class="report-btn report-content" th:if="${session.loginMember != null}">
               <span id="reportBtn" class="report" th:value="${reportCount}">신고</span>
             </div>
         </div> <!-- 게시글 본문 끝 -->

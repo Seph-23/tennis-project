@@ -147,7 +147,7 @@ const deleteBoard = (boardId) => {
         }
       },
       error: function () {
-        alert("서버 에러!");
+        alert("게시글 삭제 에러!");
       },
     });
   } else {
