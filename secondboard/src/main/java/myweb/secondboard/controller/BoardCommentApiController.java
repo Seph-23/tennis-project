@@ -4,16 +4,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
+import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.service.BoardCommentReportService;
 import myweb.secondboard.service.BoardService;
 import myweb.secondboard.service.CommentService;
 import myweb.secondboard.web.SessionConst;
 import org.json.simple.JSONObject;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +20,7 @@ public class BoardCommentApiController {
 
   private final CommentService commentService;
   private final BoardService boardService;
+  private final BoardCommentReportService boardCommentReportService;
 
   @PostMapping("/commentAdd/{boardId}")
   public JSONObject commentAdd(@PathVariable("boardId") Long boardId,
@@ -75,5 +74,20 @@ public class BoardCommentApiController {
 
     result.put("result", "success");
     return result;
+  }
+
+  @PostMapping("/report")
+  public Integer report(@RequestParam("commentId")Long commentId, @RequestParam("content") String content, HttpServletRequest request) {
+    Comment comment = commentService.findOne(commentId);
+    Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
+    if (boardCommentReportService.checkReport(comment.getId(), member.getId()) == "is") {
+      return 1;
+    } else {
+      boardCommentReportService.addReport(comment, member, content);
+      if (boardCommentReportService.getReportCount(comment.getId()) >= 2) {
+        return 2;
+      }
+      return 0;
+    }
   }
 }

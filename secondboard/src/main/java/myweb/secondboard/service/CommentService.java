@@ -9,6 +9,7 @@ import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Notice;
+import myweb.secondboard.repository.BoardCommentReportRepository;
 import myweb.secondboard.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +22,19 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final BoardCommentReportRepository boardCommentReportRepository;
+
+    public Comment findOne(Long commentId) {
+    return commentRepository.findById(commentId).get();
+    }
 
     public List<Comment> findComments(Long boardId) {
         return commentRepository.findComments(boardId);
     }
+// 삭제?
+//    public List<Comment> findReportComments(Long boardId) {
+//        return commentRepository.findComments(boardId).stream().filter(comment -> comment.getReportCount() >= 2).toList();
+//    }
 
     @Transactional
     public void save(Map<String, Object> param, Board board, Member member) {
@@ -34,6 +44,7 @@ public class CommentService {
 
     @Transactional
     public void deleteById(Long commentId) {
+        boardCommentReportRepository.deleteAllByCommentId(commentId);
         commentRepository.deleteById(commentId);
     }
 

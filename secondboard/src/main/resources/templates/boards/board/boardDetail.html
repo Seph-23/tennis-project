@@ -88,7 +88,7 @@
                 </tr> <!-- 여기부터 댓글시작 -->
                 <tr th:each="comment : ${comments}" class="fw-bold mb-1">
                   <hr class="my-0"/>
-                  <div class="card-body p-4"><!-- 몸통 -->
+                  <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
@@ -156,6 +156,11 @@
                               </div>
                             </td>
                           </div>
+                          <button th:id="'comment-report-'+${comment.id}"
+                                  th:onclick="reportComment([[${comment.id}]])"
+                          class="border-0 mt-1 ms-1 fs-4 text-danger" style="background: none">
+                            <i class="bi bi-exclamation-triangle"></i>
+                          </button>
                         </div>
                         <table th:if="${!comments.isEmpty()}">
                           <tbody>
@@ -199,7 +204,6 @@
               <br>
               <br>
   </section>
-
   <aside class="secondary secondary-a">
     <br>
     <h3> Community </h3>
@@ -268,6 +272,7 @@
 
 <script src="/js/boardlike.js"></script>
 <script src="/js/report.js"></script>
+<script src="/js/boardCommentReport.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/boardDetailPage.js}"></script>
 
