@@ -80,17 +80,17 @@
         <div class="col">
             <div class="card mb-4 rounded-3" style="width: 20rem;">
                 <div class="card-header py-3 text-bg-warning">
-                    <span class="text-white fs-2 my-0 fw-normal">
-                        <img src="/images/medal.png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                    <img src="/images/medal.png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                    <span th:text="${topRank.nickname}" class="text-white fs-2 my-0 fw-normal">
                         User1
                     </span>
                 </div>
                 <div class="card-body">
                     <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
                     <ul class="list-unstyled mt-1 mb-0 fw-bold">
-                        <li>165승 3패</li>
-                        <li>1920점</li>
-                        <li>82%</li>
+                        <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
+                        <li th:text="${topRank.record.points} + '점'">1920점</li>
+                        <li th:text="${topRank.record.rate} + '%'">82%</li>
                     </ul>
                 </div>
             </div>
@@ -98,17 +98,17 @@
         <div class="col">
             <div class="card mb-4 rounded-3" style="width: 20rem;">
                 <div class="card-header py-3 text-bg-danger">
-                    <span class="text-white fs-2 fmy-0 fw-normal">
-                        <img src="/images/medal%20(1).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                    <img src="/images/medal%20(1).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                    <span th:text="${secondRank.nickname}" class="text-white fs-2 fmy-0 fw-normal">
                         User2
                     </span>
                 </div>
                 <div class="card-body">
                     <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
                     <ul class="list-unstyled mt-1 mb-0 fw-bold">
-                        <li>165승 12패</li>
-                        <li>1702점</li>
-                        <li>72%</li>
+                        <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 12패</li>
+                        <li th:text="${secondRank.record.points} + '점'">1702점</li>
+                        <li th:text="${secondRank.record.rate} + '%'">72%</li>
                     </ul>
                 </div>
             </div>
@@ -116,17 +116,17 @@
         <div class="col">
             <div class="card mb-4 rounded-3" style="width: 20rem;">
                 <div class="card-header py-3 text-bg-primary">
-                    <span class="text-white fs-2 my-0 fw-normal">
-                        <img src="/images/medal%20(2).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                    <img src="/images/medal%20(2).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
+                    <span th:text="${thirdRank.nickname}" class="text-white fs-2 my-0 fw-normal">
                         User3
                     </span>
                 </div>
                 <div class="card-body">
                     <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
                     <ul class="list-unstyled mt-1 mb-0 fw-bold">
-                        <li>135승 25패</li>
-                        <li>1502점</li>
-                        <li>68%</li>
+                        <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 12패</li>
+                        <li th:text="${thirdRank.record.points} + '점'">1702점</li>
+                        <li th:text="${thirdRank.record.rate} + '%'">72%</li>
                     </ul>
                 </div>
             </div>
@@ -160,40 +160,18 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col" class="text-center">닉네임</th>
+            <th scope="col">전적</th>
             <th scope="col">점수</th>
             <th scope="col">승률</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>4</td><td>User4</td><td>1682</td><td>61%</td>
-        </tr>
-        <tr>
-            <td>5</td><td>User5</td><td>1634</td><td>60%</td>
-        </tr>
-        <tr>
-            <td>6</td><td>User6</td><td>1521</td><td>57%</td>
-        </tr>
-        <tr>
-            <td>7</td><td>User7</td><td>1479</td><td>55%</td>
-        </tr>
-        <tr>
-            <td>8</td><td>User8</td><td>1411</td><td>53%</td>
-        </tr>
-        <tr>
-            <td>9</td><td>User9</td><td>1328</td><td>52%</td>
-        </tr>
-        <tr>
-            <td>10</td><td>User10</td><td>1290</td><td>51%</td>
-        </tr>
-        <tr>
-            <td>11</td><td>User11</td><td>1128</td><td>49%</td>
-        </tr>
-        <tr>
-            <td>12</td><td>User12</td><td>1065</td><td>47%</td>
-        </tr>
-        <tr>
-            <td>13</td><td>User13</td><td>998</td><td>45%</td>
+        <tr th:each="member, i: ${rank}">
+            <td th:text="${i.index+4}">4</td>
+            <td th:text="${member.nickname}">닉네임</td>
+            <td th:text="${member.record.win} + '승' + ${member.record.lose} + '패'">전적</td>
+            <td th:text="${member.record.points} + '점'">점수</td>
+            <td th:text="${member.record.rate} + '%'">승률</td>
         </tr>
         </tbody>
     </table>

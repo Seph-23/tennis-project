@@ -16,4 +16,8 @@ public interface MemberRepositoryInterface {
   Optional<Member> findByEmail(String email);
 
   Optional<Member> findByPhoneNum(String phoneNum);
+
+  List<Member> findRankTopThree();
+
+  List<Member> findRankList();
 }
