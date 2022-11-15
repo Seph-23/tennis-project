@@ -59,11 +59,12 @@
             <table class="table table-hover align-middle bg-white">
                 <thead class="bg-light">
                 <tr>
-                    <th>글번호</th>
+                    <th>공지번호</th>
                     <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
+                    <th class="text-center">작성자</th>
+                    <th class="text-center">작성일</th>
+                    <th class="text-center">좋아요</th>
+                    <th class="text-center">조회수</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,9 +72,10 @@
                     th:onclick="|location.href='@{/notice/detail/{id} (id=${notice.id})}'|" role="button">
                     <td th:text="${notice.id}">1</td>
                     <td th:text="${notice.title}"></td>
-                    <td th:text="${notice.author}"></td>
-                    <td th:text="${notice.createdDate}"></td>
-                    <td th:text="${notice.views}"></td>
+                    <td th:text="${notice.author}" class="text-center"></td>
+                    <td th:text="${notice.createdDate}" class="text-center"></td>
+                    <td class="text-center"><i class="bi bi-suit-heart-fill text-muted me-1"></i><span th:text="${notice.likeCount}"></span></td>
+                    <td class="text-center"><i class="bi bi-eye text-muted me-1"></i><span th:text="${notice.views}"></span></td>
                 </tr>
                 </tbody>
             </table>

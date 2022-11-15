@@ -47,7 +47,7 @@ public class SecondboardApplication {
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
     return new JPAQueryFactory(entityManager);
   }
-
+//
 //	@Order(1)
 //	@Bean
 //	public CommandLineRunner initData(MemberRepository memberRepository,
@@ -95,6 +95,7 @@ public class SecondboardApplication {
 //				notice.setAuthor(member.getNickname());
 //				notice.setContent("test notice");
 //				notice.setViews(0);
+//        notice.setLikeCount(0L);
 //				notice.setCreatedDate(LocalDateTime.now().format(dtf));
 //				notice.setModifiedDate(LocalDateTime.now().format(dtf));
 //				notice.setMember(member);

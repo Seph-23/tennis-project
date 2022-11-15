@@ -1,16 +1,20 @@
 package myweb.secondboard.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.domain.comments.NoticeComment;
 import myweb.secondboard.dto.NoticeSaveForm;
 import myweb.secondboard.dto.NoticeUpdateForm;
 import myweb.secondboard.service.NoticeCommentService;
+import myweb.secondboard.service.NoticeLikeService;
 import myweb.secondboard.service.NoticeService;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
@@ -30,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 public class NoticeController {
 
   private final NoticeService noticeService;
-  private final NoticeCommentService noticeCommentService;
+  private final NoticeLikeService noticeLikeService;
 
   @GetMapping("/home")
   public String home(@RequestParam(required = false, value = "keyword") String keyword,
@@ -83,6 +87,16 @@ public class NoticeController {
 
     Notice notice = noticeService.findOne(noticeId);
     noticeDetailView(noticeId, model, notice);
+    Member member = (Member) request.getSession(true).getAttribute(SessionConst.LOGIN_MEMBER);
+    if (member != null) {
+      String checkLike = noticeLikeService.checkLike(notice.getId(), member.getId());
+      model.addAttribute("checkLike", checkLike);
+    }
+
+    Long likeCount = noticeLikeService.getLikeCount(notice.getId());
+    model.addAttribute("likeCount", likeCount);
+    System.out.println("notice.getLikeCount() = " + notice.getLikeCount());
+
     return "/boards/notice/noticeDetail";
   }
 
@@ -116,18 +130,21 @@ public class NoticeController {
     return "redirect:/notice/detail/"+noticeId;
   }
 
-
-
-
   private void noticeDetailView(Long noticeId, Model model, Notice notice) {
     model.addAttribute("notice", notice);
-    List<NoticeComment> comments = noticeCommentService.findComments(noticeId);
-
-    if (comments != null) {
-      model.addAttribute("comments", comments);
-    }
   }
 
-
+  @PostMapping("/like")
+  @ResponseBody
+  public Map<String, Object> like(Long noticeId, HttpServletRequest request) {
+    Notice notice = noticeService.findOne(noticeId);
+    Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
+    Integer result = noticeLikeService.clickLike(notice, member);
+    Map<String, Object> map = new HashMap<>();
+    map.put("result", result);
+    Long count = noticeLikeService.getLikeCount(notice.getId());
+    map.put("count", count);
+    return map;
+  }
 
 }

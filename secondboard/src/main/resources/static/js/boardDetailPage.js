@@ -3,8 +3,8 @@ $("#comment-submit").click(function () {
     content: $("#comment").val(),
     boardId: $("#board-id").val()
   }
-  swal({
-    title: "등록하시겠습니까?",
+  Swal.fire({
+    title: "댓글을 등록하시겠습니까?",
     icon: "success",
     inputType: "submit",
     buttons: {
@@ -36,7 +36,7 @@ $("#comment-submit").click(function () {
 });
 
 const deleteComment = (commentId) => {
-  swal({
+  Swal.fire({
     title: "삭제하시겠습니까?",
     icon: "warning",
     inputType: "submit",
@@ -76,7 +76,7 @@ const updateCommentConfirm = (commentId) => {
   let comment = {
     content: $("#comment-content-" + commentId).val()
   }
-  swal({
+  Swal.fire({
     title: "수정하시겠습니까?",
     icon: "success",
     inputType: "update",
