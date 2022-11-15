@@ -8,6 +8,7 @@ import myweb.secondboard.domain.Matching;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.Player;
 import myweb.secondboard.dto.MatchingSaveForm;
+import myweb.secondboard.dto.MatchingSearchCondition;
 import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.dto.PlayerAddForm;
 import myweb.secondboard.dto.ResultAddForm;
@@ -51,7 +52,10 @@ public class MatchingController {
     }
     model.addAttribute("carouselDays", carousel);
 
-    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.now());
+//    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.now());
+    MatchingSearchCondition condition = new MatchingSearchCondition();
+    condition.setDate(LocalDate.now().toString());
+    List<Matching> matchingList = matchingService.searchMatchingByBuilder(condition);
 
     model.addAttribute("matchingList", matchingList);
 
@@ -65,6 +69,9 @@ public class MatchingController {
     model.addAttribute("courtTypes", courtTypes);
 
     model.addAttribute("lat", null);
+
+    model.addAttribute("searchCondition", condition);
+    model.addAttribute("currDate", LocalDate.now().toString());
 
     return "/matching/matchingHome";
   }
@@ -222,7 +229,10 @@ public class MatchingController {
     }
     model.addAttribute("carouselDays", carousel);
 
-    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.parse(date, dtf));
+//    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.parse(date, dtf));
+    MatchingSearchCondition condition = new MatchingSearchCondition();
+    condition.setDate(date);
+    List<Matching> matchingList = matchingService.searchMatchingByBuilder(condition);
 
     model.addAttribute("matchingList", matchingList);
 
@@ -236,6 +246,40 @@ public class MatchingController {
     model.addAttribute("courtTypes", courtTypes);
 
     model.addAttribute("lat", null);
+
+    model.addAttribute("searchCondition", condition);
+    model.addAttribute("currDate", date);
+
+    return "/matching/matchingHome";
+  }
+
+  @PostMapping("/searchCondition")
+  public String matchingSearchCondition(
+    @ModelAttribute("searchCondition") MatchingSearchCondition condition, Model model) {
+
+    ArrayList<LocalDate> carousel = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      carousel.add(LocalDate.now().plusDays(i));
+    }
+    model.addAttribute("carouselDays", carousel);
+
+    List<Matching> matchingList = matchingService.searchMatchingByBuilder(condition);
+
+    model.addAttribute("matchingList", matchingList);
+
+    MatchingSaveForm matchingForm = new MatchingSaveForm();
+    model.addAttribute("matching", matchingForm);
+
+    MatchingType[] matchTypes = MatchingType.values();
+    model.addAttribute("matchTypes", matchTypes);
+
+    CourtType[] courtTypes = CourtType.values();
+    model.addAttribute("courtTypes", courtTypes);
+
+    model.addAttribute("lat", null);
+
+    model.addAttribute("searchCondition", condition);
+    model.addAttribute("currDate", condition.getDate());
 
     return "/matching/matchingHome";
   }

@@ -3,6 +3,7 @@ package myweb.secondboard.repository;
 import myweb.secondboard.domain.Matching;
 
 import java.util.List;
+import myweb.secondboard.dto.MatchingSearchCondition;
 
 public interface MatchingRepositoryInterface {
 
@@ -23,4 +24,7 @@ public interface MatchingRepositoryInterface {
   void matchingBeforeTwoHourCheck(Long matchingId);
 
   void matchingAfterWeek(Long matchingId);
+
+  //매치 리스트 검색 : 동적 쿼리
+  List<Matching> searchMatchingByBuilder(MatchingSearchCondition condition);
 }

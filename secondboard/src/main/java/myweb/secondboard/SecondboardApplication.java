@@ -1,11 +1,13 @@
 package myweb.secondboard;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import javax.persistence.EntityManager;
 import myweb.secondboard.domain.*;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.domain.boards.Notice;
@@ -39,6 +41,11 @@ public class SecondboardApplication {
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
 		return "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/files";
+  }
+
+  @Bean
+  JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+    return new JPAQueryFactory(entityManager);
   }
 
 //	@Order(1)

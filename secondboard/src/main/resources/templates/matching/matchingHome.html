@@ -161,9 +161,31 @@
 
 <div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
-        <div th:if="${session.loginMember != null}" class="d-md-flex justify-content-md-end">
-            <a type="button" class="btn btn-primary px-4 py-3" id="match_modal_toggle"
-               data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>
+        <div class="d-md-flex justify-content-between">         <!-- TODO 매치 목록 하위 조건 -->
+            <form th:object="${searchCondition}" method="post" th:action="@{/matching/searchCondition}">
+                <div class="justify-content-md-start">
+                    <div class="container d-flex">
+                        <input hidden th:field="*{date}" th:value="${currDate}">
+                        <select class="form-select" id="matching_type_selector" th:field="${searchCondition.matchType}">
+                            <option selected value="none">단식/복식</option>
+                            <option th:each="gameType : ${matchTypes}"
+                                    th:text="${gameType.title}"
+                                    th:value="${gameType}"></option>
+                        </select>
+                        <select class="form-select" id="court_type_selector" th:field="${searchCondition.courtType}">
+                            <option selected value="none">실내/실외</option>
+                            <option th:each="courtType : ${courtTypes}"
+                                    th:text="${courtType.title}"
+                                    th:value="${courtType}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-primary px-4 py-2">검색</button>
+                    </div>
+                </div>
+            </form>
+            <div th:if="${session.loginMember != null}" class="justify-content-md-end">
+                <a type="button" class="btn btn-primary px-4 py-3" id="match_modal_toggle"
+                   data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>
+            </div>
         </div>
         <div class="my-4">
             <table class="table table-hover align-middle bg-white">
@@ -181,7 +203,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="matching:${matchingList}"
+                <tr th:each="matching:${matchingList}" id="matching_list" class="matching_list"
+                    th:title="${matching.matchingType.title}" th:value="${matching.courtType.title}"
                     th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|" role="button">
                     <td class="py-5"></td>
                     <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>

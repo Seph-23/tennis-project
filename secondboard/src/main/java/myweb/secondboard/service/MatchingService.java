@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.*;
 import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MatchingSaveForm;
+import myweb.secondboard.dto.MatchingSearchCondition;
 import myweb.secondboard.dto.MatchingUpdateForm;
 import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.repository.MatchingRepository;
@@ -102,6 +103,10 @@ public class MatchingService {
 
   public List<Matching> findAllByDate(LocalDate date) {
     return matchingRepository.findAllByDate(date);
+  }
+
+  public List<Matching> searchMatchingByBuilder(MatchingSearchCondition condition) {
+    return matchingRepository.searchMatchingByBuilder(condition);
   }
 }
 
