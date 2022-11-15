@@ -170,14 +170,14 @@
                 <thead class="bg-light">
                 <tr>
                     <th></th>
-                    <th class="text-center">매칭 날짜</th>
-                    <th class="text-center">매칭 시간</th>
-                    <th class="text-center">매칭 지역</th>
-                    <th class="text-center">매칭 이름</th>
+                    <th class="text-center">매치 날짜</th>
+                    <th class="text-center">매치 시간</th>
+                    <th class="text-center">매치 지역</th>
+                    <th class="text-center">매치 이름</th>
                     <th class="text-center">코트 타입</th>
                     <th class="text-center">참여자</th>
                     <th class="text-center">생성자</th>
-                    <th class="text-center">매칭상태</th>
+                    <th class="text-center">매치상태</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -209,7 +209,7 @@
                               th:text="${matching.matchingCondition.title}"
                               class="badge rounded-pill d-inline text-bg-warning">
                       </span>
-                        <span th:if="${matching.matchingCondition.title == '매칭실패'}"
+                        <span th:if="${matching.matchingCondition.title == '매치실패'}"
                               th:text="${matching.matchingCondition.title}"
                               class="badge text-bg-danger rounded-pill d-inline">
                       </span>
@@ -261,14 +261,14 @@
                     <input hidden id="beforeHour" th:field="${matching.beforeHour}"/>
                     <input hidden id="beforeTwoHour" th:field="${matching.beforeTwoHour}"/>
                     <div class="mb-3">
-                        <label for="matchingTitle" class="form-label">매칭 이름<span
+                        <label for="matchingTitle" class="form-label">매치 이름<span
                                 class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.title}"
                                id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
                         <div th:errors="${matching.title}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingDate" class="form-label">매칭 날짜<span class="text-danger">*</span></label>
+                        <label for="matchingDate" class="form-label">매치 날짜<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" th:field="${matching.matchingDate}"
                                id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
                         <div th:errors="${matching.matchingDate}" class="text-danger"></div>
@@ -290,7 +290,7 @@
                         <div th:errors="${matching.matchingEndTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                        <div class="form-label">매칭 종류<span class="text-danger">*</span></div>
+                        <div class="form-label">매치 종류<span class="text-danger">*</span></div>
                         <div th:each="match : ${matchTypes}" class="form-check form-check-inline">
                             <input type="radio" th:field="*{matchingType}"
                                    th:value="${match.name()}" class="form-check-input">
@@ -308,7 +308,15 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingPlace" class="form-label">매칭 장소<span
+                        <label for="matchingTitle" class="form-label">매치 소개<span
+                            class="text-danger">*</span></label>
+                        <textarea type="text" class="form-control" th:field="${matching.content}"
+                                  id="matchingContent" placeholder="매치 소개를 입력해주세요"
+                                  style="height: 200px; resize: none;" required></textarea>
+                        <div th:errors="${matching.content}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matchingPlace" class="form-label">매치 장소<span
                                 class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
@@ -343,7 +351,7 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
+                    <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
                     <div th:errors="${matching.place}" class="text-danger"></div>
                     <div class="map_wrap">
                         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>

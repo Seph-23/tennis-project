@@ -130,6 +130,7 @@ public class MatchingController {
     matchingForm.setMatchingEndTime(matching.getMatchingEndTime());
     matchingForm.setLat(matching.getLat());
     matchingForm.setLng(matching.getLng());
+    matchingForm.setContent(matching.getContent());
     model.addAttribute("matchingForm", matchingForm);
 
     return "/matching/matchingDetail";

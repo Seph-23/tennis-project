@@ -36,8 +36,8 @@
 
 <div class="container">
 
-    <h6 class="p-3 mb-2 bg-primary text-white">매칭 상세 정보</h6>
-    <div class="matching-header"> <!-- 매칭 헤더 -->
+    <h6 class="p-3 mb-2 bg-primary text-white">매치 상세 정보</h6>
+    <div class="matching-header"> <!-- 매치 헤더 -->
         <h3 th:text="${matching.title}"></h3>
         <table>
             <thead>
@@ -61,7 +61,7 @@
 
     <table th:border="1">
         <tr>
-            <th>매칭 날짜</th>
+            <th>매치 날짜</th>
             <td><a th:text="${matching.matchingDate}"></a></td>
         </tr>
         <tr>
@@ -73,7 +73,7 @@
             <td><a id="end" th:text="${matching.matchingEndTime}"></a></td>
         </tr>
         <tr>
-            <th>매칭 종류</th>
+            <th>매치 종류</th>
             <td><a th:text="${matching.matchingType.title}"></a></td>
         </tr>
         <tr>
@@ -81,7 +81,7 @@
             <td><a th:text="${matching.courtType.title}"></a></td>
         </tr>
         <tr>
-            <th>매칭 장소</th>
+            <th>매치 장소</th>
             <td><a th:text="${matching.place}"></a></td>
         </tr>
     </table>
@@ -118,7 +118,7 @@
     </div> <!--팀 정보 끝 -->
     <hr class="mt-4">
     <h6 class="fw-bolder">매치 소개</h6>
-    <p class="text-center py-5">
+    <p class="text-center py-5" th:text="${matching.content}">
         매치 소개 내용이 없습니다.
     </p>
     <hr class="mt-4">
@@ -139,14 +139,14 @@
              and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teamModal">매치 신청</button>
             </div>
-            <!--매칭에 참가된 인원이면서 매칭 마감이 안된 경우-->
+            <!--매치에 참가된 인원이면서 매치 마감이 안된 경우-->
             <form th:action="@{/matching/delete/memberDelete/{id} (id=${matching.id})}" method="post">
                 <input hidden name="memberId" th:value="${session.loginMember.id}"/>
                 <input hidden name="matchingId" th:value="${matching.id}"/>
-                <!--매칭에 참가된 인원이면서 매칭 마감이 안된 경우-->
+                <!--매치에 참가된 인원이면서 매치 마감이 안된 경우-->
                 <div th:if="${playerMemberCheck != null and matching.matchingCondition.title == '신청가능' and session.loginMember.id != matching.member.id
                 and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">
-                    <button type="submit" class="btn btn-primary">매칭 참가 취소</button>
+                    <button type="submit" class="btn btn-primary">매치 참가 취소</button>
                 </div>
             </form>
             <div th:if="${matching.matchingStatus.equals('AFTER') and session.loginMember == playerMemberCheck}">
@@ -250,12 +250,12 @@
                 <form th:action="@{/matching/update/{id} (id=${matchingForm.id})}" th:object="${matchingForm}" method="POST">
                     <input type="hidden" th:field="${matchingForm.id}">
                     <div class="mb-3">
-                        <label for="matchingTitle" class="form-label">매칭 이름<span class="text-danger">*</span></label>
+                        <label for="matchingTitle" class="form-label">매치 이름<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matchingForm.title}" id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
                         <div th:errors="${matchingForm.title}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingDate" class="form-label">매칭 날짜<span class="text-danger">*</span></label>
+                        <label for="matchingDate" class="form-label">매치 날짜<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" th:field="${matchingForm.matchingDate}" id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
                         <div th:errors="${matchingForm.matchingDate}" class="text-danger"></div>
                     </div>
@@ -277,7 +277,16 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
+                        <label for="matchingTitle" class="form-label">매치 소개<span
+                            class="text-danger">*</span></label>
+                        <textarea type="text" class="form-control" name="content" th:text="${matchingForm.content}"
+                                  id="matchingContent" placeholder="매치 소개를 입력해주세요"
+                                  style="height: 200px; resize: none;" required></textarea>
+                        <div th:errors="${matching.content}" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
@@ -306,7 +315,7 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="matchingPlace" class="form-label">매칭 장소<span class="text-danger">*</span></label>
+                    <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
                     <div th:errors="${matching.place}" class="text-danger"></div>
                     <div class="map_wrap">
                         <div id="map_update" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>

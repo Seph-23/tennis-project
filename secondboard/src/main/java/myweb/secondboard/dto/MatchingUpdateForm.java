@@ -20,6 +20,9 @@ public class MatchingUpdateForm {
   @Size(min = 1, max = 15, message = "제목은 1 ~ 15자 이내여야 합니다.")
   private String title;
 
+  @NotNull @Size(min = 1, max = 200, message = "매치 소개는 1 ~ 200자 이내여야 합니다.")
+  private String content;
+
   @NotNull @Size(min = 1, max = 40, message = "장소은 1 ~ 40자 이내여야 합니다.")
   private String place;
 

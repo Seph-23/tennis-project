@@ -43,6 +43,8 @@ Matching {
   @Column(length = 31)
   private String title;
 
+  private String content;
+
   @NotNull
   @Column(length = 145)
   private String place;
@@ -118,6 +120,8 @@ Matching {
     matching.setLat(form.getLat());
     matching.setLng(form.getLng());
 
+    matching.setContent(form.getContent());
+
     return matching;
   }
 
@@ -136,6 +140,8 @@ Matching {
     matching.setMember(member);
     matching.setLat(form.getLat());
     matching.setLng(form.getLng());
+
+    matching.setContent(form.getContent());
   }
 
   public void increasePlayerNumber(Matching matching) {
