@@ -1,17 +1,17 @@
-$(document).ready(function () {
-    var now_utc = Date.now()
-    // var timeOff = new Date().getTimezoneOffset() * 60000;
-    var timeOff = new Date().getTimezoneOffset() * 120000;
-    var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
-    // document.getElementById("matchingDate").setAttribute("min", today);
-    $("#matchingDate").attr({"min" : today });
-    $("#single_btn").prop("checked", true);
-    if ($("#teamASize").val() === "2") {
-        $("#double_btnB").prop("checked", true);
-    } else {
-        $("#double_btnA").prop("checked", true);
-    }
-});
+// $(document).ready(function () {
+//     var now_utc = Date.now()
+//     // var timeOff = new Date().getTimezoneOffset() * 60000;
+//     var timeOff = new Date().getTimezoneOffset() * 120000;
+//     var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
+//     // document.getElementById("matchingDate").setAttribute("min", today);
+//     $("#matchingDate").attr({"min" : today });
+//     $("#single_btn").prop("checked", true);
+//     if ($("#teamASize").val() === "2") {
+//         $("#double_btnB").prop("checked", true);
+//     } else {
+//         $("#double_btnA").prop("checked", true);
+//     }
+// });
 
 
 $('#matchingStartTime').timepicker({
