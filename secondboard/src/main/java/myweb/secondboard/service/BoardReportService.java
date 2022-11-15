@@ -36,4 +36,8 @@ public class BoardReportService {
 //    return boardReportRepository.findAll().stream().filter(report -> report.getBoard().getId() == boardId).toList().size();
   return boardReportRepository.countByBoardId(boardId);
   }
+
+  public void deleteById(Long boardId) {
+    boardReportRepository.deleteById(boardId);
+  }
 }

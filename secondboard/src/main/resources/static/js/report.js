@@ -28,7 +28,7 @@ $(document).ready(function () {
             inputValidator: (value) => {
                 if (!value) {
                     return 'You need to write something!'
-                } else if (value.length < 6) {
+                } else if (value.length < 5) {
                     return '5자 이상 입력해주세요'
                 }
             },

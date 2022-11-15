@@ -38,9 +38,9 @@ public class SecondboardApplication {
 
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
-		return "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/files";
+		return "/Users/hwang-uichan/Project/tennis-project/secondboard/src/main/resources/static/files";
   }
-
+//
 //	@Order(1)
 //	@Bean
 //	public CommandLineRunner initData(MemberRepository memberRepository,

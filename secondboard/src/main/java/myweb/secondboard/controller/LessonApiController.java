@@ -40,12 +40,16 @@ public class LessonApiController {
         break;
       }
 
-      String fileName = imageService.findById(Long.valueOf(number)).getFilePath();
-      System.out.println("fileName = " + fileName);
-      content = StringUtils.substringAfter(content, "/image/");
-      imageService.deleteById(Long.valueOf(number));
-      File file = new File(fileName);
-      file.delete();
+      if (imageService.findById(Long.valueOf(number)).isPresent()) {
+        String fileName = imageService.findById(Long.valueOf(number)).get().getFilePath();
+        System.out.println("fileName = " + fileName);
+        content = StringUtils.substringAfter(content, "/image/");
+        imageService.deleteById(Long.valueOf(number));
+        File file = new File(fileName);
+        file.delete();
+      }
+      else break;
+
     }
 
     for (String imageNumber : ImageNumbers) {

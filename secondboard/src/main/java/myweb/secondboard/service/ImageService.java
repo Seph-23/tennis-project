@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.boards.BoardUploadFile;
 import myweb.secondboard.repository.UploadFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +73,15 @@ public class ImageService {
     return saveFileName;
   }
 
-  public BoardUploadFile findById(Long imageId) {
-    return uploadFileRepository.findById(imageId).get();
+  public Optional<BoardUploadFile> findById(Long imageId) {
+//    if (uploadFileRepository.findById(imageId).isPresent()) {
+//      return uploadFileRepository.findById(imageId);
+//    }
+//    return Optional.empty();
+    if (uploadFileRepository.findById(imageId).isPresent()) {
+      return Optional.of(uploadFileRepository.findById(imageId).get());
+    }
+    return Optional.empty();
   }
 
   public void deleteById(Long imageId) {
