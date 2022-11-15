@@ -3,17 +3,21 @@ package myweb.secondboard.controller;
         import java.io.IOException;
         import java.nio.charset.StandardCharsets;
         import java.security.NoSuchAlgorithmException;
+        import java.util.List;
         import java.util.Map;
         import java.util.Optional;
         import javax.validation.Valid;
         import lombok.RequiredArgsConstructor;
         import lombok.extern.slf4j.Slf4j;
+        import myweb.secondboard.domain.Matching;
         import myweb.secondboard.domain.Member;
+        import myweb.secondboard.domain.Player;
         import myweb.secondboard.dto.FindPasswordForm;
         import myweb.secondboard.dto.MemberSaveForm;
         import myweb.secondboard.dto.MemberUpdateForm;
         import myweb.secondboard.dto.UpdatePasswordForm;
         import myweb.secondboard.service.MemberService;
+        import myweb.secondboard.service.PlayerService;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
         import org.springframework.validation.BindingResult;
@@ -34,6 +38,8 @@ package myweb.secondboard.controller;
 public class MemberController {
 
   private final MemberService memberService;
+
+  private final PlayerService playerService;
 
   @GetMapping("/new")
   public String signUpPage(Model model) {
@@ -74,6 +80,11 @@ public class MemberController {
     form.setNickname(member.getNickname());
     form.setIntroduction(member.getIntroduction());
     model.addAttribute("form",form);
+
+    List<Player> playerList = playerService.findByMemberId(member.getId());
+    model.addAttribute("playerList", playerList);
+
+//    System.out.println("playerList = " + playerList);
 
     return "/members/profileHome";
   }

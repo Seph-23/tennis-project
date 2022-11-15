@@ -124,19 +124,19 @@
     <div class="d-flex">
         <div class="contact">
             <div class="text-center">
-                <img class="profile me-5 img-fluid" src="/images/challenger.png" alt=""/>
-                <h3><span>Challenger</span></h3>
+                <img class="profile me-5 img-fluid" alt=""/>
+                <h3><span class="tier" th:text="${member.getTier()}"></span></h3>
             </div>
         </div>
         <div class="container text-center">
             <div class="row">
                 <div class="col total">
                     <h3><strong>총 전적</strong></h3>
-                    <li style="list-style: none">202승 0무 12패</li>
+                    <li style="list-style: none" th:text="${member.getRecord().getWin()} + '승 ' + ${member.getRecord().getLose()} + '패 ' + ${member.getRecord().getPenalty()} + '무효'"></li>
                 </div>
                 <div class="col total">
                     <h3><strong>승점</strong></h3>
-                    <li style="list-style: none">2909점</li>
+                    <li style="list-style: none" th:text="${member.getRecord().getPoints()} + '점'"></li>
                 </div>
             </div>
         </div>
@@ -168,6 +168,9 @@
                 <div>
                     <h8>패배시 : -7 점</h8>
                 </div>
+                <div>
+                    <h8>패널티 : -10 점</h8>
+                </div>
                 <img class="level_info" src="/images/level_info_2.png" alt=""/>
             </div>
         </div>
@@ -186,47 +189,56 @@
             <tr>
                 <th></th>
                 <th class="text-center">승/패</th>
-                <th class="text-center">매칭 상대</th>
+                <th class="text-center">매치 이름</th>
+                <th class="text-center">매치 타입</th>
                 <th class="text-center">경기 날짜</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr th:each="player : ${playerList}" th:onclick="|location.href='@{/matching/detail/{id} (id=${player.matching.id})}'|" role="button">
                 <td class="py-5"></td>
-                <td class="text-center"><span>승</span></td>
-                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
-                <td class="text-center">2022-10-25</td>
+<!--                <td class="text-center" th:text="${player.matching.gameResult.title}"></td>-->
+                <td class="text-center" th:if="${player.team.toString() == 'A'}" th:text="${player.matching.gameResult.title}"></td>
+                <div th:if="${player.team.toString() == 'B'}">
+                <td class="text-center" th:if="${player.matching.gameResult.toString() == 'WIN'}" th:text="패배"></td>
+                <td class="text-center" th:if="${player.matching.gameResult.toString() == 'LOSE'}" th:text="승리"></td>
+                <td class="text-center" th:if="${player.matching.gameResult.toString() == 'PENALTY'}" th:text="무효"></td>
+                <td class="text-center" th:if="${player.matching.gameResult.toString() == 'NORECORD'}" th:text="결과미등록"></td>
+                </div>
+                <td class="text-center" th:text="${player.matching.title}"></td>
+                <td class="text-center" th:text="${player.matching.matchingType.title}"></td>
+                <td class="text-center" th:text="${player.matching.matchingDate}"></td>
             </tr>
-            <tr>
-                <td class="py-5"></td>
-                <td class="text-center"><span>승</span></td>
-                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
-                <td class="text-center">2022-10-25</td>
-            </tr>
-            <tr>
-                <td class="py-5"></td>
-                <td class="text-center"><span>승</span></td>
-                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
-                <td class="text-center">2022-10-25</td>
-            </tr>
-            <tr>
-                <td class="py-5"></td>
-                <td class="text-center"><span>승</span></td>
-                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
-                <td class="text-center">2022-10-25</td>
-            </tr>
-            <tr>
-                <td class="py-5"></td>
-                <td class="text-center"><span>승</span></td>
-                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
-                <td class="text-center">2022-10-25</td>
-            </tr>
-            <tr>
-                <td class="py-5"></td>
-                <td class="text-center"><span>승</span></td>
-                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>
-                <td class="text-center">2022-10-25</td>
-            </tr>
+<!--            <tr>-->
+<!--                <td class="py-5"></td>-->
+<!--                <td class="text-center"><span>승</span></td>-->
+<!--                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>-->
+<!--                <td class="text-center">2022-10-25</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="py-5"></td>-->
+<!--                <td class="text-center"><span>승</span></td>-->
+<!--                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>-->
+<!--                <td class="text-center">2022-10-25</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="py-5"></td>-->
+<!--                <td class="text-center"><span>승</span></td>-->
+<!--                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>-->
+<!--                <td class="text-center">2022-10-25</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="py-5"></td>-->
+<!--                <td class="text-center"><span>승</span></td>-->
+<!--                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>-->
+<!--                <td class="text-center">2022-10-25</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="py-5"></td>-->
+<!--                <td class="text-center"><span>승</span></td>-->
+<!--                <td class="text-center"><i class="bi bi-people-fill text-muted me-1"></i><span>test1</span></td>-->
+<!--                <td class="text-center">2022-10-25</td>-->
+<!--            </tr>-->
 
             </tbody>
         </table>
@@ -291,6 +303,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+<script src="/js/tierCheck.js"></script>
 </div> <!-- Container End -->
 </body>
 </html>
