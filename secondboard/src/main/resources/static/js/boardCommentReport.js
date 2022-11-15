@@ -1,23 +1,17 @@
-
-function deleteText() {
-    const element = document.getElementById('reportText');
-
-    element.innerText = '신고 처리된 게시글입니다.';
-
-}
-
 function checkReport() {
-    let reportCount = $("#reportCount").attr("value");
-    if (reportCount  >= 2) {
-        deleteText();
-    };
+    const report = document.getElementsByClassName("reportCount");
+    $(".reportCount[value=" + 2 + "]").addClass("commentReport")
+    Array.from(document.getElementsByClassName(
+        "commentReport")).forEach(
+            cmReport => cmReport.innerText = "신고 처리된 댓글입니다.");
 }
 
 document.addEventListener("DOMContentLoaded", checkReport);
 
-$(document).ready(function () {
-    $(".report-btn").click(function () {
 
+const reportComment = (commentId) => {
+    var tmp = $("#comment-report-" + commentId).closest(".reportCount");
+    console.log(tmp)
         Swal.fire({
             title: '신고 내용을 작성해주세요',
             input: 'text',
@@ -36,17 +30,15 @@ $(document).ready(function () {
             confirmButtonText: '신고하기',
         }).then(function (result) {
             if (result.isConfirmed) {
-                const boardId = $("#boardId").attr("value");
-                console.log(result.value)
                 $.ajax({
                     type: "POST",
-                    url: "/boards/report",
-                    data: {'boardId': boardId, 'content': result.value},
+                    url: "/api/comments/report",
+                    data: {'commentId': commentId, 'content': result.value},
                     success: function (data) {
                         if (data === 1) {
                             Swal.fire({
                                 icon: 'info',
-                                title: '이미 신고된 게시글입니다.'
+                                title: '이미 신고된 댓글입니다.'
                             })
                         } else {
                             Swal.fire({
@@ -54,7 +46,10 @@ $(document).ready(function () {
                                 title: '신고되었습니다'
                             }).then(function(confirm) {
                                 if (confirm.isConfirmed && data === 2) {
-                                    deleteText();
+                                 $("#comment-report-" + commentId).closest(".reportCount").addClass("clickedComment")
+                                    Array.from(document.getElementsByClassName(
+                                        "clickedComment")).forEach(
+                                        cmReport => cmReport.innerText = "신고 처리된 댓글입니다.");
                                 }
                             })
                         }
@@ -68,6 +63,5 @@ $(document).ready(function () {
                 });
             }
         })
-    });
-});
+    };
 

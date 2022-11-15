@@ -48,6 +48,9 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @NotNull
+    private Integer reportCount;
+
     //연관관계 편의 메서드
     public void setBoard(Board board) {
         this.board = board;
@@ -65,6 +68,7 @@ public class Comment {
         comment.setMember(member);
         comment.setCreatedDate(LocalDateTime.now().format(dtf));
         comment.setModifiedDate(LocalDateTime.now().format(dtf));
+        comment.setReportCount(0);
         return comment;
     }
 
