@@ -3,27 +3,18 @@ package myweb.secondboard.domain;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
-import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.print.DocFlavor.STRING;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,6 +60,9 @@ public class Board {
   @JoinColumn(name = "member_id")
   private Member member;
 
+  @Column(columnDefinition = "integer default 0")
+  private Long likeCount;
+
   @OneToMany(mappedBy = "board", cascade = REMOVE)
   private List<Comment> comments = new ArrayList<>();
 
@@ -81,6 +75,7 @@ public class Board {
     board.setContent(form.getContent());
     board.setAuthor(member.getNickname());
     board.setViews(0);
+    board.setLikeCount(0L);
     board.setCreatedDate(LocalDateTime.now().format(dtf));
     board.setModifiedDate(LocalDateTime.now().format(dtf));
     board.setMember(member);
