@@ -36,4 +36,8 @@ public class PlayerService {
   public List<Player> findAllByMatchingId(Long matchingId) {
     return playerRepository.findAllByMatchingId(matchingId);
   }
+
+  public List<Player> findByMemberId(Long memberId) {
+    return playerRepository.findByMemberId(memberId).stream().filter(list -> list.getMatching().getGameResult() != null).toList();
+  }
 }
