@@ -3,10 +3,11 @@ function deleteText() {
     const element = document.getElementById('reportText');
 
     element.innerText = '신고 처리된 게시글입니다.';
+
 }
 
 function checkReport() {
-    let reportCount = $("#reportBtn").attr("value");
+    let reportCount = $("#reportCount").attr("value");
     console.log(reportCount)
     if (reportCount  >= 2) {
         deleteText();

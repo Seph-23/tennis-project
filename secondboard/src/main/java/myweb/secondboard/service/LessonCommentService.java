@@ -9,7 +9,6 @@ import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.domain.comments.LessonComment;
 import myweb.secondboard.domain.comments.NoticeComment;
 import myweb.secondboard.repository.LessonCommentRepository;
-import myweb.secondboard.repository.NoticeCommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

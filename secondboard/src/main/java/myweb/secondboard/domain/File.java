@@ -1,5 +1,6 @@
 package myweb.secondboard.domain;
 
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class File {
+public class File implements Serializable {
     // 동호회 대표이미지
     // 내정보 회원페이지
     @Id
@@ -30,14 +31,9 @@ public class File {
 
     }
 
-
-
-
     public void  updateImgPath(File originFile, byte[] files){
 
         originFile.setSaveImg(files);
     }
-
-
 
 }

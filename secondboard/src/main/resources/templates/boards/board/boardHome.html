@@ -59,7 +59,7 @@
             <table class="table table-hover align-middle bg-white">
                 <thead class="bg-light">
                 <tr>
-                    <th>글번호</th>
+                    <th>번호</th>
                     <th>제목</th>
                     <th class="text-center">작성자</th>
                     <th class="text-center">작성일</th>
@@ -71,11 +71,11 @@
                 <tr th:each="board:${boardList}"
                     th:onclick="|location.href='@{/boards/detail/{id} (id=${board.id})}'|" role="button">
                     <td th:text="${board.id}">1</td>
-                    <td th:text="${board.title}"></td>
+                    <td><span th:text="${board.title}"></span><i class="bi bi-chat-left-dots text-muted me-1 ms-3"></i><span th:text="${board.getComments().size()}"></span></td>
                     <td th:text="${board.author}" class="text-center"></td>
                     <td th:text="${board.createdDate}" class="text-center"></td>
                     <td class="text-center"><i class="bi bi-suit-heart-fill text-muted me-1"></i><span th:text="${board.getLikeCount}"></span></td>
-                    <td th:text="${board.views}" class="text-center"></td>
+                    <td class="text-center"><i class="bi bi-eye text-muted me-1"></i><span th:text="${board.views}"></span></td>
                 </tr>
                 </tbody>
             </table>
@@ -179,5 +179,6 @@
 
 
 </body>
+<script src="/js/report.js"></script>
 </html>
 

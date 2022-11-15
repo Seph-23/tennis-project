@@ -41,6 +41,9 @@ public class Notice extends BoardAbstract {
   @OneToMany(mappedBy = "notice", cascade = REMOVE)
   private List<NoticeComment> comments = new ArrayList<>();
 
+  @Column(columnDefinition = "integer default 0")
+  private Long likeCount;
+
   public static Notice createNotice(NoticeSaveForm form, Member member) {
     Notice notice = new Notice();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
@@ -49,6 +52,7 @@ public class Notice extends BoardAbstract {
     notice.setContent(form.getContent());
     notice.setAuthor(member.getNickname());
     notice.setViews(0);
+    notice.setLikeCount(0L);
     notice.setCreatedDate(LocalDateTime.now().format(dtf));
     notice.setModifiedDate(LocalDateTime.now().format(dtf));
     notice.setMember(member);

@@ -43,8 +43,8 @@ public class BoardController {
 
   @GetMapping("/home")
   public String home(@RequestParam(required = false, value = "keyword") String keyword,
-                     @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
-  Pageable pageable, Model model) {
+      @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
+      Pageable pageable, Model model) {
 
     Page<Board> boardList;
     if (keyword != null) {
@@ -72,10 +72,10 @@ public class BoardController {
 
   @PostMapping("/new")
   public String boardAdd(@Validated @ModelAttribute("board") BoardSaveForm form,
-    BindingResult bindingResult, HttpServletRequest request) {
+      BindingResult bindingResult, HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
-      .getAttribute(SessionConst.LOGIN_MEMBER);
+        .getAttribute(SessionConst.LOGIN_MEMBER);
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
@@ -88,7 +88,7 @@ public class BoardController {
 
   @GetMapping("/detail/{boardId}")
   public String boardDetail(@PathVariable("boardId") Long boardId, Model model,
-    HttpServletRequest request, HttpServletResponse response) {
+      HttpServletRequest request, HttpServletResponse response) {
 
     Board board = boardService.findOne(boardId);
     viewLogic(boardId, request, response);
@@ -125,11 +125,11 @@ public class BoardController {
 
   @PostMapping("/update/{boardId}")
   public String boardUpdate(@Validated @ModelAttribute("form")BoardUpdateForm form,
-    BindingResult bindingResult, HttpServletRequest request,
-    @PathVariable("boardId") Long boardId) {
+      BindingResult bindingResult, HttpServletRequest request,
+      @PathVariable("boardId") Long boardId) {
 
     Member member = (Member) request.getSession(false)
-      .getAttribute(SessionConst.LOGIN_MEMBER);
+        .getAttribute(SessionConst.LOGIN_MEMBER);
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);

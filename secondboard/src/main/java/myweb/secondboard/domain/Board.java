@@ -91,7 +91,6 @@ public class Board {
     board.setAuthor(member.getNickname());
     board.setModifiedDate(LocalDateTime.now().format(dtf));
     board.setMember(member);
-
   }
 
   //조회수 증가

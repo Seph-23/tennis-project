@@ -17,7 +17,6 @@ public class BoardLikeService {
   private final BoardLikeRepository boardLikeRepository;
 
   public Long getLikeCount(Long boardId) {
-//    return boardLikeRepository.findAll().stream().filter(like -> like.getBoard().getId() == boardId).toList().size();
     return boardLikeRepository.countByBoardId(boardId);
   }
 

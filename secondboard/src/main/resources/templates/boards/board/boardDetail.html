@@ -12,7 +12,6 @@
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="pt-6">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
@@ -40,7 +39,7 @@
           <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
           <a th:text="${board.views}"></a>
         </div>
-        <div th:if="${session.loginMember != null}">
+        <div th:if="${session.loginMember != null}"> <!--th:if="${session.loginMember != null}" -->
           <div th:if="${session.loginMember.id == board.member.id}" style="display: inline-block">
             <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
                   method="get">
@@ -54,7 +53,7 @@
                     th:onclick="deleteBoard([[${board.id}]])" id="board_delete_button">게시글 삭제</button>
           </div>
         </div>
-      </div>
+      </div> <!--d-flex justify-content-between-->
 
       <br>
       <br>
@@ -70,8 +69,9 @@
               <span hidden id="checkLike" th:value="${checkLike}"></span>
             </div>
             <div class="report-btn report-content" th:if="${session.loginMember != null}">
-              <span id="reportBtn" class="report" th:value="${reportCount}">신고</span>
+              <span id="reportBtn" class="report">신고</span>
             </div>
+          <span id="reportCount" hidden th:value="${reportCount}"></span>
         </div> <!-- 게시글 본문 끝 -->
       </div>
       </div>
@@ -265,9 +265,10 @@
   <br>
 </div>
 </body>
-<script th:src="@{/js/boardDetailPage.js}"></script>
-<script src="/js/like.js"></script>
+
+<script src="/js/boardlike.js"></script>
 <script src="/js/report.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/boardDetailPage.js}"></script>
 
 </html>
