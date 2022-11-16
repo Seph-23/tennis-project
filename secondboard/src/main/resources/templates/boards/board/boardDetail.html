@@ -64,7 +64,7 @@
           <br>
           <br>
             <div class="content heart-btn2" th:if="${session.loginMember != null}">
-              <span class="heart"id="boardId" th:value="${board.id}"></span>
+              <span class="heart" id="boardId" th:value="${board.id}"></span>
               <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
               <span hidden id="checkLike" th:value="${checkLike}"></span>
             </div>
@@ -99,11 +99,11 @@
                         <div class="d-flex align-items-center mb-3">
                           <p th:text="${comment.modifiedDate}" class="mb-0"></p>
                           <!-- 시간옆 아이콘자리 -->
-                          <a href="#!" class="link-muted"><i
+                          <a class="link-muted"><i
                                   class="fas fa-pencil-alt ms-2"></i></a>
-                          <a href="#!" class="text-success"><i
+                          <a class="text-success"><i
                                   class="fas fa-redo-alt ms-2"></i></a>
-                          <a href="#!" class="link-danger"><i
+                          <a class="link-danger"><i
                                   class="fas fa-heart ms-2"></i></a>
                           <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
                             <td>
@@ -156,7 +156,7 @@
                               </div>
                             </td>
                           </div>
-                          <button th:id="'comment-report-'+${comment.id}"
+                          <button th:if="${session.loginMember != null}" th:id="'comment-report-'+${comment.id}"
                                   th:onclick="reportComment([[${comment.id}]])"
                           class="border-0 mt-1 ms-1 fs-4 text-danger" style="background: none">
                             <i class="bi bi-exclamation-triangle"></i>
@@ -271,7 +271,7 @@
 </body>
 
 <script src="/js/boardlike.js"></script>
-<script src="/js/report.js"></script>
+<script src="/js/boardReport.js"></script>
 <script src="/js/boardCommentReport.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/boardDetailPage.js}"></script>

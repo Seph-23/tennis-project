@@ -45,6 +45,9 @@ public class Lesson extends BoardAbstract {
   @OneToMany(mappedBy = "lesson", cascade = REMOVE)
   private List<LessonComment> comments = new ArrayList<>();
 
+  @Column(columnDefinition = "integer default 0")
+  private Long likeCount;
+
   public static Lesson createLesson(LessonSaveForm form, Member member) {
     Lesson lesson = new Lesson();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
@@ -55,6 +58,7 @@ public class Lesson extends BoardAbstract {
     lesson.setViews(0);
     lesson.setCreatedDate(LocalDateTime.now().format(dtf));
     lesson.setModifiedDate(LocalDateTime.now().format(dtf));
+    lesson.setLikeCount(0L);
     lesson.setMember(member);
     return lesson;
   }

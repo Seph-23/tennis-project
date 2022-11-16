@@ -3,9 +3,13 @@ package myweb.secondboard.controller;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.domain.boards.Notice;
+import myweb.secondboard.domain.comments.LessonComment;
+import myweb.secondboard.repository.LessonCommentReportRepository;
+import myweb.secondboard.service.LessonCommentReportService;
 import myweb.secondboard.service.LessonCommentService;
 import myweb.secondboard.service.LessonService;
 import myweb.secondboard.web.SessionConst;
@@ -23,6 +27,7 @@ public class LessonCommentApiController {
 
   private final LessonService lessonService;
   private final LessonCommentService lessonCommentService;
+  private final LessonCommentReportService lessonCommentReportService;
 
   @PostMapping("/commentAddLesson/{lessonId}")
   public JSONObject commentAdd(@PathVariable("lessonId") Long lessonId,
@@ -77,5 +82,20 @@ public class LessonCommentApiController {
 
     result.put("result", "success");
     return result;
+  }
+
+  @PostMapping("/lesson/report")
+  public Integer report(@RequestParam("commentId")Long commentId, @RequestParam("content") String content, HttpServletRequest request) {
+    LessonComment comment = lessonCommentService.findOne(commentId);
+    Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
+    if (lessonCommentReportService.checkReport(comment.getId(), member.getId()) == "is") {
+      return 1;
+    } else {
+      lessonCommentReportService.addReport(comment, member, content);
+      if (lessonCommentReportService.getReportCount(comment.getId()) >= 2) {
+        return 2;
+      }
+      return 0;
+    }
   }
 }

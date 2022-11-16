@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 import myweb.secondboard.domain.Member;
@@ -23,7 +25,7 @@ import myweb.secondboard.domain.boards.Notice;
 public class LessonComment extends CommentAbstract{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "notice_comment_id")
+  @Column(name = "lesson_comment_id")
   private Long id;
 
   @ManyToOne(fetch = LAZY)
@@ -33,6 +35,9 @@ public class LessonComment extends CommentAbstract{
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "lesson_id")
   private Lesson lesson;
+
+  @NotNull
+  private Integer reportCount;
 
   public static LessonComment createComment(Map<String, Object> param, Lesson lesson,
       Member member) {
@@ -45,6 +50,7 @@ public class LessonComment extends CommentAbstract{
     lessonComment.setMember(member);
     lessonComment.setCreatedDate(LocalDateTime.now().format(dtf));
     lessonComment.setModifiedDate(LocalDateTime.now().format(dtf));
+    lessonComment.setReportCount(0);
     return lessonComment;
   }
 

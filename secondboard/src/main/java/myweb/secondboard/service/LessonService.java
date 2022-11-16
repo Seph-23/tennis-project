@@ -5,6 +5,8 @@ import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.dto.LessonSaveForm;
 import myweb.secondboard.dto.LessonUpdateForm;
+import myweb.secondboard.repository.LessonLikeRepository;
+import myweb.secondboard.repository.LessonReportRepository;
 import myweb.secondboard.repository.LessonRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class LessonService {
   
   private final LessonRepository lessonRepository;
+  private final LessonLikeRepository lessonLikeRepository;
+  private final LessonReportRepository lessonReportRepository;
 
   public Lesson findOne(Long LessonId) {
     return lessonRepository.findOne(LessonId);
@@ -39,8 +43,10 @@ public class LessonService {
   }
 
   @Transactional
-  public void deleteById(Long boardId) {
-    lessonRepository.deleteById(boardId);
+  public void deleteById(Long lessonId) {
+    lessonLikeRepository.deleteAllByLessonId(lessonId);
+    lessonReportRepository.deleteAllByLessonId(lessonId);
+    lessonRepository.deleteById(lessonId);
   }
 
   @Transactional
