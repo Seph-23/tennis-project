@@ -25,7 +25,7 @@ public class QuestionComment extends CommentAbstract{
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "notice_comment_id")
+  @Column(name = "question_comment_id")
   private Long id;
 
   @ManyToOne(fetch = LAZY)

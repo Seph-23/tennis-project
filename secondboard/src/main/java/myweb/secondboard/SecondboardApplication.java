@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.persistence.EntityManager;
 import myweb.secondboard.domain.*;
+import myweb.secondboard.domain.Record;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.domain.boards.Question;
@@ -40,7 +41,7 @@ public class SecondboardApplication {
 
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
-		return "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/files";
+		return "/Users/hwang-uichan/Project/tennis-project/secondboard/src/main/resources/static/files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
@@ -67,6 +68,9 @@ public class SecondboardApplication {
 //				member.setGender(Gender.MALE);
 //				member.setProvider(Provider.GOGOTENNIS);
 //				member.setRole(Role.MEMBER);
+//				member.setTier(Tier.BRONZE);
+//				member.setRecord(new Record());
+//				member.setFile(new File());
 //				memberRepository.save(member);
 //
 //				Board board = new Board();
@@ -107,6 +111,7 @@ public class SecondboardApplication {
 //				question.setCreatedDate(LocalDateTime.now().format(dtf));
 //				question.setModifiedDate(LocalDateTime.now().format(dtf));
 //				question.setMember(member);
+//				question.setCondition(Condition.ACCEPT);
 //
 //				Comment comment = new Comment();
 //				comment.setContent("testtest" + i);
@@ -231,7 +236,8 @@ public class SecondboardApplication {
 //		});
 //	}
 //
-//  @Order(4)
+  //== 관리자 데이터 11.16(수) 테스트 완료 ==//
+//  @Order(1)
 //  @Bean
 //  public CommandLineRunner initAdminMember(MemberRepository memberRepository) {
 //    return  args -> {
@@ -242,10 +248,11 @@ public class SecondboardApplication {
 //      member.setNickname("admin");
 //      member.setEmail("admin" + "@gmail.com");
 //      member.setBirthday("19951126");
-//      member.setPhoneNumber("01087524626");
+//      member.setPhoneNumber("01012345678");
 //      member.setGender(Gender.MALE);
 //      member.setProvider(Provider.GOGOTENNIS);
 //      member.setRole(Role.ADMIN);
+//      member.setTier(Tier.BRONZE);
 //      memberRepository.save(member);
 //    };
 //  }

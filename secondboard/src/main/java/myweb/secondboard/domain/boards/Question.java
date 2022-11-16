@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,14 +19,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
-import myweb.secondboard.domain.boards.BoardAbstract;
 import myweb.secondboard.domain.comments.QuestionComment;
-import myweb.secondboard.dto.NoticeSaveForm;
-import myweb.secondboard.dto.NoticeUpdateForm;
 import myweb.secondboard.dto.QuestionSaveForm;
 import myweb.secondboard.dto.QuestionUpdateForm;
+import myweb.secondboard.web.AnswerCondition;
 
 @Entity
 @Getter @Setter
@@ -32,7 +31,7 @@ public class Question extends BoardAbstract {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "lesson_id")
+  @Column(name = "question_id")
   private Long id;
 
   @ManyToOne(fetch = LAZY)
@@ -41,6 +40,10 @@ public class Question extends BoardAbstract {
 
   @OneToMany(mappedBy = "question", cascade = REMOVE)
   private List<QuestionComment> comments = new ArrayList<>();
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "question_condition")
+  private AnswerCondition condition;
 
   public static Question createQuestion(QuestionSaveForm form, Member member) {
     Question question = new Question();
@@ -53,6 +56,7 @@ public class Question extends BoardAbstract {
     question.setCreatedDate(LocalDateTime.now().format(dtf));
     question.setModifiedDate(LocalDateTime.now().format(dtf));
     question.setMember(member);
+    question.setCondition(AnswerCondition.ACCEPT);
     return question;
   }
 
