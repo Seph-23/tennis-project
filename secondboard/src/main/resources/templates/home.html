@@ -2,18 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <title>Tennis</title>
-  <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
   <!-- Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet"/>
   <!-- CSS Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <!-- CSS -->
-  <link href="/css/styles.css" rel="stylesheet" />
-  <link href="/css/dateCarousel.css" rel="stylesheet" />
+  <link href="/css/styles.css" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/loginModal.css">
 
   <!-- icon -->
@@ -25,7 +26,9 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
   <div class="container px-4 px-lg-5">
     <a class="navbar-brand" href="#page-top">GOGOtennis</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
       Menu
     </button>
     <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
@@ -39,36 +42,52 @@
       <div class="gap-2 d-md-flex">
         <div th:if="${session.loginMember == null}">
           <button type="button" class="btn btn-outline-primary"
-                  th:onclick="|location.href='@{/members/new}'|" th:text="#{member.join}">회원가입</button>
+                  th:onclick="|location.href='@{/members/new}'|" th:text="#{member.join}">회원가입
+          </button>
           <!--          <button type="button" class="btn btn-outline-primary"-->
           <!--                  th:onclick="|location.href='@{/login}'|" th:text="#{member.login}">로그인</button>-->
           <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal"
-                  th:onclick="|location.href='@{/#}'|" th:text="#{member.login}">로그인</button>
+                  th:onclick="|location.href='@{/#}'|" th:text="#{member.login}">로그인
+          </button>
 
 
         </div>
-        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'} and ${session.loginMember.role.toString() == 'MEMBER'}"}>
-          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
+        <div
+          th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'} and ${session.loginMember.role.toString() == 'MEMBER'}"
+          }>
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|"
+                  th:text="#{member.logout}">로그아웃
+          </button>
 
           <button type="button" class="btn btn-outline-primary"
-                  th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" th:text="#{member.profile}">내 정보</button>
+                  th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |"
+                  th:text="#{member.profile}">내 정보
+          </button>
         </div>
 
-        <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'} and ${session.loginMember.role.toString() == 'ADMIN'}">
-          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
+        <div
+          th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'} and ${session.loginMember.role.toString() == 'ADMIN'}">
+          <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|"
+                  th:text="#{member.logout}">로그아웃
+          </button>
 
           <button type="button" class="btn btn-outline-primary"
-                  th:onclick="|location.href='@{/manager/profile}'|" th:text="#{admin.profile}">회원 정보</button>
+                  th:onclick="|location.href='@{/manager/profile}'|" th:text="#{admin.profile}">회원 정보
+          </button>
         </div>
 
         <!-- 카카오 로그아웃-->
         <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
           <button type="button" class="btn btn-outline-primary"
-                  th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|" th:text="#{member.logout}">로그아웃</button>
+                  th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|"
+                  th:text="#{member.logout}">로그아웃
+          </button>
 
           <!-- TODO:내 정보 UI 구현-->
           <button type="button" class="btn btn-outline-primary"
-                  th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" ) th:text="#{member.profile}">내 정보</button>
+                  th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )
+                  th:text="#{member.profile}">내 정보
+          </button>
         </div>
 
       </div> <!--gap-2 d-md-flex END-->
@@ -78,7 +97,8 @@
 </nav>
 
 <!-- Modal -->
-<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -145,9 +165,12 @@
 <!-- Main Carousel -->
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -169,114 +192,61 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-<!-- 빈 공간 -->
-<div class="col-12 p-5"></div>
-<!-- DateCarousel -->
-<div class="container">
-  <div class="row mx-auto my-auto justify-content-center">
-    <div id="dateCarousel" class="carousel slide">
-      <div class="carouselElement">
-        <a class="carousel-control-prev bg-transparent w-aut disableLink" href="#dateCarousel" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </a>
+<main>
+  <div class="text-center">
+    <h1 class="fw-bold mt-5">GOGOTENNIS</h1>
+    <p class="pb-3">소셜 테니스 고고테니스</p>
+    <div class="w-75 row m-auto mt-5 pb-5">
+      <div class="col-4">
+        <h5 class="fw-bold">내가 하고 싶을 때</h5>
+        <p class="small">매일매일 아침부터 밤까지</p>
       </div>
-      <div class="carouselElement">
-        <div class="carousel-inner" role="listbox">
-          <div class="carousel-item active">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary1<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary2<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary3<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary4<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary5<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary6<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary7<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary8<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary9<br><strong>월</strong></button>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Primary10<br><strong>월</strong></button>
-            </div>
-          </div>
-        </div>
+      <div class="col-4">
+        <h5 class="fw-bold">내가 하고 싶은 곳에서</h5>
+        <p class="small">집 앞, 학교, 회사, 여행 간 도시 어디서나</p>
       </div>
-      <div class="carouselElement">
-        <a class="carousel-control-next bg-transparent w-aut" id="nextIcon" href="#dateCarousel" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </a>
+      <div class="col-4">
+        <h5 class="fw-bold">내가 하고 싶은 사람들과</h5>
+        <p class="small">혼자, 친구랑, 함께, 새로운 사람들과</p>
       </div>
     </div>
+    <h1 class="fw-bold mt-5">HOW TO</h1>
+    <p>고고테니스 이용방법</p>
+    <img class="mt-3" src="/images/main1.jpg">
+    <div class="w-75 row m-auto mt-5 pb-5">
+      <div class="col-4">
+        <h5 class="fw-bold">친절한 매칭시스템</h5>
+        <p class="small">다른 사람들의 전적을 확인하고<br>
+          원하는 장소, 날짜를 선택해 매치를 진행하세요</p>
+      </div>
+      <div class="col-4">
+        <h5 class="fw-bold">건강한 테니스 문화</h5>
+        <p class="small">경쟁보다 배려와 재미를 추구합니다.<br>
+          신고 제도로 비매너 유저 참가를 제한해요.</p>
+      </div>
+      <div class="col-4">
+        <h5 class="fw-bold">레벨 데이터로 막상막하 매치</h5>
+        <p class="small">비슷한 레벨의 사람들과 경기를 진행하여<br>
+          팽팽하고 스릴넘치는 매치 경기를 즐겨보세요.</p>
+      </div>
+    </div>
+    <div class="row">
+      <img class="col-6 pe-0" src="/images/main3.jpg" height="500px">
+      <div class="col-6 ps-0">
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 pe-0 my-auto">
+        <h3 class="fw-bold">지금 가입하고 <br> 언제든 할 수 있어요.</h3>
+        <p class="small">일일 테니스 매치</p>
+        <button class="rounded-pill px-5 btn btn-primary py-3">가입하러 가기</button>
+      </div>
+      <img class="col-6 ps-0" src="/images/main4.jpg" height="500px">
+    </div>
   </div>
-  <!-- 빈 공간 -->
-  <div class="col-12 p-3"></div>
+</main>
 
-  <!-- matching table -->
-  <table class="table table-hover">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    </tbody>
-  </table>
-
-</div>
 
 <!-- Footer-->
 <footer class="footer bg-white small text-center text-black-50">
@@ -288,7 +258,8 @@
         crossorigin="anonymous"></script>
 <!-- JS Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
 <!-- JS-->
 <script src="/js/mainNavbar.js"></script>
 <script src="/js/dateCarousel.js"></script>
