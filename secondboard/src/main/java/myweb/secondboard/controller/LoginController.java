@@ -67,7 +67,6 @@ public class LoginController {
       out.println("</script>");
 
       out.flush();
-//      initScriptValue(jsEngine);
       return "home";
     }
     Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());

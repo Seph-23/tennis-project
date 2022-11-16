@@ -1,5 +1,7 @@
 package myweb.secondboard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,9 +83,12 @@ public class QuestionController {
 
   @GetMapping("/detail/{questionId}")
   public String boardDetail(@PathVariable("questionId") Long questionId, Model model,
-      HttpServletRequest request, HttpServletResponse response) {
+      HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     Question question = questionService.findOne(questionId);
+    Member member = question.getMember(); //해당 Q&A 글을 쓴 작성자
+    System.out.println("member.getId() = " + member.getId());
+
     noticeDetailView(questionId, model, question);
     return "/boards/question/questionDetail";
   }

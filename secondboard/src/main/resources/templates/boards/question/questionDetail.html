@@ -12,6 +12,7 @@
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <body class="pt-6">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
@@ -23,6 +24,18 @@
   <img src="/images/community_narrow.jpeg" alt="배너 이미지" class="">
 </div>
 <div class="page">
+
+  <span th:if="${session.loginMember==null} or (${session.loginMember.id != question.member.id} and ${session.loginMember.role.toString() == 'MEMBER'})">
+    <script>
+      // swal('조회 권한이 없습니다.',
+      //     '로그인 후 이용 바랍니다.',
+      //     'error').then(function () {
+      //   location.href="/question/home";
+      // })
+      alert('조회 권한이 없습니다.')
+      location.href="/question/home"
+    </script>
+  </span>
 
   <!-- <div class="content-container"> -->
   <section class="primary">

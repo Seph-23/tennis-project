@@ -59,20 +59,36 @@
                 <thead class="bg-light">
                 <tr>
                     <th>번호</th>
+                    <th>상태</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
+                    <th class="text-center">작성일</th>
+                    <th class="text-center">조회수</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="question:${questionList}"
+                <tr
+                    th:each="question:${questionList}"
                     th:onclick="|location.href='@{/question/detail/{id} (id=${question.id})}'|" role="button">
+
                     <td th:text="${question.id}">1</td>
-                    <td th:text="${question.title}"></td>
+
+                    <td class="text-start" th:if="${question.getComments().size() == 0}">
+                        <span th:text="${question.condition.ACCEPT.getTitle()}"
+                               class="badge text-bg-success rounded-pill d-inline" style="margin-left: -3px"></span>
+                    </td>
+
+                    <td th:if="${question.getComments().size() >= 1}">
+                        <span th:text="${question.condition.COMPLETE.getTitle()}"
+                              class="badge text-bg-secondary rounded-pill d-inline" style="margin-left: -3px"></span>
+                    </td>
+
+                    <td><span><i class="bi bi-lock-fill text-muted"></i></span>
+                        <span th:text="${question.title}"></span></td>
+
                     <td th:text="${question.author}"></td>
-                    <td th:text="${question.createdDate}"></td>
-                    <td th:text="${question.views}"></td>
+                    <td class="text-center" th:text="${question.createdDate}"></td>
+                    <td class="text-center" th:text="${question.views}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -173,7 +189,6 @@
     <br>
     <br>
 </div>
-
 
 </body>
 </html>

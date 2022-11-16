@@ -90,8 +90,8 @@ public class MatchingRepositoryImpl implements MatchingRepositoryInterface{
     }
 
     return queryFactory
-      .selectFrom(matching)
-      .where(builder)
-      .fetch();
+        .selectFrom(matching)
+        .where(builder)
+        .fetch();
   }
 }
