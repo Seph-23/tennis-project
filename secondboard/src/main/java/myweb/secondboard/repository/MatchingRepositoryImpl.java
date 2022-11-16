@@ -88,10 +88,25 @@ public class MatchingRepositoryImpl implements MatchingRepositoryInterface{
       CourtType courtType = CourtType.valueOf(condition.getCourtType());
       builder.and(matching.courtType.eq(courtType));
     }
+    if (hasText(condition.getMatchingPlace()) && !condition.getMatchingPlace().equals("none")) {
+      builder.and(matching.place.eq(condition.getMatchingPlace()));
+    }
 
     return queryFactory
         .selectFrom(matching)
         .where(builder)
         .fetch();
+  }
+
+  public List<String> getMatchingPlaces(String date) {
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate condition = LocalDate.parse(date, dtf);
+
+    return queryFactory
+      .select(matching.place)
+      .from(matching)
+      .where(matching.matchingDate.eq(condition))
+      .distinct()
+      .fetch();
   }
 }

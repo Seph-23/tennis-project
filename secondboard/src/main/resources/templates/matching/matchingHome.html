@@ -130,35 +130,6 @@
 
 <div class="col-12 p-4"></div>
 
-<!--<div class="container">-->
-<!--    <div class="row mx-auto my-auto justify-content-center">-->
-<!--        <div id="dateCarousel" class="carousel slide">-->
-<!--            <div class="carouselElement">-->
-<!--                <a class="carousel-control-prev bg-transparent w-aut disableLink" href="#dateCarousel" role="button" data-bs-slide="prev">-->
-<!--                    <span class="carousel-control-prev-icon"></span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <div class="carouselElement">-->
-<!--                <div class="carousel-inner" role="listbox">-->
-<!--                    <div class="carousel-item" th:each="day : ${carouselDays}">-->
-<!--                        <div class="col-md-2">-->
-<!--                            <form th:action="@{/matching/matchingListUpdate/{date} (date=${day.toString()})}" method="post">-->
-<!--                                <button type="submit" th:text="${day.toString()}"-->
-<!--                                        class="btn btn-primary"><br></button>-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="carouselElement">-->
-<!--                <a class="carousel-control-next bg-transparent w-aut" id="nextIcon" href="#dateCarousel" role="button" data-bs-slide="next">-->
-<!--                    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="container">
     <div class="matching-main"> <!-- Matching Main Start -->
         <div class="d-md-flex justify-content-between">         <!-- TODO 매치 목록 하위 조건 -->
@@ -177,6 +148,12 @@
                             <option th:each="courtType : ${courtTypes}"
                                     th:text="${courtType.title}"
                                     th:value="${courtType}"></option>
+                        </select>
+                        <select class="form-select" id="matching_place_selector" th:field="${searchCondition.matchingPlace}">
+                            <option selected value="none">매치 장소</option>
+                            <option th:each="matchingPlace : ${matchingPlaces}"
+                                    th:text="${matchingPlace}"
+                                    th:value="${matchingPlace}"></option>
                         </select>
                         <button type="submit" class="btn btn-primary px-4 py-2">검색</button>
                     </div>

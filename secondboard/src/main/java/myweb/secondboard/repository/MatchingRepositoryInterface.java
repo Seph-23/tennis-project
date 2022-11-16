@@ -27,4 +27,6 @@ public interface MatchingRepositoryInterface {
 
   //매치 리스트 검색 : 동적 쿼리
   List<Matching> searchMatchingByBuilder(MatchingSearchCondition condition);
+
+  public List<String> getMatchingPlaces(String date);
 }

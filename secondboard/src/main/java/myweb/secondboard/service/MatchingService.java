@@ -108,6 +108,10 @@ public class MatchingService {
   public List<Matching> searchMatchingByBuilder(MatchingSearchCondition condition) {
     return matchingRepository.searchMatchingByBuilder(condition);
   }
+
+  public List<String> getMatchingPlaces(String date) {
+    return matchingRepository.getMatchingPlaces(date);
+  }
 }
 
 

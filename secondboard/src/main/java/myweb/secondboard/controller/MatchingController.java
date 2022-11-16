@@ -68,6 +68,9 @@ public class MatchingController {
     CourtType[] courtTypes = CourtType.values();
     model.addAttribute("courtTypes", courtTypes);
 
+    List<String> matchingPlaces = matchingService.getMatchingPlaces(LocalDate.now().toString());
+    System.out.println("matchingPlaces = " + matchingPlaces);
+
     model.addAttribute("lat", null);
 
     model.addAttribute("searchCondition", condition);
@@ -245,6 +248,9 @@ public class MatchingController {
     CourtType[] courtTypes = CourtType.values();
     model.addAttribute("courtTypes", courtTypes);
 
+    List<String> matchingPlaces = matchingService.getMatchingPlaces(date);
+    model.addAttribute("matchingPlaces", matchingPlaces);
+
     model.addAttribute("lat", null);
 
     model.addAttribute("searchCondition", condition);
@@ -275,6 +281,9 @@ public class MatchingController {
 
     CourtType[] courtTypes = CourtType.values();
     model.addAttribute("courtTypes", courtTypes);
+
+    List<String> matchingPlaces = matchingService.getMatchingPlaces(condition.getDate());
+    model.addAttribute("matchingPlaces", matchingPlaces);
 
     model.addAttribute("lat", null);
 
