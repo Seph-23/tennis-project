@@ -11,6 +11,8 @@ import myweb.secondboard.domain.comments.LessonComment;
 import myweb.secondboard.dto.LessonSaveForm;
 import myweb.secondboard.dto.LessonUpdateForm;
 import myweb.secondboard.service.LessonCommentService;
+import myweb.secondboard.service.LessonLikeService;
+import myweb.secondboard.service.LessonReportService;
 import myweb.secondboard.service.LessonService;
 import myweb.secondboard.web.SessionConst;
 import org.springframework.data.domain.Page;
@@ -31,6 +33,8 @@ public class LessonController {
 
   private final LessonService lessonService;
   private final LessonCommentService lessonCommentService;
+  private final LessonReportService lessonReportService;
+  private final LessonLikeService lessonLikeService;
 
   @GetMapping("/home")
   public String home(@RequestParam(required = false, value = "keyword") String keyword,
@@ -83,6 +87,19 @@ public class LessonController {
 
     Lesson lesson = lessonService.findOne(lessonId);
     noticeDetailView(lessonId, model, lesson);
+
+    Member member = (Member) request.getSession(true).getAttribute(SessionConst.LOGIN_MEMBER);
+    if (member != null) { //회원
+      String checkLike = lessonLikeService.checkLike(lesson.getId(), member.getId());
+      model.addAttribute("checkLike", checkLike);
+    }
+
+    //비회원
+    Long likeCount = lessonLikeService.getLikeCount(lesson.getId());
+    model.addAttribute("likeCount", likeCount);
+
+    Long reportCount = lessonReportService.getReportCount(lesson.getId());
+    model.addAttribute("reportCount", reportCount);
     return "/boards/lesson/lessonDetail";
   }
 

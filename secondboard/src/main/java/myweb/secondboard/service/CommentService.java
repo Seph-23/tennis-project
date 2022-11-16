@@ -31,10 +31,6 @@ public class CommentService {
     public List<Comment> findComments(Long boardId) {
         return commentRepository.findComments(boardId);
     }
-// 삭제?
-//    public List<Comment> findReportComments(Long boardId) {
-//        return commentRepository.findComments(boardId).stream().filter(comment -> comment.getReportCount() >= 2).toList();
-//    }
 
     @Transactional
     public void save(Map<String, Object> param, Board board, Member member) {

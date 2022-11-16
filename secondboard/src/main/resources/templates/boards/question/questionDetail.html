@@ -11,10 +11,9 @@
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
-<body class="pt-6">
+<body class="pt-6" id="pageBody">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 <div class="board_banner_area">
   <div class="board_banner_text">
@@ -32,6 +31,18 @@
       //     'error').then(function () {
       //   location.href="/question/home";
       // })
+      // document.addEventListener("DOMContentLoaded", check);
+      // // $(document).ready(function () {
+      // function check() {
+      //     Swal.fire({
+      //         title: '조회 권한이 없습니다.',
+      //         confirmButtonText: 'OK'
+      //     }).then(function (result) {
+      //         if (result.isConfirmed) {
+      //             location.href = "/question/home"
+      //         }
+      //     })
+      // }
       alert('조회 권한이 없습니다.')
       location.href="/question/home"
     </script>
@@ -269,4 +280,5 @@
 </div>
 </body>
 <script th:src="@{/js/questionDetailPage.js}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

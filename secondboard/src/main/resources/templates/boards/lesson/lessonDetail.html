@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="/css/boardHome1.css">
   <link rel="stylesheet" href="/css/boardHome2.css">
   <link rel="stylesheet" href="/css/boardDetail.css">
+  <link href="/css/likeReport.css" rel="stylesheet"/>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="pt-6">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
@@ -27,6 +27,7 @@
   <!-- <div class="content-container"> -->
   <section class="primary">
     <div class="container">
+      <div id="reportText">
       <br>
       <h3 style="text-align: center" th:text="${lesson.title}"></h3>
       <div class="d-flex justify-content-between" id="board_title_box">
@@ -57,14 +58,23 @@
       <br>
       <br>
 
-      <div class="d-flex justify-content-center" id="board_content_box">
+      <div class="d-flex justify-content-center pb-5" id="board_content_box">
         <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
           <p th:utext="${lesson.content}"></p>
           <br>
           <br>
+          <div class="content heart-btn2" th:if="${session.loginMember != null}">
+            <span class="heart" id="lessonId" th:value="${lesson.id}"></span>
+            <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
+            <span hidden id="checkLike" th:value="${checkLike}"></span>
+          </div>
+          <div class="report-btn report-content" th:if="${session.loginMember != null}">
+            <span id="reportBtn" class="report">신고</span>
+          </div>
+          <span id="reportCount" hidden th:value="${reportCount}"></span>
         </div> <!-- 게시글 본문 끝 -->
       </div>
-
+      </div>
 
       <!--요기요기요기 -->
       <div class="container my-5 py-5">
@@ -78,7 +88,7 @@
                 </tr> <!-- 여기부터 댓글시작 -->
                 <tr th:each="comment : ${comments}" class="fw-bold mb-1">
                   <hr class="my-0"/>
-                  <div class="card-body p-4"><!-- 몸통 -->
+                  <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
@@ -146,6 +156,11 @@
                               </div>
                             </td>
                           </div>
+                          <button th:if="${session.loginMember != null}" th:id="'comment-report-'+${comment.id}"
+                                  th:onclick="reportComment([[${comment.id}]])"
+                                  class="border-0 mt-1 ms-1 fs-4 text-danger" style="background: none">
+                            <i class="bi bi-exclamation-triangle"></i>
+                          </button>
                         </div>
                         <table th:if="${!comments.isEmpty()}">
                           <tbody>
@@ -255,5 +270,10 @@
   <br>
 </div>
 </body>
+
+<script src="/js/lessonLike.js"></script>
+<script src="/js/lessonReport.js"></script>
+<script src="/js/lessonCommentReport.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/lessonDetailPage.js}"></script>
 </html>
