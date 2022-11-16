@@ -30,7 +30,7 @@ public class SchedulerService {
   private final PlayerRepository playerRepository;
 
   @Async
-//  @Scheduled(cron = "0 0/10 * * * *")
+  @Scheduled(cron = "0 0/10 * * * *")
 //  @Scheduled(cron = "0/10 * * * * *")
   @Transactional
   public void matchScheduleCheck() {

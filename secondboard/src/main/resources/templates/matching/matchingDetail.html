@@ -11,6 +11,7 @@
     <!-- CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- CSS -->
     <link href="/css/styles.css" rel="stylesheet"/>
     <link href="/css/banner.css" rel="stylesheet"/>
@@ -28,6 +29,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <!-- 카카오 지도 -->
     <link rel="stylesheet" href="/css/kakaoMapList.css">
+    <script src="https://kit.fontawesome.com/6f5b0127d9.js" crossorigin="anonymous"></script>
 </head>
 <body class="pt-6">
 <!-- Navigation-->
@@ -38,53 +40,61 @@
 
     <h6 class="p-3 mb-2 bg-primary text-white">매치 상세 정보</h6>
     <div class="matching-header"> <!-- 매치 헤더 -->
-        <h3 th:text="${matching.title}"></h3>
-        <table>
-            <thead>
-            <tr>
-                <th>생성자:
-                    <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
+        <div class="d-flex justify-content-start">
+            <div>
+                <h3 th:text="${matching.title}"></h3>
+                <div>
+                    <i class="fa-solid fa-user"></i>
                     <a th:text="${matching.author}"></a>
-                </th>
-            </tr>
-            <tr>
-                <th>작성일:
-                    <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
+                    <i class="bi bi-alarm"></i>
                     <a th:text="${matching.createdDate}"></a>
-                </th>
-            </tr>
-            </thead>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
     <hr class="mt-4">
     <h6 class="fw-bolder">매치 정보</h6>
 
-    <table th:border="1">
-        <tr>
-            <th>매치 날짜</th>
-            <td><a th:text="${matching.matchingDate}"></a></td>
-        </tr>
-        <tr>
-            <th>시작 시간</th>
-            <td><a id="start" th:text="${matching.matchingStartTime}"></a></td>
-        </tr>
-        <tr>
-            <th>종료 시간</th>
-            <td><a id="end" th:text="${matching.matchingEndTime}"></a></td>
-        </tr>
-        <tr>
-            <th>매치 종류</th>
-            <td><a th:text="${matching.matchingType.title}"></a></td>
-        </tr>
-        <tr>
-            <th>코트 종류</th>
-            <td><a th:text="${matching.courtType.title}"></a></td>
-        </tr>
-        <tr>
-            <th>매치 장소</th>
-            <td><a th:text="${matching.place}"></a></td>
-        </tr>
-    </table>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <div th:if="${matching.matchingType.toString().equals('SINGLE')}">
+                    <i class="fa-solid fa-user"></i>
+                    <a th:text="${matching.matchingType.title}"></a>
+                </div>
+                <div th:if="${matching.matchingType.toString().equals('DOUBLE')}">
+                    <i class="fa-solid fa-user-group"></i>
+                    <a th:text="${matching.matchingType.title}"></a>
+                </div>
+                <div th:if="${matching.courtType.toString().equals('INDOOR')}">
+                    <i class="fa-solid fa-house"></i>
+                    <a th:text="${matching.courtType.title}"></a>
+                </div>
+                <div th:if="${matching.courtType.toString().equals('OUTDOOR')}">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                    <a th:text="${matching.courtType.title}"></a>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <i class="bi bi-calendar"></i>
+                    <a th:text="${matching.matchingDate}"></a>
+                </div>
+                <div>
+                    <i class="bi bi-alarm"></i>
+                    <a th:text="${matching.matchingStartTime}"></a>
+                    <a>~</a>
+                    <a th:text="${matching.matchingEndTime}"></a>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <a th:text="${matching.place}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 팀 정보 -->
     <h6 class="fw-bolder mt-4">참가자 정보</h6>
