@@ -90,11 +90,12 @@
     <div class="d-flex">
         <div class="contact">
             <div class="box" style="background: #BDBDBD;">
-
-                <img th:if="${member.file==null}" src="/images/default_image.png" alt="기본 이미지">
+                <div th:if="${member.file==null}">
+                    <img th:if="${member.gender.name()=='MALE'}" src="/images/profile_ma.png">
+                    <img th:if="${member.gender.name()=='FEMALE'}" src="/images/profile_fe.png">
+                </div>
                 <img th:if="${member.file!=null}" th:src="'data:image/jpg;base64,'+${src}"
                      alt="대표이미지">
-
             </div>
             <li class="py-2"></li>
             <li><h3><span th:text="${member.nickname}"></span></h3></li>
