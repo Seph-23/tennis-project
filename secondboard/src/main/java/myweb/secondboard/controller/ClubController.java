@@ -74,10 +74,12 @@ public class ClubController {
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
 
     Club club = clubService.findOne(clubId);
-    String src = new String(club.getFile().getSaveImg(), StandardCharsets.UTF_8);
+    if(club.getFile()!=null){
+      String src = new String(club.getFile().getSaveImg(), StandardCharsets.UTF_8);
+      model.addAttribute("src", src);
+    }
 
     model.addAttribute("club", club);
-    model.addAttribute("src", src);
 
     List<ClubMember> memberList = clubService.getClubMemberList(club.getId());
     model.addAttribute("memberList", memberList);
@@ -120,6 +122,8 @@ public class ClubController {
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     form.setMember(member);
 
+    System.out.println("현재 이미지 파일은?(MultipartFile ==>" + file.isEmpty());
+
     Long clubId = clubService.addClub(form, member, file).getId();
     return "redirect:/club/detail/" + clubId;
   }
@@ -154,9 +158,8 @@ public class ClubController {
       log.info("errors = {}", bindingResult);
       return "/club/clubDetail";
     }
-
+    System.out.println("file = " + file);
     Long clubId = clubService.update(form, file);
-    Club club = clubService.findOne(clubId);
 
     return "redirect:/club/detail/" + clubId;
   }

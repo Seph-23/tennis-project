@@ -116,7 +116,7 @@
         </div>
         <div class="modal-body">
 
-          <form th:action="@{/club/save}" th:object="${form}" method="POST">
+          <form th:action="@{/club/save}" th:object="${form}" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="clubName" class="form-label">동호회 이름<span class="text-danger">*</span></label>
               <input type="text" class="form-control" th:field="${form.name}" id="clubName" placeholder="동호회 이름을 입력해주세요" required>
@@ -131,7 +131,7 @@
             </div>
             <div class="mb-3">
               <label for="clubImg" class="form-label">동호회 대표 이미지</label>
-              <input type="file" class="form-control" th:field="${form.img}" id="clubImg">
+              <input type="file" class="form-control" name="file" id="clubImg">
             </div>
             <div class="mb-3">
               <label for="clubIntroduction" class="form-label">동호회 소개</label>

@@ -61,19 +61,21 @@
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
+                    <th class="text-center">작성자</th>
+                    <th class="text-center">작성일</th>
+                    <th class="text-center">좋아요</th>
+                    <th class="text-center">조회수</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="lesson:${lessonList}"
                     th:onclick="|location.href='@{/lesson/detail/{id} (id=${lesson.id})}'|" role="button">
                     <td th:text="${lesson.id}">1</td>
-                    <td th:text="${lesson.title}"></td>
-                    <td th:text="${lesson.author}"></td>
-                    <td th:text="${lesson.createdDate}"></td>
-                    <td th:text="${lesson.views}"></td>
+                    <td><span th:text="${lesson.title}"></span><i class="bi bi-chat-left-dots text-muted me-1 ms-3"></i><span th:text="${lesson.getComments().size()}"></span></td>
+                    <td th:text="${lesson.author}" class="text-center"></td>
+                    <td th:text="${lesson.createdDate}" class="text-center"></td>
+                    <td class="text-center"><i class="bi bi-suit-heart-fill text-muted me-1"></i><span th:text="${lesson.getLikeCount}"></span></td>
+                    <td class="text-center"><i class="bi bi-eye text-muted me-1"></i><span th:text="${lesson.views}"></span></td>
                 </tr>
                 </tbody>
             </table>

@@ -24,30 +24,6 @@
 </div>
 <div class="page">
 
-  <span th:if="${session.loginMember==null} or (${session.loginMember.id != question.member.id} and ${session.loginMember.role.toString() == 'MEMBER'})">
-    <script>
-      // swal('조회 권한이 없습니다.',
-      //     '로그인 후 이용 바랍니다.',
-      //     'error').then(function () {
-      //   location.href="/question/home";
-      // })
-      // document.addEventListener("DOMContentLoaded", check);
-      // // $(document).ready(function () {
-      // function check() {
-      //     Swal.fire({
-      //         title: '조회 권한이 없습니다.',
-      //         confirmButtonText: 'OK'
-      //     }).then(function (result) {
-      //         if (result.isConfirmed) {
-      //             location.href = "/question/home"
-      //         }
-      //     })
-      // }
-      alert('조회 권한이 없습니다.')
-      location.href="/question/home"
-    </script>
-  </span>
-
   <!-- <div class="content-container"> -->
   <section class="primary">
     <div class="container">

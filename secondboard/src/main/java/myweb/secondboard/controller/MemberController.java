@@ -64,11 +64,9 @@ public class MemberController {
   public String profileHome(@PathVariable("memberId") Long memberId, Model model) {
 
     Member member = memberService.findById(memberId);
-    System.out.println("이제 프로필 출력할께요 ==>"+ member.getFile());
 
     if(member.getFile() != null){
       String src = new String(member.getFile().getSaveImg(), StandardCharsets.UTF_8);
-      System.out.println("이제 변경된 프로필 이미지는? ==>"+member.getFile().toString());
       model.addAttribute("src", src);
     }
 
@@ -98,10 +96,8 @@ public class MemberController {
       return "/home";
     }
 
-    System.out.println("controller에서 이미지 받았습니다. ==>"+file.isEmpty());
 
     Long memberId = memberService.updateMember(form, file);
-
 
     return "redirect:/members/profile/"+memberId;
   }

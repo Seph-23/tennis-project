@@ -94,13 +94,20 @@ public class MemberService {
 
     // 처음 프로필 이미지 수정 할 때
     if(member.getFile()==null){
-      System.out.println("기본이미지가 없어서 file추가합니다.");
-      originFile = File.createImg(fileService.ImgSave(file));
-      System.out.println("이미지 추가했어요 이미지번호는 ==>"+originFile.getId());
-      member.setFile(originFile);
+      if(file.isEmpty()){
+        System.out.println("기본 프로필 사진으로 유지");
+        member.setFile(null);
+        return member.getId();
+      } else {
+        System.out.println("기본이미지가 없어서 file추가합니다.");
+        originFile = File.createImg(fileService.ImgSave(file));
+        System.out.println("이미지 추가했어요 이미지번호는 ==>" + originFile.getId());
+        member.setFile(originFile);
+      }
     } else {
-      if(file.isEmpty()!=false){
-        System.out.println("파일 수정 없다.!");
+      // 여긴 전에 프로필 이미지가 있을 때
+      if(file.isEmpty()){
+        System.out.println("파일 수정 없다.! 전에 프로필 이미지 그대로 간다.");
         return member.getId();
       } else {
         System.out.println("파일 수정 있다.!");

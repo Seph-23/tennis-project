@@ -68,24 +68,19 @@
                 </thead>
                 <tbody>
                 <tr
-                    th:each="question:${questionList}"
-                    th:onclick="|location.href='@{/question/detail/{id} (id=${question.id})}'|" role="button">
-
+                    th:each="question:${questionList}" th:id="'question-'+${question.id}"
+                    th:onclick="questionClick([[${question.id}]])" role="button">
                     <td th:text="${question.id}">1</td>
-
-                    <td class="text-start" th:if="${question.getComments().size() == 0}">
-                        <span th:text="${question.condition.ACCEPT.getTitle()}"
+                    <td th:if="${question.condition.toString().equals('ACCEPT')}">
+                        <span th:text="${question.condition.getTitle()}"
                                class="badge text-bg-success rounded-pill d-inline" style="margin-left: -3px"></span>
                     </td>
-
-                    <td th:if="${question.getComments().size() >= 1}">
-                        <span th:text="${question.condition.COMPLETE.getTitle()}"
+                    <td th:if="${question.condition.toString().equals('COMPLETE')}">
+                        <span th:text="${question.condition.getTitle()}"
                               class="badge text-bg-secondary rounded-pill d-inline" style="margin-left: -3px"></span>
                     </td>
-
                     <td><span><i class="bi bi-lock-fill text-muted"></i></span>
                         <span th:text="${question.title}"></span></td>
-
                     <td th:text="${question.author}"></td>
                     <td class="text-center" th:text="${question.createdDate}"></td>
                     <td class="text-center" th:text="${question.views}"></td>
@@ -189,7 +184,11 @@
     <br>
     <br>
 </div>
-
+<div hidden id="loginMember" th:value="${session.loginMember}"></div>
+<div hidden th:if="${session.loginMember != null}" id="loginMemberNickname" th:value="${session.loginMember.nickname}"></div>
+<div hidden th:if="${session.loginMember != null}" id="loginMemberRole" th:value="${session.loginMember.role.toString()}"></div>
+<script src="/js/question.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
 

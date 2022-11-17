@@ -2,10 +2,9 @@ package myweb.secondboard.controller;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
+
+import java.util.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Matching;
@@ -36,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Controller
@@ -47,12 +46,14 @@ public class MatchingController {
   private final MatchingService matchingService;
   private final PlayerService playerService;
 
+  //ModelAttribute 컨트롤러 레벨에 적용
   @ModelAttribute
   public void addAttributes(Model model) {
     ArrayList<LocalDate> carousel = new ArrayList<>(); //날짜
     ArrayList<String> dayKR = new ArrayList<>(); //요일
     Map<LocalDate, String> carouselDay = new LinkedHashMap<>();
     for (int i = 0; i <10 ; i++) {
+
       carousel.add(LocalDate.now().plusDays(i));
       dayKR.add(LocalDate.now().plusDays(i).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN));
       carouselDay.put(carousel.get(i), dayKR.get(i));
@@ -60,16 +61,8 @@ public class MatchingController {
     model.addAttribute("carouselDay", carouselDay);
   }
 
-
-
   @GetMapping("/home")
   public String home(Model model) {
-
-    ArrayList<LocalDate> carousel = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
-      carousel.add(LocalDate.now().plusDays(i));
-    }
-    model.addAttribute("carouselDays", carousel);
 
 //    List<Matching> matchingList = matchingService.findAllByDate(LocalDate.now());
     MatchingSearchCondition condition = new MatchingSearchCondition();

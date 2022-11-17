@@ -10,6 +10,8 @@ import myweb.secondboard.service.BoardService;
 import myweb.secondboard.service.CommentService;
 import myweb.secondboard.service.QuestionCommentService;
 import myweb.secondboard.service.QuestionService;
+import myweb.secondboard.web.AnswerCondition;
+import myweb.secondboard.web.Role;
 import myweb.secondboard.web.SessionConst;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +42,9 @@ public class QuestionCommentApiController {
       .getAttribute(SessionConst.LOGIN_MEMBER);
     Question question = questionService.findOne(questionId);
     questionCommentService.save(param, question, member);
+    if (member.getRole().equals(Role.ADMIN)) {
+      questionService.updateCondition(question);
+    }
 
     result.put("result", "success");
     return result;
