@@ -71,12 +71,12 @@
                     th:each="question:${questionList}" th:id="'question-'+${question.id}"
                     th:onclick="questionClick([[${question.id}]])" role="button">
                     <td th:text="${question.id}">1</td>
-                    <td class="text-start" th:if="${question.getComments().size() == 0}">
-                        <span th:text="${question.condition.ACCEPT.getTitle()}"
+                    <td th:if="${question.condition.toString().equals('ACCEPT')}">
+                        <span th:text="${question.condition.getTitle()}"
                                class="badge text-bg-success rounded-pill d-inline" style="margin-left: -3px"></span>
                     </td>
-                    <td th:if="${question.getComments().size() >= 1}">
-                        <span th:text="${question.condition.COMPLETE.getTitle()}"
+                    <td th:if="${question.condition.toString().equals('COMPLETE')}">
+                        <span th:text="${question.condition.getTitle()}"
                               class="badge text-bg-secondary rounded-pill d-inline" style="margin-left: -3px"></span>
                     </td>
                     <td><span><i class="bi bi-lock-fill text-muted"></i></span>

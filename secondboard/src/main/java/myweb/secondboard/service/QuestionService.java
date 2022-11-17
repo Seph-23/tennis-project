@@ -55,4 +55,8 @@ public class QuestionService {
     String author = keyword;
     return questionRepository.findByTitleContainingOrAuthorContaining(title, author, pageable);
   }
+
+  public void updateCondition(Question question) {
+    Question.updateCondition(question);
+  }
 }
