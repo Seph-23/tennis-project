@@ -14,6 +14,22 @@ items.forEach((el) => {
     }
 })
 
-$(document).ready(function () {
-    $(".carousel-inner div:first-child").addClass("active");
-});
+// $(document).ready(function () {
+//     $(".carousel-inner div:first-child").addClass("active");
+//
+//     const week = ['일', '월', '화', '수', '목', '금', '토'];
+//
+//     let day = $(".hidden_btn").text()
+//
+//     console.log(day)
+//
+//     const dayOfWeek = week[new Date(day).getDay()];
+//
+//     console.log(dayOfWeek)
+//
+//     let elementById = document.getElementById("dayOfWeek");
+//
+//     elementById.innerText = dayOfWeek
+//
+// });
+
