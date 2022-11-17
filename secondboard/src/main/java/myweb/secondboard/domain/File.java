@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -22,10 +24,13 @@ public class File implements Serializable {
     @Lob
     private byte[] saveImg;
 
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
+    private Club club;
+
 
     public static File createImg(byte[] photoImg){
         File file = new File();
-
         file.setSaveImg(photoImg);
         return file;
 

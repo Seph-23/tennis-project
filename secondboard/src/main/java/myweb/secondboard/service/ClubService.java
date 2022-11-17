@@ -41,12 +41,13 @@ public class ClubService {
   public Club addClub(ClubSaveForm form, Member member, MultipartFile photoImg) throws IOException {
 
     File file = File.createImg(fileService.ImgSave(photoImg));
-    fileRepository.save(file);
+    Club club = Club.createClub(form, member, file);
+    if(photoImg.isEmpty()){
+      club.setFile(null);
+    }
+      fileRepository.save(file);
+      clubRepository.save(club);
 
-    // case : 사진 업로드 안할때 -> view에서 src로 기본사진 불러옴.
-
-    Club club = Club.createClub(form, file, member);
-    clubRepository.save(club);
 
     ClubMember clubMember = ClubMember.createClubMember(club, member);
     clubMemberRepository.save(clubMember);
@@ -76,17 +77,28 @@ public class ClubService {
   @Transactional
   public Long update(ClubUpdateForm form, MultipartFile file) throws IOException {
 
-    Club club = clubRepository.findOne(form.getId());
-    File originFile = club.getFile();
-    byte[] files = fileService.ImgSave(file);
+    Club originclub = clubRepository.findOne(form.getId());
+    originclub.updateClub(form, originclub);
 
-    if(!file.isEmpty()){
-      originFile.updateImgPath(originFile, files);
+    File originFile = originclub.getFile();
+
+    if(originclub.getFile()==null){
+      if(file.isEmpty()){
+        originclub.setFile(null);
+      } else {
+        File updateFile = File.createImg(fileService.ImgSave(file));
+        originclub.setFile(updateFile);
+      }
+    } else {
+      if(file.isEmpty()){
+        originclub.setFile(originFile);
+      } else {
+        byte[] files = fileService.ImgSave(file);
+        originFile.setSaveImg(files);
+      }
     }
 
-    club.updateClub(form, club);
-
-    return club.getId();
+    return originclub.getId();
   }
 
   @Transactional
