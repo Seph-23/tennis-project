@@ -141,6 +141,7 @@ Matching {
     matching.setLat(form.getLat());
     matching.setLng(form.getLng());
 
+
     matching.setContent(form.getContent());
   }
 
@@ -172,7 +173,9 @@ Matching {
 
   public void matchingBeforeHourCheck(Matching matching) {
     matching.setMatchingStatus(MatchingStatus.HOURBEFORE);
-    matching.setMatchingCondition(MatchingCondition.FAIL);
+    if (!matching.getMatchingCondition().equals(MatchingCondition.DONE)) {
+      matching.setMatchingCondition(MatchingCondition.FAIL);
+    }
   }
 
   public void matchingBeforeTwoHourCheck(Matching matching) { matching.setMatchingStatus(MatchingStatus.TWOHOURBEFORE);

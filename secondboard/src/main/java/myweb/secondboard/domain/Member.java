@@ -48,6 +48,7 @@ public class Member implements Serializable {
 
   private String accessToken;
 
+  @Column(length = 100)
   private String introduction;
   
   @Enumerated(EnumType.STRING)
@@ -55,6 +56,7 @@ public class Member implements Serializable {
 
   @NotNull
   @Column(length = 12)
+  @Enumerated(EnumType.STRING)
   private Tier tier;
 
   @OneToOne
