@@ -75,6 +75,10 @@ public class Question extends BoardAbstract {
     question.setViews(question.getViews() + 1);
   }
 
+  public static void updateCondition(Question question) {
+    question.setCondition(AnswerCondition.COMPLETE);
+  }
+
 
 
 }
