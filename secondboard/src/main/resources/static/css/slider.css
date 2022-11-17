@@ -1,17 +1,17 @@
-html,
-body {
-    position: relative;
-    height: 100%;
-}
+/*html,*/
+/*body {*/
+/*    position: relative;*/
+/*    height: 100%;*/
+/*}*/
 
-body {
-    /*background: #eee;*/
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-}
+/*body {*/
+/*    !*background: #eee;*!*/
+/*    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;*/
+/*    font-size: 14px;*/
+/*    color: #000;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
 
 .swiper {
     margin-top: 20px;
@@ -22,11 +22,14 @@ body {
 }
 
 .swiper-slide {
+    height: 80px !important;
     text-align: center;
     font-size: 18px;
-    /*background: #fff;*/
-    border: solid;
-    border-radius: 10px;
+    /*background-color: #ccc;*/
+    /*border: solid 3px;*/
+    /*border-radius: 20px;*/
+
+    transition-duration: 0.3s;
 
     /* Center slide text vertically */
     display: -webkit-box;
@@ -43,6 +46,7 @@ body {
     align-items: center;
 }
 
+
 .swiper-slide img {
     display: block;
     width: 100%;
@@ -52,17 +56,20 @@ body {
 
 .hidden_btn {
     width: 200px;
-    height: 200px;
-    border: none;
-    background: none;
+    height: 100%;
+    border: solid;
+    border-radius: 20px;
+    background: ghostwhite;
+
 }
 
 .swiper-button-next {
     /*transform: translateX(-2em);*/
     /*transform: translateY(11em);*/
-    transform: translate(-5em, 11em);
+    transform: translate(-5em, 7.5em);
 }
 
 .swiper-button-prev {
-    transform: translate(5em, 11em);
+    transform: translate(5em, 7.5em);
 }
+
