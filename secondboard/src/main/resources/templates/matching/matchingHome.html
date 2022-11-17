@@ -52,52 +52,39 @@
         <!-- <a class="navbar-brand" th:href="@{/}">
              <img src="img/logo2.png" alt="logo" width="100">
          </a>-->
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
         </button>
         <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" th:href="@{/matching/home}">매치</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/tournament}">대회</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/ranking/home}">랭킹</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}">커뮤니티</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/club}">동호회</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/matching/home}" th:text="#{menu.match}">매치</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/tournament}" th:text="#{menu.tournament}">대회</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/ranking/home}" th:text="#{menu.rank}">랭킹</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}" th:text="#{menu.community}">커뮤니티</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/club}" th:text="#{menu.club}">동호회</a></li>
             </ul>
 
             <div class="gap-2 d-md-flex">
                 <div th:if="${session.loginMember == null}">
                     <button type="button" class="btn btn-outline-primary"
-                            th:onclick="|location.href='@{/members/new}'|">회원가입
-                    </button>
+                            th:onclick="|location.href='@{/members/new}'|" th:text="#{member.join}">회원가입</button>
                     <button type="button" class="btn btn-outline-primary"
-                            th:onclick="|location.href='@{/login}'|">로그인
-                    </button>
+                            th:onclick="|location.href='@{/login}'|" th:text="#{member.login}">로그인</button>
                 </div>  <!-- TODO : 로그인 modal 창 구현 -->
                 <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
-                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">
-                        로그아웃
-                    </button>
+                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
 
-                    <button type="button" class="btn btn-outline-primary"
-                            th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
-                        정보
-                    </button>
+                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" ) th:text="#{member.profile}">내 정보</button>
                 </div>
 
                 <!-- 카카오 로그아웃-->
                 <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
                     <button type="button" class="btn btn-outline-primary"
-                            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">
-                        로그아웃
-                    </button>
+                            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|"
+                            th:text="#{member.logout}">로그아웃</button>
 
-                    <!-- TODO:내 정보 UI 구현-->
-                    <button type="button" class="btn btn-outline-primary"
-                            th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
-                        정보
-                    </button>
+                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )
+                            th:text="#{member.profile}">내 정보</button>
                 </div>
 
             </div> <!--gap-2 d-md-flex END-->
@@ -105,22 +92,24 @@
         </div>
     </div>
 </nav>
-
 <!-- banner -->
 <div class="board_banner_area">
     <div class="board_banner_text">
         <h1>Matching</h1>
         <p>Check out the Matching schedule!</p>
     </div>
-    <img src="/images/matching_banner_4.png" alt="Contact US 배너 이미지">
+    <img src="/images/matching_home-banner.jpg" alt="Contact US 배너 이미지">
 </div>
 
 
 <div class="swiper mySwiper container mt-5">
     <div class="swiper-wrapper">
-        <form class="swiper-slide" th:each="day : ${carouselDays}"
-              th:action="@{/matching/matchingListUpdate/{date} (date=${day.toString()})}" method="post">
-            <button class="hidden_btn" th:text="${day.toString()}"></button>
+        <form class="swiper-slide" th:each="day : ${carouselDay}"
+              th:action="@{/matching/matchingListUpdate/{date} (date=${day.key.toString()})}" method="post">
+            <button class="hidden_btn">
+                <h4 th:text="${#strings.substring(day.key, 8, 10)}"></h4>
+                <h5 th:text="${day.value}"></h5>
+            </button>
         </form>
     </div>
     <!--    <div class="swiper-pagination"></div>-->
@@ -137,25 +126,25 @@
                 <div class="justify-content-md-start">
                     <div class="container d-flex">
                         <input hidden th:field="*{date}" th:value="${currDate}">
-                        <select class="form-select" id="matching_type_selector" th:field="${searchCondition.matchType}">
-                            <option selected value="none">단식/복식</option>
-                            <option th:each="gameType : ${matchTypes}"
-                                    th:text="${gameType.title}"
-                                    th:value="${gameType}"></option>
-                        </select>
-                        <select class="form-select" id="court_type_selector" th:field="${searchCondition.courtType}">
-                            <option selected value="none">실내/실외</option>
-                            <option th:each="courtType : ${courtTypes}"
-                                    th:text="${courtType.title}"
-                                    th:value="${courtType}"></option>
-                        </select>
-                        <select class="form-select" id="matching_place_selector" th:field="${searchCondition.matchingPlace}">
+                        <select class="form-select me-2" id="matching_place_selector" th:field="${searchCondition.matchingPlace}">
                             <option selected value="none">매치 장소</option>
                             <option th:each="matchingPlace : ${matchingPlaces}"
                                     th:text="${matchingPlace}"
                                     th:value="${matchingPlace}"></option>
                         </select>
-                        <button type="submit" class="btn btn-primary px-4 py-2">검색</button>
+                        <select class="form-select me-2" id="matching_type_selector" th:field="${searchCondition.matchType}">
+                            <option selected value="none">단식/복식</option>
+                            <option th:each="gameType : ${matchTypes}"
+                                    th:text="${gameType.title}"
+                                    th:value="${gameType}"></option>
+                        </select>
+                        <select class="form-select me-2" id="court_type_selector" th:field="${searchCondition.courtType}">
+                            <option selected value="none">실내/실외</option>
+                            <option th:each="courtType : ${courtTypes}"
+                                    th:text="${courtType.title}"
+                                    th:value="${courtType}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-primary px-2 py-0">SEARCH</button>
                     </div>
                 </div>
             </form>
@@ -186,17 +175,17 @@
                     <td class="py-5"></td>
                     <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>
                     <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span
-                            th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
+                        th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
                     <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span
-                            th:text="${matching.place}"></span></td>
+                        th:text="${matching.place}"></span></td>
                     <td class="text-center" th:text="${matching.title}"></td>
                     <td class="text-center" th:text="${matching.courtType.title}"></td>
                     <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i
-                            class="bi bi-people-fill text-muted me-1"></i>
+                        class="bi bi-people-fill text-muted me-1"></i>
                         <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
                     </td>
                     <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i
-                            class="bi bi-people-fill text-muted me-1"></i>
+                        class="bi bi-people-fill text-muted me-1"></i>
                         <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
                     </td>
                     <td class="text-center" th:text="${matching.author}"></td>
@@ -207,11 +196,11 @@
                       </span>
                         <span th:if="${matching.matchingCondition.title == '신청마감'}"
                               th:text="${matching.matchingCondition.title}"
-                              class="badge rounded-pill d-inline text-bg-warning">
-                      </span>
-                        <span th:if="${matching.matchingCondition.title == '매치실패'}"
-                              th:text="${matching.matchingCondition.title}"
                               class="badge text-bg-danger rounded-pill d-inline">
+                      </span>
+                        <span th:if="${matching.matchingCondition.title == '매칭실패'}"
+                              th:text="${matching.matchingCondition.title}"
+                              class="badge rounded-pill d-inline text-bg-warning">
                       </span>
                     </td>
                 </tr>
@@ -262,7 +251,7 @@
                     <input hidden id="beforeTwoHour" th:field="${matching.beforeTwoHour}"/>
                     <div class="mb-3">
                         <label for="matchingTitle" class="form-label">매치 이름<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.title}"
                                id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
                         <div th:errors="${matching.title}" class="text-danger"></div>
@@ -275,7 +264,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="${matching.matchingStartTime}" id="matchingStartTime"
                                placeholder="시작 시간을 입력해주세요" required>
@@ -283,7 +272,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="${matching.matchingEndTime}" id="matchingEndTime"
                                placeholder="종료 시간을 입력해주세요" required>
@@ -317,7 +306,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingPlace" class="form-label">매치 장소<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"

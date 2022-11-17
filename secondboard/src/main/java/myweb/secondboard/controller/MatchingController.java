@@ -1,7 +1,11 @@
 package myweb.secondboard.controller;
 
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Matching;
@@ -42,6 +46,21 @@ public class MatchingController {
 
   private final MatchingService matchingService;
   private final PlayerService playerService;
+
+  @ModelAttribute
+  public void addAttributes(Model model) {
+    ArrayList<LocalDate> carousel = new ArrayList<>(); //날짜
+    ArrayList<String> dayKR = new ArrayList<>(); //요일
+    Map<LocalDate, String> carouselDay = new LinkedHashMap<>();
+    for (int i = 0; i <10 ; i++) {
+      carousel.add(LocalDate.now().plusDays(i));
+      dayKR.add(LocalDate.now().plusDays(i).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN));
+      carouselDay.put(carousel.get(i), dayKR.get(i));
+    }
+    model.addAttribute("carouselDay", carouselDay);
+  }
+
+
 
   @GetMapping("/home")
   public String home(Model model) {

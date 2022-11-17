@@ -1,0 +1,12 @@
+.homesubmit {
+  width: 30%;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  background: #74DF00;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 2px;
+}

@@ -38,13 +38,13 @@ public class BoardLike {
   private String createdDate;
 
   public static BoardLike createLike(Board board, Member member) {
-    BoardLike like = new BoardLike();
+    BoardLike boardLike = new BoardLike();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 
-    like.setBoard(board);
-    like.setMember(member);
-    like.setCreatedDate(LocalDateTime.now().format(dtf));
+    boardLike.setBoard(board);
+    boardLike.setMember(member);
+    boardLike.setCreatedDate(LocalDateTime.now().format(dtf));
 
-    return like;
+    return boardLike;
   }
 }
