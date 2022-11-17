@@ -5,11 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
+import myweb.secondboard.service.FileService;
 import myweb.secondboard.web.Status;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,11 +54,11 @@ public class Club implements Serializable {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @ManyToOne(fetch = LAZY)
+  @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "local_id")
   private Local local;
 
-  @OneToOne(fetch = LAZY)
+  @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name="file_id")
   private File file;
 
@@ -65,7 +67,7 @@ public class Club implements Serializable {
   @JoinColumn(name="member_id")
   private Member member;
 
-  public static Club createClub(ClubSaveForm form, File file, Member leader) {
+  public static Club createClub(ClubSaveForm form, Member leader, File file) throws IOException {
     Club club = new Club();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
