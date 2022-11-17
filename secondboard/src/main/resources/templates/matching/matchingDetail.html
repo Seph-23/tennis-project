@@ -40,7 +40,7 @@
 
     <h6 class="p-3 mb-2 bg-primary text-white">매치 상세 정보</h6>
     <div class="matching-header"> <!-- 매치 헤더 -->
-        <div class="d-flex justify-content-start">
+        <div class="d-flex justify-content-start mt-4">
             <div>
                 <h3 th:text="${matching.title}"></h3>
                 <div>
@@ -53,11 +53,11 @@
         </div>
     </div>
     <hr class="mt-4">
-    <h6 class="fw-bolder">매치 정보</h6>
+    <h4 class="fw-bolder">매치 정보</h4>
 
     <div class="container">
         <div class="d-flex justify-content-center">
-            <div class="row">
+            <div class="row text-center w-25 fs-6">
                 <div th:if="${matching.matchingType.toString().equals('SINGLE')}">
                     <i class="fa-solid fa-user"></i>
                     <a th:text="${matching.matchingType.title}"></a>
@@ -75,7 +75,7 @@
                     <a th:text="${matching.courtType.title}"></a>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-center w-25 fs-6">
                 <div>
                     <i class="bi bi-calendar"></i>
                     <a th:text="${matching.matchingDate}"></a>
@@ -87,7 +87,7 @@
                     <a th:text="${matching.matchingEndTime}"></a>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-center w-25 fs-6">
                 <div>
                     <i class="fa-solid fa-map-location-dot"></i>
                     <a th:text="${matching.place}"></a>
@@ -95,10 +95,18 @@
             </div>
         </div>
     </div>
+    <hr class="mt-4">
 
     <!-- 팀 정보 -->
-    <h6 class="fw-bolder mt-4">참가자 정보</h6>
-    <img src="/images/match2.png" class="w-100">
+    <h4 class="fw-bolder mt-4">참가자 정보</h4>
+    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">
+        <img src="/images/failed2.png" class="w-75 position-absolute mb-5" style="height:400px;">
+        <img src="/images/match2.png" class="w-100">
+    </div>
+    <div th:if="!${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">
+        <img src="/images/match2.png" class="w-100">
+    </div>
+
     <div class="row d-flex justify-content-center my-3">
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
             <div th:each="a : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal">
@@ -255,12 +263,12 @@
         </div>
     </div> <!--팀 정보 끝 -->
     <hr class="mt-4">
-    <h6 class="fw-bolder">매치 소개</h6>
+    <h4 class="fw-bolder">매치 소개</h4>
     <p class="text-center py-5" th:text="${matching.content}">
         매치 소개 내용이 없습니다.
     </p>
     <hr class="mt-4">
-    <h6 class="fw-bolder">매치 장소</h6>
+    <h4 class="fw-bolder">매치 장소</h4>
     <p class="mb-1" th:text="${matching.place}"><i class="bi bi-geo-alt-fill text-muted me-1 ms-3"></i></p>
     <div class="d-flex justify-content-center">
         <div id="map" style="width:100%;height:350px;"></div>
