@@ -175,17 +175,17 @@
                     <td class="py-5"></td>
                     <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>
                     <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span
-                            th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
+                        th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
                     <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span
-                            th:text="${matching.place}"></span></td>
+                        th:text="${matching.place}"></span></td>
                     <td class="text-center" th:text="${matching.title}"></td>
                     <td class="text-center" th:text="${matching.courtType.title}"></td>
                     <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i
-                            class="bi bi-people-fill text-muted me-1"></i>
+                        class="bi bi-people-fill text-muted me-1"></i>
                         <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
                     </td>
                     <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i
-                            class="bi bi-people-fill text-muted me-1"></i>
+                        class="bi bi-people-fill text-muted me-1"></i>
                         <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
                     </td>
                     <td class="text-center" th:text="${matching.author}"></td>
@@ -251,7 +251,7 @@
                     <input hidden id="beforeTwoHour" th:field="${matching.beforeTwoHour}"/>
                     <div class="mb-3">
                         <label for="matchingTitle" class="form-label">매치 이름<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.title}"
                                id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
                         <div th:errors="${matching.title}" class="text-danger"></div>
@@ -264,7 +264,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="${matching.matchingStartTime}" id="matchingStartTime"
                                placeholder="시작 시간을 입력해주세요" required>
@@ -272,7 +272,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="${matching.matchingEndTime}" id="matchingEndTime"
                                placeholder="종료 시간을 입력해주세요" required>
@@ -306,7 +306,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="matchingPlace" class="form-label">매치 장소<span
-                                class="text-danger">*</span></label>
+                            class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"

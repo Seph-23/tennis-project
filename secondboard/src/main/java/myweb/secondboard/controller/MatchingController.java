@@ -2,6 +2,7 @@ package myweb.secondboard.controller;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+
 import java.util.*;
 
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,7 @@ public class MatchingController {
     ArrayList<String> dayKR = new ArrayList<>(); //요일
     Map<LocalDate, String> carouselDay = new LinkedHashMap<>();
     for (int i = 0; i <10 ; i++) {
+
       carousel.add(LocalDate.now().plusDays(i));
       dayKR.add(LocalDate.now().plusDays(i).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN));
       carouselDay.put(carousel.get(i), dayKR.get(i));

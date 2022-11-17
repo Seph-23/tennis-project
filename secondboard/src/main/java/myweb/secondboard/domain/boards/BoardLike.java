@@ -41,11 +41,10 @@ public class BoardLike {
     BoardLike boardLike = new BoardLike();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 
-
     boardLike.setBoard(board);
     boardLike.setMember(member);
     boardLike.setCreatedDate(LocalDateTime.now().format(dtf));
-
+    
     return boardLike;
   }
 }
