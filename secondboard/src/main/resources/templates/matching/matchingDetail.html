@@ -101,9 +101,73 @@
     <img src="/images/match2.png" class="w-100">
     <div class="row d-flex justify-content-center my-3">
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
-            <div th:each="a:${playersA}">
+            <div th:each="a : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal">
                 <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${a.member.nickname}">사용자1</p>
+                <!-- A팀 참가자 Modal -->
+                <div class="modal fade" th:id="teamAInfoModal + ${a.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title fs-2" id="teamAInfoModalLabel">Information</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>정보</h4>
+                                <div class="row">
+                                    <div class="col total">
+                                        <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                                    </div>
+                                    <div class="col total text-center mt-5">
+                                        <div th:text="${a.member.nickname}">USER1</div>
+                                        <div th:text="${a.member.birthday}">생년월일</div>
+                                        <div th:text="${a.member.email}">이메일</div>
+                                        <div th:text="${a.member.introduction}">자기소개</div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>등급</h4>
+                                <div class="text-center">
+                                    <img height="100" src="/images/platinum.png" alt=""/>
+                                    <h3><span class="tier" th:text="${a.member.tier}">IRON</span></h3>
+                                </div>
+                                <div class="container text-center">
+                                    <div class="row">
+                                        <div class="col total">
+                                            <h4><span>총 전적</span></h4>
+                                            <li style="list-style: none" th:text="${a.member.record.win} + '승' + ${a.member.record.lose} + '패'" >13승 2패</li>
+                                        </div>
+                                        <div class="col total">
+                                            <h4><strong>승점</strong></h4>
+                                            <li style="list-style: none" th:text="${a.member.record.points} + '점'">13점</li>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>최근 전적 현황</h4>
+                                <table class="table table-hover align-middle bg-white mt-2">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th class="text-center">승/패</th>
+                                        <th class="text-center">매치 이름</th>
+                                        <th class="text-center">매치 타입</th>
+                                        <th class="text-center">경기 날짜</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center">패배</td>
+                                        <td class="text-center">매치이름</td>
+                                        <td class="text-center">매치타입</td>
+                                        <td class="text-center">경기날짜</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- A팀 참가자 Modal 끝 -->
             </div>
             <div th:if="${matching.matchingType.title.equals('복식') and playersA.size() < 2}">
                 <img src="/images/profile2.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
@@ -112,9 +176,73 @@
         </div>
         <div class="col-2 flex-shrink-1"></div>
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
-            <div th:each="b:${playersB}">
+            <div th:each="b:${playersB}" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal">
                 <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${b.member.nickname}">사용자3</p>
+                <!-- B팀 참가자 Modal -->
+                <div class="modal fade" th:id="teamBInfoModal + ${b.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title fs-2" id="teamBInfoModalLabel">Information</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h4>정보</h4>
+                                <div class="row">
+                                    <div class="col total">
+                                        <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                                    </div>
+                                    <div class="col total text-center mt-5">
+                                        <div th:text="${b.member.nickname}">USER1</div>
+                                        <div th:text="${b.member.birthday}">생년월일</div>
+                                        <div th:text="${b.member.email}">이메일</div>
+                                        <div th:text="${b.member.introduction}">자기소개</div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>등급</h4>
+                                <div class="text-center">
+                                    <img height="100" src="/images/platinum.png" alt=""/>
+                                    <h3><span class="tier" th:text="${b.member.tier}">IRON</span></h3>
+                                </div>
+                                <div class="container text-center">
+                                    <div class="row">
+                                        <div class="col total">
+                                            <h4><span>총 전적</span></h4>
+                                            <li style="list-style: none" th:text="${b.member.record.win} + '승' + ${b.member.record.lose} + '패'" >13승 2패</li>
+                                        </div>
+                                        <div class="col total">
+                                            <h4><strong>승점</strong></h4>
+                                            <li style="list-style: none" th:text="${b.member.record.points} + '점'">13점</li>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>최근 전적 현황</h4>
+                                <table class="table table-hover align-middle bg-white mt-2">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th class="text-center">승/패</th>
+                                        <th class="text-center">매치 이름</th>
+                                        <th class="text-center">매치 타입</th>
+                                        <th class="text-center">경기 날짜</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center">패배</td>
+                                        <td class="text-center">매치이름</td>
+                                        <td class="text-center">매치타입</td>
+                                        <td class="text-center">경기날짜</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- B팀 참가자 Modal 끝 -->
             </div>
             <div th:if="${playersB.size() == 0}">
                 <img src="/images/profile2.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
