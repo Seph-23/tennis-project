@@ -99,11 +99,11 @@
                         <div class="d-flex align-items-center mb-3">
                           <p th:text="${comment.modifiedDate}" class="mb-0"></p>
                           <!-- 시간옆 아이콘자리 -->
-                          <a href="#!" class="link-muted"><i
+                          <a class="link-muted"><i
                                   class="fas fa-pencil-alt ms-2"></i></a>
-                          <a href="#!" class="text-success"><i
+                          <a class="text-success"><i
                                   class="fas fa-redo-alt ms-2"></i></a>
-                          <a href="#!" class="link-danger"><i
+                          <a class="link-danger"><i
                                   class="fas fa-heart ms-2"></i></a>
                           <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
                             <td>
