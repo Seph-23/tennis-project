@@ -87,7 +87,13 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <div th:if="${topRank.imgEn==null}">
+                        <img th:if="${topRank.gender.name()=='MALE'}" src="/images/profile_ma.png" class="rounded-circle px-5 py-3" height="150">
+                        <img th:if="${topRank.gender.name()=='FEMALE'}" src="/images/profile_fe.png" class="rounded-circle px-5 py-3" height="150">
+                    </div>
+                    <div th:if="${topRank.imgEn!=null}">
+                        <img th:src="'data:image/jpg;base64,'+${src1}" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    </div>
                     <ul class="list-unstyled mt-1 mb-0 fw-bold">
                         <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
                         <li th:text="${topRank.record.points} + '점'">1920점</li>
@@ -105,7 +111,13 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <div th:if="${secondRank.imgEn==null}">
+                        <img th:if="${secondRank.gender.name()=='MALE'}" src="/images/profile_ma.png" class="rounded-circle px-5 py-3" height="150">
+                        <img th:if="${secondRank.gender.name()=='FEMALE'}" src="/images/profile_fe.png" class="rounded-circle px-5 py-3" height="150">
+                    </div>
+                    <div th:if="${secondRank.imgEn!=null}">
+                        <img th:src="'data:image/jpg;base64,'+${src2}" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    </div>
                     <ul class="list-unstyled mt-1 mb-0 fw-bold">
                         <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 12패</li>
                         <li th:text="${secondRank.record.points} + '점'">1702점</li>
@@ -123,7 +135,13 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    <img src="/images/user.png" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <div th:if="${thirdRank.imgEn==null}">
+                        <img th:if="${thirdRank.gender.name()=='MALE'}" src="/images/profile_ma.png" class="rounded-circle px-5 py-3" height="150">
+                        <img th:if="${thirdRank.gender.name()=='FEMALE'}" src="/images/profile_fe.png" class="rounded-circle px-5 py-3" height="150">
+                    </div>
+                    <div th:if="${thirdRank.imgEn!=null}">
+                        <img th:src="'data:image/jpg;base64,'+${src3}" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    </div>
                     <ul class="list-unstyled mt-1 mb-0 fw-bold">
                         <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 12패</li>
                         <li th:text="${thirdRank.record.points} + '점'">1702점</li>

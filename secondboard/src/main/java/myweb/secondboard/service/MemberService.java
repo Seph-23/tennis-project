@@ -1,7 +1,6 @@
 package myweb.secondboard.service;
 
 import lombok.RequiredArgsConstructor;
-import myweb.secondboard.domain.File;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MemberSaveForm;
@@ -27,7 +26,6 @@ import java.util.Optional;
 public class MemberService {
 
   private final MemberRepository memberRepository;
-  private final FileService fileService;
   private final RecordRepository recordRepository;
 
   @Transactional

@@ -52,18 +52,17 @@
 <div class="container">
   <div class="row">
     <div class="col-8 p-3" >
-      <section class="border_shape">
+      <section class="border_shape"> <!-- 동호회 정보 section -->
         <div class="row p-4 gx-3 gy-3">
           <div class="col">
             <h2><span th:if="${club.status.name() == 'RECRUITING'}" th:text="${club.status.title}" class="badge text-bg-success rounded-pill d-inline"></span></h2>
             <h2><span th:if="${club.status.name() == 'END'}" th:text="${club.status.title}" class="badge text-bg-danger rounded-pill d-inline"></span></h2>
           </div>
         </div> <!-- 모집상태 -->
-
         <div class="row px-5">
           <div class="col-5">
-            <img th:if="${club.file==null}" src="/images/1.png" class="profile_img" alt="기본 이미지">
-            <img th:if="${club.file!=null}" th:src="'data:image/jpg;base64,'+${src}" class="profile_img">
+            <img th:if="${club.getImg()==null}" src="/images/1.png" class="profile_img" alt="기본 이미지">
+            <img th:if="${club.getImg()!=null}" th:src="'data:image/jpg;base64,'+${src}" class="profile_img">
           </div>
           <div class="col-7">
             <ul>
@@ -83,30 +82,87 @@
             </ul>
           </div>
         </div> <!-- row-2(대표이미지, 자세한 소개) -->
-      </section>
+      </section> <!-- 동호회 정보 section END -->
 
-      <section class="border_shape p-3 my-4 border-black" >
-
-        <div id="multiple-items">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-        </div>
-
-
-
-
+      <section class="border_shape p-3 my-4 border-black" > <!-- 방명록 section -->
         <h4 style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">
-          <i class="fa-solid fa-ranking-star fa-l p-3"></i>개인 경기 기록 top10</h4>
-        <table style="text-indent: 25px;">
-          <tr>
-            <td><p> <i class="fa-regular fa-circle-1"></i></p>  </td>
-            <td>윤모양</td>
-          </tr>
-        </table>
+          <i class="fa-solid fa-ranking-star fa-l p-3"></i>방 명 록</h4>
+        <hr>
+        <!-- 댓글 창 보여주기 -->
+        <thread>
+          <tr th:each="visitors : ${visitors}">
+            <div> <!-- 방명록 틀 -->
+              <div class="row">
+                <div class="col-2">
+                  <img src="/images/profile_fe.png" class="rounded-circle"  style="width: 100px; height: 100px;">
+                </div>
+                <div class="col-10">
+                  <textarea th:id="'visitor-content-'+${visitors.id}"
+                            disabled
+                            th:text="${visitors.content}" class="bubble col-12"></textarea>
 
+                </div>
+              </div>
+              <div class="row border-1">
+                <div class="col-2">
+                  <h4 th:text="${visitors.member.nickname}" class="text-center"></h4>
+                </div>
+                <div class="col-4">
+                  <h6 th:text="${visitors.createdDate}" class="text-start"></h6>
+                </div>
+                <div class="col-6" >
+                  <div th:if="${session.loginMember.getId() == visitors.member.getId()}" style="float:right; ">
+                    <!-- 수정버튼 -->
+                    <button th:onclick="updateVisitor([[${visitors.id}]])"
+                            th:id="'visitor-update-'+${visitors.id}"
+                            class=" fa-solid fa-pencil"
+                            style="border: none; background: none">
+                    </button> <!-- 수정버튼 END -->
+                    <!-- 삭제버튼 -->
+                    <button th:id="'visitor-delete-'+${visitors.id}"
+                            th:onclick="deleteVisitor([[${visitors.id}]])"
+                            class=" fa-solid fa-trash-can"
+                            style="border: none; background: none">
+                    </button> <!-- 삭제버튼 END -->
+
+                    <div> <!-- 수정할때 보여지는 버튼 평소에는 hidden -->
+                      <button hidden
+                              th:id="'visitor-update-confirm-'+${visitors.id}"
+                              th:onclick="updateVisitorConfirm([[${visitors.id}]])"
+                              class="bi bi-check-circle"
+                              style="border: none; background: none">
+                      </button>
+                      <button hidden
+                              th:id="'visitor-update-cancel-'+${visitors.id}"
+                              th:onclick="updateVisitorCancel([[${visitors.id}]])"
+                              class="bi bi-x-circle"
+                              style="border: none; background: none">
+                      </button>
+                    </div> <!-- 수정할때 보여지는 버튼 평소에는 hidden END -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tr>
+        </thread>
+
+        <!-- 댓글 입력 창 -->
+        <div class="w-100">
+          <div> <!-- TODO 로그인 + 동호회 회원인 사람 조건넣어주기 -->
+            <div class="comment-input-body">
+              <input hidden id="club-id" th:value="${club.id}">
+              <textarea id="content" class="form-control" rows="4"
+                        placeholder="방명록을 입력하세요"></textarea>
+            </div>
+            <br>
+            <div class="d-flex justify-content-end">
+              <button class="shadow-sm" id="visitor-submit" type="submit">등록</button>
+            </div>
+          </div>
+        </div>
       </section>
+      <!-- 댓글 입력 창 END-->
+      <!-- 방명록 section END -->
     </div>
 
     <!-- 선수명단 -->
@@ -122,13 +178,14 @@
               </div>
             </td>
             <td class="py-2" th:text="${clubMember.member.nickname}" style="text-indent: 40px;font-weight : bold; font-size: large"></td>
-            <td class="py-2" th:if="${session.loginMember.nickname==club.member.nickname}">
-              <div th:if="${clubMember.member.nickname!=club.member.nickname}" style="text-indent: 40px;">
-              <div>
-                <form th:action="@{/club/memberBan/{id} (id=${clubMember.id})}" method="POST">
-                  <button type="submit" class="btn btn-success p-1"
-                          style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">추방</button>
-                </form>
+            <td class="py-2" th:if="${session.loginMember.id == club.member.id}">
+              <div th:if="${clubMember.member.id!=club.member.id}" style="text-indent: 40px;">
+                <div>
+                  <form th:action="@{/club/memberBan/{id} (id=${clubMember.id})}" method="POST">
+                    <button type="submit" class="btn btn-success p-1"
+                            style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">추방</button>
+                  </form>
+                </div>
               </div>
             </td>
           </tr>
@@ -173,15 +230,17 @@
 
             <!-- 클럽멤버 검증-->
             <div th:if="${clubMemberCheck == null}" class="d-grid">
+              <form th:action="@{/club/join}" method="POST">
+                <input type="hidden" th:field="*{club.id}">
                 <div class="d-grid">
-                  <div hidden id="clubStatus" th:value="${club.status.toString()}"></div>
-                  <button type="submit" th:onclick="clubJoin([[${club.id}]])" class="btn btn-outline-success border"
+                  <button type="submit" class="btn btn-outline-success border"
                           style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">가입하기</button>
                 </div>
+              </form>
             </div>
           </ul><!-- 로그인 검증-->
         </div>
-      </section>
+      </section><!-- 버튼 끈-->
 
       <!-- 버튼 끈-->
     </div>
@@ -260,6 +319,8 @@
   <script src="/js/clubDetail.js"></script>
   <script src="/js/clubJoin.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script th:src="@{/js/clubDetail.js}"></script>
+
 
 </body>
 </html>
