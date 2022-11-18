@@ -110,7 +110,7 @@
 
     <div class="row d-flex justify-content-center my-3">
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
-            <div th:each="a : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal">
+            <div th:each="a : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${a.id}]])">
                 <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${a.member.nickname}">사용자1</p>
                 <!-- A팀 참가자 Modal -->
@@ -137,7 +137,7 @@
                                 <h4>등급</h4>
                                 <div class="text-center">
                                     <img class="profile img-fluid" alt=""/>
-                                    <h3><span class="tier" th:text="${a.member.tier}">IRON</span></h3>
+                                    <h3><span th:id="tier + ${a.id}" th:text="${a.member.tier}">IRON</span></h3>
                                 </div>
                                 <div class="container text-center">
                                     <div class="row">
@@ -184,7 +184,7 @@
         </div>
         <div class="col-2 flex-shrink-1"></div>
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
-            <div th:each="b:${playersB}" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal">
+            <div th:each="b :${playersB}" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${b.id}]])" >
                 <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${b.member.nickname}">사용자3</p>
                 <!-- B팀 참가자 Modal -->
@@ -211,7 +211,7 @@
                                 <h4>등급</h4>
                                 <div class="text-center">
                                     <img class="profile img-fluid" alt=""/>
-                                    <h3><span class="tier" th:text="${b.member.tier}">IRON</span></h3>
+                                    <h3><span th:id="tier + ${b.id}" th:text="${b.member.tier}">IRON</span></h3>
                                 </div>
                                 <div class="container text-center">
                                     <div class="row">
@@ -310,6 +310,9 @@
 </div>
 <input hidden id="matching_lat" th:value="${matchingForm.lat}">
 <input hidden id="matching_lng" th:value="${matchingForm.lng}">
+
+<!-- Footer-->
+<footer th:replace="fragments/footer :: footer"></footer>
 
 <!-- 매치 팀 선택 Modal -->
 <div class="modal fade" id="teamModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -494,10 +497,7 @@
 
 
 
-<!-- Footer-->
-<footer class="footer bg-white small text-center text-black-50">
-    <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
-</footer>
+
 <!-- JS-->
 <script th:src="@{/js/matchingDate.js}"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
