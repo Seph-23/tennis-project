@@ -303,8 +303,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form role="form" action="/members/withdrawl" method="post" ENCTYPE="multipart/form-data"> <!-- signup form -->
-                    <input type="hidden" th:field="${form.id}" >
                 <div class="mb-3">
                     <p>언제든지 GOGOTENNIS 계정을 삭제할 수 있습니다.</p>
                     <p>그러나 계정이 삭제되고 나면 마음이 바뀌어도 계정을 복구하지 못할 수 있습니다.</p>
@@ -322,15 +320,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>
-                        <button disabled type="submit" class="withdrawl btn btn-primary py-2">탈퇴하기</button>
+                        <button disabled type="submit" class="withdrawl btn btn-primary py-2" th:onclick="deleteMember([[${memberId}]])">탈퇴하기</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
 </div>
 <!-- member withdrawal Modal end -->
-
 
 
 <!-- Footer-->
@@ -348,6 +344,7 @@
 <script src="/js/tierCheck.js"></script>
 <script src="/js/profileNickCheck.js"></script>
 <script src="/js/memberWithdrawl.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </div> <!-- Container End -->
 </body>
 </html>
