@@ -8,6 +8,7 @@ import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.service.FileService;
 import myweb.secondboard.web.Status;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -40,11 +42,10 @@ public class Club implements Serializable {
   @Column(length = 10)
   private int memberCount;
 
-  @Column(length = 256)
-  private String img;
+  // base64 파일 저장
+  @Lob
+  private byte[] img;
 
-  @Column
-  private String imgPath;
 
   @NotNull
   @CreatedDate
@@ -67,7 +68,7 @@ public class Club implements Serializable {
   @JoinColumn(name="member_id")
   private Member member;
 
-  public static Club createClub(ClubSaveForm form, Member leader, File file) throws IOException {
+  public static Club createClub(ClubSaveForm form, Member leader, MultipartFile file) throws IOException {
     Club club = new Club();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
@@ -78,15 +79,41 @@ public class Club implements Serializable {
     club.setStatus(Status.RECRUITING);
     club.setLocal(form.getLocal());
     club.setMember(leader);
-    club.setFile(file);
+
+    if(file.isEmpty()){
+      club.setImg(null);
+    } else {
+
+      byte[] ImgEn = new byte[0];
+      if (file != null) {
+        Base64.Encoder encoder = Base64.getEncoder();
+        ImgEn = encoder.encode(file.getBytes());
+      }
+      club.setImg(ImgEn);
+    }
+
     return club;
   }
 
-  public void updateClub(ClubUpdateForm form, Club club) {
+  public void updateClub(ClubUpdateForm form, Club club, MultipartFile file) throws IOException {
     club.setId(form.getId());
     club.setName(form.getName());
     club.setIntroduction(form.getIntroduction());
     club.setStatus(form.getStatus());
     club.setLocal(form.getLocal());
+
+    if(file.isEmpty()){
+      byte[] origin = club.getImg();
+      club.setImg(origin);
+
+    } else {
+      byte[] updateImg = new byte[0];
+      if (file != null) {
+        Base64.Encoder encoder = Base64.getEncoder();
+        updateImg = encoder.encode(file.getBytes());
+      }
+      club.setImg(updateImg);
+    }
+
   }
 }

@@ -6,11 +6,14 @@ import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.MemberUpdateForm;
 import myweb.secondboard.web.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Map;
 
 @Entity
@@ -61,9 +64,9 @@ public class Member implements Serializable {
   @JoinColumn(name = "record_id")
   private Record record;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name="file_id")
-  private File file;
+  // base64 인코딩하여 파일 저장
+  @Lob
+  private byte[] imgEn;
 
   public static Member createMember(MemberSaveForm form, Record record) throws NoSuchAlgorithmException {
     Member member = new Member();
@@ -110,4 +113,19 @@ public class Member implements Serializable {
 
     return member;
   }
+
+
+
+  public void setImgEn(MultipartFile file, Member member) throws IOException {
+    byte[] ImgEn = new byte[0];
+
+    if (file != null) {
+      Base64.Encoder encoder = Base64.getEncoder();
+      ImgEn = encoder.encode(file.getBytes());
+    }
+    member.setImgEn(ImgEn);
+
+
+  }
+
 }

@@ -10,6 +10,7 @@ import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.service.ClubService;
 import myweb.secondboard.service.LocalService;
+import myweb.secondboard.service.MemberService;
 import myweb.secondboard.service.TournamentService;
 import myweb.secondboard.web.SessionConst;
 import myweb.secondboard.web.Status;
@@ -38,7 +39,7 @@ public class ClubController {
 
   private final ClubService clubService;
   private final LocalService localService;
-
+  private final MemberService memberService;
 
   @GetMapping("/club")
   public String clubList(@RequestParam(required = false, value = "keyword") String keyword,
@@ -74,8 +75,8 @@ public class ClubController {
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
 
     Club club = clubService.findOne(clubId);
-    if(club.getFile()!=null){
-      String src = new String(club.getFile().getSaveImg(), StandardCharsets.UTF_8);
+    if(club.getImg()!=null){
+      String src = new String(club.getImg(), StandardCharsets.UTF_8);
       model.addAttribute("src", src);
     }
 
@@ -184,9 +185,12 @@ public class ClubController {
     ClubMember clubMember = clubService.get(id);
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
 
-//    if (clubMember.getClub().getLeader().equals(member.getNickname())) {
-//      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
-//    }
+    if (clubMember.getClub().getMember().getNickname().equals(member.getNickname())) {
+      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
+    }
     return "redirect:/club/detail/" + clubMember.getClub().getId();
   }
+
+
+
 }

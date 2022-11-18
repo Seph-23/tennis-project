@@ -35,8 +35,9 @@
 }
 
 .border_shape {
-  border: 1px solid darkolivegreen;
-  border-radius: 40px 40px;
+  border-top: gray solid 2px;
+  border-bottom: gray solid 2px;
+  background-color: whitesmoke;
 }
 
 .border_shape img{
@@ -70,4 +71,23 @@ section::-webkit-scrollbar-thumb{
   object-position: center;
   border-radius: 15%;
 
+}
+
+.sidebar {
+  position: sticky;
+  height: 400px;
+  top : 70px;
+}
+
+
+.bubble {
+  top: 100px;
+  height: 100px;
+  background: #fff;
+  border: #bbb solid 0;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  padding: 10px;
 }
