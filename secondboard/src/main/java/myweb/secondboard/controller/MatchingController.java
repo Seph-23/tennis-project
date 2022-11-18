@@ -17,10 +17,7 @@ import myweb.secondboard.dto.PlayerAddForm;
 import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.service.MatchingService;
 import myweb.secondboard.service.PlayerService;
-import myweb.secondboard.web.CourtType;
-import myweb.secondboard.web.GameResult;
-import myweb.secondboard.web.MatchingType;
-import myweb.secondboard.web.SessionConst;
+import myweb.secondboard.web.*;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,6 +66,14 @@ public class MatchingController {
     condition.setDate(LocalDate.now().toString());
     List<Matching> matchingList = matchingService.searchMatchingByBuilder(condition);
 
+    for (Matching matching : matchingList) {
+      if (matching.getMember().getNickname().contains("탈퇴된")) {
+        matching.setAuthor(matching.getMember().getNickname());
+        System.out.println("matching.getMember().getNickname() = " + matching.getMember().getNickname());
+        matching.setMatchingCondition(MatchingCondition.FAIL);
+      }
+    }
+
     model.addAttribute("matchingList", matchingList);
 
     MatchingSaveForm matchingForm = new MatchingSaveForm();
@@ -82,6 +87,8 @@ public class MatchingController {
 
     List<String> matchingPlaces = matchingService.getMatchingPlaces(LocalDate.now().toString());
     System.out.println("matchingPlaces = " + matchingPlaces);
+
+
 
     model.addAttribute("lat", null);
 
@@ -248,6 +255,14 @@ public class MatchingController {
     MatchingSearchCondition condition = new MatchingSearchCondition();
     condition.setDate(date);
     List<Matching> matchingList = matchingService.searchMatchingByBuilder(condition);
+
+    for (Matching matching : matchingList) {
+      if (matching.getMember().getNickname().contains("탈퇴된")) {
+        matching.setAuthor(matching.getMember().getNickname());
+        System.out.println("matching.getMember().getNickname() = " + matching.getMember().getNickname());
+        matching.setMatchingCondition(MatchingCondition.FAIL);
+      }
+    }
 
     model.addAttribute("matchingList", matchingList);
 

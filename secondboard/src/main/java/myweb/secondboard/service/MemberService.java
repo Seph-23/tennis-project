@@ -7,6 +7,7 @@ import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.MemberUpdateForm;
 import myweb.secondboard.dto.UpdatePasswordForm;
+import myweb.secondboard.dto.MemberWithdrawlForm;
 import myweb.secondboard.repository.MemberRepository;
 import myweb.secondboard.repository.RecordRepository;
 import myweb.secondboard.web.PasswordEncrypt;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -122,6 +122,16 @@ public class MemberService {
     return member.getId();
   }
 
+
+  @Transactional
+  public Long memberWithDrawl(MemberWithdrawlForm form, String uuid) {
+
+    Member member = findById(form.getId());
+
+    member.memberWithdrawl(form, member, uuid);
+
+    return member.getId();
+  }
 }
 
 

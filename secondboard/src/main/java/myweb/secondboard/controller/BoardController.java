@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Board;
@@ -26,6 +27,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +64,13 @@ public class BoardController {
     int nowPage = boardList.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, boardList.getTotalPages());
+
+    List<Board> boards = boardList.stream().toList();
+    for (Board board : boards) {
+      if (board.getMember().getNickname().contains("탈퇴된")) {
+        board.setAuthor(board.getMember().getNickname());
+      }
+    }
 
     List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
     List<Board> hotBoards = new ArrayList<>();
@@ -114,6 +123,10 @@ public class BoardController {
       String checkLike = boardLikeService.checkLike(board.getId(), member.getId());
       model.addAttribute("checkLike", checkLike);
     }
+    if (board.getMember().getNickname().contains("탈퇴된")) {
+      board.setAuthor(board.getMember().getNickname());
+    }
+
 
     List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
     List<Board> hotBoards = new ArrayList<>();
