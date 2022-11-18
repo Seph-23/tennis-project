@@ -100,12 +100,32 @@ public class Member implements Serializable {
     member.setNickname(userInfo.get("nickname").toString());
     member.setEmail(userInfo.get("email").toString());
     member.setLoginId(userInfo.get("email").toString());
+//    member.setBirthday(userInfo.get("birthday").toString());
+
+    //birthday example = 0529
+    String birthday = userInfo.get("birthday").toString();
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < birthday.length(); i++) {
+
+        if (i != 2) {
+          builder.append(birthday.charAt(i));
+        }
+        if (i == 2) {
+          builder.append("월 ");
+          builder.append(birthday.charAt(i));
+        }
+        if (i == 3) {
+          builder.append("일");
+        }
+    }
+    if (builder.charAt(0) == '0') {
+      builder.deleteCharAt(0);
+    }
+    member.setBirthday(builder.toString());
     member.setRole(Role.MEMBER);
     member.setTier(Tier.IRON);
     member.setRecord(record);
 
-    //==임시로 휴대전화 번호 넣어줌==//
-    member.setPhoneNumber("01012341234");
 
     if (userInfo.get("has_gender").toString().equals("true")) {
        member.setGender(Gender.valueOf(userInfo.get("gender").toString().toUpperCase()));
