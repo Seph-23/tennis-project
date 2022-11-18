@@ -110,7 +110,7 @@
 
     <div class="row d-flex justify-content-center my-3">
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
-            <div th:each="a : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${a.id}]])">
+            <div th:each="a, state : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${a.id}]])">
                 <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${a.member.nickname}">사용자1</p>
                 <!-- A팀 참가자 Modal -->
@@ -163,11 +163,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="text-center">패배</td>
-                                        <td class="text-center">매치이름</td>
-                                        <td class="text-center">매치타입</td>
-                                        <td class="text-center">경기날짜</td>
+                                    <tr th:each="a1 : ${playerListA.get(state.index)}">
+                                        <td class="text-center" th:if="${a1.team.toString().equals('A')}" th:text="${a1.matching.gameResult.title}"></td>
+                                        <div th:if="${a1.team.toString().equals('B')}">
+                                            <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('WIN')}" th:text="패배"></td>
+                                            <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('LOSE')}" th:text="승리"></td>
+                                            <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('PENALTY')}" th:text="무효"></td>
+                                            <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('NORECORD')}" th:text="결과미등록"></td>
+                                        </div>
+                                        <td class="text-center" th:text="${a1.matching.title}"></td>
+                                        <td class="text-center" th:text="${a1.matching.matchingType.title}"></td>
+                                        <td class="text-center" th:text="${a1.matching.matchingDate}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -184,7 +190,7 @@
         </div>
         <div class="col-2 flex-shrink-1"></div>
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
-            <div th:each="b :${playersB}" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${b.id}]])" >
+            <div th:each="b, state :${playersB}" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${b.id}]])" >
                 <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${b.member.nickname}">사용자3</p>
                 <!-- B팀 참가자 Modal -->
@@ -237,11 +243,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="text-center">패배</td>
-                                        <td class="text-center">매치이름</td>
-                                        <td class="text-center">매치타입</td>
-                                        <td class="text-center">경기날짜</td>
+                                    <tr th:each="b1 : ${playerListB.get(state.index)}">
+                                        <td class="text-center" th:if="${b1.team.toString().equals('A')}" th:text="${b1.matching.gameResult.title}"></td>
+                                        <div th:if="${b1.team.toString().equals('B')}">
+                                            <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('WIN')}" th:text="패배"></td>
+                                            <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('LOSE')}" th:text="승리"></td>
+                                            <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('PENALTY')}" th:text="무효"></td>
+                                            <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('NORECORD')}" th:text="결과미등록"></td>
+                                        </div>
+                                        <td class="text-center" th:text="${b1.matching.title}"></td>
+                                        <td class="text-center" th:text="${b1.matching.matchingType.title}"></td>
+                                        <td class="text-center" th:text="${b1.matching.matchingDate}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
