@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/boardHome1.css">
     <link rel="stylesheet" href="/css/boardHome2.css">
+    <link rel="stylesheet" href="/css/hotBoards.css">
     <link href="/css/banner.css" rel="stylesheet"/>
 
     <!-- jQuery -->
@@ -136,33 +137,13 @@
         </br>
         <h3>핫 게시물</h3>
         </br>
-        <ul class="user-list message-list">
-            <li class="user-item message-item">
-                <p class="message-content">
-                    1번 게시글
-                </p>
+        <ol class="user-list message-list">
+            <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
+                <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
+                    th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|"
+                    role="button"></h6>
             </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    2번 게시글
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    3번 게시글
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    4번 게시글
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    5번 게시글
-                </p>
-            </li>
-        </ul>
+        </ol>
     </aside>
     <!-- </div> -->
 

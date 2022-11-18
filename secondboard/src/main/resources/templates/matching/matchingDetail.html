@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>Tennis</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -57,7 +58,7 @@
 
     <div class="container">
         <div class="d-flex justify-content-center">
-            <div class="row text-center w-25 fs-6">
+            <div class="row text-center w-25 fs-5">
                 <div th:if="${matching.matchingType.toString().equals('SINGLE')}">
                     <i class="fa-solid fa-user"></i>
                     <a th:text="${matching.matchingType.title}"></a>
@@ -75,7 +76,7 @@
                     <a th:text="${matching.courtType.title}"></a>
                 </div>
             </div>
-            <div class="row text-center w-25 fs-6">
+            <div class="row text-center w-25 fs-5">
                 <div>
                     <i class="bi bi-calendar"></i>
                     <a th:text="${matching.matchingDate}"></a>
@@ -87,7 +88,7 @@
                     <a th:text="${matching.matchingEndTime}"></a>
                 </div>
             </div>
-            <div class="row text-center w-25 fs-6">
+            <div class="row text-center w-25 fs-5">
                 <div>
                     <i class="fa-solid fa-map-location-dot"></i>
                     <a th:text="${matching.place}"></a>
@@ -99,11 +100,11 @@
 
     <!-- 팀 정보 -->
     <h4 class="fw-bolder mt-4">참가자 정보</h4>
-    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">
-        <img src="/images/failed2.png" class="w-75 position-absolute mb-5" style="height:400px;">
-        <img src="/images/match2.png" class="w-100">
+<!--    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">-->
+    <div th:if="${matching.matchingCondition.title.equals('매칭실패')}">
+        <img src="/images/failed3.png" class="w-100">
     </div>
-    <div th:if="!${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">
+    <div th:if="!${matching.matchingCondition.title.equals('매칭실패')}">
         <img src="/images/match2.png" class="w-100">
     </div>
 
@@ -125,18 +126,17 @@
                                 <div class="row">
                                     <div class="col total">
                                         <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                                        <div class="fw-bold fs-6" th:text="${a.member.nickname}">USER1</div>
                                     </div>
-                                    <div class="col total text-center mt-5">
-                                        <div th:text="${a.member.nickname}">USER1</div>
-                                        <div th:text="${a.member.birthday}">생년월일</div>
-                                        <div th:text="${a.member.email}">이메일</div>
-                                        <div th:text="${a.member.introduction}">자기소개</div>
+                                    <div class="col total text-center mt-2">
+                                        <div class="fw-bold fs-6 mb-1">자기소개</div>
+                                        <textarea readonly style="border: solid 1px #badbcc; border-radius: 10px;" rows="7" th:text="${a.member.introduction}">자기소개</textarea>
                                     </div>
                                 </div>
                                 <hr>
                                 <h4>등급</h4>
                                 <div class="text-center">
-                                    <img height="100" src="/images/platinum.png" alt=""/>
+                                    <img class="profile img-fluid" alt=""/>
                                     <h3><span class="tier" th:text="${a.member.tier}">IRON</span></h3>
                                 </div>
                                 <div class="container text-center">
@@ -196,22 +196,21 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <h4>정보</h4>
+                                <h4 class="text-start">정보</h4>
                                 <div class="row">
                                     <div class="col total">
                                         <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                                        <div class="fw-bold fs-6" th:text="${b.member.nickname}">USER1</div>
                                     </div>
-                                    <div class="col total text-center mt-5">
-                                        <div th:text="${b.member.nickname}">USER1</div>
-                                        <div th:text="${b.member.birthday}">생년월일</div>
-                                        <div th:text="${b.member.email}">이메일</div>
-                                        <div th:text="${b.member.introduction}">자기소개</div>
+                                    <div class="col total text-center mt-2">
+                                        <div class="fw-bold fs-6">자기소개</div>
+                                        <textarea readonly style="border: solid 1px #badbcc; border-radius: 10px;" rows="7" th:text="${b.member.introduction}">자기소개</textarea>
                                     </div>
                                 </div>
                                 <hr>
                                 <h4>등급</h4>
                                 <div class="text-center">
-                                    <img height="100" src="/images/platinum.png" alt=""/>
+                                    <img class="profile img-fluid" alt=""/>
                                     <h3><span class="tier" th:text="${b.member.tier}">IRON</span></h3>
                                 </div>
                                 <div class="container text-center">
@@ -388,7 +387,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-2" id="matchUpdateModalLabel">매치 생성</h3>
+                <h3 class="modal-title fs-2" id="matchUpdateModalLabel">매치 수정</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -503,5 +502,6 @@
 <script th:src="@{/js/matchingDate.js}"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
 <script th:src="@{/js/matchingDetailKakaoMap.js}"></script>
+<script th:src="@{/js/tierCheck.js}"></script>
 </body>
 </html>

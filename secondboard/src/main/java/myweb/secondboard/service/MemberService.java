@@ -7,6 +7,7 @@ import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.MemberUpdateForm;
 import myweb.secondboard.dto.UpdatePasswordForm;
+import myweb.secondboard.dto.MemberWithdrawlForm;
 import myweb.secondboard.repository.MemberRepository;
 import myweb.secondboard.repository.RecordRepository;
 import myweb.secondboard.web.PasswordEncrypt;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,7 +61,9 @@ public class MemberService {
 
   @Transactional
   public Member kakaoSignUp(Map<String, Object> userInfo, String access_token) {
-    Member member = Member.createKakaoMember(userInfo, access_token);
+    Record record = Record.createRecord();
+    Member member = Member.createKakaoMember(userInfo, access_token, record);
+    recordRepository.save(record);
     memberRepository.save(member);
     return member;
   }
@@ -118,6 +120,16 @@ public class MemberService {
     return member.getId();
   }
 
+
+  @Transactional
+  public Long memberWithDrawl(MemberWithdrawlForm form, String uuid) {
+
+    Member member = findById(form.getId());
+
+    member.memberWithdrawl(form, member, uuid);
+
+    return member.getId();
+  }
 }
 
 

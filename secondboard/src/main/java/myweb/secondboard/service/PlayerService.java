@@ -40,4 +40,12 @@ public class PlayerService {
   public List<Player> findByMemberId(Long memberId) {
     return playerRepository.findByMemberId(memberId).stream().filter(list -> list.getMatching().getGameResult() != null).toList();
   }
+
+  public List<Player> findOne(Long memberId) {
+    return playerRepository.findByMemberId(memberId);
+  }
+
+  public List<Player> findAll() {
+    return playerRepository.findAll();
+  }
 }

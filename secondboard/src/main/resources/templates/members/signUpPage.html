@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
   <meta http-equiv="Content-Type>" content="text/html; charset=UTF-8"/>
-  <link rel="shortcut icon" href="#">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
         rel="stylesheet">
   <!-- jQuery -->
@@ -10,7 +9,6 @@
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/signUpPage.css">
-
 </head>
 <body>
   <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
@@ -34,29 +32,29 @@
           <a hidden id="login_id_dup_check" style="color: red">중복된 아이디 입니다.</a>
           <a hidden id="login_id_validate" style="color: red">아이디는 8 ~ 15자 이내여야 합니다.</a>
           <a hidden id="login_id_format" style="color: red">아이디는 영어 대문자 또는 소문자로 시작해야 합니다.</a>
-          <div class="form-group input-group mb-4 border rounded-pill p-1">
-            <input id="login-id" type="text" class="form-control bg-none border-0 rounded-circle"
+          <div class="mb-4">
+            <input id="login-id" type="text" class="form-control inputBox"
                    th:field="${member.loginId}" placeholder="아이디를 입력해주세요"/>
           </div>
           <a hidden id="password_validate" style="color: red">비밀번호는 9 ~ 24 자 이내여야 합니다</a>
-          <div class="form-group input-group mb-4 border rounded-pill p-1">
-            <input id="password" type="password" class="form-control bg-none border-0 rounded-circle"
+          <div class="mb-4">
+            <input id="password" type="password" class="form-control inputBox"
                    th:field="${member.password}" placeholder="비밀번호를 입력해주세요"/>
           </div>
           <a hidden id="password_check_message" style="color: red">비밀번호가 일치하지 않습니다</a>
-          <div class="form-group input-group mb-4 border rounded-pill p-1">
-            <input id="password_check" type="password" class="form-control bg-none border-0 rounded-circle"
+          <div class="mb-4">
+            <input id="password_check" type="password" class="form-control inputBox"
                    placeholder="비밀번호 확인"/>
           </div>
           <a hidden id="nickname_dup_check" style="color: red">중복된 닉네임 입니다</a>
           <a hidden id="nickname_validate" style="color: red">닉네임은 4 ~ 10자 이내여야 합니다</a>
-          <div class="form-group input-group mb-4 border rounded-pill p-1">
-            <input id="nickname" type="text" class="form-control bg-none border-0 rounded-circle"
+          <div class="mb-4">
+            <input id="nickname" type="text" class="form-control inputBox"
                    th:field="${member.nickname}" placeholder="닉네임을 입력해주세요"/>
           </div>
           <a hidden id="email_duplicate" style="color: red">이미 가입된 이메일 입니다</a>
-          <div class="form-group input-group mb-4 border rounded-pill p-1">
-            <input id="email" type="email" class="form-control bg-none border-0 rounded-circle"
+          <div class="mb-4">
+            <input id="email" type="email" class="form-control inputBox"
                    th:field="${member.email}"
                    placeholder="이메일을 입력해주세요"/>
           </div>
@@ -71,8 +69,8 @@
           </div>
           <a hidden id="phone_duplicate" style="color: red">이미 가입된 번호 입니다</a>
           <a hidden id="phone_validate" style="color: red">번호가 잘못 되었습니다</a>
-          <div class="form-group input-group mb-4 border rounded-pill p-1">
-            <input id="phone-number" type="text" class="form-control bg-none border-0 rounded-circle"
+          <div class="mb-4">
+            <input id="phone-number" type="text" class="form-control inputBox"
                    th:field="${member.phoneNumber}"
                    placeholder="전화번호를 입력해주세요.">
           </div>
@@ -93,6 +91,7 @@
 
           <div class="row align-items-center justify-content-center">
             <button type="submit" class="button-submit border-1 btn-light shadow-sm submit"
+                    style="width: 408px"
                     id="signup-submit">회원가입
             </button>
           </div>

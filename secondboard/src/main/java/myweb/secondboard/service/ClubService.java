@@ -50,6 +50,7 @@ public class ClubService {
   public ClubMember addClubMember(Club club, Member member) {
     ClubMember clubMember = ClubMember.createClubMember(club, member);
     clubMemberRepository.save(clubMember);
+    club.setMemberCount(club.getMemberCount() + 1);
     return clubMember;
   }
 

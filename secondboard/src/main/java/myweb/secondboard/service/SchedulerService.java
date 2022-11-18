@@ -8,6 +8,7 @@ import myweb.secondboard.repository.MatchingRepository;
 import myweb.secondboard.repository.PlayerRepository;
 import myweb.secondboard.repository.ResultTempRepository;
 import myweb.secondboard.web.GameResult;
+import myweb.secondboard.web.MatchingCondition;
 import myweb.secondboard.web.Tier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -42,43 +43,52 @@ public class SchedulerService {
 
     // 매칭 상태 업데이트 로직
     for (int i = 0; i < lists.size(); i++) {
-      Matching matching = lists.get(i);
+        Matching matching = lists.get(i);
 
-      if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeTwoHour().equals(currentTime)) {
-        matchingRepository.matchingBeforeTwoHourCheck(matching.getId());
-      }
-      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeHour().equals(currentTime)) {
-        matchingRepository.matchingBeforeHourCheck(matching.getId());
-      }
-      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingStartTime().equals(currentTime)) {
-        matchingRepository.matchingOngoingCheck(matching.getId());
-      }
-      else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingEndTime().equals(currentTime)) {
-        matchingRepository.matchingAfterCheck(matching.getId());
-      }
-      else if (lists.get(i).getMatchingDate().plusDays(7).equals(currentDate)) {
-        matchingRepository.matchingAfterWeek(matching.getId());
-        List<ResultTemp> list = resultTempRepository.findResultTempMatching(matching.getId());
-        List<ResultTemp> teamA = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("A")).toList();
-        List<ResultTemp> teamB = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("B")).toList();
-        Integer count = list.size();
-        if (matching.getGameResult() == null) {
-          if (count == 4) {
-            countFour(matching, teamA, teamB);
-          } else if (count == 3) {
-            countThree(matching, teamA, teamB);
-          } else if (count == 2) {
-            countTwo(matching, list, teamA);
-          } else if (count == 1) {
-            matching.setGameResult(list.get(0).getGameResult());
-          } else if (count == 0) {
-            matching.setGameResult(GameResult.NORECORD);
+        if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeTwoHour().equals(currentTime)) {
+          matchingRepository.matchingBeforeTwoHourCheck(matching.getId());
+        } else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getBeforeHour().equals(currentTime)) {
+          matchingRepository.matchingBeforeHourCheck(matching.getId());
+        } else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingStartTime().equals(currentTime)) {
+          matchingRepository.matchingOngoingCheck(matching.getId());
+        } else if (lists.get(i).getMatchingDate().equals(currentDate) && lists.get(i).getMatchingEndTime().equals(currentTime)) {
+          matchingRepository.matchingAfterCheck(matching.getId());
+        }
+        if (lists.get(i).getMatchingCondition() == MatchingCondition.DONE) {
+
+          if (lists.get(i).getMatchingDate().plusDays(7).equals(currentDate)) {
+          matchingRepository.matchingAfterWeek(matching.getId());
+          List<ResultTemp> list = resultTempRepository.findResultTempMatching(matching.getId());
+          List<ResultTemp> teamA = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("A")).toList();
+          List<ResultTemp> teamB = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("B")).toList();
+          Integer count = list.size();
+          if (matching.getGameResult() == null) { // 1주일 뒤에 이 로직 탐
+            if (count == 4) { //결과 등록 4명
+              countFour(matching, teamA, teamB);
+            } else if (count == 3) { // 결과 등록 3명
+              countThree(matching, teamA, teamB);
+            } else if (count == 2) { // 결과 등록 2명
+              countTwo(matching, list, teamA);
+            } else if (count == 1) { // 결과 등록 1명
+              matching.setGameResult(list.get(0).getGameResult());
+            } else if (count == 0) { //결과를 안남겼을 때
+              matching.setGameResult(GameResult.NORECORD);
+              countZero(matching);
+            }
+            updateGameResult(matching);
           }
-          updateGameResult(matching);
         }
       }
+      System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Schedule 실행됨");
     }
-    System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Schedule 실행됨");
+  }
+
+  private void countZero(Matching matching) {
+    List<Player> players = playerRepository.findAllByMatchingId(matching.getId());
+    for (Player player : players) {
+      player.getMember().getRecord().setLose(player.getMember().getRecord().getLose() + 1);// 1패 등록
+      player.getMember().getRecord().setPoints(player.getMember().getRecord().getPoints() - 4); //리뷰 미등록시 4점 감점
+    }
   }
 
   private static void countThree(Matching matching, List<ResultTemp> teamA, List<ResultTemp> teamB) {
@@ -125,6 +135,8 @@ public class SchedulerService {
 
   public void updateGameResult(Matching matching) {
     List<Player> players = playerRepository.findAllByMatchingId(matching.getId());
+
+    System.out.println("매칭업데이트");
 
     for (Player player : players) {
       if (player.getTeam().toString().equals("A")) {

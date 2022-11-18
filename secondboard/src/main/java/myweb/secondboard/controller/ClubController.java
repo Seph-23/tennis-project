@@ -129,26 +129,14 @@ public class ClubController {
     return "redirect:/club/detail/" + clubId;
   }
 
+  @ResponseBody
   @PostMapping("/club/join")
-  public String joinClub(HttpServletRequest request, Long id, HttpServletResponse response) throws IOException {
+  public String joinClub(HttpServletRequest request, @RequestParam("clubId") Long id, HttpServletResponse response) throws IOException {
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     Club club = clubService.findOne(id);
+    clubService.addClubMember(club, member);
 
-    if (club.getStatus().name() != "RECRUITING") {
-      response.setContentType("text/html; charset=utf-8");
-      PrintWriter out = response.getWriter();
-      out.println("<script language = 'javascript'>");
-      out.println("alert('모집 마감된 클럽입니다.')");
-      out.println("</script>");
-      out.flush();
-
-      return "home";
-    }
-
-    club.setMemberCount(club.getMemberCount() + 1);
-    Long clubId = clubService.addClubMember(club, member).getClub().getId();
-
-    return "redirect:/club/detail/" + clubId;
+    return "redirect:/club/detail/" + id;
   }
 
   @PostMapping("/club/update")

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
-  <link rel="shortcut icon" href="#">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
         rel="stylesheet">
   <link rel="stylesheet" href="/css/boardHome1.css">
   <link rel="stylesheet" href="/css/boardHome2.css">
   <link rel="stylesheet" href="/css/boardDetail.css">
+  <link rel="stylesheet" href="/css/hotBoards.css">
   <link href="/css/likeReport.css" rel="stylesheet"/>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
@@ -94,37 +94,16 @@
     </ul>
   </aside>
   <aside class="secondary secondary-b">
-    <br>
+    </br>
     <h3>핫 게시물</h3>
-    <br>
-    <ul class="user-list message-list">
-      <li class="user-item message-item">
-        <p class="message-content">
-          1번 게시글
-        </p>
-
+    </br>
+    <ol class="user-list message-list">
+      <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
+        <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
+            th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|"
+            role="button"></h6>
       </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          2번 게시글
-        </p>
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          3번 게시글
-        </p>
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          4번 게시글
-        </p>
-      </li>
-      <li class="user-item message-item">
-        <p class="message-content">
-          5번 게시글
-        </p>
-      </li>
-    </ul>
+    </ol>
   </aside>
   <!-- </div> -->
 

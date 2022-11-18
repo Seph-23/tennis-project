@@ -77,6 +77,7 @@ section::-webkit-scrollbar-thumb{
   position: sticky;
   height: 400px;
   top : 70px;
+<<<<<<< HEAD
 }
 
 
@@ -90,4 +91,6 @@ section::-webkit-scrollbar-thumb{
   border-radius: 15px;
   margin-bottom: 10px;
   padding: 10px;
+=======
+>>>>>>> cf293c1426e5d3c25425cd25b8ffeb51c79cc64c
 }

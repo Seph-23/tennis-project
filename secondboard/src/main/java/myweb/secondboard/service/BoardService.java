@@ -1,5 +1,7 @@
 package myweb.secondboard.service;
 
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
@@ -62,5 +64,9 @@ public class BoardService {
     String title = keyword;
     String author = keyword;
     return boardRepository.findByTitleContainingOrAuthorContaining(title, author, pageable);
+  }
+
+  public List<Long> getHotBoards(LocalDate date) {
+    return boardRepository.getHotBoards(date);
   }
 }

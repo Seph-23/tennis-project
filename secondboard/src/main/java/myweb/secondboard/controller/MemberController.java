@@ -1,21 +1,27 @@
 package myweb.secondboard.controller;
 
         import java.io.IOException;
+        import java.io.PrintWriter;
         import java.nio.charset.StandardCharsets;
         import java.security.NoSuchAlgorithmException;
+        import java.time.LocalDate;
+        import java.time.LocalDateTime;
+        import java.time.LocalTime;
         import java.util.List;
-        import java.util.Map;
+        import java.util.Objects;
         import java.util.Optional;
+        import java.util.UUID;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
+        import javax.servlet.http.HttpSession;
         import javax.validation.Valid;
         import lombok.RequiredArgsConstructor;
         import lombok.extern.slf4j.Slf4j;
         import myweb.secondboard.domain.Matching;
         import myweb.secondboard.domain.Member;
         import myweb.secondboard.domain.Player;
-        import myweb.secondboard.dto.FindPasswordForm;
-        import myweb.secondboard.dto.MemberSaveForm;
-        import myweb.secondboard.dto.MemberUpdateForm;
-        import myweb.secondboard.dto.UpdatePasswordForm;
+        import myweb.secondboard.dto.*;
+        import myweb.secondboard.service.MatchingService;
         import myweb.secondboard.service.MemberService;
         import myweb.secondboard.service.PlayerService;
         import org.springframework.stereotype.Controller;
@@ -27,8 +33,6 @@ package myweb.secondboard.controller;
         import org.springframework.web.bind.annotation.PathVariable;
         import org.springframework.web.bind.annotation.PostMapping;
         import org.springframework.web.bind.annotation.RequestMapping;
-        import org.springframework.web.bind.annotation.RequestParam;
-        import org.springframework.web.bind.annotation.ResponseBody;
         import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -40,6 +44,7 @@ public class MemberController {
   private final MemberService memberService;
 
   private final PlayerService playerService;
+  private final MatchingService matchingService;
 
   @GetMapping("/new")
   public String signUpPage(Model model) {
@@ -186,7 +191,45 @@ public class MemberController {
     return "redirect:/";
   }
 
+  //== 회원 탈퇴 ==//
+  @PostMapping("/withdrawl")
+  public String memberWithdrawl(@ModelAttribute("form") MemberWithdrawlForm form,
+                                HttpServletRequest request, Model model, HttpServletResponse response) throws IOException {
 
+
+    List<Player> players = playerService.findAll();
+    for (Player player : players) {
+      if (Objects.equals(player.getMember().getId(), form.getId())) { // 경기에 참가한 적이 있는 회원
+
+        String matchingStartTime = player.getMatching().getMatchingStartTime(); // 21:30
+        LocalDate date = player.getMatching().getMatchingDate(); // 11-18
+        LocalDateTime localDateTime = date.atTime(LocalTime.parse(matchingStartTime)); // 11-18 21:30
+
+        System.out.println("matchingStartTime = " + matchingStartTime);
+        System.out.println("date = " + date);
+        System.out.println("localDateTime = " + localDateTime);
+
+        if (localDateTime.isAfter(LocalDateTime.now())) { // 날짜 검증 // 11-18-21:30 is After 11-18 5:45
+
+          System.out.println("회원 탈퇴 불가능 로직");
+          return "redirect:/";
+        }
+      }
+    }
+    String uuid = UUID.randomUUID().toString();
+
+    // 회원 정보 변경
+    memberService.memberWithDrawl(form, uuid);
+
+    // 세션 죽이기(로그아웃)
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+      session.invalidate();
+    }
+
+
+    return "redirect:/";
+  }
 
 
 }

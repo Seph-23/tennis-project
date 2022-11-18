@@ -11708,3 +11708,17 @@ body {
 .footer {
   padding: 5rem 0;
 }
+
+.inputBox{
+  width: 100%;
+  height: 50px;
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.searchIcon {
+  transform: translate(-105%, 8%);
+}
