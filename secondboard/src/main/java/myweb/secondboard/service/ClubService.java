@@ -3,13 +3,11 @@ package myweb.secondboard.service;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Club;
 import myweb.secondboard.domain.ClubMember;
-import myweb.secondboard.domain.File;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.repository.ClubMemberRepository;
 import myweb.secondboard.repository.ClubRepository;
-import myweb.secondboard.repository.FileRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,8 +24,6 @@ public class ClubService {
 
   private final ClubRepository clubRepository;
   private final ClubMemberRepository clubMemberRepository;
-  private final FileRepository fileRepository;
-  private final FileService fileService;
 
   public Page<Club> getClubList(Pageable pageable) {
     return clubRepository.findAll(pageable);
@@ -40,14 +36,8 @@ public class ClubService {
   @Transactional
   public Club addClub(ClubSaveForm form, Member member, MultipartFile photoImg) throws IOException {
 
-    File file = File.createImg(fileService.ImgSave(photoImg));
-    Club club = Club.createClub(form, member, file);
-    if(photoImg.isEmpty()){
-      club.setFile(null);
-    }
-      fileRepository.save(file);
-      clubRepository.save(club);
-
+    Club club = Club.createClub(form, member, photoImg);
+    clubRepository.save(club);
 
     ClubMember clubMember = ClubMember.createClubMember(club, member);
     clubMemberRepository.save(clubMember);
@@ -79,25 +69,7 @@ public class ClubService {
   public Long update(ClubUpdateForm form, MultipartFile file) throws IOException {
 
     Club originclub = clubRepository.findOne(form.getId());
-    originclub.updateClub(form, originclub);
-
-    File originFile = originclub.getFile();
-
-    if(originclub.getFile()==null){
-      if(file.isEmpty()){
-        originclub.setFile(null);
-      } else {
-        File updateFile = File.createImg(fileService.ImgSave(file));
-        originclub.setFile(updateFile);
-      }
-    } else {
-      if(file.isEmpty()){
-        originclub.setFile(originFile);
-      } else {
-        byte[] files = fileService.ImgSave(file);
-        originFile.setSaveImg(files);
-      }
-    }
+    originclub.updateClub(form, originclub, file);
 
     return originclub.getId();
   }

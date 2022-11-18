@@ -2,10 +2,8 @@ package myweb.secondboard.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import myweb.secondboard.domain.File;
 import myweb.secondboard.domain.Local;
 import myweb.secondboard.domain.Member;
-import myweb.secondboard.service.FileService;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;

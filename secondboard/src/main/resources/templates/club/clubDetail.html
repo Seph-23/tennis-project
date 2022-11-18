@@ -62,8 +62,8 @@
 
         <div class="row px-5">
           <div class="col-5">
-            <img th:if="${club.file==null}" src="/images/1.png" class="profile_img" alt="기본 이미지">
-            <img th:if="${club.file!=null}" th:src="'data:image/jpg;base64,'+${src}" class="profile_img">
+            <img th:if="${club.getImg()==null}" src="/images/1.png" class="profile_img" alt="기본 이미지">
+            <img th:if="${club.getImg()!=null}" th:src="'data:image/jpg;base64,'+${src}" class="profile_img">
           </div>
           <div class="col-7">
             <ul>

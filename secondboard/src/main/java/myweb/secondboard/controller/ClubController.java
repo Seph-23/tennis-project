@@ -74,11 +74,10 @@ public class ClubController {
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
 
     Club club = clubService.findOne(clubId);
-    if(club.getFile()!=null){
-      String src = new String(club.getFile().getSaveImg(), StandardCharsets.UTF_8);
+    if(club.getImg()!=null){
+      String src = new String(club.getImg(), StandardCharsets.UTF_8);
       model.addAttribute("src", src);
     }
-
     model.addAttribute("club", club);
 
     List<ClubMember> memberList = clubService.getClubMemberList(club.getId());
