@@ -34,7 +34,6 @@ public class QuestionController {
   private final QuestionService questionService;
   private final QuestionCommentService questionCommentService;
 
-
   @GetMapping("/home")
   public String home(@RequestParam(required = false, value = "keyword") String keyword,
                      @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC)
@@ -57,7 +56,6 @@ public class QuestionController {
 
     return "/boards/question/questionHome";
   }
-
 
   @GetMapping("/questionAdd")
   public String noticeAddForm(Model model) {

@@ -92,7 +92,7 @@ public class Member implements Serializable {
 
   }
 
-  public static Member createKakaoMember(Map<String, Object> userInfo, String access_token) {
+  public static Member createKakaoMember(Map<String, Object> userInfo, String access_token, Record record) {
     Member member = new Member();
     member.setProvider(Provider.KAKAO);
     member.setNickname(userInfo.get("nickname").toString());
@@ -100,6 +100,7 @@ public class Member implements Serializable {
     member.setLoginId(userInfo.get("email").toString());
     member.setRole(Role.MEMBER);
     member.setTier(Tier.IRON);
+    member.setRecord(record);
 
     //==임시로 휴대전화 번호 넣어줌==//
     member.setPhoneNumber("01012341234");
