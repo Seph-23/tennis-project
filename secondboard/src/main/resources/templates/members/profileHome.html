@@ -252,7 +252,9 @@
     <a type="button" class="btn btn-primary px-3 py-2 me-lg-1"
        data-bs-toggle="modal" data-bs-target="#profileUpdateModal">정보 수정
     </a>
-    <a type="button" class="btn btn-primary px-3 py-2">회원탈퇴</a>
+    <a type="button" class="btn btn-primary px-3 py-2"
+       data-bs-toggle="modal" data-bs-target="#memberWithdrawal">회원 탈퇴
+    </a>
 </div>
 
 <!-- profile update Modal -->
@@ -266,11 +268,11 @@
             <div class="modal-body">
                 <form role="form" th:object="${form}" action="/members/profileUpdate" method="post" ENCTYPE="multipart/form-data"> <!-- signup form -->
                     <input type="hidden" th:field="${form.id}" >
-                    <div class="form-group">
-                        <label th:for="nickname" class="d-sm-block">닉네임</label>
-                        <input id="nickname" type="text" class="form-control w-75 d-sm-inline" th:field="${form.nickname}"/>
-                        <button type="button" id="nick-dup-button" class="dup-check-button">중복확인</button>
-                        <div class="field-error" th:errors="${form.nickname}"></div>
+                    <a hidden id="nickname_dup_check" style="color: red">중복된 닉네임 입니다</a>
+                    <a hidden id="nickname_validate" style="color: red">닉네임은 4 ~ 10자 이내여야 합니다</a>
+                    <div class="form-group input-group mb-4 border">
+                        <input id="nickname" type="text" class="form-control bg-none border-0"
+                               th:field="${member.nickname}" placeholder="닉네임을 입력해주세요"/>
                     </div>
                     <div class="mb-3">
                         <label for="profileImg" class="form-label">프로필 이미지</label>
@@ -282,7 +284,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary py-2">수정하기</button>
+                        <button type="submit" class="updatePf btn btn-primary py-2">수정하기</button>
                     </div>
                 </form>
             </div>
@@ -290,6 +292,44 @@
     </div>
 </div>
 <!--profile update modal end-->
+
+<!-- member withdrawal Modal -->
+<div class="modal fade" id="memberWithdrawal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-2" id="memberWithdrawalLabel">GOGOTENNIS 계정 삭제하기</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="/members/withdrawl" method="post" ENCTYPE="multipart/form-data"> <!-- signup form -->
+                    <input type="hidden" th:field="${form.id}" >
+                <div class="mb-3">
+                    <p>언제든지 GOGOTENNIS 계정을 삭제할 수 있습니다.</p>
+                    <p>그러나 계정이 삭제되고 나면 마음이 바뀌어도 계정을 복구하지 못할 수 있습니다.</p>
+                </div>
+                    <hr>
+                    <div class="mb-3">
+                        <h5 class="text-sm-start">주의사항</h5>
+                        <li>계정에 저장된 데이터와 콘텐츠가 모두 삭제됩니다.</li>
+                        <li>계정으로 로그인하는 매치, 랭킹, 커뮤니티, 동호회 서비스를 이용할 수 없게 됩니다.</li>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input id="checkbox_withdrawl" class="form-check-input" type="checkbox" onclick="validateByCheckbox()">
+                        <label class="form-check-label">예, 이 GOGOTENNIS 계정과 모든 데이터를 완전히 삭제하고자 합니다.</label>
+                        <a hidden id="memberWithdrawlCheck" style="color: red; font-size: 0.8em">이 GOGOTENNIS 계정을 삭제할지 확인해 주세요.</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>
+                        <button disabled type="submit" class="withdrawl btn btn-primary py-2">탈퇴하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- member withdrawal Modal end -->
+
 
 
 <!-- Footer-->
@@ -305,6 +345,8 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <script src="/js/tierCheck.js"></script>
+<script src="/js/profileNickCheck.js"></script>
+<script src="/js/memberWithdrawl.js"></script>
 </div> <!-- Container End -->
 </body>
 </html>
