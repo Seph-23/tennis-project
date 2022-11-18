@@ -117,8 +117,9 @@ public class KaKaoService {
         result.put("has_email", kakao_account.get("has_email").toString()); // true , false
         result.put("has_gender", kakao_account.get("has_gender").toString()); // true , false
       }
-
-
+      if (kakao_account.get("has_birthday").toString().equals("true")) {
+        result.put("birthday", kakao_account.get("birthday").toString());
+      }
 
       br.close();
 
