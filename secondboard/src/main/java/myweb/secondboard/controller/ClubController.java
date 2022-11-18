@@ -2,15 +2,13 @@ package myweb.secondboard.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import myweb.secondboard.domain.Club;
-import myweb.secondboard.domain.ClubMember;
-import myweb.secondboard.domain.Local;
-import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.*;
 import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.service.ClubService;
 import myweb.secondboard.service.LocalService;
 import myweb.secondboard.service.TournamentService;
+import myweb.secondboard.service.VisitorService;
 import myweb.secondboard.web.SessionConst;
 import myweb.secondboard.web.Status;
 import org.springframework.data.domain.Page;
@@ -38,6 +36,7 @@ public class ClubController {
 
   private final ClubService clubService;
   private final LocalService localService;
+  private final VisitorService visitorService;
 
 
   @GetMapping("/club")
@@ -90,6 +89,9 @@ public class ClubController {
       ClubMember clubMemberCheck = clubService.clubMemberCheck(clubId, member.getId());
       model.addAttribute("clubMemberCheck", clubMemberCheck);
     }
+
+    // 방명록 보여주기
+    ClubDetailView(clubId, model, club);
 
     // 정보 수정 모달용
     ClubUpdateForm form = new ClubUpdateForm();
@@ -171,9 +173,21 @@ public class ClubController {
     ClubMember clubMember = clubService.get(id);
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
 
-//    if (clubMember.getClub().getLeader().equals(member.getNickname())) {
-//      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
-//    }
+    if (clubMember.getClub().getMember().getNickname().equals(member.getNickname())) {
+      clubService.deleteClubMember(clubMember.getClub().getId(), clubMember.getMember().getId());
+    }
     return "redirect:/club/detail/" + clubMember.getClub().getId();
   }
+
+  private void ClubDetailView(Long clubId, Model model, Club club){
+    model.addAttribute("club", club);
+    List<Visitor> visitors = visitorService.findVisitors(clubId);
+
+    if(visitors!=null){
+      model.addAttribute("visitors", visitors);
+    }
+
+  }
+
+
 }
