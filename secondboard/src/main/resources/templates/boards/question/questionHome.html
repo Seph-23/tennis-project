@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/boardHome1.css">
     <link rel="stylesheet" href="/css/boardHome2.css">
     <link href="/css/banner.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/hotBoards.css">
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.1.js"
@@ -43,11 +44,10 @@
             <h2> Q&A </h2>
         </div>
         <form class="col-4 m-auto" th:action="@{/question/home}">
-            <div class="mb-4 d-flex">
+            <div class="input-group mb-4 border rounded-pill p-1">
                 <input name="keyword" type="search" placeholder="  질문 제목, 작성자로 검색"
-                       class="form-control inputBox">
-                <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
-                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>
+                       class="form-control bg-none border-0 rounded-circle search">
+                <button type="submit" style="border-style: none; background: none"><i class="mx-3 mt-2 mb-1 bi bi-search"></i>
                 </button>
             </div>
         </form>
@@ -145,33 +145,13 @@
         </br>
         <h3>핫 게시물</h3>
         </br>
-        <ul class="user-list message-list">
-            <li class="user-item message-item">
-                <p class="message-content">
-                    1번 게시글
-                </p>
+        <ol class="user-list message-list">
+            <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
+                <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
+                    th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|"
+                    role="button"></h6>
             </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    2번 게시글
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    3번 게시글
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    4번 게시글
-                </p>
-            </li>
-            <li class="user-item message-item">
-                <p class="message-content">
-                    5번 게시글
-                </p>
-            </li>
-        </ul>
+        </ol>
     </aside>
     <!-- </div> -->
 
