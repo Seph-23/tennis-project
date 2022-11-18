@@ -68,14 +68,13 @@ public class MemberController {
   @GetMapping("/profile/{memberId}")
   public String profileHome(@PathVariable("memberId") Long memberId, Model model) {
 
-    Member member = memberService.findById(memberId);
+      Member member = memberService.findById(memberId);
+      model.addAttribute("member", member);
 
-    if(member.getFile() != null){
-      String src = new String(member.getFile().getSaveImg(), StandardCharsets.UTF_8);
-      model.addAttribute("src", src);
-    }
-
-    model.addAttribute("member", member);
+      if(member.getImgEn()!=null){
+          String src = new String(member.getImgEn(), StandardCharsets.UTF_8);
+          model.addAttribute("src", src);
+      }
 
     // 내정보 수정 모달용
     MemberUpdateForm form = new MemberUpdateForm();
