@@ -56,7 +56,9 @@ public class MemberService {
 
   @Transactional
   public Member kakaoSignUp(Map<String, Object> userInfo, String access_token) {
-    Member member = Member.createKakaoMember(userInfo, access_token);
+    Record record = Record.createRecord();
+    Member member = Member.createKakaoMember(userInfo, access_token, record);
+    recordRepository.save(record);
     memberRepository.save(member);
     return member;
   }

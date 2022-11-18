@@ -1,15 +1,19 @@
 package myweb.secondboard.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.domain.comments.LessonComment;
 import myweb.secondboard.dto.LessonSaveForm;
 import myweb.secondboard.dto.LessonUpdateForm;
+import myweb.secondboard.service.BoardService;
 import myweb.secondboard.service.LessonCommentService;
 import myweb.secondboard.service.LessonLikeService;
 import myweb.secondboard.service.LessonReportService;
@@ -23,7 +27,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
@@ -35,6 +44,7 @@ public class LessonController {
   private final LessonCommentService lessonCommentService;
   private final LessonReportService lessonReportService;
   private final LessonLikeService lessonLikeService;
+  private final BoardService boardService;
 
   @GetMapping("/home")
   public String home(@RequestParam(required = false, value = "keyword") String keyword,
@@ -50,6 +60,15 @@ public class LessonController {
     int nowPage = lessonList.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, lessonList.getTotalPages());
+
+    List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
+    List<Board> hotBoards = new ArrayList<>();
+    for (Long hotBoardId : hotBoardIds) {
+      hotBoards.add(boardService.findOne(hotBoardId));
+      System.out.println("hotBoardId = " + hotBoardId);
+    }
+
+    model.addAttribute("hotBoardList", hotBoards);
 
     model.addAttribute("lessonList", lessonList);
     model.addAttribute("nowPage", nowPage);
@@ -93,6 +112,15 @@ public class LessonController {
       String checkLike = lessonLikeService.checkLike(lesson.getId(), member.getId());
       model.addAttribute("checkLike", checkLike);
     }
+
+    List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
+    List<Board> hotBoards = new ArrayList<>();
+    for (Long hotBoardId : hotBoardIds) {
+      hotBoards.add(boardService.findOne(hotBoardId));
+      System.out.println("hotBoardId = " + hotBoardId);
+    }
+
+    model.addAttribute("hotBoardList", hotBoards);
 
     //비회원
     Long likeCount = lessonLikeService.getLikeCount(lesson.getId());

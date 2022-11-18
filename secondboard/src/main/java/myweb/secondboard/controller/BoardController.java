@@ -1,5 +1,10 @@
 package myweb.secondboard.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +30,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -65,6 +72,14 @@ public class BoardController {
       }
     }
 
+    List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
+    List<Board> hotBoards = new ArrayList<>();
+    for (Long hotBoardId : hotBoardIds) {
+      hotBoards.add(boardService.findOne(hotBoardId));
+      System.out.println("hotBoardId = " + hotBoardId);
+    }
+
+    model.addAttribute("hotBoardList", hotBoards);
     model.addAttribute("boardList", boardList);
     model.addAttribute("nowPage", nowPage);
     model.addAttribute("startPage", startPage);
@@ -112,6 +127,15 @@ public class BoardController {
       board.setAuthor(board.getMember().getNickname());
     }
 
+
+    List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
+    List<Board> hotBoards = new ArrayList<>();
+    for (Long hotBoardId : hotBoardIds) {
+      hotBoards.add(boardService.findOne(hotBoardId));
+      System.out.println("hotBoardId = " + hotBoardId);
+    }
+
+    model.addAttribute("hotBoardList", hotBoards);
 
     //비회원
     System.out.println("member = " + member);
