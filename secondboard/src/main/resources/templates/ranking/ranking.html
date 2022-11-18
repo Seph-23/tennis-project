@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Tennis</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -16,6 +15,7 @@
     <link href="/css/banner.css" rel="stylesheet" />
     <link href="/css/localCategory.css" rel="stylesheet" />
     <link href="/css/dateCarousel.css" rel="stylesheet" />
+
 </head>
 <body class="pt-6">
 <!-- Navigation-->
@@ -67,112 +67,76 @@
     </div>
 </nav>
 
-<!--<div class="board_banner_area">-->
-<!--    <div class="board_banner_text">-->
-<!--        <h1>Ranking</h1>-->
-<!--        <p>Set your Goals and Go Higher!</p>-->
-<!--    </div>-->
-<!--    <img src="/images/trophy.jpeg" alt="Contact US 배너 이미지">-->
-<!--</div>-->
-<div class="col-12 p-5"></div>
+<div class="board_banner_area">
+    <div class="board_banner_text">
+        <h1>Ranking</h1>
+        <p>Set your Goals and Go Higher!</p>
+    </div>
+    <img src="/images/trophy.jpeg" alt="Contact US 배너 이미지">
+</div>
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-3 mb-3 ms-5 text-center">
-        <div class="col">
-            <div class="card mb-4 rounded-3" style="width: 20rem;">
-                <div class="card-header py-3 text-bg-warning">
-                    <img src="/images/medal.png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
-                    <span th:text="${topRank.nickname}" class="text-white fs-2 my-0 fw-normal">
-                        User1
-                    </span>
-                </div>
-                <div class="card-body">
-                    <div th:if="${topRank.imgEn==null}">
-                        <img th:if="${topRank.gender.name()=='MALE'}" src="/images/profile_ma.png" class="rounded-circle px-5 py-3" height="150">
-                        <img th:if="${topRank.gender.name()=='FEMALE'}" src="/images/profile_fe.png" class="rounded-circle px-5 py-3" height="150">
+<div class="album py-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 mb-3 ms-5 text-center">
+            <div class="col">
+                <div class="card shadow-sm rounded-5 bg-light" style="width: 20rem;">
+                    <div class="card-header rounded-4 py-3 text-bg-warning">
+                        <img src="/images/medal.png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
+                        <span th:text="${topRank.nickname}" class="text-white fs-2 my-0 fw-normal">User1</span>
                     </div>
-                    <div th:if="${topRank.imgEn!=null}">
-                        <img th:src="'data:image/jpg;base64,'+${src1}" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <div class="card-body">
+                        <img src="/images/yujin3.jpg" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 200px; height: 200px">
+                        <ul class="list-unstyled mt-3 mb-0 fw-bold">
+                            <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
+                            <li th:text="${topRank.record.points} + '점'">1920점</li>
+                            <li th:text="${topRank.record.rate} + '%'">82%</li>
+                            <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                            <li id="topRank" th:text="${topRank.tier}"></li>
+                        </ul>
                     </div>
-                    <ul class="list-unstyled mt-1 mb-0 fw-bold">
-                        <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
-                        <li th:text="${topRank.record.points} + '점'">1920점</li>
-                        <li th:text="${topRank.record.rate} + '%'">82%</li>
-                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card mb-4 rounded-3" style="width: 20rem;">
-                <div class="card-header py-3 text-bg-danger">
-                    <img src="/images/medal%20(1).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
-                    <span th:text="${secondRank.nickname}" class="text-white fs-2 fmy-0 fw-normal">
-                        User2
-                    </span>
-                </div>
-                <div class="card-body">
-                    <div th:if="${secondRank.imgEn==null}">
-                        <img th:if="${secondRank.gender.name()=='MALE'}" src="/images/profile_ma.png" class="rounded-circle px-5 py-3" height="150">
-                        <img th:if="${secondRank.gender.name()=='FEMALE'}" src="/images/profile_fe.png" class="rounded-circle px-5 py-3" height="150">
+            <div class="col">
+                <div class="card mb-4 rounded-5 bg-light" style="width: 20rem;">
+                    <div class="card-header rounded-4 py-3 text-bg-danger">
+                        <img src="/images/medal%20(1).png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
+                        <span th:text="${secondRank.nickname}" class="text-white fs-2 fmy-0 fw-normal">User2</span>
                     </div>
-                    <div th:if="${secondRank.imgEn!=null}">
-                        <img th:src="'data:image/jpg;base64,'+${src2}" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <div class="card-body">
+                        <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 200px; height: 200px">
+                        <ul class="list-unstyled mt-3 mb-0 fw-bold">
+                            <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 12패</li>
+                            <li th:text="${secondRank.record.points} + '점'">1702점</li>
+                            <li th:text="${secondRank.record.rate} + '%'">72%</li>
+                            <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                            <li id="secondRank" th:text="${secondRank.tier}">IRON</li>
+                        </ul>
                     </div>
-                    <ul class="list-unstyled mt-1 mb-0 fw-bold">
-                        <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 12패</li>
-                        <li th:text="${secondRank.record.points} + '점'">1702점</li>
-                        <li th:text="${secondRank.record.rate} + '%'">72%</li>
-                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card mb-4 rounded-3" style="width: 20rem;">
-                <div class="card-header py-3 text-bg-primary">
-                    <img src="/images/medal%20(2).png" class="position-absolute" style="left: -50px; top: -35px" width="110px">
-                    <span th:text="${thirdRank.nickname}" class="text-white fs-2 my-0 fw-normal">
-                        User3
-                    </span>
-                </div>
-                <div class="card-body">
-                    <div th:if="${thirdRank.imgEn==null}">
-                        <img th:if="${thirdRank.gender.name()=='MALE'}" src="/images/profile_ma.png" class="rounded-circle px-5 py-3" height="150">
-                        <img th:if="${thirdRank.gender.name()=='FEMALE'}" src="/images/profile_fe.png" class="rounded-circle px-5 py-3" height="150">
+            <div class="col">
+                <div class="card mb-4 rounded-5 bg-light" style="width: 20rem;">
+                    <div class="card-header rounded-4 py-3 text-bg-primary">
+                        <img src="/images/medal%20(2).png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
+                        <span th:text="${thirdRank.nickname}" class="text-white fs-2 my-0 fw-normal">User3</span>
                     </div>
-                    <div th:if="${thirdRank.imgEn!=null}">
-                        <img th:src="'data:image/jpg;base64,'+${src3}" class="rounded-circle px-5 py-3" alt="프로필" height="150">
+                    <div class="card-body">
+                        <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 200px; height: 200px">
+                        <ul class="list-unstyled mt-3 mb-0 fw-bold">
+                            <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 12패</li>
+                            <li th:text="${thirdRank.record.points} + '점'">1702점</li>
+                            <li th:text="${thirdRank.record.rate} + '%'">72%</li>
+                            <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                            <li id="thirdRank" th:text="${thirdRank.tier}">IRON</li>
+                        </ul>
                     </div>
-                    <ul class="list-unstyled mt-1 mb-0 fw-bold">
-                        <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 12패</li>
-                        <li th:text="${thirdRank.record.points} + '점'">1702점</li>
-                        <li th:text="${thirdRank.record.rate} + '%'">72%</li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!--페이징-->
-    <nav aria-label="Page navigation example">
-        <ul class="pagination pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" aria-label="Previous">
-                    <span class="h5" aria-hidden="true"><</span>
-                </a>
-            </li>
-            <th:block class="page-item h5">
-                <!--                <a class="page-link" ></a>-->
-                <span class="page-link">11월 1주차 주간랭킹</span>
-            </th:block>
-            <li class="page-item">
-                <a class="page-link" aria-label="Next">
-                    <span class="h5" aria-hidden="true">></span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="col-12 p-3"></div>
-
+<div class="container">
     <!-- ranking table -->
     <table class="table table-hover align-middle text-center">
         <thead class="bg-light">
@@ -209,6 +173,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="/js/localCategory.js"></script>
+<script th:src="@{/js/tierCheck.js}" th:inline="javascript"></script>
 
 </body>
 </html>

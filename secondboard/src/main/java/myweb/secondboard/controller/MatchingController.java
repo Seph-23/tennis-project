@@ -127,6 +127,19 @@ public class MatchingController {
     List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B"))
       .toList();
 
+    List<List<Player>> playerListA = new ArrayList<>();
+    List<List<Player>> playerListB = new ArrayList<>();
+
+    for (int i = 0; i < playersA.size(); i++) {
+      playerListA.add(playerService.findByMemberId(playersA.get(i).getMember().getId()));
+    }
+    for (int i = 0; i < playersB.size(); i++) {
+      playerListB.add(playerService.findByMemberId(playersB.get(i).getMember().getId()));
+    }
+
+    model.addAttribute("playerListA", playerListA);
+    model.addAttribute("playerListB", playerListB);
+
     model.addAttribute("playersA", playersA);
     model.addAttribute("playersB", playersB);
     model.addAttribute("playerAddForm", new PlayerAddForm());
