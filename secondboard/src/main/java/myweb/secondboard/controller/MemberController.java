@@ -24,15 +24,12 @@ package myweb.secondboard.controller;
         import myweb.secondboard.service.MatchingService;
         import myweb.secondboard.service.MemberService;
         import myweb.secondboard.service.PlayerService;
+        import org.json.simple.JSONObject;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
         import org.springframework.validation.BindingResult;
         import org.springframework.validation.annotation.Validated;
-        import org.springframework.web.bind.annotation.GetMapping;
-        import org.springframework.web.bind.annotation.ModelAttribute;
-        import org.springframework.web.bind.annotation.PathVariable;
-        import org.springframework.web.bind.annotation.PostMapping;
-        import org.springframework.web.bind.annotation.RequestMapping;
+        import org.springframework.web.bind.annotation.*;
         import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
@@ -191,34 +188,37 @@ public class MemberController {
   }
 
   //== 회원 탈퇴 ==//
-  @PostMapping("/withdrawl")
-  public String memberWithdrawl(@ModelAttribute("form") MemberWithdrawlForm form,
-                                HttpServletRequest request, Model model, HttpServletResponse response) throws IOException {
+  @ResponseBody
+  @PostMapping("/withdrawl/{memberId}")
+  public JSONObject memberWithdrawl(@PathVariable("memberId")Long memberId,
+                                HttpServletRequest request, Model model) throws IOException {
 
+    JSONObject result = new JSONObject();
+
+    model.addAttribute("memberId", memberId);
 
     List<Player> players = playerService.findAll();
     for (Player player : players) {
-      if (Objects.equals(player.getMember().getId(), form.getId())) { // 경기에 참가한 적이 있는 회원
+      if (Objects.equals(player.getMember().getId(), memberId)) { // 경기에 참가한 적이 있는 회원
 
         String matchingStartTime = player.getMatching().getMatchingStartTime(); // 21:30
         LocalDate date = player.getMatching().getMatchingDate(); // 11-18
         LocalDateTime localDateTime = date.atTime(LocalTime.parse(matchingStartTime)); // 11-18 21:30
 
-        System.out.println("matchingStartTime = " + matchingStartTime);
-        System.out.println("date = " + date);
-        System.out.println("localDateTime = " + localDateTime);
-
         if (localDateTime.isAfter(LocalDateTime.now())) { // 날짜 검증 // 11-18-21:30 is After 11-18 5:45
 
-          System.out.println("회원 탈퇴 불가능 로직");
-          return "redirect:/";
+          result.put("result", "error");
+          return result;
         }
       }
     }
+
+    result.put("result", "success");
+
     String uuid = UUID.randomUUID().toString();
 
     // 회원 정보 변경
-    memberService.memberWithDrawl(form, uuid);
+    memberService.memberWithDrawl(memberId, uuid);
 
     // 세션 죽이기(로그아웃)
     HttpSession session = request.getSession(false);
@@ -226,8 +226,7 @@ public class MemberController {
       session.invalidate();
     }
 
-
-    return "redirect:/";
+    return result;
   }
 
 

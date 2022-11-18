@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.MemberUpdateForm;
-import myweb.secondboard.dto.MemberWithdrawlForm;
 import myweb.secondboard.web.*;
 
 import javax.persistence.*;
@@ -13,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-import java.util.UUID;
 
 @Entity
 @Getter @Setter
@@ -136,12 +134,12 @@ public class Member implements Serializable {
     return member;
   }
 
-  public void memberWithdrawl(MemberWithdrawlForm form, Member member, String uuid) {
-    member.setId(form.getId());
-    member.setLoginId("탈퇴된 회원" + form.getId());
+  public void memberWithdrawl(Member member, String uuid) {
+    member.setId(member.getId());
+    member.setLoginId("탈퇴된 회원" + member.getId());
     member.setPassword(uuid);
-    member.setNickname("탈퇴된 회원" + form.getId());
-    member.setEmail("탈퇴된 회원" + form.getId());
-    member.setPhoneNumber("탈퇴된 회원" + form.getId());
+    member.setNickname("탈퇴된 회원" + member.getId());
+    member.setEmail("탈퇴된 회원" + member.getId());
+    member.setPhoneNumber("탈퇴된 회원" + member.getId());
   }
 }

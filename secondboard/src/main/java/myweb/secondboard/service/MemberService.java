@@ -7,7 +7,6 @@ import myweb.secondboard.domain.Record;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.MemberUpdateForm;
 import myweb.secondboard.dto.UpdatePasswordForm;
-import myweb.secondboard.dto.MemberWithdrawlForm;
 import myweb.secondboard.repository.MemberRepository;
 import myweb.secondboard.repository.RecordRepository;
 import myweb.secondboard.web.PasswordEncrypt;
@@ -124,11 +123,11 @@ public class MemberService {
 
 
   @Transactional
-  public Long memberWithDrawl(MemberWithdrawlForm form, String uuid) {
+  public Long memberWithDrawl(Long memberId, String uuid) {
 
-    Member member = findById(form.getId());
+    Member member = findById(memberId);
 
-    member.memberWithdrawl(form, member, uuid);
+    member.memberWithdrawl(member, uuid);
 
     return member.getId();
   }
