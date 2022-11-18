@@ -43,10 +43,11 @@
             <h2> 자유게시판 </h2>
         </div>
         <form class="col-4 m-auto" th:action="@{/boards/home}">
-            <div class="input-group mb-4 border rounded-pill p-1">
+            <div class="mb-4 d-flex">
                 <input name="keyword" type="search" placeholder="  게시글 제목, 작성자로 검색"
-                       class="form-control bg-none border-0 rounded-circle search">
-                <button type="submit" style="border-style: none; background: none"><i class="mx-3 mt-2 mb-1 bi bi-search"></i>
+                       class="form-control inputBox">
+                <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
+                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>
                 </button>
             </div>
         </form>
