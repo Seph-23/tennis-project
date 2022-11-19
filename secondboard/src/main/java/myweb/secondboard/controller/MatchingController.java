@@ -5,6 +5,7 @@ import java.time.format.TextStyle;
 
 import java.util.*;
 
+import com.sun.xml.bind.v2.TODO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Matching;
@@ -127,6 +128,7 @@ public class MatchingController {
     List<Player> playersB = players.stream().filter(m -> m.getTeam().toString().equals("B"))
       .toList();
 
+    // TODO 2중 리스트 물어보기 왜 이렇게 했나요...?
     List<List<Player>> playerListA = new ArrayList<>();
     List<List<Player>> playerListB = new ArrayList<>();
 
@@ -136,6 +138,7 @@ public class MatchingController {
     for (int i = 0; i < playersB.size(); i++) {
       playerListB.add(playerService.findByMemberId(playersB.get(i).getMember().getId()));
     }
+
 
     model.addAttribute("playerListA", playerListA);
     model.addAttribute("playerListB", playerListB);

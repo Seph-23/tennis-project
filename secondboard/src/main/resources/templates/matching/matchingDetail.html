@@ -111,7 +111,7 @@
     <div class="row d-flex justify-content-center my-3">
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
             <div th:each="a, state : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${a.id}]])">
-                <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
+                <img id="profileDe" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
                 <p class="mt-1 small" th:text="${a.member.nickname}">사용자1</p>
                 <!-- A팀 참가자 Modal -->
                 <div class="modal fade" th:id="teamAInfoModal + ${a.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -125,7 +125,11 @@
                                 <h4>정보</h4>
                                 <div class="row">
                                     <div class="col total">
-                                        <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                                        <img id class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                                        <!-- TODO 자바스크립트를 이용해서 playerListA에서 꺼내서 디코딩처리해서 view에 뿌려준다? -->
+                                        <!-- base64 디코딩 처리 : -->
+
+
                                         <div class="fw-bold fs-6" th:text="${a.member.nickname}">USER1</div>
                                     </div>
                                     <div class="col total text-center mt-2">
@@ -515,5 +519,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
 <script th:src="@{/js/matchingDetailKakaoMap.js}"></script>
 <script th:src="@{/js/tierCheck.js}"></script>
+<script src="/js/ProfileDe.js"></script>
+
 </body>
 </html>

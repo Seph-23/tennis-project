@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
@@ -154,7 +155,14 @@ public class Member implements Serializable {
       Base64.Encoder encoder = Base64.getEncoder();
       ImgEn = encoder.encode(file.getBytes());
     }
-    member.setImgEn(ImgEn);
 
   }
-}
+
+  public String src(byte[] Img) throws IOException {
+
+      String src = new String(Img, StandardCharsets.UTF_8);
+
+      return src;
+    }
+
+  }
