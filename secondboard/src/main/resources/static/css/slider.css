@@ -44,6 +44,8 @@
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+    border: none;
+    border-radius: 20px;
 }
 
 
@@ -57,19 +59,37 @@
 .hidden_btn {
     width: 200px;
     height: 100%;
-    border: solid;
+    /*!*border: solid;*!*/
+    border: none;
     border-radius: 20px;
-    background: ghostwhite;
+    background: none;
+}
 
+.swiper-slide :hover {
+    background: #3db370;
+    border: 1px solid #3db370;
+    font-weight: bold;
+    color: white;
+}
+
+.click-active {
+    background: #3db370;
+    border: 1px solid #3db370;
+    color: white;
+    font-weight: bold;
 }
 
 .swiper-button-next {
+
     /*transform: translateX(-2em);*/
     /*transform: translateY(11em);*/
-    transform: translate(-5em, 7.5em);
+    /*transform: translate(-5em, 7.5em);*/
+    /*transform: translateX(80px);*/
 }
 
 .swiper-button-prev {
-    transform: translate(5em, 7.5em);
+
+    /*transform: translate(5em, 7.5em);*/
+    /*transform: translateX(-80px);*/
 }
 
