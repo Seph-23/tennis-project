@@ -239,14 +239,14 @@
       </div>
     </div>
 
-    <div class="row w-100">
+    <div class="row w-100 m-0">
       <div class="col-6 pe-0 my-auto">
         <h3 class="fw-bold">지금 가입하고 <br> 언제든 할 수 있어요.</h3>
         <p class="small text-black-50">일일 테니스 매치 고고테니스</p>
         <button th:if="${session.loginMember == null}" class="homesubmit" th:onclick="|location.href='/members/new'|">가입하기</button>
         <button th:if="${session.loginMember != null}" class="homesubmit" th:onclick="|location.href='/matching/home'|">매치 보러가기</button>
       </div>
-      <img class="col-6 ps-0" src="/images/main4.jpg" height="500px">
+      <img class="col-6 p-0" src="/images/main4.jpg" height="500px">
     </div>
   </div>
 </main>
