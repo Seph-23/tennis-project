@@ -24,28 +24,30 @@ public class RankingController {
   public String home(Model model) {
 
     List<Member> rankers = recordService.findRankTopThree();
-    Member topRank = rankers.get(0);
-    Member secondRank = rankers.get(1);
-    Member thirdRank = rankers.get(2);
 
-    if(topRank.getImgEn()!=null){
-      String src1 = new String(topRank.getImgEn(), StandardCharsets.UTF_8);
-      model.addAttribute("src1",src1);
-    }
-    if(secondRank.getImgEn()!=null){
-      String src2 = new String(secondRank.getImgEn(), StandardCharsets.UTF_8);
-      model.addAttribute("src2",src2);
-    }
-    if(thirdRank.getImgEn()!=null){
-      String src3 = new String(thirdRank.getImgEn(), StandardCharsets.UTF_8);
-      model.addAttribute("src3",src3);
-    }
+    if (!rankers.isEmpty()) {
+      Member topRank = rankers.get(0);
+      Member secondRank = rankers.get(1);
+      Member thirdRank = rankers.get(2);
 
+      if (topRank.getImgEn() != null) {
+        String src1 = new String(topRank.getImgEn(), StandardCharsets.UTF_8);
+        model.addAttribute("src1", src1);
+      }
+      if (secondRank.getImgEn() != null) {
+        String src2 = new String(secondRank.getImgEn(), StandardCharsets.UTF_8);
+        model.addAttribute("src2", src2);
+      }
+      if (thirdRank.getImgEn() != null) {
+        String src3 = new String(thirdRank.getImgEn(), StandardCharsets.UTF_8);
+        model.addAttribute("src3", src3);
+      }
 
 //    model.addAttribute("rankers", rankers);
-    model.addAttribute("topRank", topRank);
-    model.addAttribute("secondRank", secondRank);
-    model.addAttribute("thirdRank", thirdRank);
+      model.addAttribute("topRank", topRank);
+      model.addAttribute("secondRank", secondRank);
+      model.addAttribute("thirdRank", thirdRank);
+    }
 
     List<Member> list = recordService.findRankList();
     List<Member> newList = new ArrayList<>();
