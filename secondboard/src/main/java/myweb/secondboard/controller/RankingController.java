@@ -24,7 +24,7 @@ public class RankingController {
   public String home(Model model) {
 
     List<Member> rankers = recordService.findRankTopThree();
-    if (!rankers.isEmpty()) {
+    if (rankers.size() > 3) {
       Member topRank = rankers.get(0);
       Member secondRank = rankers.get(1);
       Member thirdRank = rankers.get(2);
