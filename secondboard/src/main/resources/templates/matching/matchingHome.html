@@ -17,7 +17,6 @@
     <!-- CSS -->
     <link href="/css/styles.css" rel="stylesheet"/>
     <link href="/css/banner.css" rel="stylesheet"/>
-    <link href="/css/slider.css" rel="stylesheet"/>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
@@ -44,15 +43,13 @@
 
     <!-- TODO -->
     <link href="/css/dateCarousel.css" rel="stylesheet"/>
+    <link href="/css/slider.css" rel="stylesheet"/>
 </head>
 <body class="pt-6">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" th:href="@{/}">GOGOtennis</a>
-        <!-- <a class="navbar-brand" th:href="@{/}">
-             <img src="img/logo2.png" alt="logo" width="100">
-         </a>-->
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
         </button>
@@ -103,20 +100,22 @@
 </div>
 
 
-<div class="swiper mySwiper container mt-5">
+<div class="swiper mySwiper container mt-5" style="padding-right: 150px; padding-left: 150px">
     <div class="swiper-wrapper">
         <form class="swiper-slide" th:each="day : ${carouselDay}"
-              th:action="@{/matching/matchingListUpdate/{date} (date=${day.key.toString()})}" method="post">
-            <button class="hidden_btn">
-                <h4 th:text="${#strings.substring(day.key, 8, 10)}"></h4>
-                <h5 th:text="${day.value}"></h5>
+              th:action="@{/matching/matchingListUpdate/{date} (date=${day.key.toString()})}"
+              th:id="'click-'+${day.key.toString()}" method="post">
+            <button class="hidden_btn" th:utext="${#strings.substring(day.key, 8, 10)} + '<br>' + ${day.value}" th:value="${day.value}">
             </button>
         </form>
     </div>
     <!--    <div class="swiper-pagination"></div>-->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
 </div>
-<div class="swiper-button-next"></div>
-<div class="swiper-button-prev"></div>
+
+
 
 <div class="col-12 p-4"></div>
 
@@ -378,6 +377,7 @@
 <footer class="footer bg-white small text-center text-black-50">
     <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
 </footer>
+<div hidden id="m-date" th:value="${currDate}"></div>
 <!-- JS-->
 <script th:src="@{/js/matchingDate.js}"></script>
 <script type="text/javascript"
