@@ -38,69 +38,46 @@
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
 <div class="container">
-
-    <h6 class="p-3 mb-2 bg-primary text-white">매치 상세 정보</h6>
-    <div class="matching-header"> <!-- 매치 헤더 -->
-        <div class="d-flex justify-content-start mt-4">
-            <div>
-                <h3 th:text="${matching.title}"></h3>
-                <div>
-                    <i class="fa-solid fa-user"></i>
-                    <a th:text="${matching.author}"></a>
-                    <i class="bi bi-alarm"></i>
-                    <a th:text="${matching.createdDate}"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr class="mt-4">
-    <h4 class="fw-bolder">매치 정보</h4>
+    <img src="/images/matchimg.jpg" width="100%">
+    <div class="mt-2"></div>
+    <h6 class="fw-bolder">매치 정보</h6>
 
     <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="row text-center w-25 fs-5">
-                <div th:if="${matching.matchingType.toString().equals('SINGLE')}">
-                    <i class="fa-solid fa-user"></i>
-                    <a th:text="${matching.matchingType.title}"></a>
-                </div>
-                <div th:if="${matching.matchingType.toString().equals('DOUBLE')}">
-                    <i class="fa-solid fa-user-group"></i>
-                    <a th:text="${matching.matchingType.title}"></a>
-                </div>
-                <div th:if="${matching.courtType.toString().equals('INDOOR')}">
-                    <i class="fa-solid fa-house"></i>
-                    <a th:text="${matching.courtType.title}"></a>
-                </div>
-                <div th:if="${matching.courtType.toString().equals('OUTDOOR')}">
-                    <i class="fa-solid fa-cloud-sun"></i>
-                    <a th:text="${matching.courtType.title}"></a>
-                </div>
+        <div class="row text-center fs-5 py-3">
+            <div class="col-3">
+                <i class="bi bi-calendar fs-3"></i><br>
+                <a th:text="${matching.matchingDate}"></a>
             </div>
-            <div class="row text-center w-25 fs-5">
-                <div>
-                    <i class="bi bi-calendar"></i>
-                    <a th:text="${matching.matchingDate}"></a>
-                </div>
-                <div>
-                    <i class="bi bi-alarm"></i>
-                    <a th:text="${matching.matchingStartTime}"></a>
-                    <a>~</a>
-                    <a th:text="${matching.matchingEndTime}"></a>
-                </div>
+            <div class="col-3">
+                <i class="bi bi-alarm fs-3"></i><br>
+                <a th:text="${matching.matchingStartTime}"></a>
+                <a>~</a>
+                <a th:text="${matching.matchingEndTime}"></a>
             </div>
-            <div class="row text-center w-25 fs-5">
-                <div>
-                    <i class="fa-solid fa-map-location-dot"></i>
-                    <a th:text="${matching.place}"></a>
-                </div>
+            <div class="col-3" th:if="${matching.matchingType.toString().equals('SINGLE')}">
+                <i class="fa-solid fa-user fs-3"></i><br>
+                <a th:text="${matching.matchingType.title}"></a>
             </div>
+            <div class="col-3" th:if="${matching.matchingType.toString().equals('DOUBLE')}">
+                <i class="fa-solid fa-user-group fs-3"></i><br>
+                <a th:text="${matching.matchingType.title}"></a>
+            </div>
+            <div class="col-3" th:if="${matching.courtType.toString().equals('INDOOR')}">
+                <i class="fa-solid fa-house fs-3"></i><br>
+                <a th:text="${matching.courtType.title}"></a>
+            </div>
+            <div class="col-3" th:if="${matching.courtType.toString().equals('OUTDOOR')}">
+                <i class="fa-solid fa-cloud-sun fs-3"></i><br>
+                <a th:text="${matching.courtType.title}"></a>
+            </div>
+
         </div>
     </div>
     <hr class="mt-4">
 
     <!-- 팀 정보 -->
-    <h4 class="fw-bolder mt-4">참가자 정보</h4>
-<!--    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">-->
+    <h6 class="fw-bolder mt-4">참가자 정보</h6>
+    <!--    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">-->
     <div th:if="${matching.matchingCondition.title.equals('매칭실패')}">
         <img src="/images/failed3.png" class="w-100">
     </div>
@@ -274,15 +251,44 @@
         </div>
     </div> <!--팀 정보 끝 -->
     <hr class="mt-4">
-    <h4 class="fw-bolder">매치 소개</h4>
-    <p class="text-center py-5" th:text="${matching.content}">
-        매치 소개 내용이 없습니다.
-    </p>
+
+    <div class="row">
+        <div class="matching-header mb-4 col-6">
+            <h6 class="fw-bolder">매치 소개</h6><!-- 매치 헤더 -->
+            <div class="d-flex justify-content-start mt-4">
+                <div>
+                    <h3 th:text="${matching.title}"></h3>
+                    <div>
+                        <i class="fa-solid fa-user"></i>
+                        <a th:text="${matching.author}"></a>
+                        <i class="bi bi-alarm"></i>
+                        <a th:text="${matching.createdDate}"></a>
+                    </div>
+                    <div th:each="matchInfo : ${matchContentList}">
+                        <span th:text="${matchInfo}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h6 class="fw-bolder mb-4">매치 공지사항</h6>
+            <p>■풋살장 : 입구 쪽이 1구장 , 안 쪽이 2구장
+                <br>
+                ■주차: 태블릿 PC(테니스 매장 화장실 복도 왼쪽 측면) 등록 시 3시간 무료
+                *혹은 한송 골프 클럽에 주차(유마트 뒷편 주차장)
+                <br>
+                ■흡연: 흡연이 금지된 구장으로 적발 시 이후 서비스 이용에 제재가 있을 수 있습니다.
+                건물 앞에서도 절대 흡연 금지
+                <br>
+                ■기타: 망에 기대는 행위 금지/ 매치 진행되고 있는 풋살장 안 입장 금지
+                종료 후 입장 가능</p>
+        </div>
+    </div>
     <hr class="mt-4">
-    <h4 class="fw-bolder">매치 장소</h4>
-    <p class="mb-1" th:text="${matching.place}"><i class="bi bi-geo-alt-fill text-muted me-1 ms-3"></i></p>
+    <h6 class="fw-bolder">매치 장소</h6>
+    <p class="mb-1"><i class="bi bi-geo-alt-fill text-muted me-1 ms-3"></i><span th:text="${matching.place}"></span></p>
     <div class="d-flex justify-content-center">
-        <div id="map" style="width:100%;height:350px;"></div>
+        <div id="map" style="width:100%;height:550px;"></div>
     </div>
     <hr class="mt-4">
     <div class="row">
@@ -445,20 +451,20 @@
                         <div th:errors="${matching.content}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                    <div class="mb-3">
-                        <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.place}"
-                               id="matchingPlace" placeholder="매창 장소를 입력해주세요"
-                               data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
-                               required readonly>
-                        <div th:errors="${matchingForm.place}" class="text-danger"></div>
-                    </div>
-                    <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
-                    <input hidden id="matching_lng_update" th:field="${matchingForm.lng}">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary">등록하기</button>
-                    </div>
+                        <div class="mb-3">
+                            <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="${matching.place}"
+                                   id="matchingPlace" placeholder="매창 장소를 입력해주세요"
+                                   data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
+                                   required readonly>
+                            <div th:errors="${matchingForm.place}" class="text-danger"></div>
+                        </div>
+                        <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
+                        <input hidden id="matching_lng_update" th:field="${matchingForm.lng}">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button type="submit" class="btn btn-primary">등록하기</button>
+                        </div>
                 </form>
             </div>
         </div>

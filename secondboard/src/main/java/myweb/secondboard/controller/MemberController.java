@@ -97,9 +97,8 @@ public class MemberController {
       return "/home";
     }
 
-
     Long memberId = memberService.updateMember(form, file);
-
+    model.addAttribute("introductionLength", form.getIntroduction().length());
     return "redirect:/members/profile/"+memberId;
   }
 
