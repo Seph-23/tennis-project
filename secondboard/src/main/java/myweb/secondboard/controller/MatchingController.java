@@ -314,7 +314,16 @@ public class MatchingController {
 
     List<Matching> matchingList = matchingService.searchMatchingByBuilder(condition);
 
+    for (Matching matching : matchingList) {
+      if (matching.getMember().getNickname().contains("탈퇴된")) {
+        matching.setAuthor(matching.getMember().getNickname());
+        System.out.println("matching.getMember().getNickname() = " + matching.getMember().getNickname());
+      }
+    }
+
     model.addAttribute("matchingList", matchingList);
+
+//    model.addAttribute("matchingList", matchingList);
 
     MatchingSaveForm matchingForm = new MatchingSaveForm();
     model.addAttribute("matching", matchingForm);
