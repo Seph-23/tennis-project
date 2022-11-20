@@ -180,6 +180,13 @@ public class BoardController {
   private void boardDetailView(Long boardId, Model model, Board board) {
     model.addAttribute("board", board);
     List<Comment> comments = commentService.findComments(boardId);
+
+    for (Comment comment : comments) {
+      if (comment.getMember().getNickname().contains("탈퇴된")) {
+        comment.setAuthor(comment.getMember().getNickname());
+      }
+    }
+
     if (comments != null) {
       model.addAttribute("comments", comments);
     }

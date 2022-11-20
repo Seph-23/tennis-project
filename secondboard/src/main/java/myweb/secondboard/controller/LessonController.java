@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Board;
+import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.domain.comments.LessonComment;
@@ -61,6 +62,13 @@ public class LessonController {
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, lessonList.getTotalPages());
 
+    List<Lesson> lessons = lessonList.stream().toList();
+    for (Lesson lesson : lessons) {
+      if (lesson.getMember().getNickname().contains("탈퇴된")) {
+        lesson.setAuthor(lesson.getMember().getNickname());
+      }
+    }
+
     List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
     List<Board> hotBoards = new ArrayList<>();
     for (Long hotBoardId : hotBoardIds) {
@@ -112,6 +120,10 @@ public class LessonController {
       String checkLike = lessonLikeService.checkLike(lesson.getId(), member.getId());
       model.addAttribute("checkLike", checkLike);
     }
+    if (lesson.getMember().getNickname().contains("탈퇴된")) {
+      lesson.setAuthor(lesson.getMember().getNickname());
+    }
+
 
     List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
     List<Board> hotBoards = new ArrayList<>();
@@ -163,6 +175,12 @@ public class LessonController {
   private void noticeDetailView(Long lessonId, Model model, Lesson lesson) {
     model.addAttribute("lesson", lesson);
     List<LessonComment> comments = lessonCommentService.findComments(lessonId);
+
+    for (LessonComment lessonComment : comments) {
+      if (lessonComment.getMember().getNickname().contains("탈퇴된")) {
+        lessonComment.setAuthor(lessonComment.getMember().getNickname());
+      }
+    }
 
     if (comments != null) {
       model.addAttribute("comments", comments);

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.Question;
+import myweb.secondboard.domain.comments.LessonComment;
 import myweb.secondboard.domain.comments.QuestionComment;
 import myweb.secondboard.dto.QuestionSaveForm;
 import myweb.secondboard.dto.QuestionUpdateForm;
@@ -57,6 +58,13 @@ public class QuestionController {
     int nowPage = questionList.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, questionList.getTotalPages());
+
+    List<Question> questions = questionList.stream().toList();
+    for (Question question : questions) {
+      if (question.getMember().getNickname().contains("탈퇴된")) {
+        question.setAuthor(question.getMember().getNickname());
+      }
+    }
 
     List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
     List<Board> hotBoards = new ArrayList<>();
@@ -105,6 +113,11 @@ public class QuestionController {
     Member member = question.getMember(); //해당 Q&A 글을 쓴 작성자
     System.out.println("member.getId() = " + member.getId());
 
+    if (question.getMember().getNickname().contains("탈퇴된")) {
+      question.setAuthor(question.getMember().getNickname());
+    }
+
+
     List<Long> hotBoardIds = boardService.getHotBoards(LocalDate.now());
     List<Board> hotBoards = new ArrayList<>();
     for (Long hotBoardId : hotBoardIds) {
@@ -152,6 +165,12 @@ public class QuestionController {
   private void noticeDetailView(Long questionId, Model model, Question question) {
     model.addAttribute("question", question);
     List<QuestionComment> comments = questionCommentService.findComments(questionId);
+
+    for (QuestionComment questionComment : comments) {
+      if (questionComment.getMember().getNickname().contains("탈퇴된")) {
+        questionComment.setAuthor(questionComment.getMember().getNickname());
+      }
+    }
 
     if (comments != null) {
       model.addAttribute("comments", comments);
