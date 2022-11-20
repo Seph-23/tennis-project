@@ -7,8 +7,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <!-- CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -34,11 +34,22 @@
 </head>
 <body class="pt-6">
 <!-- Navigation-->
-<!-- Navigation-->
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
 <div class="container">
-    <img src="/images/matchimg.jpg" width="100%">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/images/matchimg.jpg" class="d-block w-100" alt="..." style="max-height: 600px;">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/matchImg2.jpg" class="d-block w-100" alt="..." style="max-height: 600px;">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/matchImg3.jpg" class="d-block w-100" alt="..." style="max-height: 600px;">
+            </div>
+        </div>
+    </div>
     <div class="mt-2"></div>
     <h6 class="fw-bolder">매치 정보</h6>
 
@@ -253,23 +264,23 @@
     <hr class="mt-4">
 
     <div class="row">
-    <div class="matching-header mb-4 col-6">
-        <h6 class="fw-bolder">매치 소개</h6><!-- 매치 헤더 -->
-        <div class="d-flex justify-content-start mt-4">
-            <div>
-                <h3 th:text="${matching.title}"></h3>
+        <div class="matching-header mb-4 col-6">
+            <h6 class="fw-bolder">매치 소개</h6><!-- 매치 헤더 -->
+            <div class="d-flex justify-content-start mt-4">
                 <div>
-                    <i class="fa-solid fa-user"></i>
-                    <a th:text="${matching.author}"></a>
-                    <i class="bi bi-alarm"></i>
-                    <a th:text="${matching.createdDate}"></a>
+                    <h3 th:text="${matching.title}"></h3>
+                    <div class="mb-3">
+                        <i class="fa-solid fa-user"></i>
+                        <a th:text="${matching.author}"></a>
+                        <i class="bi bi-alarm"></i>
+                        <a th:text="${matching.createdDate}"></a>
+                    </div>
+                    <div th:each="matchInfo : ${matchContentList}">
+                        <span th:text="${matchInfo}"></span>
+                    </div>
                 </div>
-                <p class="pb-5" th:text="${matching.content}">
-                    매치 소개 내용이 없습니다.
-                </p>
             </div>
         </div>
-    </div>
         <div class="col-6">
             <h6 class="fw-bolder mb-4">매치 공지사항</h6>
             <p>■풋살장 : 입구 쪽이 1구장 , 안 쪽이 2구장
