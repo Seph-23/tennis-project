@@ -11,6 +11,7 @@
   z-index: 99;
   width: 100%;
   text-align: center;
+  font-family: "Nunito", -apple-system, sans-serif;
 }
 
 .board_banner_text h1 {
@@ -18,6 +19,7 @@
   font-size: 4.2vw;
   font-weight: 600;
   text-align: center;
+  font-family: "Nunito", -apple-system, sans-serif;
 }
 
 .board_banner_text p {
@@ -26,6 +28,7 @@
   font-weight: 200;
   text-align: center;
   margin-top: 0.7vw;
+  font-family: "Nunito", -apple-system, sans-serif;
 }
 
 .board_banner_area img {

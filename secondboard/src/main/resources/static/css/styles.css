@@ -11722,3 +11722,11 @@ body {
 .searchIcon {
   transform: translate(-105%, 8%);
 }
+
+*{
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.navbar-brand {
+  font-family: "Nunito", -apple-system, sans-serif;
+}

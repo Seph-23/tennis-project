@@ -53,7 +53,7 @@ public class Club implements Serializable {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "local_id")
   private Local local;
 
