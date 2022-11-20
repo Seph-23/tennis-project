@@ -233,7 +233,8 @@
               <form th:action="@{/club/join}" method="POST">
                 <input type="hidden" th:field="*{club.id}">
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-outline-success border"
+                  <div hidden id="clubStatus" th:value="${club.status.toString()}"></div>
+                  <button type="submit" th:onclick="clubJoin([[${club.id}]])" class="btn btn-outline-success border"
                           style="font-family:'IBM Plex Sans KR', sans-serif; font-weight: bolder">가입하기</button>
                 </div>
               </form>

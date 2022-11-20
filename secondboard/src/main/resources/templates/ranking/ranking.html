@@ -78,7 +78,7 @@
 <div class="album py-5">
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 mb-3 ms-5 text-center">
-            <div class="col">
+            <div class="col" th:if="${not #lists.isEmpty(topRank)}">
                 <div class="card shadow-sm rounded-5 bg-light" style="width: 20rem;">
                     <div class="card-header rounded-4 py-3 text-bg-warning">
                         <img src="/images/medal.png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" th:if="${not #lists.isEmpty(secondRank)}">
                 <div class="card mb-4 rounded-5 bg-light" style="width: 20rem;">
                     <div class="card-header rounded-4 py-3 text-bg-danger">
                         <img src="/images/medal%20(1).png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" th:if="${not #lists.isEmpty(thirdRank)}">
                 <div class="card mb-4 rounded-5 bg-light" style="width: 20rem;">
                     <div class="card-header rounded-4 py-3 text-bg-primary">
                         <img src="/images/medal%20(2).png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
