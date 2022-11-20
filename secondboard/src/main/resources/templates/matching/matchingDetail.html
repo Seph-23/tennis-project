@@ -43,41 +43,41 @@
     <h6 class="fw-bolder">매치 정보</h6>
 
     <div class="container">
-            <div class="row text-center fs-5 py-3">
-                <div class="col-3">
-                    <i class="bi bi-calendar fs-3"></i><br>
-                    <a th:text="${matching.matchingDate}"></a>
-                </div>
-                <div class="col-3">
-                    <i class="bi bi-alarm fs-3"></i><br>
-                    <a th:text="${matching.matchingStartTime}"></a>
-                    <a>~</a>
-                    <a th:text="${matching.matchingEndTime}"></a>
-                </div>
-                <div class="col-3" th:if="${matching.matchingType.toString().equals('SINGLE')}">
-                    <i class="fa-solid fa-user fs-3"></i><br>
-                    <a th:text="${matching.matchingType.title}"></a>
-                </div>
-                <div class="col-3" th:if="${matching.matchingType.toString().equals('DOUBLE')}">
-                    <i class="fa-solid fa-user-group fs-3"></i><br>
-                    <a th:text="${matching.matchingType.title}"></a>
-                </div>
-                <div class="col-3" th:if="${matching.courtType.toString().equals('INDOOR')}">
-                    <i class="fa-solid fa-house fs-3"></i><br>
-                    <a th:text="${matching.courtType.title}"></a>
-                </div>
-                <div class="col-3" th:if="${matching.courtType.toString().equals('OUTDOOR')}">
-                    <i class="fa-solid fa-cloud-sun fs-3"></i><br>
-                    <a th:text="${matching.courtType.title}"></a>
-                </div>
-
+        <div class="row text-center fs-5 py-3">
+            <div class="col-3">
+                <i class="bi bi-calendar fs-3"></i><br>
+                <a th:text="${matching.matchingDate}"></a>
+            </div>
+            <div class="col-3">
+                <i class="bi bi-alarm fs-3"></i><br>
+                <a th:text="${matching.matchingStartTime}"></a>
+                <a>~</a>
+                <a th:text="${matching.matchingEndTime}"></a>
+            </div>
+            <div class="col-3" th:if="${matching.matchingType.toString().equals('SINGLE')}">
+                <i class="fa-solid fa-user fs-3"></i><br>
+                <a th:text="${matching.matchingType.title}"></a>
+            </div>
+            <div class="col-3" th:if="${matching.matchingType.toString().equals('DOUBLE')}">
+                <i class="fa-solid fa-user-group fs-3"></i><br>
+                <a th:text="${matching.matchingType.title}"></a>
+            </div>
+            <div class="col-3" th:if="${matching.courtType.toString().equals('INDOOR')}">
+                <i class="fa-solid fa-house fs-3"></i><br>
+                <a th:text="${matching.courtType.title}"></a>
+            </div>
+            <div class="col-3" th:if="${matching.courtType.toString().equals('OUTDOOR')}">
+                <i class="fa-solid fa-cloud-sun fs-3"></i><br>
+                <a th:text="${matching.courtType.title}"></a>
+            </div>
         </div>
     </div>
     <hr class="mt-4">
 
     <!-- 팀 정보 -->
     <h6 class="fw-bolder mt-4">참가자 정보</h6>
-<!--    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">-->
+    <!--    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">-->
+
     <div th:if="${matching.matchingCondition.title.equals('매칭실패')}">
         <img src="/images/failed3.png" class="w-100">
     </div>
@@ -451,20 +451,20 @@
                         <div th:errors="${matching.content}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                    <div class="mb-3">
-                        <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.place}"
-                               id="matchingPlace" placeholder="매창 장소를 입력해주세요"
-                               data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
-                               required readonly>
-                        <div th:errors="${matchingForm.place}" class="text-danger"></div>
-                    </div>
-                    <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
-                    <input hidden id="matching_lng_update" th:field="${matchingForm.lng}">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary">등록하기</button>
-                    </div>
+                        <div class="mb-3">
+                            <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="${matching.place}"
+                                   id="matchingPlace" placeholder="매창 장소를 입력해주세요"
+                                   data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
+                                   required readonly>
+                            <div th:errors="${matchingForm.place}" class="text-danger"></div>
+                        </div>
+                        <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
+                        <input hidden id="matching_lng_update" th:field="${matchingForm.lng}">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button type="submit" class="btn btn-primary">등록하기</button>
+                        </div>
                 </form>
             </div>
         </div>

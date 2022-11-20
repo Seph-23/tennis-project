@@ -3,11 +3,47 @@ let validationStatus = {
     nickname: ""
 }
 
+let validationLength = {
+    length: ""
+}
+
+$("#selfIntroduction").on("focusout", function () {
+
+    let member = {
+        introduction : $("#selfIntroduction").val()
+    }
+    console.log(member.introduction.length)
+
+    if (member.introduction.length >= 100) {
+        //자기소개 100자 이상일 시 에러
+        $("#introduction-length-check").removeAttr("hidden");
+        validationLength.length = "error"
+        validationLengthCheck();
+    } else {
+        //정상 경우
+        $("#introduction-length-check").attr("hidden", true);
+        validationLength.length = "ok";
+        validationLengthCheck();
+    }
+})
+
+
 $("#nickname").on("focusout", function () {
     let nick = {
-        nickname: $("#nickname").val()
+        nickname: $("#nickname").val(),
+        loginNick: $("#loginNick").text()
     }
-    if (nick.nickname.length < 4 || nick.nickname.length > 10) {
+    console.log(nick.nickname)
+    console.log(nick.loginNick)
+    if (nick.nickname == nick.loginNick) {
+
+
+        $("#nickname_validate").attr("hidden", true);
+        $("#nickname_dup_check").attr("hidden", true);
+        validationStatus.nickname = "ok";
+        validationStatusCheck();
+    }
+    else if (nick.nickname.length < 4 || nick.nickname.length > 10) {
         $("#nickname_validate").removeAttr("hidden");
         $("#nickname_dup_check").attr("hidden", true);
         validationStatus.nickname = "";
@@ -35,6 +71,14 @@ $("#nickname").on("focusout", function () {
         });
     }
 });
+
+function validationLengthCheck() {
+    if (validationLength.length === "ok") {
+        $(".updatePf").removeAttr("disabled");
+    } else {
+        $(".updatePf").attr("disabled", true);
+    }
+}
 
 function validationStatusCheck() {
     if (validationStatus.nickname === "ok") {

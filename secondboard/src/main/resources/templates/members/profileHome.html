@@ -99,12 +99,14 @@
                      alt="대표이미지">
             </div>
             <li class="py-2"></li>
-            <li><h3><span th:text="${member.nickname}"></span></h3></li>
-            <li class="mb-1"><span th:text="${member.birthday}"></span>
+            <li><h3><span  id="loginNick" th:text="${member.nickname}"></span></h3></li>
+            <li class="mb-1"><span th:if="${member.provider.toString().equals('GOGOTENNIS')}"
+                                   th:text="${member.birthday.substring(0,4)} + '년 ' + ${member.birthday.substring(4,6)} + '월 ' + ${member.birthday.substring(6,8)} + '일'"></span>
+                <span th:if="${member.provider.toString().equals('KAKAO')}" th:text="${member.birthday}"></span>
                 <i th:if="${member.gender.name() == 'MALE'}" class="bi bi-gender-male"></i>
                 <i th:if="${member.gender.name() == 'FEMALE'}" class="bi bi-gender-female"></i>
             </li>
-            <li class="mb-1"><span th:text="${member.phoneNumber}"></span></li>
+            <li class="mb-1"><span th:if="${member.provider.toString().equals('GOGOTENNIS')}" th:text="${member.phoneNumber}"></span></li>
             <li><span th:text="${member.email}"></span></li>
         </div>
         <div class="story">
@@ -273,7 +275,7 @@
                     <a hidden id="nickname_validate" style="color: red">닉네임은 4 ~ 10자 이내여야 합니다</a>
                     <div class="form-group input-group mb-4 border">
                         <input id="nickname" type="text" class="form-control bg-none border-0"
-                               th:field="${member.nickname}" placeholder="닉네임을 입력해주세요"/>
+                               th:field="${member.nickname}" placeholder="닉네임을 입력해주세요."/>
                     </div>
                     <div class="mb-3">
                         <label for="profileImg" class="form-label">프로필 이미지</label>
@@ -281,7 +283,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="selfIntroduction" class="form-label">자기 소개</label>
-                        <textarea class="form-control" th:field="${form.introduction}" id="selfIntroduction" rows="6"></textarea>
+                        <a hidden id="introduction-length-check" style="color: red">100자 이내로 작성해주세요.</a>
+                        <textarea class="form-control" th:field="${form.introduction}" id="selfIntroduction" rows="6" placeholder="자기소개를 입력해주세요."></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>

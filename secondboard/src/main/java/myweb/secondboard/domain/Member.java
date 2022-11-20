@@ -1,5 +1,6 @@
 package myweb.secondboard.domain;
 
+import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,7 +41,7 @@ public class Member implements Serializable {
   @Column(length = 10)
   private String birthday;
 
-  @Column(unique = true, length = 11)
+  @Column(length = 15)
   private String phoneNumber;
 
   @Enumerated(EnumType.STRING)
@@ -51,7 +52,7 @@ public class Member implements Serializable {
 
   private String accessToken;
 
-  @Column(length = 100)
+  @Column(length = 400)
   private String introduction;
   
   @Enumerated(EnumType.STRING)
@@ -127,6 +128,7 @@ public class Member implements Serializable {
     member.setRole(Role.MEMBER);
     member.setTier(Tier.IRON);
     member.setRecord(record);
+    member.setPhoneNumber("99679929999499");
 
 
     if (userInfo.get("has_gender").toString().equals("true")) {
