@@ -16,6 +16,7 @@
 </head>
 <body class="pt-6">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
 <div class="board_banner_area">
     <div class="board_banner_text">
         <h1>Ranking</h1>
@@ -29,55 +30,76 @@
         <div class="row row-cols-1 row-cols-md-3 mb-3 ms-5 text-center">
             <div class="col" th:if="${not #lists.isEmpty(topRank)}">
                 <div class="card shadow-sm rounded-5 bg-light" style="width: 20rem;">
-                    <div class="card-header py-3 text-bg-warning" style="border-top-right-radius: 30px; ">
-                        <img src="/images/medal.png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
-                        <span th:text="${topRank.nickname}" class="text-white fs-2 my-0 fw-normal">User1</span>
+                    <div class="card-header py-3" style="background-color: #808080; border-top-right-radius: 30px; border-top-left-radius: 30px">
+                        <img src="/images/goldmedal.png" class="position-absolute" style="left: -7px; top: -1px" width="100px">
+                        <span class="text-white fs-2 my-0 fw-normal">1위</span>
                     </div>
                     <div class="card-body">
-                        <img src="/images/yujin3.jpg" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
-                        <ul class="list-unstyled mt-3 mb-0 fw-bold">
-                            <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
-                            <li th:text="${topRank.record.points} + '점'">1920점</li>
-                            <li th:text="${topRank.record.rate} + '%'">82%</li>
-                            <img class="profile img-fluid" style="width: 50px" alt="티어"/>
-                            <li id="topRank" th:text="${topRank.tier}"></li>
-                        </ul>
+                        <div class="row">
+                            <div class="col total mt-3 ms-3">
+                                <img src="/images/yujin3.jpg" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
+                                <div class="fw-bold fs-6 mt-1" th:text="${topRank.nickname}">User1</div>
+                            </div>
+                            <div class="col total text-center mt-3">
+                                <ul class="list-unstyled mt-3 mb-0 fw-bold">
+                                    <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
+                                    <li th:text="${topRank.record.points} + '점'">1920점</li>
+                                    <li th:text="${topRank.record.rate} + '%'">82%</li>
+                                    <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                                    <li id="topRank" th:text="${topRank.tier}"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col" th:if="${not #lists.isEmpty(secondRank)}">
                 <div class="card mb-4 rounded-5 bg-light" style="width: 20rem;">
-                    <div class="card-header py-3 text-bg-danger" style="border-top-right-radius: 30px; ">
-                        <img src="/images/medal%20(1).png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
-                        <span th:text="${secondRank.nickname}" class="text-white fs-2 fmy-0 fw-normal">User2</span>
+                    <div class="card-header py-3" style="background-color: #808080; border-top-right-radius: 30px; border-top-left-radius: 30px">
+                        <img src="/images/silvermedal.png" class="position-absolute" style="left: -7px; top: -1px" width="100px">
+                        <span class="text-white fs-2 my-0 fw-normal">2위</span>
                     </div>
                     <div class="card-body">
-                        <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
-                        <ul class="list-unstyled mt-3 mb-0 fw-bold">
-                            <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 12패</li>
-                            <li th:text="${secondRank.record.points} + '점'">1702점</li>
-                            <li th:text="${secondRank.record.rate} + '%'">72%</li>
-                            <img class="profile img-fluid" style="width: 50px" alt="티어"/>
-                            <li id="secondRank" th:text="${secondRank.tier}">IRON</li>
-                        </ul>
+                        <div class="row">
+                            <div class="col total mt-3 ms-3">
+                                <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
+                                <div class="fw-bold fs-6 mt-1" th:text="${secondRank.nickname}">User2</div>
+                            </div>
+                            <div class="col total text-center mt-3">
+                                <ul class="list-unstyled mt-3 mb-0 fw-bold">
+                                    <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 3패</li>
+                                    <li th:text="${secondRank.record.points} + '점'">1920점</li>
+                                    <li th:text="${secondRank.record.rate} + '%'">82%</li>
+                                    <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                                    <li id="secondRank" th:text="${topRank.tier}"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col" th:if="${not #lists.isEmpty(thirdRank)}">
                 <div class="card mb-4 rounded-5 bg-light" style="width: 20rem;">
-                    <div class="card-header py-3 text-bg-primary" style="border-top-right-radius: 30px; ">
-                        <img src="/images/medal%20(2).png" class="position-absolute" style="left: -30px; top: -5px" width="100px">
-                        <span th:text="${thirdRank.nickname}" class="text-white fs-2 my-0 fw-normal">User3</span>
+                    <div class="card-header py-3" style="background-color: #808080; border-top-right-radius: 30px; border-top-left-radius: 30px">
+                        <img src="/images/bronzemedal.png" class="position-absolute" style="left: -7px; top: -1px" width="100px">
+                        <span class="text-white fs-2 my-0 fw-normal">3위</span>
                     </div>
                     <div class="card-body">
-                        <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
-                        <ul class="list-unstyled mt-3 mb-0 fw-bold">
-                            <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 12패</li>
-                            <li th:text="${thirdRank.record.points} + '점'">1702점</li>
-                            <li th:text="${thirdRank.record.rate} + '%'">72%</li>
-                            <img class="profile img-fluid" style="width: 50px" alt="티어"/>
-                            <li id="thirdRank" th:text="${thirdRank.tier}">IRON</li>
-                        </ul>
+                        <div class="row">
+                            <div class="col total mt-3 ms-3">
+                                <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
+                                <div class="fw-bold fs-6 mt-1" th:text="${thirdRank.nickname}">User2</div>
+                            </div>
+                            <div class="col total text-center mt-3">
+                                <ul class="list-unstyled mt-3 mb-0 fw-bold">
+                                    <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 3패</li>
+                                    <li th:text="${thirdRank.record.points} + '점'">1920점</li>
+                                    <li th:text="${thirdRank.record.rate} + '%'">82%</li>
+                                    <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                                    <li id="thirdRank" th:text="${topRank.tier}"></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
