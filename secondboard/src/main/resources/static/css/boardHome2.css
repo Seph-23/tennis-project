@@ -118,19 +118,19 @@ label[for="modal-switch"] span {
 
     .primary {
         grid-column: 2 / 3;
-        grid-row: 3 / 4;
+        grid-row: 1 / 4;
         align-content: start;
     }
 
     .secondary-a {
         grid-column: 1 / 2;
-        grid-row: 3 / 4;
+        grid-row: 1 / 4;
         align-content: start;
     }
 
     .secondary-b {
         grid-column: 3 / 4;
-        grid-row: 3 / 4;
+        grid-row: 1 / 4;
         align-content: start;
     }
 
