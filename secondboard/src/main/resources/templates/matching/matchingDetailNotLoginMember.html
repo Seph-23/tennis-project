@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>Tennis</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+  <!-- CSS Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <!-- CSS -->
+  <link href="/css/styles.css" rel="stylesheet"/>
+  <link href="/css/banner.css" rel="stylesheet"/>
+  <link href="/css/menu.css" rel="stylesheet"/>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+          crossorigin="anonymous"></script>
+  <!--TimePicker-->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  <!-- 카카오 지도 -->
+  <link rel="stylesheet" href="/css/kakaoMapList.css">
+  <script src="https://kit.fontawesome.com/6f5b0127d9.js" crossorigin="anonymous"></script>
+</head>
+<body class="pt-6">
+<!-- Navigation-->
+<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
+<div class="container">
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/images/matchimg.jpg" class="d-block w-100" alt="..." style="max-height: 600px;">
+      </div>
+      <div class="carousel-item">
+        <img src="/images/matchImg2.jpg" class="d-block w-100" alt="..." style="max-height: 600px;">
+      </div>
+      <div class="carousel-item">
+        <img src="/images/matchImg3.jpg" class="d-block w-100" alt="..." style="max-height: 600px;">
+      </div>
+    </div>
+  </div>
+  <div class="mt-2"></div>
+  <h6 class="fw-bolder">매치 정보</h6>
+
+  <div class="container">
+    <div class="row text-center fs-5 py-3">
+      <div class="col-3">
+        <i class="bi bi-calendar fs-3"></i><br>
+        <a th:text="${matching.matchingDate}"></a>
+      </div>
+      <div class="col-3">
+        <i class="bi bi-alarm fs-3"></i><br>
+        <a th:text="${matching.matchingStartTime}"></a>
+        <a>~</a>
+        <a th:text="${matching.matchingEndTime}"></a>
+      </div>
+      <div class="col-3" th:if="${matching.matchingType.toString().equals('SINGLE')}">
+        <i class="fa-solid fa-user fs-3"></i><br>
+        <a th:text="${matching.matchingType.title}"></a>
+      </div>
+      <div class="col-3" th:if="${matching.matchingType.toString().equals('DOUBLE')}">
+        <i class="fa-solid fa-user-group fs-3"></i><br>
+        <a th:text="${matching.matchingType.title}"></a>
+      </div>
+      <div class="col-3" th:if="${matching.courtType.toString().equals('INDOOR')}">
+        <i class="fa-solid fa-house fs-3"></i><br>
+        <a th:text="${matching.courtType.title}"></a>
+      </div>
+      <div class="col-3" th:if="${matching.courtType.toString().equals('OUTDOOR')}">
+        <i class="fa-solid fa-cloud-sun fs-3"></i><br>
+        <a th:text="${matching.courtType.title}"></a>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-4">
+
+  <!-- 팀 정보 -->
+  <h6 class="fw-bolder mt-4">참가자 정보</h6>
+  <!--    <div th:if="${(matching.matchingStatus.title.equals('신청마감') or matching.matchingStatus.title.equals('경기후') or matching.matchingStatus.title.equals('일주일후')) and matching.matchingCondition.title.equals('신청가능')}">-->
+
+  <div th:if="${matching.matchingCondition.title.equals('매칭실패')}">
+    <img src="/images/failed3.png" class="w-100">
+  </div>
+  <div th:if="!${matching.matchingCondition.title.equals('매칭실패')}">
+    <img src="/images/match2.png" class="w-100">
+  </div>
+
+  <div class="row d-flex justify-content-center my-3">
+    <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
+      <div th:each="a, state : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${a.id}]])">
+        <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
+        <p class="mt-1 small" th:text="${a.member.nickname}">사용자1</p>
+        <!-- A팀 참가자 Modal -->
+        <div class="modal fade" th:id="teamAInfoModal + ${a.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title fs-2" id="teamAInfoModalLabel">Information</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4>정보</h4>
+                <div class="row">
+                  <div class="col total">
+                    <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                    <div class="fw-bold fs-6" th:text="${a.member.nickname}">USER1</div>
+                  </div>
+                  <div class="col total text-center mt-2">
+                    <div class="fw-bold fs-6 mb-1">자기소개</div>
+                    <textarea readonly style="border: solid 1px #badbcc; border-radius: 10px;" rows="7" th:text="${a.member.introduction}">자기소개</textarea>
+                  </div>
+                </div>
+                <hr>
+                <h4>등급</h4>
+                <div class="text-center">
+                  <img class="profile img-fluid" alt="">
+                  <h3><span th:id="tier + ${a.id}" th:text="${a.member.tier}">IRON</span></h3>
+                </div>
+                <div class="container text-center">
+                  <div class="row">
+                    <div class="col total">
+                      <h4><span>총 전적</span></h4>
+                      <li style="list-style: none" th:text="${a.member.record.win} + '승' + ${a.member.record.lose} + '패'" >13승 2패</li>
+                    </div>
+                    <div class="col total">
+                      <h4><strong>승점</strong></h4>
+                      <li style="list-style: none" th:text="${a.member.record.points} + '점'">13점</li>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <h4>최근 전적 현황</h4>
+                <table class="table table-hover align-middle bg-white mt-2">
+                  <thead class="bg-light">
+                  <tr>
+                    <th class="text-center">승/패</th>
+                    <th class="text-center">매치 이름</th>
+                    <th class="text-center">매치 타입</th>
+                    <th class="text-center">경기 날짜</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="a1 : ${playerListA.get(state.index)}">
+                    <td class="text-center" th:if="${a1.team.toString().equals('A')}" th:text="${a1.matching.gameResult.title}"></td>
+                    <div th:if="${a1.team.toString().equals('B')}">
+                      <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('WIN')}" th:text="패배"></td>
+                      <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('LOSE')}" th:text="승리"></td>
+                      <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('PENALTY')}" th:text="무효"></td>
+                      <td class="text-center" th:if="${a1.matching.gameResult.toString().equals('NORECORD')}" th:text="결과미등록"></td>
+                    </div>
+                    <td class="text-center" th:text="${a1.matching.title}"></td>
+                    <td class="text-center" th:text="${a1.matching.matchingType.title}"></td>
+                    <td class="text-center" th:text="${a1.matching.matchingDate}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- A팀 참가자 Modal 끝 -->
+      </div>
+      <div th:if="${matching.matchingType.title.equals('복식') and playersA.size() < 2}">
+        <img src="/images/profile2.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
+        <p class="mt-1 small">비어있음</p>
+      </div>
+    </div>
+    <div class="col-2 flex-shrink-1"></div>
+    <div class="col-4 text-center d-flex justify-content-center flex-shrink-0" style="border-radius: 40px;">
+      <div th:each="b, state :${playersB}" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${b.id}]])" >
+        <img src="/images/profile.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
+        <p class="mt-1 small" th:text="${b.member.nickname}">사용자3</p>
+        <!-- B팀 참가자 Modal -->
+        <div class="modal fade" th:id="teamBInfoModal + ${b.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title fs-2" id="teamBInfoModalLabel">Information</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 class="text-start">정보</h4>
+                <div class="row">
+                  <div class="col total">
+                    <img class="rounded-circle mt-2 px-1 py-1" width="200" height="200" src="/images/yujin3.jpg">
+                    <div class="fw-bold fs-6" th:text="${b.member.nickname}">USER1</div>
+                  </div>
+                  <div class="col total text-center mt-2">
+                    <div class="fw-bold fs-6">자기소개</div>
+                    <textarea readonly style="border: solid 1px #badbcc; border-radius: 10px;" rows="7" th:text="${b.member.introduction}">자기소개</textarea>
+                  </div>
+                </div>
+                <hr>
+                <h4>등급</h4>
+                <div class="text-center">
+                  <img class="profile img-fluid" alt=""/>
+                  <h3><span th:id="tier + ${b.id}" th:text="${b.member.tier}">IRON</span></h3>
+                </div>
+                <div class="container text-center">
+                  <div class="row">
+                    <div class="col total">
+                      <h4><span>총 전적</span></h4>
+                      <li style="list-style: none" th:text="${b.member.record.win} + '승' + ${b.member.record.lose} + '패'" >13승 2패</li>
+                    </div>
+                    <div class="col total">
+                      <h4><strong>승점</strong></h4>
+                      <li style="list-style: none" th:text="${b.member.record.points} + '점'">13점</li>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <h4>최근 전적 현황</h4>
+                <table class="table table-hover align-middle bg-white mt-2">
+                  <thead class="bg-light">
+                  <tr>
+                    <th class="text-center">승/패</th>
+                    <th class="text-center">매치 이름</th>
+                    <th class="text-center">매치 타입</th>
+                    <th class="text-center">경기 날짜</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="b1 : ${playerListB.get(state.index)}">
+                    <td class="text-center" th:if="${b1.team.toString().equals('A')}" th:text="${b1.matching.gameResult.title}"></td>
+                    <div th:if="${b1.team.toString().equals('B')}">
+                      <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('WIN')}" th:text="패배"></td>
+                      <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('LOSE')}" th:text="승리"></td>
+                      <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('PENALTY')}" th:text="무효"></td>
+                      <td class="text-center" th:if="${b1.matching.gameResult.toString().equals('NORECORD')}" th:text="결과미등록"></td>
+                    </div>
+                    <td class="text-center" th:text="${b1.matching.title}"></td>
+                    <td class="text-center" th:text="${b1.matching.matchingType.title}"></td>
+                    <td class="text-center" th:text="${b1.matching.matchingDate}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- B팀 참가자 Modal 끝 -->
+      </div>
+      <div th:if="${playersB.size() == 0}">
+        <img src="/images/profile2.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
+        <p class="mt-1 small">비어있음</p>
+      </div>
+      <div th:if="${matching.matchingType.title.equals('복식') and playersB.size() < 2}">
+        <img src="/images/profile2.png" alt="" style="width: 200px; min-width: 100px" class="rounded-circle img-fluid"/>
+        <p class="mt-1 small">비어있음</p>
+      </div>
+    </div>
+  </div> <!--팀 정보 끝 -->
+  <hr class="mt-4">
+
+  <div class="row">
+    <div class="matching-header mb-4 col-6">
+      <h6 class="fw-bolder">매치 소개</h6><!-- 매치 헤더 -->
+      <div class="d-flex justify-content-start mt-4">
+        <div>
+          <h3 th:text="${matching.title}"></h3>
+          <div class="mb-3">
+            <i class="fa-solid fa-user"></i>
+            <a th:text="${matching.author}"></a>
+            <i class="bi bi-alarm"></i>
+            <a th:text="${matching.createdDate}"></a>
+          </div>
+          <div th:each="matchInfo : ${matchContentList}">
+            <span th:text="${matchInfo}"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <h6 class="fw-bolder mb-4">매치 공지사항</h6>
+      <p>■풋살장 : 입구 쪽이 1구장 , 안 쪽이 2구장
+        <br>
+        ■주차: 태블릿 PC(테니스 매장 화장실 복도 왼쪽 측면) 등록 시 3시간 무료
+        *혹은 한송 골프 클럽에 주차(유마트 뒷편 주차장)
+        <br>
+        ■흡연: 흡연이 금지된 구장으로 적발 시 이후 서비스 이용에 제재가 있을 수 있습니다.
+        건물 앞에서도 절대 흡연 금지
+        <br>
+        ■기타: 망에 기대는 행위 금지/ 매치 진행되고 있는 풋살장 안 입장 금지
+        종료 후 입장 가능</p>
+    </div>
+  </div>
+  <hr class="mt-4">
+  <h6 class="fw-bolder">매치 장소</h6>
+  <p class="mb-1"><i class="bi bi-geo-alt-fill text-muted me-1 ms-3"></i><span th:text="${matching.place}"></span></p>
+  <div class="d-flex justify-content-center">
+    <div id="map" style="width:100%;height:550px;"></div>
+  </div>
+  <hr class="mt-4">
+  <div class="row">
+
+    <div class="col-4">
+      <a type="button" class="btn btn-primary" th:onclick="|location.href='@{/matching/home}'|">이전</a>
+    </div>
+
+    <div class="col-4 d-flex justify-content-center gap-3">
+      <div th:if="${playerMemberCheck == null and matching.matchingCondition.title == '신청가능'
+             and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">
+      </div>
+      <!--매치에 참가된 인원이면서 매치 마감이 안된 경우-->
+      <form th:action="@{/matching/delete/memberDelete/{id} (id=${matching.id})}" method="post">
+        <!--                <input hidden name="memberId" th:value="${session.loginMember.id}"/>-->
+        <input hidden name="matchingId" th:value="${matching.id}"/>
+        <!--매치에 참가된 인원이면서 매치 마감이 안된 경우-->
+        <!--                <div th:if="${playerMemberCheck != null and matching.matchingCondition.title == '신청가능' and session.loginMember.id != matching.member.id-->
+        <!--                and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">-->
+        <!--                </div>-->
+      </form>
+      <!--            <div th:if="${matching.matchingStatus.equals('AFTER') and session.loginMember == playerMemberCheck}">-->
+      <!--            </div>-->
+    </div>
+
+    <!--        <div class="col-4 d-flex justify-content-end gap-2" th:if="${session.loginMember.id == matching.member.id and matching.matchingStatus.name().equals('BEFORE')}">-->
+    <form th:action="@{/matching/delete/{id} (id=${matching.id})}" method="post">
+
+    </form>
+    <!--        </div>-->
+
+  </div>
+</div>
+<input hidden id="matching_lat" th:value="${matchingForm.lat}">
+<input hidden id="matching_lng" th:value="${matchingForm.lng}">
+
+<!-- Footer-->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- 매치 팀 선택 Modal -->
+<div class="modal fade" id="teamModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title fs-2" id="teamModalLabel">매치 팀 선택</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form th:object="${playerAddForm}" th:action="@{/matching/player/add}" method="post">
+          <!--                    <input hidden name="memberId" th:value="${session.loginMember.id}"/>-->
+          <input hidden name="matchingId" th:value="${matching.id}"/>
+          <input hidden id="teamASize" th:value="${playersA.size()}"/>
+          <input hidden id="teamBSize" th:value="${playersB.size()}"/>
+          <div th:if="${matching.matchingType.title.equals('단식')}" class="mb-3">
+            <div class="form-label">팀</div>
+            <input type="radio" th:field="${playerAddForm.team}" value="B" id="single_btn">B
+          </div>
+          <div th:if="${matching.matchingType.title.equals('복식')}" class="mb-3">
+            <div class="form-label">팀</div>
+            <div th:if="${playersA.size() < 2}">
+              <input type="radio" th:field="${playerAddForm.team}" id="double_btnA" value="A">A
+            </div>
+            <div th:if="${playersB.size() < 2}">
+              <input type="radio" th:field="${playerAddForm.team}" id="double_btnB" value="B">B
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary">등록하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 팀선택 모달 끝 -->
+
+<!-- 매치결과 Modal -->
+<div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title fs-2" id="resultModalLabel">RESULT</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form th:action="@{/matching/result}" th:object="${resultForm}" method="POST">
+          <input hidden th:field="${matching.id}">
+          <div class="mb-3">
+            <div class="form-label">게임 결과</div>
+            <div th:each="gresult : ${results}" class="form-check form-check-inline">
+              <input type="radio" th:field="*{gameResult}" th:value="${gresult.name()}" class="form-check-input">
+              <label th:for="${#ids.prev('gameResult')}" th:text="${gresult.title}" class="form-check-label"></label>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary">등록하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 매치결과 모달 끝 -->
+
+<!-- 매치수정 모달 -->
+<div class="modal fade" id="matchUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title fs-2" id="matchUpdateModalLabel">매치 수정</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form th:action="@{/matching/update/{id} (id=${matchingForm.id})}" th:object="${matchingForm}" method="POST">
+          <input type="hidden" th:field="${matchingForm.id}">
+          <div class="mb-3">
+            <label for="matchingTitle" class="form-label">매치 이름<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" th:field="${matchingForm.title}" id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
+            <div th:errors="${matchingForm.title}" class="text-danger"></div>
+          </div>
+          <div class="mb-3">
+            <label for="matchingDate" class="form-label">매치 날짜<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" th:field="${matchingForm.matchingDate}" id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
+            <div th:errors="${matchingForm.matchingDate}" class="text-danger"></div>
+          </div>
+          <div class="mb-3">
+            <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" th:field="${matchingForm.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required readonly>
+            <div th:errors="${matchingForm.matchingStartTime}" class="text-danger"></div>
+          </div>
+          <div class="mb-3">
+            <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required readonly>
+            <div th:errors="${matchingForm.matchingEndTime}" class="text-danger"></div>
+          </div>
+          <div class="mb-3">
+            <div class="form-label">코트 종류<span class="text-danger">*</span></div>
+            <div th:each="court : ${courtTypes}" class="form-check form-check-inline">
+              <input type="radio" th:field="*{courtType}" th:value="${court.name()}" class="form-check-input">
+              <label th:for="${#ids.prev('courtType')}" th:text="${court.title}" class="form-check-label"></label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="matchingTitle" class="form-label">매치 소개<span
+                class="text-danger">*</span></label>
+            <textarea type="text" class="form-control" name="content" th:text="${matchingForm.content}"
+                      id="matchingContent" placeholder="매치 소개를 입력해주세요"
+                      style="height: 200px; resize: none;" required></textarea>
+            <div th:errors="${matching.content}" class="text-danger"></div>
+          </div>
+          <div class="mb-3">
+            <div class="mb-3">
+              <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" th:field="${matching.place}"
+                     id="matchingPlace" placeholder="매창 장소를 입력해주세요"
+                     data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
+                     required readonly>
+              <div th:errors="${matchingForm.place}" class="text-danger"></div>
+            </div>
+            <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
+            <input hidden id="matching_lng_update" th:field="${matchingForm.lng}">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="submit" class="btn btn-primary">등록하기</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 매치수정 모달 끝 -->
+
+<div class="modal fade" id="matchAddLocationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title fs-2" id="matchAddLocationModalLabel">장소 등록</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
+          <div th:errors="${matching.place}" class="text-danger"></div>
+          <div class="map_wrap">
+            <div id="map_update" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+            <div id="menu_wrap" class="bg_white">
+              <div class="option">
+                <div>
+                  <form onsubmit="searchPlaces(); return false;">
+                    키워드 : <input type="text" value="테니스" id="keyword" size="15">
+                    <button type="submit">검색하기</button>
+                  </form>
+                </div>
+              </div>
+              <hr>
+              <ul id="placesList"></ul>
+              <div id="pagination"></div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center ">
+          <input id="placeName" class="text-center border-0 w-100 mb-3" placeholder="장소를 선택해주세요." readonly>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary"
+                  data-bs-toggle="modal" data-bs-target="#matchUpdateModal">위치 등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- JS-->
+<script th:src="@{/js/matchingDate.js}"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
+<script th:src="@{/js/matchingDetailKakaoMap.js}"></script>
+<script th:src="@{/js/tierCheck.js}"></script>
+</body>
+</html>

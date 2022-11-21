@@ -18,11 +18,6 @@ import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.service.MatchingService;
 import myweb.secondboard.service.PlayerService;
 import myweb.secondboard.web.*;
-import org.json.simple.JSONObject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Controller
@@ -149,6 +143,7 @@ public class MatchingController {
 
     HttpSession session = request.getSession(false);
 
+
     if (session != null) {
       Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
@@ -179,6 +174,9 @@ public class MatchingController {
     List<String> matchContentList = new ArrayList<>(Arrays.asList(split));
     model.addAttribute("matchContentList", matchContentList);
 
+    if (session == null) {
+      return "/matching/matchingDetailNotLoginMember";
+    }
     return "/matching/matchingDetail";
   }
 
