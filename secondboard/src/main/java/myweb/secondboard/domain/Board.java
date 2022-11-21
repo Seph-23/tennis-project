@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import myweb.secondboard.domain.boards.BoardReport;
 import myweb.secondboard.dto.BoardSaveForm;
 import myweb.secondboard.dto.BoardUpdateForm;
 import org.springframework.data.annotation.CreatedDate;
@@ -65,6 +66,9 @@ public class Board {
 
   @OneToMany(mappedBy = "board", cascade = REMOVE)
   private List<Comment> comments = new ArrayList<>();
+
+  @OneToMany(mappedBy = "board", cascade = REMOVE)
+  private List<BoardReport> boardReports = new ArrayList<>();
 
   //생성 메서드
   public static Board createBoard(BoardSaveForm form, Member member) {

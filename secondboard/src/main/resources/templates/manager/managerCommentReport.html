@@ -43,8 +43,7 @@
     <div class="list-group list-group-flush">
       <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/profile}">게시글 신고 목록</a>
       <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/comment/report}">댓글 신고 목록</a>
-      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/tournament}">대회 페이지 관리</a>
-<!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>-->
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/tournament}">대회 페이지 관리</a><!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>-->
 <!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>-->
 <!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>-->
     </div>
@@ -53,27 +52,27 @@
   <div id="page-content-wrapper">
     <!-- Page content-->
     <div class="container-fluid">
-      <h1 class="mt-4">게시글 신고목록</h1>
+      <h1 class="mt-4">댓글 신고목록</h1>
       <table class="table table-hover align-middle bg-white">
         <thead>
         <tr>
-          <th>게시글 번호</th>
+          <th>댓글 번호</th>
           <th>신고 내용</th>
+          <th>댓글 내용</th>
           <th>신고 접수일</th>
           <th>삭제</th>
         </tr>
         </thead>
-        <tr th:each="boardReport:${boardReportList}">
-          <td th:text="${boardReport.board.id}"></td>
-          <td th:text="${boardReport.content}"
-              th:onclick="|location.href='@{/manager/boardDetail/{id} (id=${boardReport.board.id})}'|"
-              role="button"></td>
-          <td th:text="${boardReport.createdDate}"></td>
+        <tr th:each="commentReport:${commentReportList}">
+          <td th:text="${commentReport.comment.id}"></td>
+          <td th:text="${commentReport.content}"></td>
+          <td th:text="${commentReport.comment.getContent()}"></td>
+          <td th:text="${commentReport.createdDate}"></td>
           <td>
             <button class="btn-outline-danger border-0 shadow-sm"
-                    style="background: none"
-                    th:onclick="deleteBoard([[${boardReport.board.id}]])"
-                    id="board_delete_button">삭제</button>
+                    style="background: none" type="button"
+                    th:onclick="deleteComment([[${commentReport.comment.id}]])"
+                    th:id="'comment-delete-'+${commentReport.comment.id}">삭제</button>
           </td>
         </tr>
       </table>
@@ -82,19 +81,19 @@
       <nav aria-label="Page navigation example" th:if="${startPage != null}">
         <ul class="pagination pagination-circle justify-content-center">
           <li class="page-item" th:if="${nowPage!=startPage}">
-            <a class="page-link" aria-label="Previous" th:href="@{/manager/profile(page=${nowPage -2})}">
+            <a class="page-link" aria-label="Previous" th:href="@{/manager/comment/report(page=${nowPage -2})}">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
           <th:block class="page-item" th:each="page:${#numbers.sequence(startPage, endPage)}">
             <div th:if="${endPage != 0}">
-              <a class="page-link" th:if="${page != nowPage}" th:href="@{/manager/profile(page=${page -1})}"
+              <a class="page-link" th:if="${page != nowPage}" th:href="@{/manager/comment/report(page=${page -1})}"
                  th:text="${page}"></a>
               <strong class="page-link" th:if="${page==nowPage}" th:text="${page}"></strong>
             </div>
           </th:block>
           <li class="page-item"  th:if="${nowPage!=endPage && endPage != 0}">
-            <a class="page-link" aria-label="Next" th:href="@{/manager/profile(page=${nowPage})}">
+            <a class="page-link" aria-label="Next" th:href="@{/manager/comment/report(page=${nowPage})}">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

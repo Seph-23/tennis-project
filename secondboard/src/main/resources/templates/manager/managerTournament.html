@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap"
+        rel="stylesheet">
+  <link href="/css/managerStyles.css" rel="stylesheet" />
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet"/>
+  <!-- CSS Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+          integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+          crossorigin="anonymous"></script>
+  <!-- CSS -->
+  <link href="/css/styles.css" rel="stylesheet"/>
+  <link href="/css/menu.css" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
+<br>
+<br>
+<br>
+<!--    <h1>관리자 페이지</h1>-->
+<!--    <ul>-->
+<!--      <li>회원 목록, 삭제</li>-->
+<!--      <li>회원 신고 목록 -> 보류</li>-->
+<!--      <li>대회 생성, 수정, 삭제</li>-->
+<!--      <li style="color: red">커뮤니티 게시글 삭제 권한 완료</li>-->
+<!--      <li>공지사항 등록(관리자만 가능) -> 보류</li>-->
+<!--    </ul>-->
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar-->
+  <div class="border-end bg-white" id="sidebar-wrapper">
+    <div class="sidebar-heading border-bottom bg-light">Admin Page</div>
+    <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/profile}">게시글 신고 목록</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/comment/report}">댓글 신고 목록</a>
+      <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/manager/tournament}">대회 페이지 관리</a>
+      <!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>-->
+      <!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>-->
+      <!--      <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>-->
+    </div>
+  </div>
+  <!-- Page content wrapper-->
+  <div id="page-content-wrapper">
+    <!-- Page content-->
+    <div class="container-fluid">
+      <h1 class="mt-4">토너먼트 페이지 관리</h1>
+      <a type="button" class="btn btn-primary px-3 py-2 me-lg-1"
+         data-bs-toggle="modal" data-bs-target="#tournamentAdd">토너먼트 등록
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- tournament add Modal -->
+<div class="modal fade" id="tournamentAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title fs-2" id="tournamentAddLabel">매치 등록</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:object="${form}" role="form" action="/tournament/new" method="post" ENCTYPE="multipart/form-data"> <!-- signup form -->
+          <div class="form-group input-group mb-4 border">
+            <label for="title" class="form-label">대회명<span class="text-danger">*</span></label>
+            <input id="title" type="text" class="form-control bg-none border-0"
+                   th:field="${form.title}" placeholder="대회명을 입력해주세요" required/>
+          </div>
+          <div class="mb-3">
+            <label for="applicationStartDate" class="form-label">접수 시작 날짜<span class="text-danger">*</span></label>
+            <input type="date" class="form-control"
+                   th:field="${form.applicationStartDate}" id="applicationStartDate" placeholder="접수 시작 날짜를 입력해주세요" required>
+          </div>
+          <div class="mb-3">
+            <label for="applicationEndDate" class="form-label">접수 마감 날짜<span class="text-danger">*</span></label>
+            <input type="date" class="form-control"
+                   th:field="${form.applicationEndDate}" id="applicationEndDate" placeholder="접수 마감 날짜를 입력해주세요" required>
+          </div>
+          <div class="mb-3">
+            <label for="compStartDate" class="form-label">대회 시작 날짜<span class="text-danger">*</span></label>
+            <input type="date" class="form-control"
+                   th:field="${form.compStartDate}" id="compStartDate" placeholder="대회 시작 날짜를 입력해주세요" required>
+          </div>
+          <div class="mb-3">
+            <label for="compEndDate" class="form-label">대회 시작 날짜<span class="text-danger">*</span></label>
+            <input type="date" class="form-control"
+                   th:field="${form.compEndDate}" id="compEndDate" placeholder="대회 종료 날짜를 입력해주세요" required>
+          </div>
+          <div class="mb-3">
+            <label for="tournamentImage" class="form-label">대회 소개 이미지<span class="text-danger">*</span></label>
+            <input type="file" class="form-control" name="file" id="tournamentImage" required>
+          </div>
+          <div class="mb-3">
+            <label for="selfIntroduction" class="form-label">대회 소개<span class="text-danger">*</span></label>
+            <textarea th:field="${form.content}" class="form-control" id="selfIntroduction" rows="6" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="tournamentLocal" class="form-label">지역<span class="text-danger">*</span></label>
+            <select th:field="${form.local}" th:value="${form.local}" id="tournamentLocal" class="form-control">
+              <option th:each="local:${locals}"  th:text="${local.name}" th:value="${local.id}">
+              </option>
+            </select>
+          </div>
+          <div class="form-group input-group mb-4 border">
+            <label for="place" class="form-label">장소<span class="text-danger">*</span></label>
+            <input id="place" type="text" class="form-control bg-none border-0"
+                   th:field="${form.place}" placeholder="대회 장소" required/>
+          </div>
+          <div class="form-group input-group mb-4 border">
+            <label for="tournamentUrl" class="form-label">대회 정보 URL<span class="text-danger">*</span></label>
+            <input id="tournamentUrl" type="text" class="form-control bg-none border-0"
+                   th:field="${form.url}" placeholder="대회 정보 URL" required/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger py-2" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary py-2">등록하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- tournament add Modal -->
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+        crossorigin="anonymous"></script>
+<!-- JS Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+<script src="/js/managerScripts.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--<script th:src="@{/js/managerAjax.js}"></script>-->
+</body>
+</html>

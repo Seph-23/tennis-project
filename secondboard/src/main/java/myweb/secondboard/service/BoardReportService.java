@@ -5,6 +5,8 @@ import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.boards.BoardReport;
 import myweb.secondboard.repository.BoardReportRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +37,9 @@ public class BoardReportService {
   public Long getReportCount(Long boardId) {
 //    return boardReportRepository.findAll().stream().filter(report -> report.getBoard().getId() == boardId).toList().size();
   return boardReportRepository.countByBoardId(boardId);
+  }
+
+  public Page<BoardReport> findAll(Pageable page) {
+    return boardReportRepository.findAll(page);
   }
 }

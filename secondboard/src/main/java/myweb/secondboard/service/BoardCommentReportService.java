@@ -8,6 +8,8 @@ import myweb.secondboard.domain.boards.BoardReport;
 import myweb.secondboard.domain.comments.BoardCommentReport;
 import myweb.secondboard.repository.BoardCommentReportRepository;
 import myweb.secondboard.repository.BoardReportRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +40,10 @@ public class BoardCommentReportService {
 
   public Long getReportCount(Long commentId) {
     return boardCommentReportRepository.countByCommentId(commentId);
+  }
+
+
+  public Page<BoardCommentReport> findAll(Pageable pageable) {
+    return boardCommentReportRepository.findAll(pageable);
   }
 }

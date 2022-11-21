@@ -2,17 +2,21 @@ package myweb.secondboard.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.domain.boards.Notice;
+import myweb.secondboard.domain.comments.BoardCommentReport;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.*;
 
 @Entity
@@ -50,6 +54,10 @@ public class Comment {
 
     @NotNull
     private Integer reportCount;
+
+    @OneToMany(mappedBy = "comment", cascade = REMOVE)
+    private List<BoardCommentReport> boardCommentReportList = new ArrayList<>();
+
 
     //연관관계 편의 메서드
     public void setBoard(Board board) {
