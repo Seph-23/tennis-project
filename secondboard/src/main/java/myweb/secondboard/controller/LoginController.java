@@ -1,13 +1,7 @@
 package myweb.secondboard.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +10,15 @@ import myweb.secondboard.domain.Member;
 import myweb.secondboard.dto.LoginForm;
 import myweb.secondboard.service.LoginService;
 import myweb.secondboard.web.SessionConst;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -54,37 +51,21 @@ public class LoginController {
   }
 
   @PostMapping("/login/modal")
-  public String loginModal(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
-      BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response)
-      throws NoSuchAlgorithmException, IOException, ScriptException {
-    if (bindingResult.hasErrors()) {
-      log.info("errors = {}", bindingResult);
-      response.setContentType("text/html; charset=UTF-8");
-      PrintWriter out = response.getWriter();
-
-      out.println("<script language='javascript'>");
-      out.println("alert('아이디와 비밀번호를 입력해 주세요.')");
-      out.println("</script>");
-
-      out.flush();
-      return "home";
-    }
-    Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
+  @ResponseBody
+  public JSONObject loginModal(@RequestParam("loginId") String loginId,
+    @RequestParam String password, HttpServletRequest request) throws NoSuchAlgorithmException {
+    JSONObject result = new JSONObject();
+    System.out.println("loginId = " + loginId);
+    System.out.println("password = " + password);
+    Member loginMember = loginService.login(loginId, password);
     if (loginMember == null) {
-      bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-      response.setContentType("text/html; charset=UTF-8");
-      PrintWriter out = response.getWriter();
-
-      out.println("<script language='javascript'>");
-      out.println("alert('아이디 또는 비밀번호가 맞지 않습니다.')");
-      out.println("</script>");
-
-      out.flush();
-      return "home";
+      result.put("result", "fail");
+      return result;
     }
     //세션에 로그인 객체 저장.
     request.getSession().setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-    return "redirect:/";
+    result.put("result", "success");
+    return result;
   }
 
   @GetMapping("/logout")

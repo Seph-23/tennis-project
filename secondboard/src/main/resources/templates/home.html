@@ -16,10 +16,8 @@
   <link href="/css/styles.css" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/loginModal.css">
   <link rel="stylesheet" href="/css/mainpage.css">
-
   <!-- icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -111,44 +109,30 @@
           <div class="login">
             <h3 class="hit">테니스가 치고 싶을땐</h3>
             <h3 class="hit2">GOGOTENNIS</h3>
-            <form class="login-form" role="form" action="/login/modal" method="post"
-                  th:object="${loginForm}" onsubmit="return frm_check()">
-
-
-              <div th:if="${#fields.hasGlobalErrors()}">
-                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-              </div>
-
+            <div class="login-form" role="form">
               </br>
-
               <div class="login_id">
                 <label th:for="loginId"></label>
                 <input id="login_id" type="text" class="form-control" th:field="${loginForm.loginId}"
-                       placeholder="아이디를 입력해주세요."/>
+                       placeholder="아이디를 입력해주세요." required/>
                 <div class="field-error" th:errors="${loginForm.loginId}"></div>
               </div>
-
               <div class="login_pw">
                 <label th:for="password"></label>
                 <input id="password" type="password" class="form-control" th:field="${loginForm.password}"
-                       placeholder="비밀번호를 입력해주세요."/>
-                <div class="field-error" th:errors="${loginForm.password}"></div>
+                       placeholder="비밀번호를 입력해주세요." required/>
               </div>
-
               <div class="login_etc">
                 <div class="checkbox">
                   <input type="checkbox" name="checkId" id="saveId"> Id 저장
                   <label for="saveId"></label>
                 </div>
-
                 <div class="forgot_pw">
                   <a href="/members/find/password">비밀번호 찾기</a>
                 </div>
               </div> <!--login_etc end-->
-
               <button type="submit" class="submit" id="submit">로그인</button>
-            </form>
-            <!-- TODO -->
+            </div>
             <button type="submit" class="submit" id="kakao"
                     th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code}'|">
               <i class="bi bi-chat-fill"></i>카카오 로그인
@@ -230,8 +214,8 @@
           팽팽하고 스릴넘치는 매치 경기를 즐겨보세요.</p>
       </div>
     </div>
-    <div class="row w-100 m-0">
-      <img class="col-6 p-0" src="/images/main3.jpg" height="500px">
+    <div class="row w-100">
+      <img class="col-6 pe-0" src="/images/main3.jpg" height="500px">
       <div class="col-6 ps-0 my-auto">
         <h3 class="fw-bold">"일취월장한 실력으로 <br> 대회에 도전해 보세요."</h3>
         <p class="small text-black-50">일일 테니스 매치 고고테니스</p>
@@ -267,5 +251,7 @@
 <script src="/js/mainNavbar.js"></script>
 <script src="/js/dateCarousel.js"></script>
 <script th:src="@{/js/IdSave.js}"></script>
+<script th:src="@{/js/loginModalCheck.js}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
