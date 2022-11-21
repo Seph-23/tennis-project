@@ -48,94 +48,82 @@ public class SecondboardApplication {
     return new JPAQueryFactory(entityManager);
   }
 
-//	@Order(1)
+//	 /**
+//   * 멤버 정보
+//   */
+//  @Order(1)
 //  @Bean
-//	public CommandLineRunner initData(MemberRepository memberRepository,
-//		BoardRepository boardRepository, CommentRepository commentRepository,
-//			LessonRepository lessonRepository, NoticeRepository noticeRepository,
-//			QuestionRepository questionRepository){
+//  public CommandLineRunner initMember(MemberRepository memberRepository,
+//    RecordRepository recordRepository) {
+//    return args -> IntStream.rangeClosed(1, 500).forEach(i -> {
+//      try {
+//        //생성 객체 준비
+//        Member member = new Member();
+//        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+//        Record record = Record.createRecord();
 //
-//		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
-//			try {
-//				Member member = new Member();
-//				PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-//				member.setLoginId("testtest" + i);
-//				member.setPassword(passwordEncrypt.encrypt("testtest" + i + "!"));
-//				member.setNickname("test" + i);
-//				member.setEmail("test" + i + "@gmail.com");
-//				member.setBirthday("19951126");
-//				member.setPhoneNumber("01021219" + String.format("%03d", i));
-//				member.setGender(Gender.MALE);
-//				member.setProvider(Provider.GOGOTENNIS);
-//				member.setRole(Role.MEMBER);
-//				member.setTier(Tier.BRONZE);
-//				member.setRecord(new Record());
-//				member.setFile(new File());
-//				memberRepository.save(member);
+//        member.setLoginId("testtest" + i);
+//        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
+//        member.setNickname("test" + i);
+//        member.setEmail("test" + i + "@test.com");
+//        member.setBirthday("19950307");
+//        member.setPhoneNumber("01021219" + String.format("%03d", i));
+//        member.setProvider(Provider.GOGOTENNIS);
+//        member.setRole(Role.MEMBER);
+//        member.setTier(Tier.IRON);
+//        member.setRecord(record);
 //
-//				Board board = new Board();
-//				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
-//				board.setTitle("자유게시판 " + i);
-//				board.setAuthor(member.getNickname());
-//				board.setContent("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque labore obcaecati repellendus sed? Amet dolores dolorum iusto laboriosam natus optio veniam! A aliquid architecto dicta enim maiores mollitia, neque.");
-//				board.setViews(0);
-//        board.setLikeCount(0L);
-//				board.setCreatedDate(LocalDateTime.now().format(dtf));
-//				board.setModifiedDate(LocalDateTime.now().format(dtf));
-//				board.setMember(member);
+//        if (i % 2 == 1) {
+//          member.setGender(Gender.MALE);
+//        } else {
+//          member.setGender(Gender.FEMALE);
+//        }
 //
-//				Lesson lesson = new Lesson();
-//				lesson.setTitle("레슨 " + i);
-//				lesson.setAuthor(member.getNickname());
-//				lesson.setContent("test lesson");
-//				lesson.setViews(0);
-//				lesson.setCreatedDate(LocalDateTime.now().format(dtf));
-//				lesson.setModifiedDate(LocalDateTime.now().format(dtf));
-//				lesson.setMember(member);
+//        recordRepository.save(record);
+//        memberRepository.save(member);
+//      } catch (Exception e) {
+//        e.printStackTrace();
+//      }
+//    });
+//  }
 //
-//				Notice notice = new Notice();
-//				notice.setTitle("공지사항 " + i);
-//				notice.setAuthor(member.getNickname());
-//				notice.setContent("test notice");
-//				notice.setViews(0);
-//        notice.setLikeCount(0L);
-//				notice.setCreatedDate(LocalDateTime.now().format(dtf));
-//				notice.setModifiedDate(LocalDateTime.now().format(dtf));
-//				notice.setMember(member);
+//  //내일, 복식, 실내 매치 생성
+//  @Order(2)
+//  @Bean
+//  public CommandLineRunner initMatching(MemberService memberService,
+//    MatchingService matchingService) {
+//    return args -> IntStream.rangeClosed(1, 10).forEach(i -> {
+//      try {
+//        Member member = memberService.findById(Long.valueOf(i));
+//        MatchingSaveForm form = new MatchingSaveForm();
+//        form.setTitle("테스트 매치: 복식 실내 - " + i);
+//        form.setContent("복식 실내: 테스트 매치 " + i + "번 입니다.");
+//        form.setMatchingDate(LocalDate.now().plusDays(1));
+//        form.setMatchingStartTime("14:40");
+//        form.setMatchingEndTime("16:40");
+//        form.setMatchingType(MatchingType.DOUBLE);
+//        form.setCourtType(CourtType.INDOOR);
+//        form.setBeforeHour("13:40");
+//        form.setBeforeTwoHour("12:40");
 //
-//				Question question = new Question();
-//				question.setTitle("Q&A " + i);
-//				question.setAuthor(member.getNickname());
-//				question.setContent("test question");
-//				question.setViews(0);
-//				question.setCreatedDate(LocalDateTime.now().format(dtf));
-//				question.setModifiedDate(LocalDateTime.now().format(dtf));
-//				question.setMember(member);
-//				question.setCondition(AnswerCondition.ACCEPT);
+//        if (i % 2 == 1) {
+//          form.setPlace("잠원한강공원 테니스장");
+//          form.setLat("37.52027097095218");
+//          form.setLng("127.01107673077598");
+//        } else {
+//          form.setPlace("목동테니스장");
+//          form.setLat("37.52803255610589");
+//          form.setLng("126.87778133983099");
+//        }
 //
-//				Comment comment = new Comment();
-//				comment.setContent("testtest" + i);
-//				comment.setAuthor(member.getNickname());
-//				comment.setCreatedDate(LocalDateTime.now().format(dtf));
-//				comment.setModifiedDate(LocalDateTime.now().format(dtf));
-//				comment.setMember(member);
-//				comment.setBoard(board);
+//        matchingService.addMatching(form, member);
+//      } catch (Exception e) {
+//        e.printStackTrace();
+//      }
+//    });
+//  }
 //
-//				board.setComments(commentRepository.findComments(board.getId()));
-//
-//				boardRepository.save(board);
-//				lessonRepository.save(lesson);
-//				noticeRepository.save(notice);
-//				questionRepository.save(question);
-//				commentRepository.save(comment);
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		});
-//	}
-//
-//	public static int rand(int min, int max)
+//  public static int rand(int min, int max)
 //	{
 //		if (min > max || (max - min + 1 > Integer.MAX_VALUE)) {
 //			throw new IllegalArgumentException("Invalid range");
@@ -153,7 +141,7 @@ public class SecondboardApplication {
 //		return r;
 //	}
 //
-//	@Order(2)
+//	@Order(3)
 //	@Bean
 //	public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
 //        return args -> {
@@ -168,77 +156,11 @@ public class SecondboardApplication {
 //                local.setName(locals.get(i - 1));
 //                localRepository.save(local);
 //            }
-//            //==Tournament(대회) 테스트 데이터==//
-//            for (int i = 1; i <= 16; i++) {
-//                Tournament tournament = new Tournament();
-//
-//                tournament.setCompStartDate(LocalDate.now());
-//                tournament.setCompEndDate(LocalDate.now());
-//                tournament.setApplicationStartDate(LocalDate.now());
-//                tournament.setApplicationEndDate(LocalDate.now());
-//                String url = "https://mdbootstrap.com/img/new/standard/nature";
-//                Random random = new Random();
-//                int a = random.nextInt(6) + 184;
-//                tournament.setImage(url + "/" + a + ".jpg");
-//                tournament.setPlace("올림픽공원");
-//                tournament.setTitle("대회명" + i);
-//
-//                int val = generate();
-//                tournament.setLocal(localRepository.findById((long) val).get());
-//                tournamentRepository.save(tournament);
-//            }
 //        };
 //    }
 //
-//	}
-//	@Order(3)
-//	@Bean
-//	public CommandLineRunner initMatching(MatchingRepository matchRepository,
-//		MemberRepository memberRepository, PlayerRepository playerRepository) {
-//		return args -> IntStream.rangeClosed(1, 154).forEach(i -> {
-//			Matching matching = new Matching();
-//			Player player = new Player();
-//			Member member = memberRepository.findById(Long.valueOf(i)).get();
-//			if (i % 2 == 0) {
-//				matching.setTitle("매치 test" + i);
-//				matching.setAuthor(member.getNickname());
-//				matching.setMatchingDate(LocalDate.of(2022, 12, 12));
-//				matching.setMatchingStartTime("16:30");
-//				matching.setMatchingEndTime("18:30");
-//				matching.setMatchingType(MatchingType.DOUBLE);
-//				matching.setCourtType(CourtType.INDOOR);
-//				matching.setPlace("한남테니스장");
-//				matching.setMember(member);
-//				matching.setMatchingCondition(MatchingCondition.AVAILABLE);
-//				matching.setLat("37.546108538841295");
-//				matching.setLng("127.00368899119701");
-//
-//			} else if (i % 2 == 1) {
-//				matching.setTitle("매치 test" + i);
-//				matching.setAuthor(member.getNickname());
-//				matching.setMatchingDate(LocalDate.of(2022, 12, 12));
-//				matching.setMatchingStartTime("13:30");
-//				matching.setMatchingEndTime("15:30");
-//				matching.setMatchingType(MatchingType.SINGLE);
-//				matching.setCourtType(CourtType.OUTDOOR);
-//				matching.setPlace("한남테니스장");
-//				matching.setMember(member);
-//				matching.setMatchingCondition(MatchingCondition.AVAILABLE);
-//				matching.setLat("37.546108538841295");
-//				matching.setLng("127.00368899119701");
-//			}
-//			matchRepository.save(matching);
-//
-//			player.setMatching(matching);
-//			player.setMember(member);
-//			player.setTeam(Team.A);
-//			playerRepository.save(player);
-//
-//		});
-//	}
-
-//  == 관리자 데이터 11.16(수) 테스트 완료 ==//
-//  @Order(1)
+////  == 관리자 데이터 11.16(수) 테스트 완료 ==//
+//  @Order(4)
 //  @Bean
 //  public CommandLineRunner initAdminMember(MemberRepository memberRepository) {
 //    return  args -> {

@@ -34,6 +34,7 @@ public class Record implements Serializable {
     record.setWin(0);
     record.setLose(0);
     record.setPenalty(0);
+    record.setRate(0.0);
     record.setPoints(100);
     return record;
   }
