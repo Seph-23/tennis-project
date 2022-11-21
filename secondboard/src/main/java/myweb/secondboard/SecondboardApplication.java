@@ -13,7 +13,10 @@ import myweb.secondboard.domain.Record;
 import myweb.secondboard.domain.boards.Lesson;
 import myweb.secondboard.domain.boards.Notice;
 import myweb.secondboard.domain.boards.Question;
+import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.repository.*;
+import myweb.secondboard.service.MatchingService;
+import myweb.secondboard.service.MemberService;
 import myweb.secondboard.web.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -48,9 +51,9 @@ public class SecondboardApplication {
     return new JPAQueryFactory(entityManager);
   }
 
-//	 /**
-//   * 멤버 정보
-//   */
+	 /**
+   * 멤버 정보
+   */
 //  @Order(1)
 //  @Bean
 //  public CommandLineRunner initMember(MemberRepository memberRepository,
@@ -91,7 +94,7 @@ public class SecondboardApplication {
 //  @Order(2)
 //  @Bean
 //  public CommandLineRunner initMatching(MemberService memberService,
-//    MatchingService matchingService) {
+//                                        MatchingService matchingService) {
 //    return args -> IntStream.rangeClosed(1, 10).forEach(i -> {
 //      try {
 //        Member member = memberService.findById(Long.valueOf(i));

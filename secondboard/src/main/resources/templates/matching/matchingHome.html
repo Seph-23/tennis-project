@@ -67,8 +67,8 @@
         </form>
     </div>
     <!--    <div class="swiper-pagination"></div>-->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev" style="color: #3db370"></div>
+    <div class="swiper-button-next" style="color: #3db370"></div>
 
 </div>
 
@@ -129,35 +129,64 @@
                 <tr th:each="matching:${matchingList}" id="matching_list" class="matching_list"
                     th:title="${matching.matchingType.title}" th:value="${matching.courtType.title}"
                     th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|" role="button">
-                    <td class="py-5"></td>
-<!--                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>-->
-                    <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span
-                        th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
-                    <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span
-                        th:text="${matching.place}"></span></td>
-                    <td class="text-center" th:text="${matching.title}"></td>
-                    <td class="text-center" th:text="${matching.courtType.title}"></td>
-                    <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i
-                        class="bi bi-people-fill text-muted me-1"></i>
-                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
+                    <td></td>
+                    <td class="p-0" style="width: 150px">
+<!--                        <i class="bi bi-clock"></i>-->
+                        <span class="fw-bold" th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span>
                     </td>
-                    <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i
-                        class="bi bi-people-fill text-muted me-1"></i>
-                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
+                    <td>
+                        <p class="mb-0 mt-2">
+                        <i class="bi bi-geo-alt-fill text-muted"></i>
+                        <span class="fw-bold" th:text="${matching.place}"></span>
+                        </p>
+                        <p class="mb-2">
+                            <span class="ms-4 me-2" th:text="${matching.courtType.title}"></span>
+<!--                            <span th:if="${matching.matchingType.title.equals('단식')}">-->
+                            <i class="bi bi-people-fill text-muted"></i>
+                            <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
+                            </span>
+<!--                            <span th:if="${matching.matchingType.title.equals('복식')}">-->
+<!--                            <i class="bi bi-people-fill text-muted"></i>-->
+<!--                            <span class="small" th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
+<!--                            </span>-->
+                        </p>
                     </td>
-                    <td class="text-center" th:text="${matching.author}"></td>
+                    <td>
+                        <p class="mb-0 mt-2" th:text="${matching.title}"></p>
+                        <p class="small" th:text="${matching.author}"></p>
+                    </td>
+                    <!--                    <td class="py-5"></td>-->
+<!--&lt;!&ndash;                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>&ndash;&gt;-->
+<!--                    <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span-->
+<!--                        th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>-->
+<!--                    <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span-->
+<!--                        th:text="${matching.place}"></span></td>-->
+<!--                    <td class="text-center" th:text="${matching.title}"></td>-->
+<!--                    <td class="text-center" th:text="${matching.courtType.title}"></td>-->
+<!--                    <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i-->
+<!--                        class="bi bi-people-fill text-muted me-1"></i>-->
+<!--                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
+<!--                    </td>-->
+<!--                    <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i-->
+<!--                        class="bi bi-people-fill text-muted me-1"></i>-->
+<!--                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
+<!--                    </td>-->
+<!--                    <td class="text-center" th:text="${matching.author}"></td>-->
+                    <td>
+
+                    </td>
                     <td class="text-center">
                       <span th:if="${matching.matchingCondition.title == '신청가능'}"
                             th:text="${matching.matchingCondition.title}"
-                            class="badge text-bg-success rounded-pill d-inline">
+                            class="badge text-bg-success rounded-pill d-inline py-3 px-4">
                       </span>
                         <span th:if="${matching.matchingCondition.title == '신청마감'}"
                               th:text="${matching.matchingCondition.title}"
-                              class="badge text-bg-danger rounded-pill d-inline">
+                              class="badge text-bg-danger rounded-pill d-inline py-3 px-4">
                       </span>
                         <span th:if="${matching.matchingCondition.title == '매칭실패'}"
                               th:text="${matching.matchingCondition.title}"
-                              class="badge rounded-pill d-inline text-bg-warning">
+                              class="badge rounded-pill d-inline text-bg-warning py-3 px-4">
                       </span>
                     </td>
                 </tr>
