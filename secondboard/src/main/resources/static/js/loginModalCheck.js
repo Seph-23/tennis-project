@@ -34,13 +34,7 @@ $("#submit").click(function () {
       data: {'loginId': form.loginId, 'password': form.password},
       success: function (data) {
         if (data.result === "success") {
-          Swal.fire({
-            title: "로그인 성공!!",
-            icon: "success",
-            showCloseButton: true,
-          }).then(function (confirm) {
-            window.location.href="/";
-          });
+          window.location.href="/";
         } else {
           Swal.fire({
             title: "아이디 비밀번호가 잘못되었습니다.",
