@@ -75,23 +75,18 @@
     </div>
   </section>
 
-  <aside class="secondary secondary-a">
-    <h3 class="text-center"> Community </h3>
-    <ul class="info-list text-center mt-3">
-      <li class="info-list-item">
-        <a class="info-list-a" th:onclick="|location.href='@{/boards/home}'|">자유게시판</a>
-      </li>
-      <li class="info-list-item">
-        <a class="info-list-a" th:onclick="|location.href='@{/notice/home}'|">공지사항</a>
-      </li>
-      <li class="info-list-item">
-        <a class="info-list-a" th:onclick="|location.href='@{/lesson/home}'|">레슨 찾아요</a>
-      </li>
-      <li class="info-list-item">
-        <a class="info-list-a" th:onclick="|location.href='@{/question/home}'|">Q&A</a>
-      </li>
-    </ul>
+  <aside class="secondary-a text-center">
+    <div class="bg-white mt-5" id="sidebar-wrapper">
+      <div class="list-group list-group-flush">
+        <h4>커뮤니티</h4>
+        <a class="list-group-item list-group-item-action p-3 border-top" th:href="@{/boards/home}">자유게시판</a>
+        <a class="list-group-item list-group-item-action p-3" style="background-color: #3db370" th:href="@{/notice/home}">공지사항</a>
+        <a class="list-group-item list-group-item-action p-3" th:href="@{/lesson/home}">레슨 찾아요</a>
+        <a class="list-group-item list-group-item-action p-3" th:href="@{/question/home}">Q&A</a>
+      </div>
+    </div>
   </aside>
+
   <aside class="secondary secondary-b">
     <h3 class="text-center">Hot 게시물</h3>
     <ol class="user-list message-list text-center">

@@ -37,10 +37,7 @@
 
 <div class="page">
     <section class="primary">
-        <div class="d-flex justify-content-between">
-            <h2> 레슨 찾아요 </h2>
-        </div>
-        <form class="col-4 m-auto" th:action="@{/lesson/home}">
+        <form class="col-4 m-auto mt-5" th:action="@{/lesson/home}">
             <div class="input-group mb-4 border rounded-pill p-1">
                 <input name="keyword" type="search" placeholder="  레슨 제목, 작성자로 검색"
                        class="form-control bg-none border-0 rounded-circle search">
@@ -110,26 +107,21 @@
         </br>
     </section>
 
-    <aside class="secondary secondary-a">
-        <h3 class="text-center"> Community </h3>
-        <ul class="info-list text-center mt-3">
-            <li class="info-list-item">
-                <a class="info-list-a" th:onclick="|location.href='@{/boards/home}'|">자유게시판</a>
-            </li>
-            <li class="info-list-item">
-                <a class="info-list-a" th:onclick="|location.href='@{/notice/home}'|">공지사항</a>
-            </li>
-            <li class="info-list-item">
-                <a class="info-list-a" th:onclick="|location.href='@{/lesson/home}'|">레슨 찾아요</a>
-            </li>
-            <li class="info-list-item">
-                <a class="info-list-a" th:onclick="|location.href='@{/question/home}'|">Q&A</a>
-            </li>
-        </ul>
+    <aside class="secondary-a text-center">
+        <div class="bg-white mt-5" id="sidebar-wrapper">
+            <div class="list-group list-group-flush">
+                <h4>커뮤니티</h4>
+                <a class="list-group-item list-group-item-action p-3 border-top" th:href="@{/boards/home}">자유게시판</a>
+                <a class="list-group-item list-group-item-action p-3" th:href="@{/notice/home}">공지사항</a>
+                <a class="list-group-item list-group-item-action p-3" style="background-color: #3db370" th:href="@{/lesson/home}">레슨 찾아요</a>
+                <a class="list-group-item list-group-item-action p-3" th:href="@{/question/home}">Q&A</a>
+            </div>
+        </div>
     </aside>
 
+
     <aside class="secondary secondary-b">
-        <h3 class="text-center">Hot 게시물</h3>
+        <h4 class="text-center mt-4">Hot 게시물</h4>
         <ol class="user-list message-list text-center">
             <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
                 <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
