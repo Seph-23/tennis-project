@@ -47,7 +47,7 @@
 </head>
 <body class="pt-6">
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
-<!-- banner -->
+<!-- banner-->
 <div class="board_banner_area">
     <div class="board_banner_text">
         <h1>Matching</h1>
@@ -113,24 +113,24 @@
         <div class="my-4">
             <table class="table table-hover align-middle bg-white">
                 <thead class="bg-light">
-                <tr>
-                    <th></th>
-                    <th class="text-center">매치 날짜</th>
-                    <th class="text-center">매치 시간</th>
-                    <th class="text-center">매치 지역</th>
-                    <th class="text-center">매치 이름</th>
-                    <th class="text-center">코트 타입</th>
-                    <th class="text-center">참여자</th>
-                    <th class="text-center">생성자</th>
-                    <th class="text-center">매치상태</th>
-                </tr>
+<!--                <tr>-->
+<!--                    <th></th>-->
+<!--                    <th class="text-center">매치 날짜</th>-->
+<!--                    <th class="text-center">매치 시간</th>-->
+<!--                    <th class="text-center">매치 지역</th>-->
+<!--                    <th class="text-center">매치 이름</th>-->
+<!--                    <th class="text-center">코트 타입</th>-->
+<!--                    <th class="text-center">참여자</th>-->
+<!--                    <th class="text-center">생성자</th>-->
+<!--                    <th class="text-center">매치상태</th>-->
+<!--                </tr>-->
                 </thead>
                 <tbody>
                 <tr th:each="matching:${matchingList}" id="matching_list" class="matching_list"
                     th:title="${matching.matchingType.title}" th:value="${matching.courtType.title}"
                     th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|" role="button">
                     <td class="py-5"></td>
-                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>
+<!--                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>-->
                     <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span
                         th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>
                     <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span

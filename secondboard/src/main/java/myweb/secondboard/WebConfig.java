@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
           "/oauth/kakao/**", "/notice/home", "/notice/detail/**", "/question/home",
           "/question/detail/**", "/lesson/home", "/lesson/detail/**", "/login/modal/**",
           "/api/members/*", "/matching/matchingListUpdate/*", "/members/find/password/**",
-            "/members/find/**", "/api/sms/check/sendSMS/**", "/members/update/**", "/members/profile/**", "/members/withdrawl/**");
+            "/members/find/**", "/api/sms/check/sendSMS/**", "/members/update/**", "/members/profile/**", "/members/withdrawl/**",
+            "/error", "/matching/detail/**");
   }
 }
