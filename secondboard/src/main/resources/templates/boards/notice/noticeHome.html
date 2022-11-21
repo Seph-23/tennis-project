@@ -110,23 +110,23 @@
     <aside class="secondary-a text-center">
         <div class="bg-white mt-5" id="sidebar-wrapper">
             <div class="list-group list-group-flush">
-                <h4>커뮤니티</h4>
-                <a class="list-group-item list-group-item-action p-3 border-top" th:href="@{/boards/home}">자유게시판</a>
-                <a class="list-group-item list-group-item-action p-3" style="background-color: #3db370" th:href="@{/notice/home}">공지사항</a>
-                <a class="list-group-item list-group-item-action p-3" th:href="@{/lesson/home}">레슨 찾아요</a>
-                <a class="list-group-item list-group-item-action p-3" th:href="@{/question/home}">Q&A</a>
+                <h3 class="mb-5">커뮤니티</h3>
+                <a class="list-group-item list-group-item-action p-3 border-top fw-bold" th:href="@{/boards/home}">자유게시판</a>
+                <a class="list-group-item list-group-item-action p-3 fw-bold" th:href="@{/lesson/home}">레슨 찾아요</a>
+                <a class="list-group-item list-group-item-action p-3 fw-bold text-white" style="background-color: #3db370" th:href="@{/notice/home}">공지사항</a>
+                <a class="list-group-item list-group-item-action p-3 border-bottom fw-bold" th:href="@{/question/home}">Q&A</a>
             </div>
         </div>
     </aside>
 
 
     <aside class="secondary secondary-b">
-        <h4 class="text-center mt-4">Hot 게시물</h4>
-        <ol class="user-list message-list text-center">
+        <h5 class="text-center fw-bold mt-5">GoGo 화제글</h5>
+        <hr>
+        <ol class="p-0 message-list">
             <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
-                <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
-                    th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|"
-                    role="button"></h6>
+                <h6 class="fw-bold me-1" style="color: orangered" th:text="${state.count}"></h6>
+                <h6 th:text= "${hotboard.title}" th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|" role="button"></h6>
             </li>
         </ol>
     </aside>
