@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter @Setter
 public class TournamentSaveForm {
 
+  private Long id;
   private String title;
   private String content;
   private String place;
@@ -30,6 +31,7 @@ public class TournamentSaveForm {
   }
 
   public TournamentSaveForm(Tournament tournament) {
+    this.id = tournament.getId();
     this.title = tournament.getTitle();
     this.content = tournament.getContent();
     this.place = tournament.getPlace();

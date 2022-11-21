@@ -21,6 +21,7 @@
   <!-- CSS -->
   <link href="/css/styles.css" rel="stylesheet"/>
   <link href="/css/menu.css" rel="stylesheet"/>
+  <link href="/css/localCategory.css" rel="stylesheet" />
 </head>
 <body>
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
@@ -57,6 +58,41 @@
       <a type="button" class="btn btn-primary px-3 py-2 me-lg-1"
          data-bs-toggle="modal" data-bs-target="#tournamentAdd">토너먼트 등록
       </a>
+
+      <div class="container">
+        <!-- category -->
+        <div class="container">
+          <div class="category_area">
+            <ul class="category_list" >
+              <li id="list_all" class="category active" title="all">전체</li>
+              <li class="category"  th:each="local:${locals}"
+                  th:id="${local.id}" th:title="${local.id}" th:text="${local.name}"></li>
+            </ul>
+          </div>
+
+          <div class="col-12 p-5"></div>
+
+          <!-- card -->
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-12 mb-4 mb-lg-4 card_area" th:each="tournament:${list}"  th:title="${tournament.local.id}">
+              <div class="card">
+                <img th:src="'data:image/jpg;base64,'+${tournament.image}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title" th:text="${tournament.title}">Card title</h5>
+                  <ul>
+                    <li class="card-text" th:text="'장소: ' + ${tournament.place}">장소</li>
+                    <li class="card-text" th:text="'신청기간: ' + ${tournament.applicationStartDate} + ' ~ ' + ${tournament.applicationEndDate}">신청기간</li>
+                    <li class="card-text" th:text="'대회기간: ' + ${tournament.compStartDate} + ' ~ ' + ${tournament.compEndDate}">대회기간</li>
+                  </ul>
+                  <p class="card-text" th:text="${tournament.content}"></p>
+                  <a th:href="${tournament.url}" class="btn btn-primary">대회 바로가기</a>
+                  <button th:onclick="deleteTournament([[${tournament.id}]])" class="btn btn-warning">대회 삭제</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -141,6 +177,7 @@
         crossorigin="anonymous"></script>
 <script src="/js/managerScripts.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!--<script th:src="@{/js/managerAjax.js}"></script>-->
+<script th:src="@{/js/managerAjax.js}"></script>
+<script src="/js/localCategory.js"></script>
 </body>
 </html>

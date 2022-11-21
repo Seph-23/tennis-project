@@ -44,3 +44,24 @@ const deleteComment = (commentId) => {
     }
   });
 };
+
+const deleteTournament = (tournamentId) => {
+  if (confirm("대회를 삭제하시겠습니까?") === true) {
+    $.ajax({
+      type: "post",
+      url: "/manager/deleteTournament/" + tournamentId,
+      success: function (data) {
+        if (data.result === "success") {
+          window.location.reload();
+        } else {
+          alert("삭제 실패!");
+        }
+      },
+      error: function () {
+        alert("서버 에러!");
+      },
+    });
+  } else {
+    return false;
+  }
+};

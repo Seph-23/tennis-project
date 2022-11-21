@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import myweb.secondboard.domain.Local;
 import myweb.secondboard.domain.Tournament;
 import myweb.secondboard.dto.TournamentSaveForm;
-import myweb.secondboard.repository.LocalRepository;
 import myweb.secondboard.repository.TournamentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +28,13 @@ public class TournamentService {
     Tournament tournament = Tournament.createTournament(form, file);
     tournament.setImgEn(file, tournament);
     tournamentRepository.save(tournament);
+  }
+
+  public Tournament findById(Long tournamentId) {
+    return tournamentRepository.findById(tournamentId).get();
+  }
+
+  public void deleteById(Long tournamentId) {
+    tournamentRepository.deleteById(tournamentId);
   }
 }

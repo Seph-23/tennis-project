@@ -12,6 +12,7 @@ import myweb.secondboard.domain.Board;
 import myweb.secondboard.domain.Comment;
 import myweb.secondboard.domain.Local;
 import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.Tournament;
 import myweb.secondboard.domain.boards.BoardReport;
 import myweb.secondboard.domain.comments.BoardCommentReport;
 import myweb.secondboard.dto.TournamentSaveForm;
@@ -21,7 +22,9 @@ import myweb.secondboard.service.BoardReportService;
 import myweb.secondboard.service.BoardService;
 import myweb.secondboard.service.CommentService;
 import myweb.secondboard.service.LocalService;
+import myweb.secondboard.service.TournamentService;
 import myweb.secondboard.web.SessionConst;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -30,7 +33,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -44,6 +49,7 @@ public class ManagerController {
   private final BoardLikeService boardLikeService;
   private final CommentService commentService;
   private final LocalService localService;
+  private final TournamentService tournamentService;
 
   @GetMapping("/profile")
   public String managerHome(
@@ -122,16 +128,32 @@ public class ManagerController {
     return "/manager/boardDetailAdmin";
   }
 
-  //TODO
   @GetMapping("/tournament")
   public String managerTournament(Model model) {
+    List<Tournament> list = tournamentService.getTournamentList();
     List<Local> locals = localService.getLocalList();
+
+    List<TournamentSaveForm> listDto = new ArrayList<>();
+    for (int i = 0; i < list.size(); i++) {
+      listDto.add(new TournamentSaveForm(list.get(i)));
+    }
+
+    model.addAttribute("list", listDto);
     model.addAttribute("locals", locals);
 
     TournamentSaveForm tournamentSaveForm = new TournamentSaveForm();
     model.addAttribute("form", tournamentSaveForm);
 
     return "/manager/managerTournament";
+  }
+
+  @PostMapping("/deleteTournament/{tournamentId}")
+  @ResponseBody
+  public JSONObject deleteTournament(@PathVariable("tournamentId") Long tournamentId) {
+    JSONObject result = new JSONObject();
+    tournamentService.deleteById(tournamentId);
+    result.put("result", "success");
+    return result;
   }
 
   private void boardDetailView(Long boardId, Model model, Board board) {
