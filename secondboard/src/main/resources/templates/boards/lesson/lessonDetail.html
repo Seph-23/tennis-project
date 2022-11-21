@@ -14,7 +14,9 @@
           crossorigin="anonymous"></script>
 </head>
 <body class="pt-6">
+
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
 <div class="board_banner_area">
   <div class="board_banner_text">
     <h1 style="font-family: Nunito">Community</h1>
@@ -22,58 +24,57 @@
   </div>
   <img src="/images/community_narrow.jpeg" alt="배너 이미지" class="">
 </div>
-<div class="page">
 
-  <!-- <div class="content-container"> -->
+<div class="page">
   <section class="primary">
     <div class="container">
       <div id="reportText">
-      <br>
-      <h3 style="text-align: center" th:text="${lesson.title}"></h3>
-      <div class="d-flex justify-content-between" id="board_title_box">
-        <div>
-          <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
-          <a th:text="${lesson.author}"></a>
-          <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
-          <a th:text="${lesson.createdDate}"></a>
-          <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
-          <a th:text="${lesson.views}"></a>
+        <br>
+        <h3 style="text-align: center" th:text="${lesson.title}"></h3>
+        <div class="d-flex justify-content-between" id="board_title_box">
+          <div>
+            <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
+            <a th:text="${lesson.author}"></a>
+            <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
+            <a th:text="${lesson.createdDate}"></a>
+            <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
+            <a th:text="${lesson.views}"></a>
+          </div>
+          <div th:if="${session.loginMember != null}">
+            <div th:if="${session.loginMember.id == lesson.member.id}" style="display: inline-block">
+              <form class="col" role="form" th:action="@{/lesson/update/{id} (id=${lesson.id})}"
+                    method="get">
+                <button class="btn-outline-success border-0 shadow-sm" style="background: none"
+                        type="submit" id="board_update_button">레슨 수정</button>
+              </form>
+            </div>
+            <div th:if="${session.loginMember.id == lesson.member.id} or ${session.loginMember.role.toString() == 'ADMIN'}"
+                 style="display: inline-block">
+              <button class="btn-outline-danger border-0 shadow-sm" style="background: none"
+                      th:onclick="deleteNotice([[${lesson.id}]])" id="board_delete_button">레슨 삭제</button>
+            </div>
+          </div>
         </div>
-        <div th:if="${session.loginMember != null}">
-          <div th:if="${session.loginMember.id == lesson.member.id}" style="display: inline-block">
-            <form class="col" role="form" th:action="@{/lesson/update/{id} (id=${lesson.id})}"
-                  method="get">
-              <button class="btn-outline-success border-0 shadow-sm" style="background: none"
-                      type="submit" id="board_update_button">레슨 수정</button>
-            </form>
-          </div>
-          <div th:if="${session.loginMember.id == lesson.member.id} or ${session.loginMember.role.toString() == 'ADMIN'}"
-               style="display: inline-block">
-            <button class="btn-outline-danger border-0 shadow-sm" style="background: none"
-                    th:onclick="deleteNotice([[${lesson.id}]])" id="board_delete_button">레슨 삭제</button>
-          </div>
+
+        <br>
+        <br>
+
+        <div class="d-flex justify-content-center pb-5" id="board_content_box">
+          <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
+            <p th:utext="${lesson.content}"></p>
+            <br>
+            <br>
+            <div class="content heart-btn2" th:if="${session.loginMember != null}">
+              <span class="heart" id="lessonId" th:value="${lesson.id}"></span>
+              <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
+              <span hidden id="checkLike" th:value="${checkLike}"></span>
+            </div>
+            <div class="report-btn report-content" th:if="${session.loginMember != null}">
+              <span id="reportBtn" class="report">신고</span>
+            </div>
+            <span id="reportCount" hidden th:value="${reportCount}"></span>
+          </div> <!-- 게시글 본문 끝 -->
         </div>
-      </div>
-
-      <br>
-      <br>
-
-      <div class="d-flex justify-content-center pb-5" id="board_content_box">
-        <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-          <p th:utext="${lesson.content}"></p>
-          <br>
-          <br>
-          <div class="content heart-btn2" th:if="${session.loginMember != null}">
-            <span class="heart" id="lessonId" th:value="${lesson.id}"></span>
-            <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
-            <span hidden id="checkLike" th:value="${checkLike}"></span>
-          </div>
-          <div class="report-btn report-content" th:if="${session.loginMember != null}">
-            <span id="reportBtn" class="report">신고</span>
-          </div>
-          <span id="reportCount" hidden th:value="${reportCount}"></span>
-        </div> <!-- 게시글 본문 끝 -->
-      </div>
       </div>
 
       <!--요기요기요기 -->
@@ -206,10 +207,8 @@
   </section>
 
   <aside class="secondary secondary-a">
-    <br>
-    <h3> Community </h3>
-    <br>
-    <ul class="info-list">
+    <h3 class="text-center"> Community </h3>
+    <ul class="info-list text-center mt-3">
       <li class="info-list-item">
         <a class="info-list-a" th:onclick="|location.href='@{/boards/home}'|">자유게시판</a>
       </li>
@@ -225,10 +224,8 @@
     </ul>
   </aside>
   <aside class="secondary secondary-b">
-    </br>
-    <h3>핫 게시물</h3>
-    </br>
-    <ol class="user-list message-list">
+    <h3 class="text-center">Hot 게시물</h3>
+    <ol class="user-list message-list text-center">
       <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
         <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
             th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|"

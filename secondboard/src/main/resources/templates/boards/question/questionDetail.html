@@ -14,7 +14,9 @@
 
 </head>
 <body class="pt-6" id="pageBody">
+
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+
 <div class="board_banner_area">
   <div class="board_banner_text">
     <h1 style="font-family: Nunito">Community</h1>
@@ -22,9 +24,8 @@
   </div>
   <img src="/images/community_narrow.jpeg" alt="배너 이미지" class="">
 </div>
-<div class="page">
 
-  <!-- <div class="content-container"> -->
+<div class="page">
   <section class="primary">
     <div class="container">
       <br>
@@ -191,10 +192,8 @@
   </section>
 
   <aside class="secondary secondary-a">
-    <br>
-    <h3> Community </h3>
-    <br>
-    <ul class="info-list">
+    <h3 class="text-center"> Community </h3>
+    <ul class="info-list text-center mt-3">
       <li class="info-list-item">
         <a class="info-list-a" th:onclick="|location.href='@{/boards/home}'|">자유게시판</a>
       </li>
@@ -210,9 +209,7 @@
     </ul>
   </aside>
   <aside class="secondary secondary-b">
-    </br>
-    <h3>핫 게시물</h3>
-    </br>
+    <h3 class="text-center">Hot 게시물</h3>
     <ol class="user-list message-list">
       <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
         <h6 th:text="${state.count} + '. ' + ${hotboard.title}"
