@@ -41,7 +41,7 @@
 <div class="page">
     <section class="primary">
         <form class="col-4 m-auto" th:action="@{/boards/home}">
-            <div class="mt-5 d-flex" style="width: 330px">
+            <div class="mt-5 d-flex">
                 <input name="keyword" type="search" placeholder="  게시글 제목, 작성자로 검색"
                        class="form-control inputBox">
                 <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
@@ -61,12 +61,12 @@
                 <tbody>
                 <tr th:each="board:${boardList}"
                     th:onclick="|location.href='@{/boards/detail/{id} (id=${board.id})}'|" role="button">
-                    <td>
+                    <td class="mx-5">
                     <span>
-                    <span th:text="${board.createdDate}" class="text-center" style="font-size: 12px"></span>
+                    <span th:text="${board.createdDate}" style="font-size: 14px"></span>
                     </span>
                         <div>
-                            <span th:text="${board.title}"></span>
+                            <span th:text="${board.title}" style="font-size: 20px"></span>
                         </div>
                         <div>
                             <span><img class="me-1" th:src="${board.member.image}" style="width: 20px; height: 20px"><span th:text="${board.author}" class="text-center"></span>

@@ -14,14 +14,14 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
   //로그인 한 유저 허용 범위
   private static final String[] whitelist = {"/boards/boardAdd", "/boards/new", "/lesson/lessonAdd",
-    "/lesson/new", "/boardDelete/**", "/api/notice/noticeDelete/**", "/notice/update/**", "/notice/like",
+    "/lesson/new", "/api/boards/boardDelete/**", "/api/notice/noticeDelete/**", "/notice/update/**", "/notice/like",
     "/question/questionAdd", "/question/new", "/notice/new", "/club/memberDelete", "/matching/delete/**",
     "/club/delete", "/club/memberBan/*", "/club/join", "/members/update/password/*", "/members/withdrawl/**",
     "/notice/noticeAdd", "/members/update/**", "/members/profile/**", "/club/save", "/club/update",
     "/matching/new", "/manager/**", "/tournament/new", "/matching/player/add", "/matching/save",
     "/matching/delete/memberDelete/**", "/matching/update/**", "/boards/update/**", "/members/profileUpdate",
     "/api/question/**", "/api/comments/**", "/question/update/**", "/club/visitor/**", "/image" ,"/image/**",
-    "/image/member/**"};
+    "/image/member/**", "/boards/like", "/boards/report", "/api/lesson/**", "/lesson/update/**"};
 
   public static final String LOG_ID = "logId";
 
