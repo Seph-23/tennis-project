@@ -42,7 +42,7 @@ public class BoardRepositoryImpl implements BoardRepositoryInterface {
       .groupBy(board.id)
       .orderBy(board.id.count().desc())
       .where(boardLike.createdDate.eq(dateFormatted))
-      .limit(5)
+      .limit(10)
       .fetch();
 
     List<Long> hotBoardList = new ArrayList<>();

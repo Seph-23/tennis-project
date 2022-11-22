@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/header :: header(~{::link},~{:://head/script})}">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    mmunity</title>
+    <title>Community</title>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
     <link
@@ -19,6 +19,10 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
             crossorigin="anonymous"></script>
+    <!--font awsome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/solid.js" integrity="sha384-/BxOvRagtVDn9dJ+JGCtcofNXgQO/CCCVKdMfL115s3gOgQxWaX/tSq5V8dRgsbc" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/fontawesome.js" integrity="sha384-dPBGbj4Uoy1OOpM4+aRGfAOc0W37JkROT+3uynUgTHZCHZNMHfGXsmmvYTffZjYO" crossorigin="anonymous"></script>
 
 </head>
 
@@ -37,7 +41,7 @@
 
 <div class="page">
     <section class="primary">
-        <form class="col-4 m-auto mt-5" th:action="@{/notice/home}">
+        <form class="col-4 m-auto mt-5 pt-5" th:action="@{/notice/home}">
             <div class="input-group mb-4 border rounded-pill p-1">
                 <input name="keyword" type="search" placeholder="  공지사항 제목, 작성자로 검색"
                        class="form-control bg-none border-0 rounded-circle search">
@@ -125,8 +129,9 @@
         <hr>
         <ol class="p-0 message-list">
             <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
-                <h6 class="fw-bold me-1" style="color: orangered" th:text="${state.count}"></h6>
-                <h6 th:text= "${hotboard.title}" th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|" role="button"></h6>
+                <i class="fa-solid fw-bold fs-5 me-2 text-center" style="color: orangered; width: 17px;" th:text="${state.count}"></i>
+                <!--                <h6 class="fw-bold me-1" style="color: orangered" th:text="${state.count}"></h6>-->
+                <h6 class="line_limit" style=" "th:text= "${hotboard.title}" th:onclick="|location.href='@{/boards/detail/{id} (id=${hotboard.id})}'|" role="button"></h6>
             </li>
         </ol>
     </aside>
@@ -137,7 +142,7 @@
     <footer class="footer bg-white small text-center text-black-50">
         <br>
         <br>
-        <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 GOGOtennis 2022</div>
+        <div class="container px-4 px-lg-5">Copyright &copy; 우아한1팀 Website 2022</div>
     </footer>
     <br>
     <br>
