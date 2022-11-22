@@ -1,3 +1,18 @@
+function checkClub() {
+    Swal.fire({
+        title: "탈퇴하시겠습니까?",
+        icon: "success",
+        inputType: "submit",
+        showDenyButton: true,
+    }).then((confirm) => {
+        if (confirm.isConfirmed) {
+            $("#clubMemberDelete").submit()
+        } else if (confirm.isDenied) {
+            Swal.fire('탈퇴를 취소하였습니다.', '', 'info')
+        }
+})
+}
+
 $("#visitor-submit").click(function () {
     let newVisitor = {
         content: $("#content").val(),
