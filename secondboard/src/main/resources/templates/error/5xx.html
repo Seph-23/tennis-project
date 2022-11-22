@@ -52,8 +52,10 @@
 
 <body>
 
-<h1 class="text-center navbar-brand">GOGOtennis</h1>
-<div class="text-center guidance">Server Error!</div>
+<h1 class="text-center navbar-brand" th:onclick="|location.href='@{/}'|">GOGOtennis</h1>
+<div class="text-center guidance">
+  <span th:text="|${status} Server Error!|"></span>
+</div>
 
 <div class="video-margin"></div>
 
