@@ -5,14 +5,65 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>GOGOtennis</title>
+  <!--favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+
+
   <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/error.css">
+  <style>
+    .text-center {
+      text-align: center !important;
+    }
+    .video-center {
+      display: block;
+      margin: auto;
+    }
+    .home-submit {
+      width: 13%;
+      height: 50px;
+      border: 0;
+      outline: none;
+      border-radius: 40px;
+      background: #74DF00;
+      color: white;
+      font-size: 1.2em;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .video-margin {
+      margin: 3rem !important;
+    }
+    .guidance {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .text-margin {
+      margin: 2rem !important;
+    }
+    .text-bold {
+      font-weight: 800;
+    }
+  </style>
 </head>
 
 <body>
-<h2 class="text-center navbar-brand">GOGOtennis</h2>
+
+<h1 class="text-center navbar-brand">GOGOtennis</h1>
+<div class="text-center guidance">Error occurred!</div>
+
+<div class="video-margin"></div>
+
+<video class="video-center" src="https://thumbs.gfycat.com/CapitalSingleFlyingsquirrel-mobile.mp4"
+       width="40%" height="40%" autoplay loop muted controls></video>
+
+<div class="text-margin"></div>
+
+<h3 class="text-center text-bold">서버 에러가 발생해 복구중에 있습니다</h3>
+<h4 class="text-center">Q&A 게시판을 이용하면 빠른 문의가 가능합니다</h4>
+<button class="home-submit video-center" th:onclick="|location.href='/'|">홈으로 가기</button>
 </body>
 </html>
