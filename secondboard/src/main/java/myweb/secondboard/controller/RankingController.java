@@ -35,10 +35,13 @@ public class RankingController {
 
     List<Member> list = recordService.findRankList();
     List<Member> newList = new ArrayList<>();
-    for (int i = 3; i < 100; i++) {
-      newList.add(list.get(i));
+    if (list.size() != 0) {
+      for (int i = 3; i < 100; i++) {
+        newList.add(list.get(i));
+      }
+      model.addAttribute("rank", newList);
+
     }
-    model.addAttribute("rank", newList);
 
     return "ranking/ranking";
   }
