@@ -2,8 +2,10 @@ package myweb.secondboard.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import myweb.secondboard.domain.MemberUploadFile;
 import myweb.secondboard.domain.boards.BoardUploadFile;
 import myweb.secondboard.service.ImageService;
+import myweb.secondboard.service.MemberImageService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageController {
 
   private final ImageService imageService;
+  private final MemberImageService memberImageService;
   private final ResourceLoader resourceLoader;
 
   @PostMapping("/image")
@@ -27,19 +30,32 @@ public class ImageController {
     try {
       BoardUploadFile uploadFile = imageService.store(file);
       return ResponseEntity.ok().body("/image/" + uploadFile.getId());
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
   }
 
   @GetMapping("/image/{fileId}")
-  public ResponseEntity<?> serveFile(@PathVariable Long fileId){
+  public ResponseEntity<?> serveFile(@PathVariable Long fileId) {
     try {
       BoardUploadFile uploadFile = imageService.load(fileId);
       Resource resource = resourceLoader.getResource("file:" + uploadFile.getFilePath());
       return ResponseEntity.ok().body(resource);
-    } catch(Exception e) {
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.badRequest().build();
+    }
+
+  }
+
+  @GetMapping("/image/member/{fileId}")
+  public ResponseEntity<?> serveFileMember(@PathVariable Long fileId) {
+    try {
+      MemberUploadFile uploadFile = memberImageService.load(fileId);
+      Resource resource = resourceLoader.getResource("file:" + uploadFile.getFilePath());
+      return ResponseEntity.ok().body(resource);
+    } catch (Exception e) {
       e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }

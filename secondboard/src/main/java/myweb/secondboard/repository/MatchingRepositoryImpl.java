@@ -1,24 +1,21 @@
 package myweb.secondboard.repository;
 
-import static myweb.secondboard.domain.QMatching.*;
-import static org.springframework.util.StringUtils.*;
+import static myweb.secondboard.domain.QMatching.matching;
+import static org.springframework.util.StringUtils.hasText;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Matching;
-import myweb.secondboard.domain.QMatching;
 import myweb.secondboard.dto.MatchingSearchCondition;
 import myweb.secondboard.web.CourtType;
 import myweb.secondboard.web.MatchingType;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
-import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -95,6 +92,7 @@ public class MatchingRepositoryImpl implements MatchingRepositoryInterface{
     return queryFactory
         .selectFrom(matching)
         .where(builder)
+        .orderBy(matching.matchingStartTime.asc())
         .fetch();
   }
 

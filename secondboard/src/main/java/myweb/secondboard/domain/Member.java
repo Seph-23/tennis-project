@@ -1,21 +1,28 @@
 package myweb.secondboard.domain;
 
-import java.util.UUID;
+import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import myweb.secondboard.dto.MemberSaveForm;
 import myweb.secondboard.dto.MemberUpdateForm;
-import myweb.secondboard.web.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Map;
+import myweb.secondboard.web.Gender;
+import myweb.secondboard.web.PasswordEncrypt;
+import myweb.secondboard.web.Provider;
+import myweb.secondboard.web.Role;
+import myweb.secondboard.web.Tier;
 
 @Entity
 @Getter @Setter
@@ -58,10 +65,6 @@ public class Member implements Serializable {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  // base64 인코딩하여 파일 저장
-  @Lob
-  private byte[] imgEn;
-
   @NotNull
   @Column(length = 12)
   @Enumerated(EnumType.STRING)
@@ -70,6 +73,8 @@ public class Member implements Serializable {
   @OneToOne
   @JoinColumn(name = "record_id")
   private Record record;
+
+  private String image;
 
 
   public static Member createMember(MemberSaveForm form, Record record) throws NoSuchAlgorithmException {
@@ -149,14 +154,14 @@ public class Member implements Serializable {
     member.setPhoneNumber("탈퇴된 회원" + member.getId());
   }
 
-  public void setImgEn(MultipartFile file, Member member) throws IOException {
-    byte[] ImgEn = new byte[0];
-
-    if (file != null) {
-      Base64.Encoder encoder = Base64.getEncoder();
-      ImgEn = encoder.encode(file.getBytes());
-    }
-    member.setImgEn(ImgEn);
-
-  }
+//  public void setImgEn(MultipartFile file, Member member) throws IOException {
+//    byte[] ImgEn = new byte[0];
+//
+//    if (file != null) {
+//      Base64.Encoder encoder = Base64.getEncoder();
+//      ImgEn = encoder.encode(file.getBytes());
+//    }
+//    member.setImgEn(ImgEn);
+//
+//  }
 }

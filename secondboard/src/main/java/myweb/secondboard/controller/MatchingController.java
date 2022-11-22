@@ -1,10 +1,16 @@
 package myweb.secondboard.controller;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.Matching;
@@ -17,16 +23,20 @@ import myweb.secondboard.dto.PlayerAddForm;
 import myweb.secondboard.dto.ResultAddForm;
 import myweb.secondboard.service.MatchingService;
 import myweb.secondboard.service.PlayerService;
-import myweb.secondboard.web.*;
+import myweb.secondboard.web.CourtType;
+import myweb.secondboard.web.GameResult;
+import myweb.secondboard.web.MatchingCondition;
+import myweb.secondboard.web.MatchingType;
+import myweb.secondboard.web.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
@@ -124,12 +134,6 @@ public class MatchingController {
     List<List<Player>> playerListA = new ArrayList<>();
     List<List<Player>> playerListB = new ArrayList<>();
 
-    for (int i = 0; i < playersA.size(); i++) {
-      playerListA.add(playerService.findByMemberId(playersA.get(i).getMember().getId()));
-    }
-    for (int i = 0; i < playersB.size(); i++) {
-      playerListB.add(playerService.findByMemberId(playersB.get(i).getMember().getId()));
-    }
 
     model.addAttribute("playerListA", playerListA);
     model.addAttribute("playerListB", playerListB);

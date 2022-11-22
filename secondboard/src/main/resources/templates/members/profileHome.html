@@ -91,12 +91,13 @@
     <div class="d-flex">
         <div class="contact">
             <div class="box" style="background: #BDBDBD;">
-                <div th:if="${member.imgEn==null}">
-                    <img th:if="${member.gender.name()=='MALE'}" src="/images/profile_ma.png">
-                    <img th:if="${member.gender.name()=='FEMALE'}" src="/images/profile_fe.png">
-                </div>
-                <img th:if="${member.imgEn!=null}" th:src="'data:image/jpg;base64,'+${src}"
-                     alt="대표이미지">
+<!--                <div th:if="${member.imgEn==null}">-->
+<!--                    <img th:if="${member.gender.name()=='MALE'}" src="/images/profile_ma.png">-->
+<!--                    <img th:if="${member.gender.name()=='FEMALE'}" src="/images/profile_fe.png">-->
+<!--                </div>-->
+<!--                <img th:if="${member.imgEn!=null}" th:src="'data:image/jpg;base64,'+${src}"-->
+<!--                     alt="대표이미지">-->
+                <img th:src="${member.image}">
             </div>
             <li class="py-2"></li>
             <li><h3><span  id="loginNick" th:text="${member.nickname}"></span></h3></li>

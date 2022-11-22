@@ -45,7 +45,6 @@ public class TournamentController {
     MultipartFile file) throws IOException {
 
     tournamentService.addTournament(form, file);
-
     return "redirect:/manager/tournament";
   }
 

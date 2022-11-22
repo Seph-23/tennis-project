@@ -1,36 +1,42 @@
 package myweb.secondboard.controller;
 
-        import java.io.IOException;
-        import java.io.PrintWriter;
-        import java.nio.charset.StandardCharsets;
-        import java.security.NoSuchAlgorithmException;
-        import java.time.LocalDate;
-        import java.time.LocalDateTime;
-        import java.time.LocalTime;
-        import java.util.List;
-        import java.util.Objects;
-        import java.util.Optional;
-        import java.util.UUID;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import javax.servlet.http.HttpSession;
-        import javax.validation.Valid;
-        import lombok.RequiredArgsConstructor;
-        import lombok.extern.slf4j.Slf4j;
-        import myweb.secondboard.domain.Matching;
-        import myweb.secondboard.domain.Member;
-        import myweb.secondboard.domain.Player;
-        import myweb.secondboard.dto.*;
-        import myweb.secondboard.service.MatchingService;
-        import myweb.secondboard.service.MemberService;
-        import myweb.secondboard.service.PlayerService;
-        import org.json.simple.JSONObject;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.Model;
-        import org.springframework.validation.BindingResult;
-        import org.springframework.validation.annotation.Validated;
-        import org.springframework.web.bind.annotation.*;
-        import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import myweb.secondboard.domain.Member;
+import myweb.secondboard.domain.MemberUploadFile;
+import myweb.secondboard.domain.Player;
+import myweb.secondboard.dto.FindPasswordForm;
+import myweb.secondboard.dto.MemberSaveForm;
+import myweb.secondboard.dto.MemberUpdateForm;
+import myweb.secondboard.dto.UpdatePasswordForm;
+import myweb.secondboard.service.MatchingService;
+import myweb.secondboard.service.MemberImageService;
+import myweb.secondboard.service.MemberService;
+import myweb.secondboard.service.PlayerService;
+import org.json.simple.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
@@ -42,6 +48,7 @@ public class MemberController {
 
   private final PlayerService playerService;
   private final MatchingService matchingService;
+  private final MemberImageService memberImageService;
 
   @GetMapping("/new")
   public String signUpPage(Model model) {
@@ -65,13 +72,8 @@ public class MemberController {
   @GetMapping("/profile/{memberId}")
   public String profileHome(@PathVariable("memberId") Long memberId, Model model) {
 
-      Member member = memberService.findById(memberId);
-      model.addAttribute("member", member);
-
-      if(member.getImgEn()!=null){
-          String src = new String(member.getImgEn(), StandardCharsets.UTF_8);
-          model.addAttribute("src", src);
-      }
+    Member member = memberService.findById(memberId);
+    model.addAttribute("member", member);
 
     // 내정보 수정 모달용
     MemberUpdateForm form = new MemberUpdateForm();
@@ -89,12 +91,16 @@ public class MemberController {
   }
 
   @PostMapping("/profileUpdate")
-  public String profileUpdate(@Validated @ModelAttribute("form")MemberUpdateForm form,
+  public String profileUpdate(@ModelAttribute("form")MemberUpdateForm form,
                               BindingResult bindingResult, Model model, MultipartFile file) throws IOException {
 
-    if (bindingResult.hasErrors()) {
-      log.info("errors = {}", bindingResult);
-      return "/home";
+    try {
+      if (file != null) {
+        MemberUploadFile uploadFile = memberImageService.store(file);
+        memberService.setProfileImage("/image/member/"+uploadFile.getId(), form);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
     }
 
     Long memberId = memberService.updateMember(form, file);

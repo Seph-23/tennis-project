@@ -1,5 +1,10 @@
 package myweb.secondboard.service;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import myweb.secondboard.domain.Member;
 import myweb.secondboard.domain.Record;
@@ -12,12 +17,6 @@ import myweb.secondboard.web.PasswordEncrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -97,26 +96,26 @@ public class MemberService {
 //    member.setImgEn(file, member);
 
 
-    // 첫 회원가입으로 이미지가 없을때
-    if(member.getImgEn() == null){
-      // 기본 이미지X, 새로 받은 파일 O
-      if(!file.isEmpty()){
-        System.out.println("기본 이미지X, 새로 받은 파일 O");
-        member.setImgEn(file, member);
-      } else {
-        System.out.println("기존 이미지 X, 새로 받은 이미지 X");
-        // 기존 이미지 X, 새로 받은 이미지 X
-      }
-    } else {
-      // 기본 이미지 O, 새로 받은 파일 O
-      if (!file.isEmpty()) {
-        System.out.println("기본 이미지 O, 새로 받은 파일 O");
-        member.setImgEn(file, member);
-      } else {
-        // 기본이미지 o, 새로 받은 파일 X
-        System.out.println("기본이미지 o, 새로 받은 파일 X");
-      }
-    }
+//    // 첫 회원가입으로 이미지가 없을때
+//    if(member.getImgEn() == null){
+//      // 기본 이미지X, 새로 받은 파일 O
+//      if(!file.isEmpty()){
+//        System.out.println("기본 이미지X, 새로 받은 파일 O");
+//        member.setImgEn(file, member);
+//      } else {
+//        System.out.println("기존 이미지 X, 새로 받은 이미지 X");
+//        // 기존 이미지 X, 새로 받은 이미지 X
+//      }
+//    } else {
+//      // 기본 이미지 O, 새로 받은 파일 O
+//      if (!file.isEmpty()) {
+//        System.out.println("기본 이미지 O, 새로 받은 파일 O");
+//        member.setImgEn(file, member);
+//      } else {
+//        // 기본이미지 o, 새로 받은 파일 X
+//        System.out.println("기본이미지 o, 새로 받은 파일 X");
+//      }
+//    }
 
     return member.getId();
   }
@@ -131,6 +130,11 @@ public class MemberService {
     member.memberWithdrawl(member, uuid);
 
     return member.getId();
+  }
+
+  public void setProfileImage(String s, MemberUpdateForm form) {
+    Member member = memberRepository.findById(form.getId()).get();
+    member.setImage(s);
   }
 }
 
