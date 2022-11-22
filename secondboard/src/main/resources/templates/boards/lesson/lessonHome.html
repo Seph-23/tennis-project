@@ -41,11 +41,12 @@
 
 <div class="page">
     <section class="primary">
-        <form class="col-4 m-auto mt-5 pt-5" th:action="@{/lesson/home}">
-            <div class="input-group mb-4 border rounded-pill p-1">
+        <form class="col-4 m-auto" th:action="@{/lesson/home}">
+            <div class="mt-5 d-flex" style="width: 320px">
                 <input name="keyword" type="search" placeholder="  레슨 제목, 작성자로 검색"
-                       class="form-control bg-none border-0 rounded-circle search">
-                <button type="submit" style="border-style: none; background: none"><i class="mx-3 mt-2 mb-1 bi bi-search"></i>
+                       class="form-control inputBox">
+                <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
+                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>
                 </button>
             </div>
         </form>
@@ -57,24 +58,26 @@
         <div class="my-4">
             <table class="table table-hover align-middle bg-white">
                 <thead class="bg-light">
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th class="text-center">작성자</th>
-                    <th class="text-center">작성일</th>
-                    <th class="text-center">좋아요</th>
-                    <th class="text-center">조회수</th>
-                </tr>
                 </thead>
                 <tbody>
                 <tr th:each="lesson:${lessonList}"
                     th:onclick="|location.href='@{/lesson/detail/{id} (id=${lesson.id})}'|" role="button">
-                    <td th:text="${lesson.id}">1</td>
-                    <td><span th:text="${lesson.title}"></span><i class="bi bi-chat-left-dots text-muted me-1 ms-3"></i><span th:text="${lesson.getComments().size()}"></span></td>
-                    <td th:text="${lesson.author}" class="text-center"></td>
-                    <td th:text="${lesson.createdDate}" class="text-center"></td>
-                    <td class="text-center"><i class="bi bi-suit-heart-fill text-muted me-1"></i><span th:text="${lesson.getLikeCount}"></span></td>
-                    <td class="text-center"><i class="bi bi-eye text-muted me-1"></i><span th:text="${lesson.views}"></span></td>
+                    <td>
+                    <span>
+                    <span th:text="${lesson.createdDate}" class="text-center" style="font-size: 12px"></span>
+                    </span>
+                        <div>
+                            <span th:text="${lesson.title}"></span>
+                        </div>
+                        <div>
+                            <span><img class="me-1" th:src="${lesson.member.image}" style="width: 20px; height: 20px"><span th:text="${lesson.author}" class="text-center"></span>
+                            <span class="float-end">
+                            <i class="bi bi-chat-left-dots text-muted me-1 ms-3"></i><span th:text="${lesson.getComments().size()}"></span>
+                            <i class="bi bi-suit-heart-fill text-muted me-1"></i><span th:text="${lesson.getLikeCount}"></span>
+                            <i class="bi bi-eye text-muted me-1"></i><span th:text="${lesson.views}"></span>
+                            </span>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -125,7 +128,7 @@
 
 
     <aside class="secondary secondary-b">
-        <h5 class="text-center fw-bold mt-5">GoGo 화제글</h5>
+        <h5 class="text-center fw-bold mt-5">GOGO 화제글</h5>
         <hr>
         <ol class="p-0 message-list">
             <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
