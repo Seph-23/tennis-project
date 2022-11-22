@@ -12,4 +12,6 @@ public interface VisitorRepository extends JpaRepository<Visitor, Long> {
 
     @Query("select v from Visitor v where v.club.id= :clubId")
     List<Visitor> findVisitors(@Param("clubId") Long clubId);
+
+    void deleteAllByClubId(Long clubId);
 }

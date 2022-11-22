@@ -4,15 +4,12 @@ $("#visitor-submit").click(function () {
         clubId: $("#club-id").val()
     }
     Swal.fire({
-        title: "댓글을 등록하시겠습니까?",
+        title: "방명록을 등록하시겠습니까?",
         icon: "success",
         inputType: "submit",
-        buttons: {
-            confirm: true,
-            cancel: true
-        },
-    }).then(function (confirm) {
-        if (confirm) {
+        showDenyButton: true,
+    }).then((confirm) => {
+        if (confirm.isConfirmed) {
             $.ajax({
                 type: "post",
                 async: false,
@@ -22,15 +19,18 @@ $("#visitor-submit").click(function () {
                     if (data.result === "success") {
                         window.location.reload();
                     } else if (data.result === "validate") {
-                        alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
+                        Swal.fire("내용은 100자 이내여야 합니다.", '', 'warning');
                     }
                 },
                 error: function () {
-                    alert("서버 에러!");
+                    Swal.fire({
+                        icon: 'error',
+                        title: '오류가 발생했습니다'
+                    })
                 },
             });
-        } else {
-            return false;
+        } else if (confirm.isDenied) {
+            Swal.fire('등록을 취소하였습니다.', '', 'info')
         }
     });
 });
@@ -41,12 +41,9 @@ const deleteVisitor = (visitorId) => {
         title: "삭제하시겠습니까?",
         icon: "warning",
         inputType: "submit",
-        buttons: {
-            confirm: true,
-            cancel: true
-        },
-    }).then(function (confirm) {
-        if (confirm) {
+        showDenyButton: true,
+    }).then((confirm) => {
+        if (confirm.isConfirmed) {
             $.ajax({
                 type: "post",
                 url: "/club/visitor/visitorDelete/" + visitorId,
@@ -56,10 +53,14 @@ const deleteVisitor = (visitorId) => {
                     }
                 },
                 error: function () {
-                    alert("서버 에러!");
-                },});
-        } else {
-            return false;
+                    Swal.fire({
+                        icon: 'error',
+                        title: '오류가 발생했습니다'
+                    })
+                }
+            });
+        } else if (confirm.isDenied) {
+            Swal.fire('삭제를 취소하였습니다.', '', 'info')
         }
     });
 };
@@ -81,12 +82,9 @@ const updateVisitorConfirm = (visitorId) => {
         title: "수정하시겠습니까?",
         icon: "success",
         inputType: "update",
-        buttons: {
-            confirm: true,
-            cancel: true
-        },
-    }).then(function (confirm) {
-        if (confirm) {
+        showDenyButton: true,
+    }).then((confirm) => {
+        if (confirm.isConfirmed) {
             $.ajax({
                 type: "post",
                 url: "/club/visitor/visitorUpdate/" + visitorId,
@@ -100,15 +98,18 @@ const updateVisitorConfirm = (visitorId) => {
                         $("#visitor-update-confirm-" + visitorId).attr("hidden", true);
                         $("#visitor-update-cancel-" + visitorId).attr("hidden", true);
                     } else if (data.result === "validate") {
-                        alert("댓글은 1 ~ 100 자 이내여야 합니다.");
+                        Swal.fire("내용은 100자 이내여야 합니다.", '', 'warning');
                     }
                 },
                 error: function () {
-                    alert("서버 에러!");
+                    Swal.fire({
+                        icon: 'error',
+                        title: '오류가 발생했습니다'
+                    })
                 },
             });
-        } else {
-            return false;
+        } else if (confirm.isDenied) {
+            Swal.fire('수정을 취소하였습니다.', '', 'info')
         }
     });
 }
@@ -132,7 +133,10 @@ const updateVisitorCancel = (visitorId) => {
             }
         },
         error: function () {
-            alert("서버 에러!");
+            Swal.fire({
+                icon: 'error',
+                title: '오류가 발생했습니다'
+            })
         },
     });
 };
