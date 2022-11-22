@@ -157,7 +157,7 @@ public class SecondboardApplication {
   }
 
   //내일, 복식, 실내 매치 생성
-  @Order(2)
+  @Order(3)
   @Bean
   public CommandLineRunner initMatching(MemberService memberService,
                                         MatchingService matchingService) {
@@ -210,7 +210,8 @@ public class SecondboardApplication {
 		return r;
 	}
 
-	@Order(3)
+
+	@Order(4)
 	@Bean
 	public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
         return args -> {
@@ -229,10 +230,12 @@ public class SecondboardApplication {
     }
 
 //  == 관리자 데이터 11.16(수) 테스트 완료 ==//
-  @Order(4)
+  @Order(5)
   @Bean
-  public CommandLineRunner initAdminMember(MemberRepository memberRepository) {
+  public CommandLineRunner initAdminMember(MemberRepository memberRepository,
+    MemberImageService memberImageService, MemberService memberService) {
     return  args -> {
+    try{
       Member member = new Member();
       PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
       member.setLoginId("adminadmin");
@@ -246,6 +249,21 @@ public class SecondboardApplication {
       member.setRole(Role.ADMIN);
       member.setTier(Tier.BRONZE);
       memberRepository.save(member);
+
+      File fileItem = null;
+      try {
+        fileItem = new File(
+          "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/images/admin.jpeg");
+        FileInputStream input = new FileInputStream(fileItem);
+        MultipartFile multipartFile = new MockMultipartFile("fileItem",
+          fileItem.getName(), "image/png", IOUtils.toByteArray(input));
+        MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
+        memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
+      } catch (Exception e) {
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     };
   }
 
