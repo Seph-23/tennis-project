@@ -41,11 +41,12 @@
 
 <div class="page">
     <section class="primary">
-        <form class="col-4 m-auto mt-5 pt-5" th:action="@{/question/home}">
-            <div class="input-group mb-4 border rounded-pill p-1">
+        <form class="col-4 m-auto" th:action="@{/question/home}">
+            <div class="mt-5 d-flex" style="width: 320px">
                 <input name="keyword" type="search" placeholder="  질문 제목, 작성자로 검색"
-                       class="form-control bg-none border-0 rounded-circle search">
-                <button type="submit" style="border-style: none; background: none"><i class="mx-3 mt-2 mb-1 bi bi-search"></i>
+                       class="form-control inputBox">
+                <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
+                    <i class="mx-3 mt-2 mb-1 bi bi-search"></i>
                 </button>
             </div>
         </form>
@@ -133,7 +134,7 @@
 
 
     <aside class="secondary secondary-b">
-        <h5 class="text-center fw-bold mt-5">GoGo 화제글</h5>
+        <h5 class="text-center fw-bold mt-5">GOGO 화제글</h5>
         <hr>
         <ol class="p-0 message-list">
             <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">
