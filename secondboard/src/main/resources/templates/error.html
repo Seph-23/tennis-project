@@ -52,8 +52,11 @@
 
 <body>
 
-<h1 class="text-center navbar-brand">GOGOtennis</h1>
-<div class="text-center guidance">Error occurred!</div>
+<h1 class="text-center navbar-brand" th:onclick="|location.href='@{/}'|">GOGOtennis</h1>
+
+<div class="text-center guidance">
+  <span th:text="|${status} Error occurred!|"></span>
+</div>
 
 <div class="video-margin"></div>
 

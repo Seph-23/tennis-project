@@ -19,8 +19,8 @@
       text-align: center !important;
     }
     .video-center {
-     display: block;
-     margin: auto;
+      display: block;
+      margin: auto;
     }
     .home-submit {
       width: 13%;
@@ -52,18 +52,21 @@
 
 <body>
 
-  <h1 class="text-center navbar-brand">GOGOtennis</h1>
-  <div class="text-center guidance">This page does not exist!</div>
+<h1 class="text-center navbar-brand" th:onclick="|location.href='@{/}'|">GOGOtennis</h1>
 
-  <div class="video-margin"></div>
+<div class="text-center guidance">
+  <span th:text="|${status} This page does not exist!|"></span>
+</div>
 
-  <video class="video-center" src="https://thumbs.gfycat.com/CapitalSingleFlyingsquirrel-mobile.mp4"
-         width="40%" height="40%" autoplay loop muted controls></video>
+<div class="video-margin"></div>
 
-  <div class="text-margin"></div>
+<video class="video-center" src="https://thumbs.gfycat.com/CapitalSingleFlyingsquirrel-mobile.mp4"
+       width="40%" height="40%" autoplay loop muted controls></video>
 
-  <h3 class="text-center text-bold">존재하지 않는 페이지입니다</h3>
-  <h4 class="text-center">URL을 확인해주세요</h4>
-  <button class="home-submit video-center" th:onclick="|location.href='/'|">홈으로 가기</button>
+<div class="text-margin"></div>
+
+<h3 class="text-center text-bold">존재하지 않는 페이지입니다</h3>
+<h4 class="text-center">URL을 확인해주세요</h4>
+<button class="home-submit video-center" th:onclick="|location.href='/'|">홈으로 가기</button>
 </body>
 </html>
