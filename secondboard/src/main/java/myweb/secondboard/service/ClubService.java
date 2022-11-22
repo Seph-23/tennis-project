@@ -8,6 +8,7 @@ import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.repository.ClubMemberRepository;
 import myweb.secondboard.repository.ClubRepository;
+import myweb.secondboard.repository.VisitorRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class ClubService {
 
   private final ClubRepository clubRepository;
   private final ClubMemberRepository clubMemberRepository;
+  private final VisitorRepository visitorRepository;
 
   public Page<Club> getClubList(Pageable pageable) {
     return clubRepository.findAll(pageable);
@@ -84,6 +86,7 @@ public class ClubService {
 
   @Transactional
   public void deleteClub(Long clubId) {
+    visitorRepository.deleteAllByClubId(clubId);
     clubMemberRepository.deleteAllInBatch(getClubMemberList(clubId));
     clubRepository.deleteById(clubId);
   }

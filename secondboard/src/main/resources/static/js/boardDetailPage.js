@@ -7,12 +7,9 @@ $("#comment-submit").click(function () {
     title: "댓글을 등록하시겠습니까?",
     icon: "success",
     inputType: "submit",
-    buttons: {
-      confirm: true,
-      cancel: true
-    },
-  }).then(function (confirm) {
-    if (confirm) {
+    showDenyButton: true,
+  }).then((confirm) => {
+    if (confirm.isConfirmed) {
       $.ajax({
         type: "post",
         async: false,
@@ -22,15 +19,18 @@ $("#comment-submit").click(function () {
           if (data.result === "success") {
             window.location.reload();
           } else if (data.result === "validate") {
-            alert("댓글 길이는 1 ~ 100자 이내여야 합니다.");
+            Swal.fire("내용은 100자 이내여야 합니다.", '', 'warning');
           }
         },
         error: function () {
-          alert("서버 에러!");
+          Swal.fire({
+            icon: 'error',
+            title: '오류가 발생했습니다'
+          })
         },
       });
-    } else {
-      return false;
+    } else if (confirm.isDenied) {
+      Swal.fire('등록을 취소하였습니다.', '', 'info')
     }
   });
 });
@@ -40,12 +40,9 @@ const deleteComment = (commentId) => {
     title: "삭제하시겠습니까?",
     icon: "warning",
     inputType: "submit",
-    buttons: {
-      confirm: true,
-      cancel: true
-    },
-  }).then(function (confirm) {
-    if (confirm) {
+    showDenyButton: true,
+  }).then((confirm) => {
+    if (confirm.isConfirmed) {
       $.ajax({
         type: "post",
         url: "/api/comments/commentDelete/" + commentId,
@@ -55,10 +52,13 @@ const deleteComment = (commentId) => {
           }
         },
         error: function () {
-          alert("서버 에러!");
+          Swal.fire({
+            icon: 'error',
+            title: '오류가 발생했습니다'
+          })
         },});
-    } else {
-      return false;
+    } else if (confirm.isDenied) {
+      Swal.fire('삭제를 취소하였습니다.', '', 'info')
     }
   });
 };
@@ -80,12 +80,9 @@ const updateCommentConfirm = (commentId) => {
     title: "수정하시겠습니까?",
     icon: "success",
     inputType: "update",
-    buttons: {
-      confirm: true,
-      cancel: true
-    },
-  }).then(function (confirm) {
-    if (confirm) {
+    showDenyButton: true,
+  }).then((confirm) => {
+    if (confirm.isConfirmed) {
       $.ajax({
         type: "post",
         url: "/api/comments/commentUpdate/" + commentId,
@@ -99,15 +96,18 @@ const updateCommentConfirm = (commentId) => {
             $("#comment-update-confirm-" + commentId).attr("hidden", true);
             $("#comment-update-cancel-" + commentId).attr("hidden", true);
           } else if (data.result === "validate") {
-            alert("댓글은 1 ~ 100 자 이내여야 합니다.");
+            Swal.fire("내용은 100자 이내여야 합니다.", '', 'warning');
           }
         },
         error: function () {
-          alert("서버 에러!");
+          Swal.fire({
+            icon: 'error',
+            title: '오류가 발생했습니다'
+          })
         },
       });
-    } else {
-      return false;
+    } else if (confirm.isDenied) {
+      Swal.fire('수정을 취소하였습니다.', '', 'info')
     }
   });
 }
@@ -131,13 +131,22 @@ const updateCommentCancel = (commentId) => {
       }
     },
     error: function () {
-      alert("서버 에러!");
+      Swal.fire({
+        icon: 'error',
+        title: '오류가 발생했습니다'
+      })
     },
   });
 };
 
 const deleteBoard = (boardId) => {
-  if (confirm("게시글을 삭제하시겠습니까?") === true) {
+  Swal.fire({
+    title: "삭제하시겠습니까?",
+    icon: "warning",
+    inputType: "submit",
+    showDenyButton: true,
+  }).then((confirm) => {
+    if (confirm.isConfirmed) {
     $.ajax({
       type: "post",
       url: "/api/boards/boardDelete/" + boardId,
@@ -147,11 +156,15 @@ const deleteBoard = (boardId) => {
         }
       },
       error: function () {
-        alert("게시글 삭제 에러!");
+        Swal.fire({
+          icon: 'error',
+          title: '오류가 발생했습니다'
+        })
       },
     });
-  } else {
-    return false;
-  }
+  } else if (confirm.isDenied) {
+      Swal.fire('삭제를 취소하였습니다.', '', 'info')
+    }
+  });
 };
 
