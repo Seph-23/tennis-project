@@ -45,86 +45,40 @@
   }
 </style>
 <body>
-  <div class="container">   <!-- Container Start -->
+<div class="container">   <!-- Container Start -->
+  <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 
-
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shrink" id="mainNav">
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" th:href="@{/}">GOGOtennis</a>
-        <!-- <a class="navbar-brand" th:href="@{/}">
-             <img src="img/logo2.png" alt="logo" width="100">
-         </a>-->
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-        </button>
-        <div class="gap-5 collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" th:href="@{/matching/home}" th:text="#{menu.match}">매치</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/templates/tournament}" th:text="#{menu.tournament}">대회</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/ranking/home}" th:text="#{menu.rank}">랭킹</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/boards/home}" th:text="#{menu.community}">커뮤니티</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/templates/club}" th:text="#{menu.club}">동호회</a></li>
-          </ul>
-
-          <div class="gap-2 d-md-flex">
-            <div th:if="${session.loginMember == null}">
-              <button type="button" class="btn btn-outline-primary"
-                      th:onclick="|location.href='@{/members/new}'|" th:text="#{member.join}">회원가입</button>
-              <button type="button" class="btn btn-outline-primary"
-                      th:onclick="|location.href='@{/login}'|" th:text="#{member.login}">로그인</button>
-            </div>  <!-- TODO : 로그인 modal 창 구현 -->
-            <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
-              <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|" th:text="#{member.logout}">로그아웃</button>
-
-              <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" ) th:text="#{member.profile}">내 정보</button>
-            </div>
-
-            <!-- 카카오 로그아웃-->
-            <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
-              <button type="button" class="btn btn-outline-primary"
-                      th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|"
-                      th:text="#{member.logout}">로그아웃</button>
-
-              <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )
-                      th:text="#{member.profile}">내 정보</button>
-            </div>
-
-          </div> <!--gap-2 d-md-flex END-->
-
-        </div>
+  <div class="board-main"> <!-- Board Main Start -->
+    <h4>글쓰기</h4>
+    <form role="form" th:object="${notice}" action="/notice/new" method="post">
+      <div class="form-group">
+        <label th:for="title"></label>
+        <input id="title" type="text" class="form-control" th:field="${notice.title}"
+               placeholder="제목을 입력해주세요." />
+        <div class="field-error" th:errors="${notice.title}"></div>
       </div>
-    </nav>
+      <div class="form-group">
+        <label th:for="content"></label>
+        <textarea id="summernote" type="text" class="form-control" th:field="${notice.content}"
+                  placeholder="내용을 입력해주세요."></textarea>
+        <div class="field-error" th:errors="${notice.content}"></div>
+      </div>
+      <div class="d-md-flex justify-content-end">
+        <button type="submit" class="btn btn-primary button-submit mt-3" id="board-submit">등록하기</button>
+      </div>
+    </form>
+  </div> <!-- Board Main End -->
 
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-
-      <div class="board-main"> <!-- Board Main Start -->
-        <h4>글쓰기</h4>
-        <form role="form" th:object="${notice}" action="/notice/new" method="post">
-          <div class="form-group">
-            <label th:for="title"></label>
-            <input id="title" type="text" class="form-control" th:field="${notice.title}"
-                   placeholder="제목을 입력해주세요." />
-            <div class="field-error" th:errors="${notice.title}"></div>
-          </div>
-          <div class="form-group">
-            <label th:for="content"></label>
-            <textarea id="summernote" type="text" class="form-control" th:field="${notice.content}"
-                      placeholder="내용을 입력해주세요."></textarea>
-            <div class="field-error" th:errors="${notice.content}"></div>
-          </div>
-          <button type="submit" class="button-submit" id="board-submit">등록하기</button>
-        </form>
-      </div> <!-- Board Main End -->
-
-      <div class="side-menu-right"> <!-- Right Side Menu Start -->
-      </div> <!-- Right Side Menu End -->
-    </div> <!-- board end -->
-    <footer th:replace="fragments/footer :: footer"></footer>
-  </div> <!-- Container End -->
+  <div class="side-menu-right"> <!-- Right Side Menu Start -->
+  </div> <!-- Right Side Menu End -->
+</div> <!-- board end -->
+<footer th:replace="fragments/footer :: footer"></footer>
+</div> <!-- Container End -->
 
 
 </body>
