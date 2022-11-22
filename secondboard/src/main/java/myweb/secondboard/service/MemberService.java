@@ -83,39 +83,8 @@ public class MemberService {
   @Transactional
   public Long updateMember(MemberUpdateForm form, MultipartFile file) throws IOException {
 
-    // case1: 기존 file null -> 변경해서 추가
-    // case2: 기존 사진 -> 변경
-    // case3: 기존 사진 -> 변경없음
-
     Member member = findById(form.getId());
-
-    // 닉네임, 자기소개 변경
     member.updateMember(form, member);
-
-//    첫 테스트
-//    member.setImgEn(file, member);
-
-
-//    // 첫 회원가입으로 이미지가 없을때
-//    if(member.getImgEn() == null){
-//      // 기본 이미지X, 새로 받은 파일 O
-//      if(!file.isEmpty()){
-//        System.out.println("기본 이미지X, 새로 받은 파일 O");
-//        member.setImgEn(file, member);
-//      } else {
-//        System.out.println("기존 이미지 X, 새로 받은 이미지 X");
-//        // 기존 이미지 X, 새로 받은 이미지 X
-//      }
-//    } else {
-//      // 기본 이미지 O, 새로 받은 파일 O
-//      if (!file.isEmpty()) {
-//        System.out.println("기본 이미지 O, 새로 받은 파일 O");
-//        member.setImgEn(file, member);
-//      } else {
-//        // 기본이미지 o, 새로 받은 파일 X
-//        System.out.println("기본이미지 o, 새로 받은 파일 X");
-//      }
-//    }
 
     return member.getId();
   }
@@ -132,8 +101,15 @@ public class MemberService {
     return member.getId();
   }
 
+  @Transactional
   public void setProfileImage(String s, MemberUpdateForm form) {
     Member member = memberRepository.findById(form.getId()).get();
+    member.setImage(s);
+  }
+
+  @Transactional
+  public void setBasicProfileImage(String s, Long memberId) {
+    Member member = memberRepository.findById(memberId).get();
     member.setImage(s);
   }
 }

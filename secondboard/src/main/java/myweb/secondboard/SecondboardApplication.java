@@ -1,6 +1,8 @@
 package myweb.secondboard;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.io.File;
+import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,19 +18,23 @@ import myweb.secondboard.domain.boards.Question;
 import myweb.secondboard.dto.MatchingSaveForm;
 import myweb.secondboard.repository.*;
 import myweb.secondboard.service.MatchingService;
+import myweb.secondboard.service.MemberImageService;
 import myweb.secondboard.service.MemberService;
 import myweb.secondboard.web.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 11월1일자 복구
@@ -42,23 +48,80 @@ public class SecondboardApplication {
     SpringApplication.run(SecondboardApplication.class, args);
   }
 
-	@Bean(name = "uploadPath")
-	public String uploadPath() {
-		return "/Users/hwang-uichan/Project/tennis-project/secondboard/src/main/resources/static/files";
+  @Bean(name = "uploadPath")
+  public String uploadPath() {
+    return "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/imagefiles";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
     return new JPAQueryFactory(entityManager);
   }
 
-	 /**
+  /**
+   * 주석 처리하지 말고
+   * 회원 2개 생성해야 이미지 적용
+   */
+  @Order(1)
+  @Bean
+  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,
+    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
+    return args -> IntStream.rangeClosed(1, 2).forEach(i -> {
+      try {
+        //생성 객체 준비
+        Member member = new Member();
+        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+        Record record = Record.createRecord();
+
+        member.setLoginId("testtest" + i);
+        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
+        member.setNickname("test" + i);
+        member.setEmail("test" + i + "@test.com");
+        member.setBirthday("19950307");
+        member.setPhoneNumber("01021219" + String.format("%03d", i));
+        member.setProvider(Provider.GOGOTENNIS);
+        member.setRole(Role.MEMBER);
+        member.setTier(Tier.IRON);
+        member.setRecord(record);
+
+        if (i % 2 == 1) {
+          member.setGender(Gender.MALE);
+        } else {
+          member.setGender(Gender.FEMALE);
+        }
+
+        recordRepository.save(record);
+        memberRepository.save(member);
+
+        File fileItem = null;
+        try {
+          if (member.getGender().toString().equals(Gender.MALE.toString())) {
+            fileItem = new File(
+              "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/imagefiles/profile_ma.png");
+          } else {
+            fileItem = new File(
+              "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/imagefiles/profile_fe.png");
+          }
+          FileInputStream input = new FileInputStream(fileItem);
+          MultipartFile multipartFile = new MockMultipartFile("fileItem",
+            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
+          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
+          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
+        } catch (Exception e) {
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
+  }
+
+  /**
    * 멤버 정보
    */
-//  @Order(1)
+//  @Order(2)
 //  @Bean
 //  public CommandLineRunner initMember(MemberRepository memberRepository,
-//    RecordRepository recordRepository) {
-//    return args -> IntStream.rangeClosed(1, 500).forEach(i -> {
+//    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
+//    return args -> IntStream.rangeClosed(3, 10).forEach(i -> {
 //      try {
 //        //생성 객체 준비
 //        Member member = new Member();
@@ -78,12 +141,15 @@ public class SecondboardApplication {
 //
 //        if (i % 2 == 1) {
 //          member.setGender(Gender.MALE);
+//          member.setImage("/image/member/1");
 //        } else {
 //          member.setGender(Gender.FEMALE);
+//          member.setImage("/image/member/2");
 //        }
 //
 //        recordRepository.save(record);
 //        memberRepository.save(member);
+//
 //      } catch (Exception e) {
 //        e.printStackTrace();
 //      }

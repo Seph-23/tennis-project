@@ -64,7 +64,9 @@ public class MemberController {
       return "/members/signUpPage";
     }
     //SignUp Success Logic
-    memberService.signUp(form);
+    Long memberId = memberService.signUp(form);
+
+
     return "redirect:/";
   }
 
@@ -96,7 +98,7 @@ public class MemberController {
 
     try {
       if (file != null) {
-        MemberUploadFile uploadFile = memberImageService.store(file);
+        MemberUploadFile uploadFile = memberImageService.updateStore(file);
         memberService.setProfileImage("/image/member/"+uploadFile.getId(), form);
       }
     } catch(Exception e) {

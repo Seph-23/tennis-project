@@ -92,6 +92,11 @@ public class Member implements Serializable {
     member.setRecord(record);
     member.setRole(Role.MEMBER);
     member.setTier(Tier.IRON);
+    if (form.getGender().toString().equals("MALE")) {
+      member.setImage("/image/member/1");
+    } else {
+      member.setImage("/image/member/2");
+    }
     return member;
   }
 
@@ -141,6 +146,11 @@ public class Member implements Serializable {
     } // male, female => MALE, FEMALE
 
     member.setAccessToken(access_token);
+    if (userInfo.get("gender").toString().toUpperCase().equals("MALE")) {
+      member.setImage("/image/member/1");
+    } else {
+      member.setImage("/image/member/2");
+    }
 
     return member;
   }

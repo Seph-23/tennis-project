@@ -29,7 +29,7 @@ public class MemberImageService {
     System.out.println(rootLocation.toString());
   }
 
-  public MemberUploadFile store(MultipartFile file) throws Exception {
+  public MemberUploadFile updateStore(MultipartFile file) throws Exception {
 
     try {
       if(file.isEmpty()) {
@@ -87,5 +87,45 @@ public class MemberImageService {
 
   public void deleteById(Long imageId) {
     memberUploadFileRepository.deleteById(imageId);
+  }
+
+  public MemberUploadFile newStore(MultipartFile file) throws Exception {
+
+    try {
+      if(file.isEmpty()) {
+        throw new Exception("Failed to store empty file " + file.getOriginalFilename());
+      }
+
+      String saveFileName = newFileSave(rootLocation.toString(), file);
+      MemberUploadFile saveFile = new MemberUploadFile();
+      saveFile.setFileName(file.getOriginalFilename());
+      saveFile.setSaveFileName(saveFileName);
+      saveFile.setContentType(file.getContentType());
+      saveFile.setSize(file.getResource().contentLength());
+      saveFile.setRegisterDate(LocalDateTime.now());
+      saveFile.setFilePath(rootLocation.toString().replace(File.separatorChar, '/') +'/' + saveFileName);
+      memberUploadFileRepository.save(saveFile);
+      return saveFile;
+
+    } catch(IOException e) {
+      throw new Exception("Failed to store file " + file.getOriginalFilename(), e);
+    }
+
+
+  }
+
+  public String newFileSave(String rootLocation, MultipartFile file) throws IOException {
+    File uploadDir = new File(rootLocation);
+
+    if (!uploadDir.exists()) {
+      uploadDir.mkdirs();
+    }
+
+    // saveFileName 생성
+    String saveFileName = file.getOriginalFilename();
+    File saveFile = new File(rootLocation, saveFileName);
+    FileCopyUtils.copy(file.getBytes(), saveFile);
+
+    return saveFileName;
   }
 }
