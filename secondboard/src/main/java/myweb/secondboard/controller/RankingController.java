@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ranking")
 @RequiredArgsConstructor
 public class RankingController {
+
   private final RecordService recordService;
+
   @GetMapping("/home")
   public String home(Model model) {
 
     List<Member> rankers = recordService.findRankTopThree();
     if (rankers.size() > 2) {
-      Member topRank = rankers.get(0);
+      Member topRank = rankers.get(0); // 1등
       Member secondRank = rankers.get(1);
       Member thirdRank = rankers.get(2);
 
@@ -35,13 +37,14 @@ public class RankingController {
 
     List<Member> list = recordService.findRankList();
     List<Member> newList = new ArrayList<>();
-    if (list.size() > 3) {
-      for (int i = 3; i < 100; i++) {
-        newList.add(list.get(i));
-      }
-      model.addAttribute("rank", newList);
 
+    for (int i = 3; i < list.size(); i++) {
+      if (i > 100) {
+        break;
+      }
+      newList.add(list.get(i));
     }
+    model.addAttribute("rank", newList);
 
     return "ranking/ranking";
   }
