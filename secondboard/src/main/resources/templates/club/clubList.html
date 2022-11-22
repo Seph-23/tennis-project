@@ -74,8 +74,8 @@
         <td class="text-center"th:text="${club.member.nickname}"></td>
         <td class="text-center" th:text="${club.createdDate}"></td>
         <td class="text-center">
-          <span th:if="${club.status.name() == 'RECRUITING'}" th:text="${club.status.title}" class="badge text-bg-success rounded-pill d-inline"></span>
-          <span th:if="${club.status.name() == 'END'}" th:text="${club.status.title}" class="badge text-bg-danger rounded-pill d-inline"></span>
+          <span th:if="${club.status.name() == 'RECRUITING'}" th:text="${club.status.title}" class="badge text-bg-success rounded-pill d-inline px-3 py-2"></span>
+          <span th:if="${club.status.name() == 'END'}" th:text="${club.status.title}" class="badge text-bg-danger rounded-pill d-inline px-3 py-2"></span>
         </td>
       </tr>
       </tbody>

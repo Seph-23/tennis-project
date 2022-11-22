@@ -35,15 +35,16 @@
 }
 
 .border_shape {
-  border-top: gray solid 2px;
-  border-bottom: gray solid 2px;
+  /*border-top: gray solid 2px;*/
+  /*border-bottom: gray solid 2px;*/
   background-color: whitesmoke;
+  border-radius: 25px;
 }
 
 .border_shape img{
-  height : 300px;
+  height : 315px;
   width: 300px;
-  object-fit: cover;
+  /*object-fit: cover;*/
 }
 
 
@@ -63,11 +64,11 @@ section::-webkit-scrollbar-thumb{
 
 .profile_img{
   margin: 0;
-  padding-bottom: 20px;
-  padding-right: 10px;
+  /*padding-bottom: 20px;*/
+  /*padding-right: 10px;*/
   background-size: cover;
   background-position: center;
-  object-fit: cover;
+  /*object-fit: cover;*/
   object-position: center;
   border-radius: 15%;
 
@@ -81,12 +82,11 @@ section::-webkit-scrollbar-thumb{
 
 .bubble {
   top: 100px;
-  height: 100px;
+  height: 130px;
   background: #fff;
   border: #bbb solid 0;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px 30px;
 }
