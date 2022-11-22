@@ -50,73 +50,73 @@ public class SecondboardApplication {
 
   @Bean(name = "uploadPath")
   public String uploadPath() {
-    return "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/files";
+    return "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
     return new JPAQueryFactory(entityManager);
   }
 
-  /**
-   * 주석 처리하지 말고
-   * 회원 2개 생성해야 이미지 적용
-   */
-  @Order(1)
-  @Bean
-  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,
-    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
-    return args -> IntStream.rangeClosed(1, 2).forEach(i -> {
-      try {
-        //생성 객체 준비
-        Member member = new Member();
-        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-        Record record = Record.createRecord();
-
-        member.setLoginId("testtest" + i);
-        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
-        member.setNickname("test" + i);
-        member.setEmail("test" + i + "@test.com");
-        member.setBirthday("19950307");
-        member.setPhoneNumber("01021219" + String.format("%03d", i));
-        member.setProvider(Provider.GOGOTENNIS);
-        member.setRole(Role.MEMBER);
-        member.setTier(Tier.IRON);
-        member.setRecord(record);
-
-        if (i % 2 == 1) {
-          member.setGender(Gender.MALE);
-        } else {
-          member.setGender(Gender.FEMALE);
-        }
-
-        recordRepository.save(record);
-        memberRepository.save(member);
-
-        File fileItem = null;
-        try {
-          if (member.getGender().toString().equals(Gender.MALE.toString())) {
-            fileItem = new File(
-              "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/images/profile_ma.png");
-          } else {
-            fileItem = new File(
-              "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/images/profile_fe.png");
-          }
-          FileInputStream input = new FileInputStream(fileItem);
-          MultipartFile multipartFile = new MockMultipartFile("fileItem",
-            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
-          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
-          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
-        } catch (Exception e) {
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    });
-  }
-
-  /**
-   * 멤버 정보
-   */
+//  /**
+//   * 주석 처리하지 말고
+//   * 회원 2개 생성해야 이미지 적용
+//   */
+//  @Order(1)
+//  @Bean
+//  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,
+//    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
+//    return args -> IntStream.rangeClosed(1, 2).forEach(i -> {
+//      try {
+//        //생성 객체 준비
+//        Member member = new Member();
+//        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+//        Record record = Record.createRecord();
+//
+//        member.setLoginId("testtest" + i);
+//        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
+//        member.setNickname("test" + i);
+//        member.setEmail("test" + i + "@test.com");
+//        member.setBirthday("19950307");
+//        member.setPhoneNumber("01021219" + String.format("%03d", i));
+//        member.setProvider(Provider.GOGOTENNIS);
+//        member.setRole(Role.MEMBER);
+//        member.setTier(Tier.IRON);
+//        member.setRecord(record);
+//
+//        if (i % 2 == 1) {
+//          member.setGender(Gender.MALE);
+//        } else {
+//          member.setGender(Gender.FEMALE);
+//        }
+//
+//        recordRepository.save(record);
+//        memberRepository.save(member);
+//
+//        File fileItem = null;
+//        try {
+//          if (member.getGender().toString().equals(Gender.MALE.toString())) {
+//            fileItem = new File(
+//              "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\images\\profile_ma.png");
+//          } else {
+//            fileItem = new File(
+//              "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\images\\profile_fe.png");
+//          }
+//          FileInputStream input = new FileInputStream(fileItem);
+//          MultipartFile multipartFile = new MockMultipartFile("fileItem",
+//            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
+//          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
+//          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
+//        } catch (Exception e) {
+//        }
+//      } catch (Exception e) {
+//        e.printStackTrace();
+//      }
+//    });
+//  }
+//
+//  /**
+//   * 멤버 정보
+//   */
 //  @Order(2)
 //  @Bean
 //  public CommandLineRunner initMember(MemberRepository memberRepository,

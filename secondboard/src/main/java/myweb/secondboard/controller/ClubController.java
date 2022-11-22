@@ -7,7 +7,6 @@ import myweb.secondboard.dto.ClubSaveForm;
 import myweb.secondboard.dto.ClubUpdateForm;
 import myweb.secondboard.service.ClubService;
 import myweb.secondboard.service.LocalService;
-import myweb.secondboard.service.TournamentService;
 import myweb.secondboard.service.VisitorService;
 import myweb.secondboard.web.SessionConst;
 import myweb.secondboard.web.Status;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -108,6 +106,9 @@ public class ClubController {
     List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
+    if (session == null) {
+      return "/club/clubDetailNotLoginMember";
+    }
     return "/club/clubDetail";
   }
 
