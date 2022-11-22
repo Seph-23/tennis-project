@@ -15,7 +15,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
   //로그인 한 유저 허용 범위
   private static final String[] whitelist = {"/boards/boardAdd", "/boards/new", "/lesson/lessonAdd",
     "/lesson/new", "/boardDelete/**", "/api/notice/noticeDelete/**", "/notice/update/**", "/notice/like",
-    "/question/questionAdd", "/question/new", "/notice/new", "/club/memberDelete",
+    "/question/questionAdd", "/question/new", "/notice/new", "/club/memberDelete", "/matching/delete/**",
     "/club/delete", "/club/memberBan/*", "/club/join", "/members/update/password/*", "/members/withdrawl/**",
     "/notice/noticeAdd", "/members/update/**", "/members/profile/**", "/club/save", "/club/update",
     "/matching/new", "/manager/**", "/tournament/new", "/matching/player/add", "/matching/save",
