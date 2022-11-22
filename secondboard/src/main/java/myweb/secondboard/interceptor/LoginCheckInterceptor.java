@@ -19,7 +19,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     "/club/delete", "/club/memberBan/*", "/club/join", "/members/update/password/*", "/members/withdrawl/**",
     "/notice/noticeAdd", "/members/update/**", "/members/profile/**", "/club/save", "/club/update",
     "/matching/new", "/manager/**", "/tournament/new", "/matching/player/add", "/matching/save",
-    "/matching/delete/memberDelete/**", "/matching/update/**", "/board/update/**", "/members/profileUpdate",
+    "/matching/delete/memberDelete/**", "/matching/update/**", "/boards/update/**", "/members/profileUpdate",
     "/api/question/**", "/api/comments/**", "/question/update/**", "/club/visitor/**",
     "/boards/like", "/boards/report", "/notice/like", "/notice/report", "/lesson/like", "/lesson/report",
     "/question/like", "/question/report"};
