@@ -42,7 +42,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col total mt-3 ms-3">
-                                <img src="/images/yujin3.jpg" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
+                                <img th:src="${topRank.image}" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
                                 <div class="fw-bold fs-6 mt-1" th:text="${topRank.nickname}">User1</div>
                             </div>
                             <div class="col total text-center mt-3">
@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col total mt-3 ms-3">
-                                <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
+                                <img th:src="${secondRank.image}" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
                                 <div class="fw-bold fs-6 mt-1" th:text="${secondRank.nickname}">User2</div>
                             </div>
                             <div class="col total text-center mt-3">
@@ -92,7 +92,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col total mt-3 ms-3">
-                                <img src="/images/user.png" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
+                                <img th:src="${thirdRank.image}" class="rounded-circle" alt="프로필" style="object-fit: fill; width: 130px; height: 130px">
                                 <div class="fw-bold fs-6 mt-1" th:text="${thirdRank.nickname}">User2</div>
                             </div>
                             <div class="col total text-center mt-3">

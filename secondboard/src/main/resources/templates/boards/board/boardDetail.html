@@ -37,7 +37,7 @@
         <h3 style="text-align: center" th:text="${board.title}"></h3>
         <div class="d-flex justify-content-between" id="board_title_box">
           <div>
-            <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
+            <img th:src="${board.member.image}" class="rounded-circle" alt="logo" height="15" width="20">
             <a th:text="${board.author}"></a>
             <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
             <a th:text="${board.createdDate}"></a>
@@ -96,7 +96,7 @@
                   <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
+                           th:src="${comment.member.image}"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->

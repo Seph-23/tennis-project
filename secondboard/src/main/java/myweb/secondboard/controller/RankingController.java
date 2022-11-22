@@ -35,7 +35,7 @@ public class RankingController {
 
     List<Member> list = recordService.findRankList();
     List<Member> newList = new ArrayList<>();
-    if (list.size() != 0) {
+    if (list.size() > 3) {
       for (int i = 3; i < 100; i++) {
         newList.add(list.get(i));
       }
