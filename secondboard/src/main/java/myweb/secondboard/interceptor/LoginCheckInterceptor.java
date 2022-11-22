@@ -12,8 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
-  private static final String[] whitelist = {"/boards/boardAdd", "/lesson/lessonAdd", "/question/questionAdd"
-  , "/notice/noticeAdd"};
+  //로그인 한 유저 허용 범위
+  private static final String[] whitelist = {"boards/boardAdd", "/boards/new", "/lesson/lessonAdd",
+    "/lesson/new", "/boardDelete/**", "/api/notice/noticeDelete/**", "/notice/update/**", "/notice/like",
+    "/question/questionAdd", "/question/new", "/notice/new", "/club/memberDelete",
+    "/club/delete", "/club/memberBan/*", "/club/join", "/members/update/password/*", "/members/withdrawl/**",
+    "/notice/noticeAdd", "/members/update/**", "/members/profile/**", "/club/save", "/club/update",
+    "/matching/new", "/manager/**", "/tournament/new", "/matching/player/add", "/matching/save",
+    "/matching/delete/memberDelete/**", "/matching/update/**", "/board/update/**", "/members/profileUpdate",
+    "/api/question/**", "/api/comments/**", "/question/update/**", "/club/visitor/**"};
 
   public static final String LOG_ID = "logId";
 
