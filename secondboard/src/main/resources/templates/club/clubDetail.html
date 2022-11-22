@@ -110,7 +110,7 @@
                   <h6 th:text="${visitors.createdDate}" class="text-start"></h6>
                 </div>
                 <div class="col-6" >
-                  <div style="float:right; ">
+                  <div style="float:right;" th:if="${clubMemberCheck != null}">
                     <!-- 수정버튼 -->
                     <button th:if="${session.loginMember.getId() == visitors.member.getId()}"
                             th:onclick="updateVisitor([[${visitors.id}]])"

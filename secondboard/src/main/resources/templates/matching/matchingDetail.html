@@ -341,13 +341,13 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teamModal">매치 신청</button>
             </div>
             <!--매치에 참가된 인원이면서 매치 마감이 안된 경우-->
-            <form th:action="@{/matching/delete/memberDelete/{id} (id=${matching.id})}" method="post">
+            <form th:action="@{/matching/delete/memberDelete/{id} (id=${matching.id})}" method="post" id="matchMemberDelete">
                 <input hidden name="memberId" th:value="${session.loginMember.id}"/>
                 <input hidden name="matchingId" th:value="${matching.id}"/>
                 <!--매치에 참가된 인원이면서 매치 마감이 안된 경우-->
                 <div th:if="${playerMemberCheck != null and matching.matchingCondition.title == '신청가능' and session.loginMember.id != matching.member.id
                 and (matching.matchingStatus.name().equals('TWOHOURBEFORE') or matching.matchingStatus.name().equals('BEFORE'))}">
-                    <button type="submit" class="btn btn-primary">매치 참가 취소</button>
+                    <button type="button" onclick="matchMemberDelete()" class="btn btn-primary">매치 참가 취소</button>
                 </div>
             </form>
             <div th:if="${matching.matchingStatus.equals('AFTER') and session.loginMember == playerMemberCheck}">
@@ -385,17 +385,16 @@
                     <input hidden name="matchingId" th:value="${matching.id}"/>
                     <input hidden id="teamASize" th:value="${playersA.size()}"/>
                     <input hidden id="teamBSize" th:value="${playersB.size()}"/>
+                    <div class="form-label">팀</div>
                     <div th:if="${matching.matchingType.title.equals('단식')}" class="mb-3">
-                        <div class="form-label">팀</div>
-                        <input type="radio" th:field="${playerAddForm.team}" value="B" id="single_btn">B
+                        <input type="radio" th:field="${playerAddForm.team}" value="B" id="single_btn"> B
                     </div>
-                    <div th:if="${matching.matchingType.title.equals('복식')}" class="mb-3">
-                        <div class="form-label">팀</div>
+                    <div th:if="${matching.matchingType.title.equals('복식')}" class="mb-3 d-flex">
                         <div th:if="${playersA.size() < 2}">
-                            <input type="radio" th:field="${playerAddForm.team}" id="double_btnA" value="A">A
+                            <input type="radio" th:field="${playerAddForm.team}" id="double_btnA" value="A"> A
                         </div>
                         <div th:if="${playersB.size() < 2}">
-                            <input type="radio" th:field="${playerAddForm.team}" id="double_btnB" value="B">B
+                            <input type="radio" th:field="${playerAddForm.team}" id="double_btnB" value="B" class="ms-3"> B
                         </div>
                     </div>
 
@@ -559,5 +558,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
 <script th:src="@{/js/matchingDetailKakaoMap.js}"></script>
 <script th:src="@{/js/tierCheck.js}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/matchAlert.js}"></script>
 </body>
 </html>
