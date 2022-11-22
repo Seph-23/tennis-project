@@ -21,12 +21,12 @@
 
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
 
-<div class="board_banner_area" >
+<div class="board_banner_area">
   <div class="board_banner_text">
-    <h1 style="color: #3c763d">Community</h1>
-    <p style="color: #3c763d">come and join!</p>
+    <h1 style="font-family: Nunito">Community</h1>
+    <p style="font-family: Nunito">come and join!</p>
   </div>
-  <img src="/images/community2.jpg" alt="배너 이미지" class="board_banner_area" style="height: 470px">
+  <img src="/images/community_narrow.jpeg" alt="배너 이미지" class="">
 </div>
 
 <div class="page">
@@ -34,27 +34,18 @@
     <div class="container">
       <div id="reportText">
         <br>
-        <h3 style="text-align: center" th:text="${board.title}"></h3>
-        <div class="d-flex justify-content-between" id="board_title_box">
-          <div>
-            <img th:src="${board.member.image}" class="rounded-circle" alt="logo" height="15" width="20">
-            <a th:text="${board.author}"></a>
-            <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
-            <a th:text="${board.createdDate}"></a>
-            <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
-            <a th:text="${board.views}"></a>
-          </div>
+        <div class="d-flex justify-content-end" id="board_title_box">
           <div th:if="${session.loginMember != null}"> <!--th:if="${session.loginMember != null}" -->
             <div th:if="${session.loginMember.id == board.member.id}" style="display: inline-block">
               <form class="col" role="form" th:action="@{/boards/update/{id} (id=${board.id})}"
                     method="get">
-                <button class="btn-outline-success border-0 shadow-sm" style="background: none"
+                <button class="btn-outline-success rounded-3 border-0 shadow-sm py-2" style="background: none"
                         type="submit" id="board_update_button">게시글 수정</button>
               </form>
             </div>
             <div th:if="${session.loginMember.id == board.member.id} or ${session.loginMember.role.toString() == 'ADMIN'}"
                  style="display: inline-block">
-              <button class="btn-outline-danger border-0 shadow-sm" style="background: none"
+              <button class="btn-outline-success rounded-3 border-0 shadow-sm py-2" style="background: none"
                       th:onclick="deleteBoard([[${board.id}]])" id="board_delete_button">게시글 삭제</button>
             </div>
           </div>
@@ -63,9 +54,26 @@
         <br>
         <br>
 
-        <div class="d-flex justify-content-center pb-5" id="board_content_box">
+        <div class="d-flex justify-content-start pb-5" id="board_content_box">
           <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-            <p th:utext="${board.content}"></p>
+            <div class="row">
+              <div class="col-2">
+                <img th:src="@{/images/user.png}" class="rounded-circle" alt="logo" height="50" width="50">
+              </div>
+              <div class="col-10">
+                <span th:text="${board.author}"></span>
+                <div>
+                  <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
+                  <span class="small" th:text="${board.createdDate}"></span>
+                  <img th:src="@{/images/views.png}" alt="logo" height="13" width="20">
+                  <span class="small" th:text="${board.views}"></span>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <h1 class="start-100 mt-3 mb-3" th:text="${board.title}"></h1>
+            <p class="mt-5" th:utext="${board.content}"></p>
             <br>
             <br>
             <div class="content heart-btn2" th:if="${session.loginMember != null}">
@@ -85,31 +93,24 @@
       <div class="container my-5 py-5">
         <div class="row d-flex justify-content-center">
           <div class="col-md-12 col-lg-10">
-            <div class="card text-dark">
+            <div class="card text-dark rounded-4">
               <div class="card-body p-4">
                 <thead>
                 <tr>
-                  <th>Recent Comment</th>
+                  <th>Comment</th>
                 </tr> <!-- 여기부터 댓글시작 -->
                 <tr th:each="comment : ${comments}" class="fw-bold mb-1">
                   <hr class="my-0"/>
                   <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           th:src="${comment.member.image}"
+                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->
                         <h6 th:text="${comment.author}" class="fw-bold mb-1"></h6>
                         <div class="d-flex align-items-center mb-3">
                           <p th:text="${comment.modifiedDate}" class="mb-0"></p>
-                          <!-- 시간옆 아이콘자리 -->
-                          <a class="link-muted"><i
-                                  class="fas fa-pencil-alt ms-2"></i></a>
-                          <a class="text-success"><i
-                                  class="fas fa-redo-alt ms-2"></i></a>
-                          <a class="link-danger"><i
-                                  class="fas fa-heart ms-2"></i></a>
                           <div th:if="${session.loginMember != null}">  <!-- 댓글 수정,삭제 버튼 -->
                             <td>
                               <div class="button-group">
@@ -174,7 +175,7 @@
                                 border: none;
                                 background: white;
                                 width: 400px;
-                                height: 70px"
+                                height: 60px"
                               th:id="'comment-content-'+${comment.id}"
                               disabled
                               th:text="${comment.content}"></textarea>
@@ -192,22 +193,16 @@
                   <div th:if="${session.loginMember != null}">   <!-- 댓글 입력 창 -->
                     <div class="comment-input-body">
                       <input hidden id="board-id" th:value="${board.id}">
-                      <textarea id="comment" class="form-control" rows="4"
+                      <textarea id="comment" class="form-control rounded-4 mt-3 bg-light" rows="4"
                                 placeholder="댓글을 입력하세요"></textarea>
                     </div>
                     <br>
                     <div class="d-flex justify-content-end">
-                      <button class="shadow-sm" id="comment-submit" type="submit">등록</button>
+                      <button class="shadow-sm btn btn-primary px-2 py-2" id="comment-submit" type="submit">댓글 쓰기</button>
                     </div>
                   </div>
                 </div>
               </div>
-
-
-              <br>
-              <br>
-              <br>
-              <br>
   </section>
   <aside class="secondary-a text-center">
     <div class="bg-white mt-5" id="sidebar-wrapper">
@@ -223,7 +218,7 @@
 
 
   <aside class="secondary secondary-b">
-    <h5 class="text-center fw-bold mt-5">GoGo 화제글</h5>
+    <h5 class="text-center fw-bold mt-5">GOGO 화제글</h5>
     <hr>
     <ol class="p-0 message-list">
       <li class="user-item message-item" th:each="hotboard, state : ${hotBoardList}">

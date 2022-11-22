@@ -10,11 +10,11 @@ button{
 }
 
 #board_update_button {
-  color: grey;
+  color: mediumseagreen;
 }
 
 #board_delete_button {
-  color: lightgrey;
+  color: tomato;
 }
 
 #board_content_box {
@@ -23,17 +23,17 @@ button{
   border-bottom-color: lightgrey;
 }
 
-#comment-submit {
-  border-radius: 0;
-  width: 20%;
-  height: 50px;
-  border: 0;
-  outline: none;
-  background: white;
-  color: black;
-  font-size: 1.2em;
-  letter-spacing: 2px;
-}
+/*#comment-submit {*/
+/*  border-radius: 0;*/
+/*  width: 20%;*/
+/*  height: 50px;*/
+/*  border: 0;*/
+/*  outline: none;*/
+/*  background: white;*/
+/*  color: black;*/
+/*  font-size: 1.2em;*/
+/*  letter-spacing: 2px;*/
+/*}*/
 .comment1 {
   word-wrap: break-word;
   word-break: break-word;

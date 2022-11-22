@@ -50,7 +50,7 @@ public class SecondboardApplication {
 
   @Bean(name = "uploadPath")
   public String uploadPath() {
-    return "/Users/anchiun/project/tennis-project/secondboard/src/main/resources/static/files";
+    return "/Users/gaon/git/tennis-project/secondboard/src/main/resources/static/files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
@@ -96,10 +96,10 @@ public class SecondboardApplication {
         try {
           if (member.getGender().toString().equals(Gender.MALE.toString())) {
             fileItem = new File(
-              "/Users/anchiun/project/tennis-project/secondboard/src/main/resources/static/files/profile_ma.png");
+              "/Users/gaon/git/tennis-project/secondboard/src/main/resources/static/files/profile_ma.png");
           } else {
             fileItem = new File(
-              "/Users/anchiun/project/tennis-project/secondboard/src/main/resources/static/files/profile_fe.png");
+              "/Users/gaon/git/tennis-project/secondboard/src/main/resources/static/files/profile_fe.png");
           }
           FileInputStream input = new FileInputStream(fileItem);
           MultipartFile multipartFile = new MockMultipartFile("fileItem",
