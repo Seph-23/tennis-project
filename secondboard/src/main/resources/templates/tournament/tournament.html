@@ -56,7 +56,9 @@
           </ul>
           <p class="card-text" th:text="${tournament.content}">
           </p>
-          <a th:href="${tournament.url}" class="btn btn-primary">대회 바로가기</a>
+          <div class="d-flex justify-content-center">
+            <a th:href="${tournament.url}" class="btn btn-primary">대회 바로가기</a>
+          </div>
         </div>
       </div>
     </div>
