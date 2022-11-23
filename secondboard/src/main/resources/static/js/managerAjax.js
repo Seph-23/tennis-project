@@ -5,7 +5,7 @@ const deleteBoard = (boardId) => {
       url: "/api/boards/boardDelete/" + boardId,
       success: function (data) {
         if (data.result === "success") {
-          window.location.assign("http://localhost:8080/manager/profile");
+          window.location.assign("http://gogotennis.co.kr/manager/profile");
         }
       },
       error: function () {

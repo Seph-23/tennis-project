@@ -152,7 +152,7 @@ const deleteNotice = (noticeId) => {
       url: "/api/lesson/lessonDelete/" + noticeId,
       success: function (data) {
         if (data.result === "success") {
-          window.location.assign("http://localhost:8080/lesson/home");
+          window.location.assign("http://gogotennis.co.kr/lesson/home");
         }
       },
       error: function () {

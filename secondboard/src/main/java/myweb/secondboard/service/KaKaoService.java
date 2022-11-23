@@ -33,7 +33,7 @@ public class KaKaoService {
       StringBuilder sb = new StringBuilder();
       sb.append("grant_type=authorization_code");
       sb.append("&client_id=b70b62ddd16773ad4e495c5aa49dc006");
-      sb.append("&redirect_uri=http://localhost:8080/oauth/kakao");
+      sb.append("&redirect_uri=http://gogotennis.co.kr/oauth/kakao");
       sb.append("&code=" + code);
 
       bw.write(sb.toString());

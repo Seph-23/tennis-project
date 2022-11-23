@@ -50,8 +50,7 @@ public class SecondboardApplication {
 
   @Bean(name = "uploadPath")
   public String uploadPath() {
-
-    return "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files";
+    return "sftp://ubuntu@52.78.173.11/home/ubuntu/files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
