@@ -23,10 +23,10 @@
 
 <div class="board_banner_area">
   <div class="board_banner_text">
-    <h1 style="font-family: Nunito">Community</h1>
-    <p style="font-family: Nunito">come and join!</p>
+    <h1 style="font-family: Nunito; color: #3c763d">Community</h1>
+    <p style="font-family: Nunito; color: #3c763d">come and join!</p>
   </div>
-  <img src="/images/community_narrow.jpeg" alt="배너 이미지" class="">
+  <img src="/images/community2.jpg" alt="배너 이미지" class="">
 </div>
 
 <div class="page">
@@ -58,9 +58,9 @@
           <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
             <div class="row">
               <div class="col-2">
-                <img th:src="@{/images/user.png}"  class="rounded-circle" alt="logo" height="50" width="50">
+                <img th:src="${lesson.member.image}" class="rounded-circle" alt="logo" height="50" width="50">
               </div>
-              <div class="col-10">
+              <div class="col-10 px-4">
                 <span th:text="${lesson.author}"></span>
                 <div>
                   <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
@@ -72,8 +72,8 @@
             </div>
             <br>
 
-            <h1 class="start-100 mt-3 mb-3" th:text="${lesson.title}"></h1>
-            <p class="mt-5" th:utext="${lesson.content}"></p>
+            <h2 class="start-100 mt-3 mb-3" th:text="${lesson.title}"></h2>
+            <h4 class="mt-5" th:utext="${lesson.content}"></h4>
             <br>
             <br>
             <div class="content heart-btn2" th:if="${session.loginMember != null}">
