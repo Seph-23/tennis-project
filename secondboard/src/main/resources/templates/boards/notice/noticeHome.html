@@ -30,7 +30,7 @@
 <body class="pt-6">
 
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
-
+<!-- banner -->
 <div class="board_banner_area" >
     <div class="board_banner_text">
         <h1 style="color: #3c763d">Community</h1>
@@ -42,7 +42,7 @@
 <div class="page">
     <section class="primary">
         <form class="col-4 m-auto" th:action="@{/notice/home}">
-            <div class="mt-5 d-flex" style="width: 340px">
+            <div class="mt-5 d-flex">
                 <input name="keyword" type="search" placeholder="  공지사항 제목, 작성자로 검색"
                        class="form-control inputBox">
                 <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
@@ -62,12 +62,12 @@
                 <tbody>
                 <tr th:each="notice:${noticeList}"
                     th:onclick="|location.href='@{/notice/detail/{id} (id=${notice.id})}'|" role="button">
-                    <td>
+                    <td class="mx-5">
                     <span>
-                    <span th:text="${notice.createdDate}" class="text-center" style="font-size: 12px"></span>
+                    <span th:text="${notice.createdDate}" style="font-size: 14px"></span>
                     </span>
                         <div>
-                            <span th:text="${notice.title}"></span>
+                            <span th:text="${notice.title}" style="font-size: 20px"></span>
                         </div>
                         <div>
                             <span><img class="me-1" th:src="${notice.member.image}" style="width: 20px; height: 20px"><span th:text="${notice.author}" class="text-center"></span>

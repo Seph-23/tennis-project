@@ -30,7 +30,7 @@
 <body class="pt-6">
 
 <nav th:replace="fragments/bodyheader :: bodyHeader"></nav>
-
+<!-- banner -->
 <div class="board_banner_area" >
     <div class="board_banner_text">
         <h1 style="color: #3c763d">Community</h1>
@@ -42,7 +42,7 @@
 <div class="page">
     <section class="primary">
         <form class="col-4 m-auto" th:action="@{/question/home}">
-            <div class="mt-5 d-flex" style="width: 320px">
+            <div class="mt-5 d-flex">
                 <input name="keyword" type="search" placeholder="  질문 제목, 작성자로 검색"
                        class="form-control inputBox">
                 <button type="submit" class="border-0 justify-content-end searchIcon" style="background: none">
