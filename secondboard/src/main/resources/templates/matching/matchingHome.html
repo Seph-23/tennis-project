@@ -180,9 +180,25 @@
                             th:text="${matching.matchingCondition.title}"
                             class="badge text-bg-success rounded-pill d-inline py-3 px-4">
                       </span>
-                        <span th:if="${matching.matchingCondition.title == '신청마감'}"
-                              th:text="${matching.matchingCondition.title}"
-                              class="badge text-bg-danger rounded-pill d-inline py-3 px-4">
+                        <span th:if="${matching.matchingCondition.title == '신청마감'}">
+                             <span th:if="${matching.matchingStatus.name() == 'BEFORE'}"
+                                   th:text="${matching.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
+                            </span>
+                            <span th:if="${matching.matchingStatus.name() == 'TWOHOURBEFORE'}"
+                                  th:text="${matching.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
+                            </span>
+                            <span th:if="${matching.matchingStatus.name() == 'HOURBEFORE'}"
+                                  th:text="${matching.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
+                            </span>
+                            <span th:if="${matching.matchingStatus.name() == 'ONGOING'}"
+                                  class="badge rounded-pill d-inline py-3 px-4" style="background: grey">경기진행중
+                            </span>
+                            <span th:if="${matching.matchingStatus.name() == 'AFTER'}"
+                                  class="badge rounded-pill d-inline py-3 px-4" style="background: grey">경기종료
+                            </span>
+                            <span th:if="${matching.matchingStatus.name() == 'WEEKAFTER'}"
+                                  class="badge rounded-pill d-inline py-3 px-4" style="background: grey">경기종료
+                            </span>
                       </span>
                         <span th:if="${matching.matchingCondition.title == '매칭실패'}"
                               th:text="${matching.matchingCondition.title}"
