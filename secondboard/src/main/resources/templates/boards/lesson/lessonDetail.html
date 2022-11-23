@@ -58,9 +58,9 @@
           <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
             <div class="row">
               <div class="col-2">
-                <img th:src="@{/images/user.png}"  class="rounded-circle" alt="logo" height="50" width="50">
+                <img th:src="${lesson.member.image}"  class="rounded-circle" alt="logo" height="50" width="50">
               </div>
-              <div class="col-10">
+              <div class="col-10 px-3">
                 <span th:text="${lesson.author}"></span>
                 <div>
                   <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
@@ -72,8 +72,8 @@
             </div>
             <br>
 
-            <h1 class="start-100 mt-3 mb-3" th:text="${lesson.title}"></h1>
-            <p class="mt-5" th:utext="${lesson.content}"></p>
+            <h2 class="start-100 mt-3 mb-3" th:text="${lesson.title}"></h2>
+            <h5 class="mt-5" th:utext="${lesson.content}"></h5>
             <br>
             <br>
             <div class="content heart-btn2" th:if="${session.loginMember != null}">
@@ -104,7 +104,7 @@
                   <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
+                           th:src="${lesson.member.image}"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->
