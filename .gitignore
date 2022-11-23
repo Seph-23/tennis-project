@@ -166,3 +166,7 @@ gradle-app.setting
 ### IntelliJ IDEA ###
 application.properties
 .DS_Store
+
+
+# Second Board Ignore
+SecondboardApplication.java
