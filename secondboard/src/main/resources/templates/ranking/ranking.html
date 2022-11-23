@@ -125,7 +125,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="member, i: ${rank}">
+        <tr th:each="member, i: ${rank}" th:if="${member.role.toString() == 'MEMBER'}">
             <td th:text="${i.index+4}">4</td>
             <td th:text="${member.nickname}">닉네임</td>
             <td th:text="${member.record.win} + '승' + ${member.record.lose} + '패'">전적</td>
