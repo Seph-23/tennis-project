@@ -55,28 +55,28 @@
                     </button>
                 </div>  <!-- TODO : 로그인 modal 창 구현 -->
                 <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'GOGOTENNIS'}">
-                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">
-                        로그아웃
-                    </button>
-
                     <button type="button" class="btn btn-outline-primary"
                             th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
                         정보
                     </button>
+                    <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/logout}'|">
+                        로그아웃
+                    </button>
+
                 </div>
 
                 <!-- 카카오 로그아웃-->
                 <div th:if="${session.loginMember != null} and ${session.loginMember.provider.toString() == 'KAKAO'}">
-                    <button type="button" class="btn btn-outline-primary"
-                            th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">
-                        로그아웃
-                    </button>
-
                     <!-- TODO:내 정보 UI 구현-->
                     <button type="button" class="btn btn-outline-primary"
                             th:onclick="|location.href='@{/members/profile/{id} (id=${session.loginMember.id})}' |" )>내
                         정보
                     </button>
+                    <button type="button" class="btn btn-outline-primary"
+                    th:onclick="|location.href='@{https://kauth.kakao.com/oauth/logout?client_id=b70b62ddd16773ad4e495c5aa49dc006&logout_redirect_uri=http://localhost:8080/oauth/kakao/logout&response_type=code}'|">
+                        로그아웃
+                    </button>
+
                 </div>
 
             </div> <!--gap-2 d-md-flex END-->
