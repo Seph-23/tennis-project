@@ -246,7 +246,7 @@ public class MatchingController {
 
     matchingService.resultTempAdd(result, member);
 
-    return "redirect:/matching/home";
+    return "redirect:/matching/detail/" + result.getId();
   }
 
   //  @PostMapping("/new")

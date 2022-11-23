@@ -21,7 +21,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     "/matching/new", "/manager/**", "/tournament/new", "/matching/player/add", "/matching/save",
     "/matching/delete/memberDelete/**", "/matching/update/**", "/boards/update/**", "/members/profileUpdate",
     "/api/question/**", "/api/comments/**", "/question/update/**", "/club/visitor/**", "/image" ,"/image/**",
-    "/image/member/**", "/boards/like", "/boards/report", "/api/lesson/**", "/lesson/update/**"};
+    "/image/member/**", "/boards/like", "/boards/report", "/api/lesson/**", "/lesson/update/**", "/matching/result"};
 
   public static final String LOG_ID = "logId";
 

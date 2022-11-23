@@ -51,7 +51,7 @@ public class SecondboardApplication {
   @Bean(name = "uploadPath")
   public String uploadPath() {
 
-    return "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/files";
+    return "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
@@ -59,10 +59,10 @@ public class SecondboardApplication {
   }
 
 
-  /**
-   * 주석 처리하지 말고
-   * 회원 2개 생성해야 이미지 적용
-   */
+//  /**
+//   * 주석 처리하지 말고
+//   * 회원 2개 생성해야 이미지 적용
+//   */
 //  @Order(1)
 //  @Bean
 //  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,
@@ -98,10 +98,10 @@ public class SecondboardApplication {
 //        try {
 //          if (member.getGender().toString().equals(Gender.MALE.toString())) {
 //            fileItem = new File(
-//              "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/images/profile_ma.png");
+//              "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files\\profile_ma.png");
 //          } else {
 //            fileItem = new File(
-//              "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/images/profile_fe.png");
+//              "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files\\profile_fe.png");
 //          }
 //          FileInputStream input = new FileInputStream(fileItem);
 //          MultipartFile multipartFile = new MockMultipartFile("fileItem",
@@ -255,7 +255,7 @@ public class SecondboardApplication {
 //        File fileItem = null;
 //        try {
 //          fileItem = new File(
-//            "/Users/seph/Documents/Dev/git/tennis-project/secondboard/src/main/resources/static/images/admin.jpeg");
+//            "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files\\admin.jpeg");
 //          FileInputStream input = new FileInputStream(fileItem);
 //          MultipartFile multipartFile = new MockMultipartFile("fileItem",
 //            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
