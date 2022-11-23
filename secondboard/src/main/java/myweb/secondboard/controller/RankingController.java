@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping("/ranking")
+@RequestMapping("ranking")
 @RequiredArgsConstructor
 public class RankingController {
 

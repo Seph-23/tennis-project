@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/manager")
+@RequestMapping("manager")
 public class ManagerController {
 
   private final BoardReportService boardReportService;
@@ -68,7 +68,7 @@ public class ManagerController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/manager/managerHome";
+    return "manager/managerHome";
   }
 
   @GetMapping("/comment/report")
@@ -88,7 +88,7 @@ public class ManagerController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/manager/managerCommentReport";
+    return "manager/managerCommentReport";
   }
 
   @GetMapping("/boardDetail/{boardId}")
@@ -125,7 +125,7 @@ public class ManagerController {
 
     Long reportCount = boardReportService.getReportCount(board.getId());
     model.addAttribute("reportCount", reportCount);
-    return "/manager/boardDetailAdmin";
+    return "manager/boardDetailAdmin";
   }
 
   @GetMapping("/tournament")
@@ -144,7 +144,7 @@ public class ManagerController {
     TournamentSaveForm tournamentSaveForm = new TournamentSaveForm();
     model.addAttribute("form", tournamentSaveForm);
 
-    return "/manager/managerTournament";
+    return "manager/managerTournament";
   }
 
   @PostMapping("/deleteTournament/{tournamentId}")

@@ -25,7 +25,7 @@ public class ImageController {
   private final MemberImageService memberImageService;
   private final ResourceLoader resourceLoader;
 
-  @PostMapping("/image")
+  @PostMapping("image")
   public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile file) {
     try {
       BoardUploadFile uploadFile = imageService.store(file);
@@ -36,7 +36,7 @@ public class ImageController {
     }
   }
 
-  @GetMapping("/image/{fileId}")
+  @GetMapping("image/{fileId}")
   public ResponseEntity<?> serveFile(@PathVariable Long fileId) {
     try {
       BoardUploadFile uploadFile = imageService.load(fileId);
@@ -49,7 +49,7 @@ public class ImageController {
 
   }
 
-  @GetMapping("/image/member/{fileId}")
+  @GetMapping("image/member/{fileId}")
   public ResponseEntity<?> serveFileMember(@PathVariable Long fileId) {
     try {
       MemberUploadFile uploadFile = memberImageService.load(fileId);

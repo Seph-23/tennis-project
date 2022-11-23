@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping("/matching")
+@RequestMapping("matching")
 @RequiredArgsConstructor
 public class MatchingController {
 
@@ -99,7 +99,7 @@ public class MatchingController {
     model.addAttribute("searchCondition", condition);
     model.addAttribute("currDate", LocalDate.now().toString());
 
-    return "/matching/matchingHome";
+    return "matching/matchingHome";
   }
 
   @PostMapping("/new")
@@ -185,9 +185,9 @@ public class MatchingController {
     model.addAttribute("matchContentList", matchContentList);
 
     if (session == null) {
-      return "/matching/matchingDetailNotLoginMember";
+      return "matching/matchingDetailNotLoginMember";
     }
-    return "/matching/matchingDetail";
+    return "matching/matchingDetail";
   }
 
   @PostMapping("/delete/{matchingId}")
@@ -263,7 +263,7 @@ public class MatchingController {
     }
 
     model.addAttribute("form", form);
-    return "/matching/matchingLocationAdd";
+    return "matching/matchingLocationAdd";
   }
 
   @PostMapping("/matchingListUpdate/{date}")
@@ -307,7 +307,7 @@ public class MatchingController {
     model.addAttribute("searchCondition", condition);
     model.addAttribute("currDate", date);
 
-    return "/matching/matchingHome";
+    return "matching/matchingHome";
   }
 
   @PostMapping("/searchCondition")
@@ -350,7 +350,7 @@ public class MatchingController {
     model.addAttribute("searchCondition", condition);
     model.addAttribute("currDate", condition.getDate());
 
-    return "/matching/matchingHome";
+    return "matching/matchingHome";
   }
 }
 

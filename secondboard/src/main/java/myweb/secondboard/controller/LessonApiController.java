@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/lesson")
+@RequestMapping("api/lesson")
 public class LessonApiController {
 
   private final LessonService lessonService;

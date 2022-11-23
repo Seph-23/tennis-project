@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("notice")
 @RequiredArgsConstructor
 public class NoticeController {
 
@@ -73,13 +73,13 @@ public class NoticeController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/boards/notice/noticeHome";
+    return "boards/notice/noticeHome";
   }
 
   @GetMapping("/noticeAdd")
   public String noticeAddForm(Model model) {
     model.addAttribute("notice", new NoticeSaveForm());
-    return "/boards/notice/noticeAddForm";
+    return "boards/notice/noticeAddForm";
   }
 
   @PostMapping("/new")
@@ -91,7 +91,7 @@ public class NoticeController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/notice/noticeAddForm";
+      return "boards/notice/noticeAddForm";
     }
 
     Long noticeId = noticeService.addNotice(form, member);
@@ -114,7 +114,7 @@ public class NoticeController {
     model.addAttribute("likeCount", likeCount);
     System.out.println("notice.getLikeCount() = " + notice.getLikeCount());
 
-    return "/boards/notice/noticeDetail";
+    return "boards/notice/noticeDetail";
   }
 
   @GetMapping("/update/{noticeId}")
@@ -127,7 +127,7 @@ public class NoticeController {
     form.setContent(notice.getContent());
     model.addAttribute("form",form);
 
-    return "/boards/notice/noticeUpdateForm";
+    return "boards/notice/noticeUpdateForm";
   }
 
   @PostMapping("/update/{noticeId}")
@@ -140,7 +140,7 @@ public class NoticeController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/notice/noticeUpdateForm";
+      return "boards/notice/noticeUpdateForm";
     }
 
     noticeService.update(form, member);

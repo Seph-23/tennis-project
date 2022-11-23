@@ -27,10 +27,10 @@ public class LoginController {
 
   private final LoginService loginService;
 
-  @GetMapping("/login")
+  @GetMapping("login")
   public String loginPage(Model model) {
     model.addAttribute("loginForm", new LoginForm());
-    return "/login/loginPage";
+    return "login/loginPage";
   }
 
   @PostMapping("/login")
@@ -38,7 +38,7 @@ public class LoginController {
     BindingResult bindingResult, HttpServletRequest request) throws NoSuchAlgorithmException {
     if (bindingResult.hasErrors()) {
       log.info("globalError = {}", bindingResult);
-      return "/login/loginPage";
+      return "login/loginPage";
     }
     Member loginMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
     if (loginMember == null) {

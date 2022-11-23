@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
-@RequestMapping("/lesson")
+@RequestMapping("lesson")
 @RequiredArgsConstructor
 public class LessonController {
 
@@ -83,13 +83,13 @@ public class LessonController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/boards/lesson/lessonHome";
+    return "boards/lesson/lessonHome";
   }
 
   @GetMapping("/lessonAdd")
   public String noticeAddForm(Model model) {
     model.addAttribute("lesson", new LessonSaveForm());
-    return "/boards/lesson/lessonAddForm";
+    return "boards/lesson/lessonAddForm";
   }
 
   @PostMapping("/new")
@@ -101,7 +101,7 @@ public class LessonController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/lesson/lessonAddForm";
+      return "boards/lesson/lessonAddForm";
     }
 
     Long lessonId = lessonService.addLesson(form, member);
@@ -140,7 +140,7 @@ public class LessonController {
 
     Long reportCount = lessonReportService.getReportCount(lesson.getId());
     model.addAttribute("reportCount", reportCount);
-    return "/boards/lesson/lessonDetail";
+    return "boards/lesson/lessonDetail";
   }
 
   @GetMapping("/update/{lessonId}")
@@ -153,7 +153,7 @@ public class LessonController {
     form.setContent(lesson.getContent());
     model.addAttribute("form",form);
 
-    return  "/boards/lesson/lessonUpdateForm";
+    return  "boards/lesson/lessonUpdateForm";
   }
   @PostMapping("/update/{lessonId}")
   public String noticeUpdate(@Validated @ModelAttribute("form")LessonUpdateForm form,
@@ -165,7 +165,7 @@ public class LessonController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/lesson/lessonUpdateForm";
+      return "boards/lesson/lessonUpdateForm";
     }
 
     lessonService.update(form, member);

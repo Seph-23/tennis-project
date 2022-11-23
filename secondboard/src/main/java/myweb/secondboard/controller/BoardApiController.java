@@ -27,7 +27,7 @@ import org.thymeleaf.util.PatternUtils;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/boards")
+@RequestMapping("api/boards")
 public class BoardApiController {
 
   private final BoardService boardService;

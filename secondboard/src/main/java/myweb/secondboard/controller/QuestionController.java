@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
-@RequestMapping("/question")
+@RequestMapping("question")
 @RequiredArgsConstructor
 public class QuestionController {
 
@@ -80,13 +80,13 @@ public class QuestionController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/boards/question/questionHome";
+    return "boards/question/questionHome";
   }
 
   @GetMapping("/questionAdd")
   public String noticeAddForm(Model model) {
     model.addAttribute("question", new QuestionSaveForm());
-    return "/boards/question/questionAddForm";
+    return "boards/question/questionAddForm";
   }
 
   @PostMapping("/new")
@@ -98,7 +98,7 @@ public class QuestionController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/question/questionAddForm";
+      return "boards/question/questionAddForm";
     }
 
     Long questionId = questionService.addQuestion(form, member);
@@ -128,7 +128,7 @@ public class QuestionController {
     model.addAttribute("hotBoardList", hotBoards);
 
     noticeDetailView(questionId, model, question);
-    return "/boards/question/questionDetail";
+    return "boards/question/questionDetail";
   }
 
   @GetMapping("/update/{questionId}")
@@ -141,7 +141,7 @@ public class QuestionController {
     form.setContent(question.getContent());
     model.addAttribute("form",form);
 
-    return "/boards/question/questionUpdateForm";
+    return "boards/question/questionUpdateForm";
   }
 
   @PostMapping("/update/{questionId}")
@@ -154,7 +154,7 @@ public class QuestionController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/question/questionUpdateForm";
+      return "boards/question/questionUpdateForm";
     }
 
     questionService.update(form, member);

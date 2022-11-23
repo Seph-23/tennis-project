@@ -40,7 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
-@RequestMapping("/members")
+@RequestMapping("members")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -53,7 +53,7 @@ public class MemberController {
   @GetMapping("/new")
   public String signUpPage(Model model) {
     model.addAttribute("member", new MemberSaveForm());
-    return "/members/signUpPage";
+    return "members/signUpPage";
   }
 
   @PostMapping("/new")
@@ -61,7 +61,7 @@ public class MemberController {
                        BindingResult bindingResult) throws NoSuchAlgorithmException {
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/members/signUpPage";
+      return "members/signUpPage";
     }
     //SignUp Success Logic
     Long memberId = memberService.signUp(form);
@@ -89,7 +89,7 @@ public class MemberController {
 
 //    System.out.println("playerList = " + playerList);
 
-    return "/members/profileHome";
+    return "members/profileHome";
   }
 
   @PostMapping("/profileUpdate")
@@ -114,7 +114,7 @@ public class MemberController {
   @GetMapping("/find/password")
   public String findPassword(Model model) {
     model.addAttribute("form", new FindPasswordForm());
-    return "/members/findPassword";
+    return "members/findPassword";
   }
 
   //==비밀번호 인증 : 휴대폰 인증 사용==//
@@ -128,7 +128,7 @@ public class MemberController {
       updateMemberLoginId = findMemberByLoginId.get().getId();
     } else {
       bindingResult.reject("NotFoundLoginMember", "입력하신 아이디를 찾을 수 없습니다.");
-      return  "/members/findPassword";
+      return  "members/findPassword";
     }
 
     return "redirect:/members/find/"+ updateMemberLoginId;
@@ -153,7 +153,7 @@ public class MemberController {
     model.addAttribute("loginId",updateMember.getLoginId());
     model.addAttribute("phoneNum",builder.toString());
     model.addAttribute("updateMemberLoginId", updateMemberLoginId);
-    return "/members/memberAuthentication";
+    return "members/memberAuthentication";
   }
 
   @GetMapping("/update/password/{updateMemberLoginId}")
@@ -163,7 +163,7 @@ public class MemberController {
     System.out.println("form.getId() = " + form.getId());
     model.addAttribute("form", form);
 
-    return "/members/updateMemberPassword";
+    return "members/updateMemberPassword";
   }
 
   @PostMapping("/update")
@@ -177,7 +177,7 @@ public class MemberController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/members/updateMemberPassword";
+      return "members/updateMemberPassword";
     }
 
     System.out.println("updatePasswordCheck = " + updatePassword);
@@ -185,7 +185,7 @@ public class MemberController {
 
     if (!updatePassword.equals(updatePasswordCheck)) {
       bindingResult.reject("NotMatchPassword", "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-      return "/members/updateMemberPassword";
+      return "members/updateMemberPassword";
     }
 
     memberService.updatePassword(form, member);

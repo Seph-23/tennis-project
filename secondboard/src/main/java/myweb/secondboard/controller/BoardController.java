@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
-@RequestMapping("/boards")
+@RequestMapping("boards")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -85,13 +85,13 @@ public class BoardController {
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
 
-    return "/boards/board/boardHome";
+    return "boards/board/boardHome";
   }
 
   @GetMapping("/boardAdd")
   public String boardAddForm(Model model) {
     model.addAttribute("board", new BoardSaveForm());
-    return "/boards/board/boardAddForm";
+    return "boards/board/boardAddForm";
   }
 
   @PostMapping("/new")
@@ -103,7 +103,7 @@ public class BoardController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/board/boardAddForm";
+      return "boards/board/boardAddForm";
     }
 
     Long boardId = boardService.addBoard(form, member);
@@ -144,7 +144,7 @@ public class BoardController {
 
     Long reportCount = boardReportService.getReportCount(board.getId());
     model.addAttribute("reportCount", reportCount);
-    return "/boards/board/boardDetail";
+    return "boards/board/boardDetail";
   }
 
   @GetMapping("/update/{boardId}")
@@ -157,7 +157,7 @@ public class BoardController {
     form.setContent(board.getContent());
     model.addAttribute("form",form);
 
-    return "/boards/board/boardUpdateForm";
+    return "boards/board/boardUpdateForm";
   }
 
   @PostMapping("/update/{boardId}")
@@ -170,7 +170,7 @@ public class BoardController {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/boards/board/boardUpdateForm";
+      return "boards/board/boardUpdateForm";
     }
 
     boardService.update(form, member);

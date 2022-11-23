@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class KakaoMapController {
 
   @ResponseBody
-  @PostMapping("/kakaoMap/addPlace")
+  @PostMapping("kakaoMap/addPlace")
   public JSONObject markerLocation(@RequestParam Map<String, Object> param, Model model) {
     JSONObject result = new JSONObject();
     System.out.println("param.get(\"lat\") = " + param.get("lat"));

@@ -25,7 +25,7 @@ public class TournamentController {
   private final TournamentService tournamentService;
   private final LocalService localService;
 
-  @GetMapping("/tournament")
+  @GetMapping("tournament")
   public String tournament(Model model) {
     List<Tournament> list = tournamentService.getTournamentList();
     List<Local> locals = localService.getLocalList();
@@ -37,10 +37,10 @@ public class TournamentController {
 
     model.addAttribute("list", listDto);
     model.addAttribute("locals", locals);
-    return "/tournament/tournament";
+    return "tournament/tournament";
   }
 
-  @PostMapping("/tournament/new")
+  @PostMapping("tournament/new")
   public String tournament(@ModelAttribute("form") TournamentSaveForm form,
     MultipartFile file) throws IOException {
 

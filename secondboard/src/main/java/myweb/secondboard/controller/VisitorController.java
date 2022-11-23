@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/club/visitor")
+@RequestMapping("club/visitor")
 public class VisitorController {
 
     private final ClubService clubService;
