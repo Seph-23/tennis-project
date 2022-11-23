@@ -51,7 +51,7 @@ public class SecondboardApplication {
   @Bean(name = "uploadPath")
   public String uploadPath() {
 
-    return "/Users/seph/Documents/Dev/작업중/tennis-project/secondboard/src/main/resources/static/files";
+    return "/Users/gaon/git/tennis-project/secondboard/src/main/resources/static/files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {

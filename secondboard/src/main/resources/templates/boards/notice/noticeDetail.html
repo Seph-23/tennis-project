@@ -33,27 +33,18 @@
   <section class="primary">
     <div class="container">
       <br>
-      <h3 style="text-align: center" th:text="${notice.title}"></h3>
-      <div class="d-flex justify-content-between" id="board_title_box">
-        <div>
-          <img th:src="@{/images/user.png}" alt="logo" height="15" width="20">
-          <a th:text="${notice.author}"></a>
-          <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
-          <a th:text="${notice.createdDate}"></a>
-          <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
-          <a th:text="${notice.views}"></a>
-        </div>
+      <div class="d-flex justify-content-end" id="board_title_box">
         <div th:if="${session.loginMember != null}">
           <div th:if="${session.loginMember.id == notice.member.id}" style="display: inline-block">
             <form class="col" role="form" th:action="@{/notice/update/{id} (id=${notice.id})}"
                   method="get">
-              <button class="btn-outline-success border-0 shadow-sm" style="background: none"
+              <button class="btn-outline-success rounded-3 border-0 shadow-sm py-2" style="background: none"
                       type="submit" id="board_update_button">공지사항 수정</button>
             </form>
           </div>
           <div th:if="${session.loginMember.id == notice.member.id} or ${session.loginMember.role.toString() == 'ADMIN'}"
                style="display: inline-block">
-            <button class="btn-outline-danger border-0 shadow-sm" style="background: none"
+            <button class="btn-outline-success rounded-3 border-0 shadow-sm py-2" style="background: none"
                     th:onclick="deleteNotice([[${notice.id}]])" id="board_delete_button">공지사항 삭제</button>
           </div>
         </div>
@@ -62,9 +53,26 @@
       <br>
       <br>
 
-      <div class="d-flex justify-content-center pb-5" id="board_content_box">
+      <div class="d-flex justify-content-start pb-5" id="board_content_box">
         <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-          <p th:utext="${notice.content}"></p>
+          <div class="row">
+            <div class="col-2">
+             <img th:src="${notice.member.image}" alt="logo" height="50" width="50">
+            </div>
+            <div class="col-10 px-3">
+              <span th:text="${notice.author}"></span>
+              <div>
+                <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
+                <span th:text="${notice.createdDate}"></span>
+                <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
+                <span th:text="${notice.views}"></span>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <h2 class="start-100 mt-3 mb-3" th:text="${notice.title}"></h2>
+          <h5 class="mt-5" th:utext="${notice.content}"></h5>
           <br>
           <br>
           <div class="content heart-btn" th:if="${session.loginMember != null}">
