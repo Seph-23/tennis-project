@@ -50,7 +50,7 @@
                                     <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
                                     <li th:text="${topRank.record.points} + '점'">1920점</li>
                                     <li th:text="${topRank.record.rate} + '%'">82%</li>
-                                    <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                                    <img class="profile_first img-fluid" style="width: 50px" alt="티어"/>
                                     <li id="topRank" th:text="${topRank.tier}"></li>
                                 </ul>
                             </div>
@@ -75,7 +75,7 @@
                                     <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 3패</li>
                                     <li th:text="${secondRank.record.points} + '점'">1920점</li>
                                     <li th:text="${secondRank.record.rate} + '%'">82%</li>
-                                    <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                                    <img class="profile_second img-fluid" style="width: 50px" alt="티어"/>
                                     <li id="secondRank" th:text="${secondRank.tier}"></li>
                                 </ul>
                             </div>
@@ -100,7 +100,7 @@
                                     <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 3패</li>
                                     <li th:text="${thirdRank.record.points} + '점'">1920점</li>
                                     <li th:text="${thirdRank.record.rate} + '%'">82%</li>
-                                    <img class="profile img-fluid" style="width: 50px" alt="티어"/>
+                                    <img class="profile_third img-fluid" style="width: 50px" alt="티어"/>
                                     <li id="thirdRank" th:text="${thirdRank.tier}"></li>
                                 </ul>
                             </div>
@@ -149,7 +149,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="/js/localCategory.js"></script>
-<script th:src="@{/js/tierCheck.js}" th:inline="javascript"></script>
+<script th:src="@{/js/tierCheck.js}"></script>
 
 </body>
 </html>
