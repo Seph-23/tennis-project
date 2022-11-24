@@ -43,7 +43,7 @@ public class ClubController {
 
   @GetMapping("club")
   public String clubList(@RequestParam(required = false, value = "keyword") String keyword,
-    @PageableDefault(page = 0, size = 3) Pageable pageable, Model model) {
+    @PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 
     Page<Club> clubs;
     if (keyword != null) {

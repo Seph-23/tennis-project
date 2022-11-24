@@ -56,7 +56,7 @@ public class SchedulerService {
         }
         if (lists.get(i).getMatchingCondition() == MatchingCondition.DONE) {
 
-          if (lists.get(i).getMatchingDate().plusDays(7).equals(currentDate)) {
+          if (lists.get(i).getMatchingDate().plusDays(2).equals(currentDate)) {
           matchingRepository.matchingAfterWeek(matching.getId());
           List<ResultTemp> list = resultTempRepository.findResultTempMatching(matching.getId());
           List<ResultTemp> teamA = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("A")).toList();
