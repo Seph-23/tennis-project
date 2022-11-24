@@ -50,7 +50,7 @@ public class SecondboardApplication {
 
   @Bean(name = "uploadPath")
   public String uploadPath() {
-    return "sftp://ubuntu@52.78.173.11/home/ubuntu/files";
+    return "/home/ubuntu/files";
   }
   @Bean
   JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
@@ -97,10 +97,10 @@ public class SecondboardApplication {
 //        try {
 //          if (member.getGender().toString().equals(Gender.MALE.toString())) {
 //            fileItem = new File(
-//              "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files\\profile_ma.png");
+//              "/home/ubuntu/files/profile_ma.png");
 //          } else {
 //            fileItem = new File(
-//              "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files\\profile_fe.png");
+//              "/home/ubuntu/files/profile_fe.png");
 //          }
 //          FileInputStream input = new FileInputStream(fileItem);
 //          MultipartFile multipartFile = new MockMultipartFile("fileItem",
@@ -254,7 +254,7 @@ public class SecondboardApplication {
 //        File fileItem = null;
 //        try {
 //          fileItem = new File(
-//            "C:\\Users\\User\\git\\team-project\\secondboard\\src\\main\\resources\\static\\files\\admin.jpeg");
+//            "/home/ubuntu/files/profile_ma.jpeg");
 //          FileInputStream input = new FileInputStream(fileItem);
 //          MultipartFile multipartFile = new MockMultipartFile("fileItem",
 //            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
@@ -269,3 +269,4 @@ public class SecondboardApplication {
 //  }
 
 }
+

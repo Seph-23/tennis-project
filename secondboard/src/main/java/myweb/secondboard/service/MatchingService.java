@@ -94,6 +94,7 @@ public class MatchingService {
   @Transactional
   public void resultTempAdd(ResultAddForm result, Member member) {
     Optional<Player> player = playerRepository.exist(result.getId(), member.getId());
+    Player.updateResultStatus(player.get());
     resultTempRepository.save(ResultTemp.createResultTemp(result, player.get()));
   }
 

@@ -85,7 +85,9 @@ public class MemberController {
     model.addAttribute("form",form);
 
     List<Player> playerList = playerService.findByMemberId(member.getId());
+    List<Player> playerAfterList = playerService.findByAfterMemberId(member.getId());
     model.addAttribute("playerList", playerList);
+    model.addAttribute("afterPlayerList", playerAfterList);
 
 //    System.out.println("playerList = " + playerList);
 
