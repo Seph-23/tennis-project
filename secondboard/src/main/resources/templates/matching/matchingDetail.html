@@ -351,10 +351,10 @@
                 </div>
             </form>
             <div th:if="${playerMemberCheck != null}">
-                <div th:if="${matching.matchingStatus.name().equals('AFTER') and session.loginMember.id == playerMemberCheck.member.id}">
+                <div th:if="${matching.matchingStatus.name().equals('AFTER') and session.loginMember.id == playerMemberCheck.member.id} and ${playerMemberCheck.resultStatus.name() == 'RESULTNO'}">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resultModal">매치 결과 등록</button>
                 </div>
-        </div>
+            </div>
         </div>
         <div class="col-4 d-flex justify-content-end gap-2" th:if="${session.loginMember.id == matching.member.id and matching.matchingStatus.name().equals('BEFORE')}">
             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#matchUpdateModal">수정</a>
@@ -425,8 +425,8 @@
                     <div class="mb-3">
                         <div class="form-label">게임 결과</div>
                         <div class="form-check form-check-inline d-flex">
-                            <input type="radio" th:field="*{gameResult}" value="WIN" class="form-check-input"> 승리
-                            <input type="radio" th:field="*{gameResult}" value="LOSE" class="form-check-input ms-3"> 패배
+                            <input type="radio" th:field="*{gameResult}" value="WIN" class="form-check-input me-2"> 승리
+                            <input type="radio" th:field="*{gameResult}" value="LOSE" class="form-check-input ms-3 me-2"> 패배
                         </div>
                     </div>
                     <div class="modal-footer">
