@@ -19,11 +19,11 @@ function setCookie(name, value, expiredays) {
   var todayDate = new Date();
   todayDate.setTime(todayDate.getTime() + 0);
   if (todayDate > expiredays) {
-    document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiredays + ";";
+    document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiredays + "; domain=gogotennis.co.kr;"
   } else if (todayDate < expiredays) {
     todayDate.setDate(todayDate.getDate() + expiredays);
     document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString()
-        + ";";
+        + "; domain=gogotennis.co.kr;"
   }
   console.log(document.cookie);
 }

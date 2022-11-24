@@ -131,7 +131,7 @@
                   <a href="/members/find/password">비밀번호 찾기</a>
                 </div>
               </div> <!--login_etc end-->
-              <button type="submit" class="submit" id="submit">로그인</button>
+              <button type="submit" class="submit" id="submit" onclick="return frm_check();">로그인</button>
             </div>
             <button type="submit" class="submit" id="kakao"
                     th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?client_id=b70b62ddd16773ad4e495c5aa49dc006&redirect_uri=http://gogotennis.co.kr/oauth/kakao&response_type=code}'|">
