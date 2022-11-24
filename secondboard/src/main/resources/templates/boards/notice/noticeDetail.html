@@ -53,37 +53,39 @@
       <br>
       <br>
 
-      <div class="d-flex justify-content-start pb-5" id="board_content_box">
-        <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-          <div class="row">
-            <div class="col-2">
-             <img th:src="${notice.member.image}" alt="logo" height="50" width="50">
-            </div>
-            <div class="col-10 px-3">
+
+
+      <div class="pb-5" id="board_content_box">
+        <div class="d-flex justify-content-start ">
+            <span>
+              <img th:src="${notice.member.image}" class="rounded-circle" alt="logo" height="50" width="50">
+            </span>
+          <span class="px-3">
               <span th:text="${notice.author}"></span>
               <div>
-                <img th:src="@{/images/clock.png}" alt="logo" height="15" width="20">
-                <span th:text="${notice.createdDate}"></span>
-                <img th:src="@{/images/views.png}" alt="logo" height="10" width="20">
-                <span th:text="${notice.views}"></span>
+                <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
+                <span class="small" th:text="${notice.createdDate}"></span>
+                <img th:src="@{/images/views.png}" alt="logo" height="13" width="20">
+                <span class="small" th:text="${notice.views}"></span>
               </div>
-            </div>
-          </div>
-          <br>
+            </span>
+        </div>
 
-          <h2 class="start-100 mt-3 mb-3" th:text="${notice.title}"></h2>
+        <h2 class="start-100 mt-3 mb-3" th:text="${notice.title}"></h2>
+        <div id="summernote" class="board-content d-flex" > <!-- 게시글 본문 -->
+          <br>
           <h5 class="mt-5" th:utext="${notice.content}"></h5>
           <br>
           <br>
-          <div class="content heart-btn" th:if="${session.loginMember != null}">
-            <span class="heart"id="noticeId" th:value="${notice.id}"></span>
+        </div> <!-- 게시글 본문 끝 -->
+        <div class="my-5">
+          <div class="content heart-btn2" th:if="${session.loginMember != null}">
+            <span class="heart" id="noticeId" th:value="${notice.id}"></span>
             <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
             <span hidden id="checkLike" th:value="${checkLike}"></span>
           </div>
-        </div> <!-- 게시글 본문 끝 -->
+        </div>
       </div>
-
-
     </div>
   </section>
 

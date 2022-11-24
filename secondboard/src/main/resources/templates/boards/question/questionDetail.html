@@ -53,13 +53,12 @@
       <br>
       <br>
 
-      <div class="d-flex justify-content-start pb-5" id="board_content_box">
-        <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-          <div class="row">
-            <div class="col-2">
+      <div class="pb-5" id="board_content_box">
+        <div class="d-flex justify-content-start ">
+            <span>
               <img th:src="${question.member.image}" class="rounded-circle" alt="logo" height="50" width="50">
-            </div>
-            <div class="col-10 px-3">
+            </span>
+          <span class="px-3">
               <span th:text="${question.author}"></span>
               <div>
                 <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
@@ -67,16 +66,16 @@
                 <img th:src="@{/images/views.png}" alt="logo" height="13" width="20">
                 <span class="small" th:text="${question.views}"></span>
               </div>
-            </div>
-          </div>
-          <br>
+            </span>
+        </div>
 
-          <h2 class="start-100 mt-3 mb-3" th:text="${question.title}"></h2>
+        <h2 class="start-100 mt-3 mb-3" th:text="${question.title}"></h2>
+        <div id="summernote" class="board-content d-flex" > <!-- 게시글 본문 -->
+          <br>
           <h5 class="mt-5" th:utext="${question.content}"></h5>
           <br>
           <br>
         </div> <!-- 게시글 본문 끝 -->
-      </div>
 
 
       <!--요기요기요기 -->
@@ -94,7 +93,7 @@
                   <div class="card-body p-4 reportCount"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           th:src="${comment.member.image}"
+                           th:src="${question.member.image}"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->

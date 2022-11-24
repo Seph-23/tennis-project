@@ -113,95 +113,95 @@
         <div class="my-4">
             <table class="table table-hover align-middle bg-white">
                 <thead class="bg-light">
-<!--                <tr>-->
-<!--                    <th></th>-->
-<!--                    <th class="text-center">매치 날짜</th>-->
-<!--                    <th class="text-center">매치 시간</th>-->
-<!--                    <th class="text-center">매치 지역</th>-->
-<!--                    <th class="text-center">매치 이름</th>-->
-<!--                    <th class="text-center">코트 타입</th>-->
-<!--                    <th class="text-center">참여자</th>-->
-<!--                    <th class="text-center">생성자</th>-->
-<!--                    <th class="text-center">매치상태</th>-->
-<!--                </tr>-->
+                <!--                <tr>-->
+                <!--                    <th></th>-->
+                <!--                    <th class="text-center">매치 날짜</th>-->
+                <!--                    <th class="text-center">매치 시간</th>-->
+                <!--                    <th class="text-center">매치 지역</th>-->
+                <!--                    <th class="text-center">매치 이름</th>-->
+                <!--                    <th class="text-center">코트 타입</th>-->
+                <!--                    <th class="text-center">참여자</th>-->
+                <!--                    <th class="text-center">생성자</th>-->
+                <!--                    <th class="text-center">매치상태</th>-->
+                <!--                </tr>-->
                 </thead>
                 <tbody>
-                <tr th:each="matching:${matchingList}" id="matching_list" class="matching_list"
-                    th:title="${matching.matchingType.title}" th:value="${matching.courtType.title}"
-                    th:onclick="|location.href='@{/matching/detail/{id} (id=${matching.id})}'|" role="button">
+                <tr th:each="mList:${matchingList}" id="matching_list" class="matching_list"
+                    th:title="${mList.matchingType.title}" th:value="${mList.courtType.title}"
+                    th:onclick="|location.href='@{/matching/detail/{id} (id=${mList.id})}'|" role="button">
                     <td></td>
                     <td class="p-0" style="width: 150px">
-<!--                        <i class="bi bi-clock"></i>-->
-                        <span class="fw-bold" th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span>
+                        <!--                        <i class="bi bi-clock"></i>-->
+                        <span class="fw-bold" th:text="${mList.matchingStartTime} + '~' + ${mList.matchingEndTime}"></span>
                     </td>
                     <td>
                         <p class="mb-0 mt-2">
-                        <i class="bi bi-geo-alt-fill text-muted"></i>
-                        <span class="fw-bold" th:text="${matching.place}"></span>
+                            <i class="bi bi-geo-alt-fill text-muted"></i>
+                            <span class="fw-bold" th:text="${mList.place}"></span>
                         </p>
                         <p class="mb-2">
-                            <span class="ms-4 me-2" th:text="${matching.courtType.title}"></span>
-<!--                            <span th:if="${matching.matchingType.title.equals('단식')}">-->
+                            <span class="ms-4 me-2" th:text="${mList.courtType.title}"></span>
+                            <!--                            <span th:if="${matching.matchingType.title.equals('단식')}">-->
                             <i class="bi bi-people-fill text-muted"></i>
-                            <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>
+                            <span th:text="${mList.playerNumber} + '/' + ${mList.matchingType.code}"></span>
                             </span>
-<!--                            <span th:if="${matching.matchingType.title.equals('복식')}">-->
-<!--                            <i class="bi bi-people-fill text-muted"></i>-->
-<!--                            <span class="small" th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
-<!--                            </span>-->
+                            <!--                            <span th:if="${matching.matchingType.title.equals('복식')}">-->
+                            <!--                            <i class="bi bi-people-fill text-muted"></i>-->
+                            <!--                            <span class="small" th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
+                            <!--                            </span>-->
                         </p>
                     </td>
                     <td>
-                        <p class="mb-0 mt-2" th:text="${matching.title}"></p>
-                        <span><img class="me-1" th:src="${matching.member.image}" style="width: 20px; height: 20px"><span th:text="${matching.author}" class="small"></span></span>
+                        <p class="mb-0 mt-2" th:text="${mList.title}"></p>
+                        <span><img class="me-1" th:src="${mList.member.image}" style="width: 20px; height: 20px"><span th:text="${mList.author}" class="small"></span></span>
                     </td>
                     <!--                    <td class="py-5"></td>-->
-<!--&lt;!&ndash;                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>&ndash;&gt;-->
-<!--                    <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span-->
-<!--                        th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>-->
-<!--                    <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span-->
-<!--                        th:text="${matching.place}"></span></td>-->
-<!--                    <td class="text-center" th:text="${matching.title}"></td>-->
-<!--                    <td class="text-center" th:text="${matching.courtType.title}"></td>-->
-<!--                    <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i-->
-<!--                        class="bi bi-people-fill text-muted me-1"></i>-->
-<!--                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
-<!--                    </td>-->
-<!--                    <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i-->
-<!--                        class="bi bi-people-fill text-muted me-1"></i>-->
-<!--                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
-<!--                    </td>-->
-<!--                    <td class="text-center" th:text="${matching.author}"></td>-->
+                    <!--&lt;!&ndash;                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>&ndash;&gt;-->
+                    <!--                    <td class="text-center"><i class="bi bi-clock text-muted me-1"></i><span-->
+                    <!--                        th:text="${matching.matchingStartTime} + '~' + ${matching.matchingEndTime}"></span></td>-->
+                    <!--                    <td class="text-center"><i class="bi bi-geo-alt-fill text-muted me-1"></i><span-->
+                    <!--                        th:text="${matching.place}"></span></td>-->
+                    <!--                    <td class="text-center" th:text="${matching.title}"></td>-->
+                    <!--                    <td class="text-center" th:text="${matching.courtType.title}"></td>-->
+                    <!--                    <td class="text-center" th:if="${matching.matchingType.title.equals('단식')}"><i-->
+                    <!--                        class="bi bi-people-fill text-muted me-1"></i>-->
+                    <!--                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
+                    <!--                    </td>-->
+                    <!--                    <td class="text-center" th:if="${matching.matchingType.title.equals('복식')}"><i-->
+                    <!--                        class="bi bi-people-fill text-muted me-1"></i>-->
+                    <!--                        <span th:text="${matching.playerNumber} + '/' + ${matching.matchingType.code}"></span>-->
+                    <!--                    </td>-->
+                    <!--                    <td class="text-center" th:text="${matching.author}"></td>-->
                     <td>
 
                     </td>
                     <td class="text-center">
-                      <span th:if="${matching.matchingCondition.title == '신청가능'}"
-                            th:text="${matching.matchingCondition.title}"
+                      <span th:if="${mList.matchingCondition.title == '신청가능'}"
+                            th:text="${mList.matchingCondition.title}"
                             class="badge text-bg-success rounded-pill d-inline py-3 px-4">
                       </span>
-                        <span th:if="${matching.matchingCondition.title == '신청마감'}">
-                             <span th:if="${matching.matchingStatus.name() == 'BEFORE'}"
-                                   th:text="${matching.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
+                        <span th:if="${mList.matchingCondition.title == '신청마감'}">
+                             <span th:if="${mList.matchingStatus.name() == 'BEFORE'}"
+                                   th:text="${mList.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
                             </span>
-                            <span th:if="${matching.matchingStatus.name() == 'TWOHOURBEFORE'}"
-                                  th:text="${matching.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
+                            <span th:if="${mList.matchingStatus.name() == 'TWOHOURBEFORE'}"
+                                  th:text="${mList.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
                             </span>
-                            <span th:if="${matching.matchingStatus.name() == 'HOURBEFORE'}"
-                                  th:text="${matching.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
+                            <span th:if="${mList.matchingStatus.name() == 'HOURBEFORE'}"
+                                  th:text="${mList.matchingCondition.title}" class="text-bg-danger badge rounded-pill d-inline py-3 px-4">
                             </span>
-                            <span th:if="${matching.matchingStatus.name() == 'ONGOING'}"
+                            <span th:if="${mList.matchingStatus.name() == 'ONGOING'}"
                                   class="badge rounded-pill d-inline py-3 px-4" style="background: grey">경기진행중
                             </span>
-                            <span th:if="${matching.matchingStatus.name() == 'AFTER'}"
+                            <span th:if="${mList.matchingStatus.name() == 'AFTER'}"
                                   class="badge rounded-pill d-inline py-3 px-4" style="background: grey">경기종료
                             </span>
-                            <span th:if="${matching.matchingStatus.name() == 'WEEKAFTER'}"
+                            <span th:if="${mList.matchingStatus.name() == 'WEEKAFTER'}"
                                   class="badge rounded-pill d-inline py-3 px-4" style="background: grey">경기종료
                             </span>
                       </span>
-                        <span th:if="${matching.matchingCondition.title == '매칭실패'}"
-                              th:text="${matching.matchingCondition.title}"
+                        <span th:if="${mList.matchingCondition.title == '매칭실패'}"
+                              th:text="${mList.matchingCondition.title}"
                               class="badge rounded-pill d-inline text-bg-warning py-3 px-4">
                       </span>
                     </td>
@@ -267,14 +267,14 @@
                             class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="${matching.matchingStartTime}" id="matchingStartTime"
-                               placeholder="시작 시간을 입력해주세요" readonly required>
+                               placeholder="시작 시간을 입력해주세요" required readonly>
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span
                             class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="${matching.matchingEndTime}" id="matchingEndTime"
-                               placeholder="종료 시간을 입력해주세요" readonly required>
+                               placeholder="종료 시간을 입력해주세요" required readonly>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">매치 종류<span class="text-danger">*</span></div>
@@ -305,7 +305,7 @@
                         <label for="matchingPlace" class="form-label">매치 장소<span
                             class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.place}"
-                               id="matchingPlace" placeholder="매치 장소를 입력해주세요"
+                               id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
                                required readonly>
                         <!--                        <a type="button" class="btn btn-primary px-4 py-3"-->
@@ -357,7 +357,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center ">
-                    <input id="placeName" class="text-center border-0 w-100 mb-3" placeholder="장소를 선택해주세요." readonly>
+                    <input id="placeName" class="text-center border-0 w-100 mb-3" placeholder="장소를 선택해주세요." >
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary"

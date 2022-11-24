@@ -54,28 +54,30 @@
         <br>
         <br>
 
-        <div class="d-flex justify-content-start pb-5" id="board_content_box">
-          <div id="summernote" class="board-content"> <!-- 게시글 본문 -->
-            <div class="row">
-              <div class="col-2">
-                <img th:src="${lesson.member.image}"  class="rounded-circle" alt="logo" height="50" width="50">
+        <div class="pb-5" id="board_content_box">
+          <div class="d-flex justify-content-start ">
+            <span>
+              <img th:src="${lesson.member.image}" class="rounded-circle" alt="logo" height="50" width="50">
+            </span>
+            <span class="px-3">
+              <span th:text="${lesson.author}"></span>
+              <div>
+                <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
+                <span class="small" th:text="${lesson.createdDate}"></span>
+                <img th:src="@{/images/views.png}" alt="logo" height="13" width="20">
+                <span class="small" th:text="${lesson.views}"></span>
               </div>
-              <div class="col-10 px-3">
-                <span th:text="${lesson.author}"></span>
-                <div>
-                  <img th:src="@{/images/clock.png}" alt="logo" height="15" width="15">
-                  <span class="small" th:text="${lesson.createdDate}"></span>
-                  <img th:src="@{/images/views.png}" alt="logo" height="13" width="20">
-                  <span class="small" th:text="${lesson.views}"></span>
-                </div>
-              </div>
-            </div>
-            <br>
+            </span>
+          </div>
 
-            <h2 class="start-100 mt-3 mb-3" th:text="${lesson.title}"></h2>
+          <h2 class="start-100 mt-3 mb-3" th:text="${lesson.title}"></h2>
+          <div id="summernote" class="board-content d-flex" > <!-- 게시글 본문 -->
+            <br>
             <h5 class="mt-5" th:utext="${lesson.content}"></h5>
             <br>
             <br>
+          </div> <!-- 게시글 본문 끝 -->
+          <div class="mt-5">
             <div class="content heart-btn2" th:if="${session.loginMember != null}">
               <span class="heart" id="lessonId" th:value="${lesson.id}"></span>
               <span class="like" id="likeCount" th:text="'like '+ ${likeCount}"></span>
@@ -85,7 +87,7 @@
               <span id="reportBtn" class="report">신고</span>
             </div>
             <span id="reportCount" hidden th:value="${reportCount}"></span>
-          </div> <!-- 게시글 본문 끝 -->
+          </div>
         </div>
       </div>
 
@@ -104,7 +106,7 @@
                   <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           th:src="${comment.member.image}"
+                           th:src="${lesson.member.image}"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->

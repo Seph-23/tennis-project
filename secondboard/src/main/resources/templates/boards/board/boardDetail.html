@@ -16,6 +16,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css"/>
   <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/solid.js" integrity="sha384-/BxOvRagtVDn9dJ+JGCtcofNXgQO/CCCVKdMfL115s3gOgQxWaX/tSq5V8dRgsbc" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/fontawesome.js" integrity="sha384-dPBGbj4Uoy1OOpM4+aRGfAOc0W37JkROT+3uynUgTHZCHZNMHfGXsmmvYTffZjYO" crossorigin="anonymous"></script>
+  <style>
+    .rowContent {
+      --bs-gutter-x: 1.5rem;
+      --bs-gutter-y: 0;
+      display: flex;
+      flex-wrap: nowrap;
+      margin-top: calc(var(--bs-gutter-y) * -1);
+      margin-left: calc(var(--bs-gutter-x) * -.5);
+      margin-right: calc(var(--bs-gutter-x) * -.5);
+      !important;
+    }
+  </style>
 </head>
 <body class="pt-6">
 
@@ -54,6 +66,7 @@
         <br>
         <br>
 
+
         <div class="pb-5" id="board_content_box">
           <div class="d-flex justify-content-start ">
             <span>
@@ -71,12 +84,12 @@
           </div>
 
           <h2 class="start-100 mt-3 mb-3" th:text="${board.title}"></h2>
-          <div id="summernote" class="board-content d-flex" > <!-- 게시글 본문 -->
+          <div id="summernote" class="board-content d-flex" > <!— 게시글 본문 —>
             <br>
             <h5 class="mt-5" th:utext="${board.content}"></h5>
             <br>
             <br>
-          </div> <!-- 게시글 본문 끝 -->
+          </div> <!— 게시글 본문 끝 —>
           <div class="mt-5">
             <div class="content heart-btn2" th:if="${session.loginMember != null}">
               <span class="heart" id="boardId" th:value="${board.id}"></span>
@@ -106,7 +119,7 @@
                   <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           th:src="${comment.member.image}"
+                           th:src="${board.member.image}"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->
