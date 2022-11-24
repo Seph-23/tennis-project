@@ -153,7 +153,7 @@
                     </td>
                     <td>
                         <p class="mb-0 mt-2" th:text="${matching.title}"></p>
-                        <p class="small" th:text="${matching.author}"></p>
+                        <span><img class="me-1" th:src="${matching.member.image}" style="width: 20px; height: 20px"><span th:text="${matching.author}" class="small"></span></span>
                     </td>
                     <!--                    <td class="py-5"></td>-->
 <!--&lt;!&ndash;                    <td class="text-center"><span th:text="${matching.matchingDate}"></span></td>&ndash;&gt;-->
@@ -255,14 +255,12 @@
                         <label for="matchingTitle" class="form-label">매치 이름<span
                             class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matching.title}"
-                               id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
-                        <div th:errors="${matching.title}" class="text-danger"></div>
+                               id="matchingTitle" placeholder="매치 이름을 입력해주세요" maxlength="15" required>
                     </div>
                     <div class="mb-3">
                         <label for="matchingDate" class="form-label">매치 날짜<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" th:field="${matching.matchingDate}"
-                               id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
-                        <div th:errors="${matching.matchingDate}" class="text-danger"></div>
+                               id="matchingDate" placeholder="매치 날짜를 입력해주세요" required readonly>
                     </div>
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span
@@ -270,7 +268,6 @@
                         <input type="text" class="form-control"
                                th:field="${matching.matchingStartTime}" id="matchingStartTime"
                                placeholder="시작 시간을 입력해주세요" required>
-                        <div th:errors="${matching.matchingStartTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span
@@ -278,7 +275,6 @@
                         <input type="text" class="form-control"
                                th:field="${matching.matchingEndTime}" id="matchingEndTime"
                                placeholder="종료 시간을 입력해주세요" required>
-                        <div th:errors="${matching.matchingEndTime}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">매치 종류<span class="text-danger">*</span></div>
@@ -303,8 +299,7 @@
                             class="text-danger">*</span></label>
                         <textarea type="text" class="form-control" th:field="${matching.content}"
                                   id="matchingContent" placeholder="매치 소개를 입력해주세요"
-                                  style="height: 200px; resize: none;" required></textarea>
-                        <div th:errors="${matching.content}" class="text-danger"></div>
+                                  style="height: 200px; resize: none;" maxlength="200" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="matchingPlace" class="form-label">매치 장소<span
@@ -312,8 +307,7 @@
                         <input type="text" class="form-control" th:field="${matching.place}"
                                id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
-                               required>
-                        <div th:errors="${matching.place}" class="text-danger"></div>
+                               required readonly>
                         <!--                        <a type="button" class="btn btn-primary px-4 py-3"-->
                         <!--                           data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>-->
                         <input hidden id="matching_lat" th:field="${matching.lat}">

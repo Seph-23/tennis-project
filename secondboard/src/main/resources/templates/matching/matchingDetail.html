@@ -105,7 +105,7 @@
     <div class="row d-flex justify-content-center my-3">
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0 gap-5" style="border-radius: 40px;">
             <div class="m-3 mt-4" th:each="a, state : ${playersA}" th:attr="data-bs-target='#teamAInfoModal' + ${a.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${a.id}]])">
-                <img th:src="${a.member.image}" class="rounded-circle" style="width: 82px; height: 82px;">
+                <img th:src="${a.member.image}" class="rounded-circle clickImg" style="width: 82px; height: 82px;">
                 <p class="mt-1 small" th:text="${a.member.nickname}"></p>
                 <!-- A팀 참가자 Modal -->
                 <div class="modal fade" th:id="teamAInfoModal + ${a.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -185,7 +185,7 @@
         <div class="col-2 flex-shrink-1"></div>
         <div class="col-4 text-center d-flex justify-content-center flex-shrink-0 gap-5" style="border-radius: 40px;">
             <div th:each="b, state :${playersB}" class="m-3 mt-4" th:attr="data-bs-target='#teamBInfoModal' + ${b.id}" data-bs-toggle="modal" th:onclick="tiercheckModal([[${b.id}]])" >
-                    <img th:src="${b.member.image}" class="rounded-circle" style="width: 82px; height: 82px;">
+                    <img th:src="${b.member.image}" class="rounded-circle clickImg" style="width: 82px; height: 82px;">
                     <p class="mt-1 small" th:text="${b.member.nickname}"></p>
                 <!-- B팀 참가자 Modal -->
                 <div class="modal fade" th:id="teamBInfoModal + ${b.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -454,23 +454,23 @@
                     <input type="hidden" th:field="${matchingForm.id}">
                     <div class="mb-3">
                         <label for="matchingTitle" class="form-label">매치 이름<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matchingForm.title}" id="matchingTitle" placeholder="매치 이름을 입력해주세요" required>
-                        <div th:errors="${matchingForm.title}" class="text-danger"></div>
+                        <input type="text" class="form-control" th:field="${matchingForm.title}"
+                               id="matchingTitle" placeholder="매치 이름을 입력해주세요" maxlength="15" readonly required>
                     </div>
                     <div class="mb-3">
                         <label for="matchingDate" class="form-label">매치 날짜<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" th:field="${matchingForm.matchingDate}" id="matchingDate" placeholder="매치 날짜를 입력해주세요" required>
-                        <div th:errors="${matchingForm.matchingDate}" class="text-danger"></div>
+                        <input type="date" class="form-control" th:field="${matchingForm.matchingDate}"
+                               id="matchingDate" placeholder="매치 날짜를 입력해주세요" readonly required>
                     </div>
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matchingForm.matchingStartTime}" id="matchingStartTime" placeholder="시작 시간을 입력해주세요" required readonly>
-                        <div th:errors="${matchingForm.matchingStartTime}" class="text-danger"></div>
+                        <input type="text" class="form-control" th:field="${matchingForm.matchingStartTime}"
+                               id="matchingStartTime" placeholder="시작 시간을 입력해주세요" readonly required>
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}" id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required readonly>
-                        <div th:errors="${matchingForm.matchingEndTime}" class="text-danger"></div>
+                        <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}"
+                               id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required readonly>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">코트 종류<span class="text-danger">*</span></div>
@@ -483,9 +483,8 @@
                         <label for="matchingTitle" class="form-label">매치 소개<span
                             class="text-danger">*</span></label>
                         <textarea type="text" class="form-control" name="content" th:text="${matchingForm.content}"
-                                  id="matchingContent" placeholder="매치 소개를 입력해주세요"
+                                  id="matchingContent" placeholder="매치 소개를 입력해주세요" maxlength="200"
                                   style="height: 200px; resize: none;" required></textarea>
-                        <div th:errors="${matching.content}" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
                         <div class="mb-3">
@@ -494,7 +493,6 @@
                                    id="matchingPlace" placeholder="매창 장소를 입력해주세요"
                                    data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
                                    required readonly>
-                            <div th:errors="${matchingForm.place}" class="text-danger"></div>
                         </div>
                         <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
                         <input hidden id="matching_lng_update" th:field="${matchingForm.lng}">

@@ -118,7 +118,7 @@
           <form th:action="@{/club/save}" th:object="${form}" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="clubName" class="form-label">동호회 이름<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" th:field="${form.name}" id="clubName" placeholder="동호회 이름을 입력해주세요" required>
+              <input type="text" class="form-control" th:field="${form.name}" id="clubName" placeholder="동호회 이름을 입력해주세요" required maxlength="15">
               <div th:errors="${form.name}" class="text-danger"></div>
             </div>
             <div class="mb-3">
@@ -134,7 +134,7 @@
             </div>
             <div class="mb-3">
               <label for="clubIntroduction" class="form-label">동호회 소개</label>
-              <textarea class="form-control" th:field="${form.introduction}" id="clubIntroduction" rows="3"></textarea>
+              <textarea class="form-control" th:field="${form.introduction}" id="clubIntroduction" rows="3" maxlength="200" required></textarea>
               <div th:errors="${form.introduction}" class="text-danger"></div>
             </div>
             <div class="modal-footer">

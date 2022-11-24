@@ -90,7 +90,7 @@ public class MatchingController {
     model.addAttribute("courtTypes", courtTypes);
 
     List<String> matchingPlaces = matchingService.getMatchingPlaces(LocalDate.now().toString());
-    System.out.println("matchingPlaces = " + matchingPlaces);
+    model.addAttribute("matchingPlaces", matchingPlaces);
 
 
 
@@ -103,16 +103,11 @@ public class MatchingController {
   }
 
   @PostMapping("/new")
-  public String matchingAdd(@Validated @ModelAttribute("matching") MatchingSaveForm form,
+  public String matchingAdd(@ModelAttribute("matching") MatchingSaveForm form,
     BindingResult bindingResult, HttpServletRequest request) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
-
-    if (bindingResult.hasErrors()) {
-      log.info("errors = {}", bindingResult);
-      return "redirect:/matching/home";
-    }
 
     Long matchingId = matchingService.addMatching(form, member);
     return "redirect:/matching/detail/" + matchingId;
@@ -205,17 +200,12 @@ public class MatchingController {
   }
 
   @PostMapping("/update/{matchingId}")
-  public String matchingUpdate(@Validated @ModelAttribute("matchingForm") MatchingUpdateForm form,
+  public String matchingUpdate(@ModelAttribute("matchingForm") MatchingUpdateForm form,
     BindingResult bindingResult, HttpServletRequest request,
     @PathVariable("matchingId") Long matchingId) {
 
     Member member = (Member) request.getSession(false)
       .getAttribute(SessionConst.LOGIN_MEMBER);
-
-    if (bindingResult.hasErrors()) {
-      log.info("errors = {}", bindingResult);
-      return "redirect:/matching/detail/" + matchingId;
-    }
 
     matchingService.update(form, member);
     return "redirect:/matching/detail/" + matchingId;
