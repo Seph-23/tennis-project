@@ -86,8 +86,10 @@ public class MemberController {
 
     List<Player> playerList = playerService.findByMemberId(member.getId());
     List<Player> playerAfterList = playerService.findByAfterMemberId(member.getId());
+    List<Player> playerBeforeList = playerService.findByBeforeMemberId(member.getId());
     model.addAttribute("playerList", playerList);
     model.addAttribute("afterPlayerList", playerAfterList);
+    model.addAttribute("playerBeforeList", playerBeforeList);
 
 //    System.out.println("playerList = " + playerList);
 

@@ -187,7 +187,7 @@
 
 <div class="section">
     <hr>
-    <h2 class="py-3">결과 대기 목록</h2>
+    <h2 class="py-3">참가 매치 현황</h2>
     <div>
         <table class="table table-hover align-middle bg-white">
             <thead class="bg-light">
@@ -196,7 +196,30 @@
                 <th class="text-center">매치 이름</th>
                 <th class="text-center">매치 타입</th>
                 <th class="text-center">경기 날짜</th>
-                <th class="text-center">결과 등록 상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="beforePlayer : ${playerBeforeList}" th:onclick="|location.href='@{/matching/detail/{id} (id=${beforePlayer.matching.id})}'|" role="button">
+                <td class="py-5"></td>
+                <td class="text-center" th:text="${beforePlayer.matching.title}"></td>
+                <td class="text-center" th:text="${beforePlayer.matching.matchingType.title}"></td>
+                <td class="text-center" th:text="${beforePlayer.matching.matchingDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="section">
+    <h2 class="py-3">결과 등록 현황</h2>
+    <div>
+        <table class="table table-hover align-middle bg-white">
+            <thead class="bg-light">
+            <tr>
+                <th></th>
+                <th class="text-center">매치 이름</th>
+                <th class="text-center">매치 타입</th>
+                <th class="text-center">경기 날짜</th>
+                <th class="text-center">상태</th>
             </tr>
             </thead>
             <tbody>
@@ -206,7 +229,11 @@
                 <td class="text-center" th:text="${afterPlayer.matching.title}"></td>
                 <td class="text-center" th:text="${afterPlayer.matching.matchingType.title}"></td>
                 <td class="text-center" th:text="${afterPlayer.matching.matchingDate}"></td>
-                <td class="text-center" th:text="${afterPlayer.resultStatus.title}"></td>
+                <td class="text-center">
+                    <span class="text-bg-success badge rounded-pill py-2 px-4" th:if="${afterPlayer.resultStatus.name() == 'RESULTYES'}" th:text="등록완료"></span>
+                    <span class="text-bg-danger badge rounded-pill py-2 px-4" th:if="${afterPlayer.resultStatus.name() == 'RESULTNO'}" th:text="미등록"></span>
+                </td>
+<!--                <td class="text-center" th:text="${afterPlayer.resultStatus.title}"></td>-->
             </tr>
             </tbody>
         </table>
@@ -216,7 +243,6 @@
 <div class="py-2"></div>
 
 <div class="section">
-    <hr>
     <h2 class="py-3">최근 전적 현황</h2>
     <div>
         <table class="table table-hover align-middle bg-white">

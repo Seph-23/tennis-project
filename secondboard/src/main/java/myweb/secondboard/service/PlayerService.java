@@ -45,6 +45,15 @@ public class PlayerService {
     return playerRepository.findByMemberId(memberId).stream().filter(list -> list.getMatching().getMatchingStatus().name() == "AFTER").toList();
   }
 
+  public List<Player> findByBeforeMemberId(Long memberId) {
+    return playerRepository.findByMemberId(memberId).stream().filter(
+            list -> list.getMatching().getMatchingStatus().name() == "BEFORE" ||
+                    list.getMatching().getMatchingStatus().name() == "HOURBEFORE" ||
+                    list.getMatching().getMatchingStatus().name() == "TWOHOURBEFORE" ||
+                    list.getMatching().getMatchingStatus().name() == "ONGOING"
+            ).toList();
+  }
+
   public List<Player> findOne(Long memberId) {
     return playerRepository.findByMemberId(memberId);
   }
