@@ -41,7 +41,7 @@ public class ClubController {
   private final VisitorService visitorService;
 
 
-  @GetMapping("/club")
+  @GetMapping("club")
   public String clubList(@RequestParam(required = false, value = "keyword") String keyword,
     @PageableDefault(page = 0, size = 3) Pageable pageable, Model model) {
 
@@ -83,10 +83,10 @@ public class ClubController {
     List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
-    return "/club/clubList"; // 동호회 리스트 페이지
+    return "club/clubList"; // 동호회 리스트 페이지
   }
 
-  @GetMapping("/club/detail/{clubId}")
+  @GetMapping("club/detail/{clubId}")
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
 
     Club club = clubService.findOne(clubId);
@@ -126,18 +126,18 @@ public class ClubController {
     model.addAttribute("locals", locals);
 
     if (session == null) {
-      return "/club/clubDetailNotLoginMember";
+      return "club/clubDetailNotLoginMember";
     }
-    return "/club/clubDetail";
+    return "club/clubDetail";
   }
 
-  @PostMapping("/club/save")
+  @PostMapping("club/save")
   public String clubSave(@Validated @ModelAttribute("form") ClubSaveForm form, BindingResult bindingResult,
     HttpServletRequest request, MultipartFile file) throws IOException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/club/clubList";
+      return "club/clubList";
     }
 
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
@@ -150,7 +150,7 @@ public class ClubController {
   }
 
   @ResponseBody
-  @PostMapping("/club/join")
+  @PostMapping("club/join")
   public String joinClub(HttpServletRequest request, @RequestParam("clubId") Long id, HttpServletResponse response) throws IOException {
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     Club club = clubService.findOne(id);
@@ -159,13 +159,13 @@ public class ClubController {
     return "redirect:/club/detail/" + id;
   }
 
-  @PostMapping("/club/update")
+  @PostMapping("club/update")
   public String clubUpdate(@Validated @ModelAttribute("form") ClubUpdateForm form,
     BindingResult bindingResult, Model model, MultipartFile file) throws IOException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "/club/clubDetail";
+      return "club/clubDetail";
     }
     System.out.println("file = " + file);
     Long clubId = clubService.update(form, file);
@@ -173,7 +173,7 @@ public class ClubController {
     return "redirect:/club/detail/" + clubId;
   }
 
-  @PostMapping("/club/memberDelete")
+  @PostMapping("club/memberDelete")
   public String clubMemberDelete(HttpServletRequest request, Long id) {
     Long clubId = clubService.findOne(id).getId();
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
@@ -182,13 +182,13 @@ public class ClubController {
     return "redirect:/club/detail/" + clubId;
   }
 
-  @PostMapping("/club/delete")
+  @PostMapping("club/delete")
   public String clubDelete(Long id) {
     clubService.deleteClub(clubService.findOne(id).getId());
     return "redirect:/club";
   }
 
-  @PostMapping("/club/memberBan/{id}")
+  @PostMapping("club/memberBan/{id}")
   public String clubMemberBan(@PathVariable("id") Long id, HttpServletRequest request) {
     ClubMember clubMember = clubService.get(id);
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);

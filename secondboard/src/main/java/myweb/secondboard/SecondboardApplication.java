@@ -58,104 +58,104 @@ public class SecondboardApplication {
   }
 
 
-//  /**
-//   * 주석 처리하지 말고
-//   * 회원 2개 생성해야 이미지 적용
-//   */
-//  @Order(1)
-//  @Bean
-//  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,
-//    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
-//    return args -> IntStream.rangeClosed(1, 2).forEach(i -> {
-//      try {
-//        //생성 객체 준비
-//        Member member = new Member();
-//        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-//        Record record = Record.createRecord();
-//
-//        member.setLoginId("testtest" + i);
-//        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
-//        member.setNickname("test" + i);
-//        member.setEmail("test" + i + "@test.com");
-//        member.setBirthday("19950307");
-//        member.setPhoneNumber("01021219" + String.format("%03d", i));
-//        member.setProvider(Provider.GOGOTENNIS);
-//        member.setRole(Role.MEMBER);
-//        member.setTier(Tier.IRON);
-//        member.setRecord(record);
-//
-//        if (i % 2 == 1) {
-//          member.setGender(Gender.MALE);
-//        } else {
-//          member.setGender(Gender.FEMALE);
-//        }
-//
-//        recordRepository.save(record);
-//        memberRepository.save(member);
-//
-//        File fileItem = null;
-//        try {
-//          if (member.getGender().toString().equals(Gender.MALE.toString())) {
-//            fileItem = new File(
-//              "/home/ubuntu/files/profile_ma.png");
-//          } else {
-//            fileItem = new File(
-//              "/home/ubuntu/files/profile_fe.png");
-//          }
-//          FileInputStream input = new FileInputStream(fileItem);
-//          MultipartFile multipartFile = new MockMultipartFile("fileItem",
-//            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
-//          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
-//          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
-//        } catch (Exception e) {
-//        }
-//      } catch (Exception e) {
-//        e.printStackTrace();
-//      }
-//    });
-//  }
-//
-//  /**
-//   * 멤버 정보
-//   */
-//  @Order(2)
-//  @Bean
-//  public CommandLineRunner initMember(MemberRepository memberRepository,
-//    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
-//    return args -> IntStream.rangeClosed(3, 10).forEach(i -> {
-//      try {
-//        //생성 객체 준비
-//        Member member = new Member();
-//        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-//        Record record = Record.createRecord();
-//
-//        member.setLoginId("testtest" + i);
-//        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
-//        member.setNickname("test" + i);
-//        member.setEmail("test" + i + "@test.com");
-//        member.setBirthday("19950307");
-//        member.setPhoneNumber("01021219" + String.format("%03d", i));
-//        member.setProvider(Provider.GOGOTENNIS);
-//        member.setRole(Role.MEMBER);
-//        member.setTier(Tier.IRON);
-//        member.setRecord(record);
-//
-//        if (i % 2 == 1) {
-//          member.setGender(Gender.MALE);
-//          member.setImage("/image/member/1");
-//        } else {
-//          member.setGender(Gender.FEMALE);
-//          member.setImage("/image/member/2");
-//        }
-//
-//        recordRepository.save(record);
-//        memberRepository.save(member);
-//
-//      } catch (Exception e) {
-//        e.printStackTrace();
-//      }
-//    });
-//  }
+  /**
+   * 주석 처리하지 말고
+   * 회원 2개 생성해야 이미지 적용
+   */
+  @Order(1)
+  @Bean
+  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,
+    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
+    return args -> IntStream.rangeClosed(1, 2).forEach(i -> {
+      try {
+        //생성 객체 준비
+        Member member = new Member();
+        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+        Record record = Record.createRecord();
+
+        member.setLoginId("testtest" + i);
+        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
+        member.setNickname("test" + i);
+        member.setEmail("test" + i + "@test.com");
+        member.setBirthday("19950307");
+        member.setPhoneNumber("01021219" + String.format("%03d", i));
+        member.setProvider(Provider.GOGOTENNIS);
+        member.setRole(Role.MEMBER);
+        member.setTier(Tier.IRON);
+        member.setRecord(record);
+
+        if (i % 2 == 1) {
+          member.setGender(Gender.MALE);
+        } else {
+          member.setGender(Gender.FEMALE);
+        }
+
+        recordRepository.save(record);
+        memberRepository.save(member);
+
+        File fileItem = null;
+        try {
+          if (member.getGender().toString().equals(Gender.MALE.toString())) {
+            fileItem = new File(
+              "/home/ubuntu/files/profile_ma.png");
+          } else {
+            fileItem = new File(
+              "/home/ubuntu/files/profile_fe.png");
+          }
+          FileInputStream input = new FileInputStream(fileItem);
+          MultipartFile multipartFile = new MockMultipartFile("fileItem",
+            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
+          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
+          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
+        } catch (Exception e) {
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
+  }
+
+  /**
+   * 멤버 정보
+   */
+  @Order(2)
+  @Bean
+  public CommandLineRunner initMember(MemberRepository memberRepository,
+    RecordRepository recordRepository, MemberImageService memberImageService, MemberService memberService) {
+    return args -> IntStream.rangeClosed(3, 10).forEach(i -> {
+      try {
+        //생성 객체 준비
+        Member member = new Member();
+        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+        Record record = Record.createRecord();
+
+        member.setLoginId("testtest" + i);
+        member.setPassword(passwordEncrypt.encrypt("testtest" + i));
+        member.setNickname("test" + i);
+        member.setEmail("test" + i + "@test.com");
+        member.setBirthday("19950307");
+        member.setPhoneNumber("01021219" + String.format("%03d", i));
+        member.setProvider(Provider.GOGOTENNIS);
+        member.setRole(Role.MEMBER);
+        member.setTier(Tier.IRON);
+        member.setRecord(record);
+
+        if (i % 2 == 1) {
+          member.setGender(Gender.MALE);
+          member.setImage("/image/member/1");
+        } else {
+          member.setGender(Gender.FEMALE);
+          member.setImage("/image/member/2");
+        }
+
+        recordRepository.save(record);
+        memberRepository.save(member);
+
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
+  }
 //
 //  //내일, 복식, 실내 매치 생성
 //  @Order(3)
@@ -212,60 +212,60 @@ public class SecondboardApplication {
 //  }
 //
 //
-//  @Order(4)
-//  @Bean
-//  public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
-//    return args -> {
-//      //==Local (지역) 테스트 데이터==//
-//      List<String> locals = new ArrayList<>();
-//      for (String s : Arrays.asList("서울", "경기", "강원", "경상", "전라", "충청", "제주")) {
-//        locals.add(s);
-//      }
-//
-//      for (int i = 1; i <= 7; i++) {
-//        Local local = new Local();
-//        local.setName(locals.get(i - 1));
-//        localRepository.save(local);
-//      }
-//    };
-//  }
-//
-//  //  == 관리자 데이터 11.16(수) 테스트 완료 ==//
-//  @Order(5)
-//  @Bean
-//  public CommandLineRunner initAdminMember(MemberRepository memberRepository,
-//    MemberImageService memberImageService, MemberService memberService) {
-//    return  args -> {
-//      try{
-//        Member member = new Member();
-//        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
-//        member.setLoginId("adminadmin");
-//        member.setPassword(passwordEncrypt.encrypt("adminadmin!"));
-//        member.setNickname("admin");
-//        member.setEmail("admin" + "@gmail.com");
-//        member.setBirthday("19951126");
-//        member.setPhoneNumber("01012345678");
-//        member.setGender(Gender.MALE);
-//        member.setProvider(Provider.GOGOTENNIS);
-//        member.setRole(Role.ADMIN);
-//        member.setTier(Tier.BRONZE);
-//        memberRepository.save(member);
-//
-//        File fileItem = null;
-//        try {
-//          fileItem = new File("/home/ubuntu/files/admin.jpeg");
-//          FileInputStream input = new FileInputStream(fileItem);
-//          MultipartFile multipartFile = new MockMultipartFile("fileItem",
-//            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
-//          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
-//          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
-//        } catch (Exception e) {
-//        }
-//      } catch (Exception e) {
-//        e.printStackTrace();
-//      }
-//    };
-//  }
+  @Order(4)
+  @Bean
+  public CommandLineRunner test(LocalRepository localRepository, TournamentRepository tournamentRepository) {
+    return args -> {
+      //==Local (지역) 테스트 데이터==//
+      List<String> locals = new ArrayList<>();
+      for (String s : Arrays.asList("서울", "경기", "강원", "경상", "전라", "충청", "제주")) {
+        locals.add(s);
+      }
+
+      for (int i = 1; i <= 7; i++) {
+        Local local = new Local();
+        local.setName(locals.get(i - 1));
+        localRepository.save(local);
+      }
+    };
+  }
+
+  //  == 관리자 데이터 11.16(수) 테스트 완료 ==//
+  @Order(5)
+  @Bean
+  public CommandLineRunner initAdminMember(MemberRepository memberRepository,
+    MemberImageService memberImageService, MemberService memberService) {
+    return  args -> {
+      try{
+        Member member = new Member();
+        PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
+        member.setLoginId("adminadmin");
+        member.setPassword(passwordEncrypt.encrypt("adminadmin!"));
+        member.setNickname("admin");
+        member.setEmail("admin" + "@gmail.com");
+        member.setBirthday("19951126");
+        member.setPhoneNumber("01012345678");
+        member.setGender(Gender.MALE);
+        member.setProvider(Provider.GOGOTENNIS);
+        member.setRole(Role.ADMIN);
+        member.setTier(Tier.BRONZE);
+        memberRepository.save(member);
+
+        File fileItem = null;
+        try {
+          fileItem = new File("/home/ubuntu/files/admin.jpeg");
+          FileInputStream input = new FileInputStream(fileItem);
+          MultipartFile multipartFile = new MockMultipartFile("fileItem",
+            fileItem.getName(), "image/png", IOUtils.toByteArray(input));
+          MemberUploadFile uploadFile = memberImageService.newStore(multipartFile);
+          memberService.setBasicProfileImage("/image/member/"+uploadFile.getId(), member.getId());
+        } catch (Exception e) {
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    };
+  }
 
 }
 
