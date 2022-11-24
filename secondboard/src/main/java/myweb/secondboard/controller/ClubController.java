@@ -1,5 +1,9 @@
 package myweb.secondboard.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myweb.secondboard.domain.*;
@@ -37,9 +41,9 @@ public class ClubController {
   private final VisitorService visitorService;
 
 
-  @GetMapping("club")
+  @GetMapping("/club")
   public String clubList(@RequestParam(required = false, value = "keyword") String keyword,
-                         @PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
+    @PageableDefault(page = 0, size = 3) Pageable pageable, Model model) {
 
     Page<Club> clubs;
     if (keyword != null) {
@@ -47,12 +51,27 @@ public class ClubController {
     } else {
       clubs = clubService.getClubList(pageable);
     }
+    Object[] objects = clubService.getClubList(pageable).stream().toArray();
+//    Arrays.sort(clubMembers, (a, b) -> b.getMemberCount() - a.getMemberCount());
+    List<Club> clubListByMemberCount = new ArrayList<>();
+    for (Object object : objects) {
+      clubListByMemberCount.add((Club) object);
+    }
+
+    Comparator<Club> comparator = new Comparator<Club>() {
+      @Override
+      public int compare(Club o1, Club o2) {
+        return o2.getMemberCount() - o1.getMemberCount();
+      }
+    };
+
+    clubListByMemberCount.sort(comparator);
 
     int nowPage = clubs.getPageable().getPageNumber() + 1;
     int startPage = Math.max(nowPage - 4, 1);
     int endPage = Math.min(nowPage + 9, clubs.getTotalPages());
 
-    model.addAttribute("clubs", clubs);
+    model.addAttribute("clubs", clubListByMemberCount);
     model.addAttribute("nowPage", nowPage);
     model.addAttribute("startPage", startPage);
     model.addAttribute("endPage", endPage);
@@ -64,10 +83,10 @@ public class ClubController {
     List<Local> locals = localService.getLocalList();
     model.addAttribute("locals", locals);
 
-    return "club/clubList"; // 동호회 리스트 페이지
+    return "/club/clubList"; // 동호회 리스트 페이지
   }
 
-  @GetMapping("club/detail/{clubId}")
+  @GetMapping("/club/detail/{clubId}")
   public String clubDetail(@PathVariable("clubId") Long clubId, Model model, HttpServletRequest request) {
 
     Club club = clubService.findOne(clubId);
@@ -107,18 +126,18 @@ public class ClubController {
     model.addAttribute("locals", locals);
 
     if (session == null) {
-      return "club/clubDetailNotLoginMember";
+      return "/club/clubDetailNotLoginMember";
     }
-    return "club/clubDetail";
+    return "/club/clubDetail";
   }
 
-  @PostMapping("club/save")
+  @PostMapping("/club/save")
   public String clubSave(@Validated @ModelAttribute("form") ClubSaveForm form, BindingResult bindingResult,
-                         HttpServletRequest request, MultipartFile file) throws IOException {
+    HttpServletRequest request, MultipartFile file) throws IOException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "club/clubList";
+      return "/club/clubList";
     }
 
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
@@ -131,7 +150,7 @@ public class ClubController {
   }
 
   @ResponseBody
-  @PostMapping("club/join")
+  @PostMapping("/club/join")
   public String joinClub(HttpServletRequest request, @RequestParam("clubId") Long id, HttpServletResponse response) throws IOException {
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
     Club club = clubService.findOne(id);
@@ -140,13 +159,13 @@ public class ClubController {
     return "redirect:/club/detail/" + id;
   }
 
-  @PostMapping("club/update")
+  @PostMapping("/club/update")
   public String clubUpdate(@Validated @ModelAttribute("form") ClubUpdateForm form,
-                           BindingResult bindingResult, Model model, MultipartFile file) throws IOException {
+    BindingResult bindingResult, Model model, MultipartFile file) throws IOException {
 
     if (bindingResult.hasErrors()) {
       log.info("errors = {}", bindingResult);
-      return "club/clubDetail";
+      return "/club/clubDetail";
     }
     System.out.println("file = " + file);
     Long clubId = clubService.update(form, file);
@@ -154,7 +173,7 @@ public class ClubController {
     return "redirect:/club/detail/" + clubId;
   }
 
-  @PostMapping("club/memberDelete")
+  @PostMapping("/club/memberDelete")
   public String clubMemberDelete(HttpServletRequest request, Long id) {
     Long clubId = clubService.findOne(id).getId();
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);
@@ -163,13 +182,13 @@ public class ClubController {
     return "redirect:/club/detail/" + clubId;
   }
 
-  @PostMapping("club/delete")
+  @PostMapping("/club/delete")
   public String clubDelete(Long id) {
     clubService.deleteClub(clubService.findOne(id).getId());
     return "redirect:/club";
   }
 
-  @PostMapping("club/memberBan/{id}")
+  @PostMapping("/club/memberBan/{id}")
   public String clubMemberBan(@PathVariable("id") Long id, HttpServletRequest request) {
     ClubMember clubMember = clubService.get(id);
     Member member = (Member) request.getSession(false).getAttribute(SessionConst.LOGIN_MEMBER);

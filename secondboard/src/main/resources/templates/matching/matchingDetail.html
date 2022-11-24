@@ -490,8 +490,7 @@
                         <div class="mb-3">
                             <label for="matchingPlace" class="form-label">매치 장소<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" th:field="${matching.place}"
-                                   id="matchingPlace" placeholder="매창 장소를 입력해주세요"
-                                   data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
+                                   id="matchingPlace" placeholder="매치 장소를 입력해주세요"
                                    required readonly>
                         </div>
                         <input hidden id="matching_lat_update" th:field="${matchingForm.lat}">
@@ -553,11 +552,13 @@
 
 <!-- JS-->
 <script th:src="@{/js/matchingDate.js}"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45acc46c41ba5b2c11cd52ac12e6960a&libraries=services"></script>
 <script th:src="@{/js/matchingDetailKakaoMap.js}"></script>
 <script th:src="@{/js/tierCheck.js}"></script>
+<script th:src="@{/js/kakaoMap.js}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:src="@{/js/matchAlert.js}"></script>
-    <script th:src="@{/js/matchResult.js}"></script>
+<script th:src="@{/js/matchResult.js}"></script>
 </body>
 </html>

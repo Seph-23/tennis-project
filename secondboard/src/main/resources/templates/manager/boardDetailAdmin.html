@@ -91,7 +91,7 @@
                   <div class="card-body p-4 reportCount" th:value="${comment.reportCount}"><!-- 몸통 -->
                     <div class="d-flex flex-start">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
+                           th:src="${comment.member.image}"
                            alt="avatar" width="60"
                            height="60"/> <!-- 사진 -->
                       <div style="width: 100%"> <!-- 시간 -->

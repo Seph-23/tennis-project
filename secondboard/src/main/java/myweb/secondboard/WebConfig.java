@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
           "/question/detail/**", "/lesson/home", "/lesson/detail/**", "/login/modal/**",
           "/api/members/*", "/matching/matchingListUpdate/*", "/members/find/password/**",
             "/members/find/**", "members/find", "/api/sms/check/sendSMS/**", "/image/member/**",
-            "/matching/detail/**", "/club/detail/**", "/matching/searchCondition"); // 인터셉터에서 제외할 패턴 : 로그인 안한 회원
+            "/matching/detail/**", "/club/detail/**", "/matching/searchCondition", "/members/update/**",
+          "/image" ,"/image/**", "/image/member/**"); // 인터셉터에서 제외할 패턴 : 로그인 안한 회원
   }
 }
