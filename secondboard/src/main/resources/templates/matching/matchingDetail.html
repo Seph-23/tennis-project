@@ -457,22 +457,22 @@
                         <input type="text" class="form-control" th:field="${matchingForm.title}"
                                id="matchingTitle" placeholder="매치 이름을 입력해주세요" maxlength="15" readonly required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <label for="matchingDate" class="form-label">매치 날짜<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" th:field="${matchingForm.matchingDate}"
                                id="matchingDate" placeholder="매치 날짜를 입력해주세요" readonly required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <label for="matchingStartTime" class="form-label">시작 시간<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matchingForm.matchingStartTime}"
                                id="matchingStartTime" placeholder="시작 시간을 입력해주세요" readonly required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <label for="matchingEndTime" class="form-label">종료 시간<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" th:field="${matchingForm.matchingEndTime}"
                                id="matchingEndTime" placeholder="종료 시간을 입력해주세요" required readonly>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <div class="form-label">코트 종류<span class="text-danger">*</span></div>
                         <div th:each="court : ${courtTypes}" class="form-check form-check-inline">
                             <input type="radio" th:field="*{courtType}" th:value="${court.name()}" class="form-check-input">
