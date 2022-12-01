@@ -58,10 +58,10 @@ public class SecondboardApplication {
   }
 
 
-  /**
-   * 주석 처리하지 말고
-   * 회원 2개 생성해야 이미지 적용
-   */
+//  /**
+//   * 주석 처리하지 말고
+//   * 회원 2개 생성해야 이미지 적용
+//   */
 //  @Order(1)
 //  @Bean
 //  public CommandLineRunner initMemberProfile(MemberRepository memberRepository,

@@ -56,7 +56,7 @@ public class SchedulerService {
         }
         if (lists.get(i).getMatchingCondition() == MatchingCondition.DONE) {
 
-          if (lists.get(i).getMatchingDate().plusDays(2).equals(currentDate)) {
+          if (lists.get(i).getMatchingDate().plusDays(1).equals(currentDate)) {
           matchingRepository.matchingAfterWeek(matching.getId());
           List<ResultTemp> list = resultTempRepository.findResultTempMatching(matching.getId());
           List<ResultTemp> teamA = list.stream().filter(a -> a.getPlayer().getTeam().toString().equals("A")).toList();
@@ -165,21 +165,21 @@ public class SchedulerService {
       }
       player.getMember().getRecord().setRate((double) (player.getMember().getRecord().getWin()) / (double)(player.getMember().getRecord().getWin() + player.getMember().getRecord().getLose()) * 100);
 
-      if (player.getMember().getRecord().getPoints() >= 150) {
+      if (player.getMember().getRecord().getPoints() >= 125) {
         player.getMember().setTier(Tier.BRONZE);
-      } else if (player.getMember().getRecord().getPoints() >= 200) {
+      } else if (player.getMember().getRecord().getPoints() >= 150) {
         player.getMember().setTier(Tier.SILVER);
-      } else if (player.getMember().getRecord().getPoints() >= 250) {
+      } else if (player.getMember().getRecord().getPoints() >= 175) {
         player.getMember().setTier(Tier.GOLD);
-      } else if (player.getMember().getRecord().getPoints() >= 300) {
+      } else if (player.getMember().getRecord().getPoints() >= 200) {
         player.getMember().setTier(Tier.PLATINUM);
-      } else if (player.getMember().getRecord().getPoints() >= 350) {
+      } else if (player.getMember().getRecord().getPoints() >= 225) {
         player.getMember().setTier(Tier.DIAMOND);
-      } else if (player.getMember().getRecord().getPoints() >= 400) {
+      } else if (player.getMember().getRecord().getPoints() >= 250) {
         player.getMember().setTier(Tier.MASTER);
-      } else if (player.getMember().getRecord().getPoints() >= 500) {
+      } else if (player.getMember().getRecord().getPoints() >= 275) {
         player.getMember().setTier(Tier.GRANDMASTER);
-      } else if (player.getMember().getRecord().getPoints() >= 600) {
+      } else if (player.getMember().getRecord().getPoints() >= 300) {
         player.getMember().setTier(Tier.CHALLENGER);
       }
     }
