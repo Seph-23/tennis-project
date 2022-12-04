@@ -223,7 +223,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="afterPlayer : ${afterPlayerList}" th:onclick="|location.href='@{/matching/detail/{id} (id=${afterPlayer.matching.id})}'|" role="button">
+            <tr th:each="afterPlayer : ${afterPlayerList}" th:if="${afterPlayer.matching.matchingCondition.name() == 'DONE'}"
+                th:onclick="|location.href='@{/matching/detail/{id} (id=${afterPlayer.matching.id})}'|" role="button">
                 <td class="py-5"></td>
                 <!--                <td class="text-center" th:text="${player.matching.gameResult.title}"></td>-->
                 <td class="text-center" th:text="${afterPlayer.matching.title}"></td>

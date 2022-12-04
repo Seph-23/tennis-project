@@ -66,7 +66,9 @@ $('#matchingEndTime').timepicker({
     zindex: 9999
 });
 
-
+$(".readonly").keydown(function(e){
+    e.preventDefault();
+});
 
 
 

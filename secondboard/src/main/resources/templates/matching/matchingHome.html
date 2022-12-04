@@ -265,22 +265,22 @@
                     <div class="mb-3">
                         <label for="matchingStartTime" class="form-label">시작 시간<span
                             class="text-danger">*</span></label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control readonly"
                                th:field="${matching.matchingStartTime}" id="matchingStartTime"
-                               placeholder="시작 시간을 입력해주세요" required readonly>
+                               placeholder="시작 시간을 입력해주세요" required>
                     </div>
                     <div class="mb-3">
                         <label for="matchingEndTime" class="form-label">종료 시간<span
                             class="text-danger">*</span></label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control readonly"
                                th:field="${matching.matchingEndTime}" id="matchingEndTime"
-                               placeholder="종료 시간을 입력해주세요" required readonly>
+                               placeholder="종료 시간을 입력해주세요" required>
                     </div>
                     <div class="mb-3">
                         <div class="form-label">매치 종류<span class="text-danger">*</span></div>
                         <div th:each="match : ${matchTypes}" class="form-check form-check-inline">
                             <input type="radio" th:field="*{matchingType}"
-                                   th:value="${match.name()}" class="form-check-input">
+                                   th:value="${match.name()}" class="form-check-input" required>
                             <label th:for="${#ids.prev('matchingType')}" th:text="${match.title}"
                                    class="form-check-label"></label>
                         </div>
@@ -289,7 +289,7 @@
                         <div class="form-label">코트 종류<span class="text-danger">*</span></div>
                         <div th:each="court : ${courtTypes}" class="form-check form-check-inline">
                             <input type="radio" th:field="*{courtType}" th:value="${court.name()}"
-                                   class="form-check-input">
+                                   class="form-check-input" required>
                             <label th:for="${#ids.prev('courtType')}" th:text="${court.title}"
                                    class="form-check-label"></label>
                         </div>
@@ -304,10 +304,10 @@
                     <div class="mb-3">
                         <label for="matchingPlace" class="form-label">매치 장소<span
                             class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="${matching.place}"
-                               id="matchingPlace" placeholder="매창 장소를 입력해주세요"
+                        <input type="text" class="form-control readonly" th:field="${matching.place}"
+                               id="matchingPlace" placeholder="매칭 장소를 입력해주세요"
                                data-bs-toggle="modal" data-bs-target="#matchAddLocationModal"
-                               required readonly>
+                               required>
                         <!--                        <a type="button" class="btn btn-primary px-4 py-3"-->
                         <!--                           data-bs-toggle="modal" data-bs-target="#matchAddModal">매치등록</a>-->
                         <input hidden id="matching_lat" th:field="${matching.lat}">
