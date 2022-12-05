@@ -351,8 +351,8 @@
                 </div>
             </form>
             <div th:if="${playerMemberCheck != null}">
-                <div th:if="${matching.matchingStatus.name().equals('AFTER') and ${playerMemberCheck.matching.matchingCondition.name() == 'DONE'}
-                 and session.loginMember.id == playerMemberCheck.member.id} and ${playerMemberCheck.resultStatus.name() == 'RESULTNO'}">
+                <div th:if="${matching.matchingStatus.name().equals('AFTER') and playerMemberCheck.matching.matchingCondition.name() == 'DONE'}
+                 and ${session.loginMember.id == playerMemberCheck.member.id} and ${playerMemberCheck.resultStatus.name() == 'RESULTNO'}">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resultModal">매치 결과 등록</button>
                 </div>
             </div>
