@@ -165,19 +165,19 @@ public class SchedulerService {
       }
       player.getMember().getRecord().setRate((double) (player.getMember().getRecord().getWin()) / (double)(player.getMember().getRecord().getWin() + player.getMember().getRecord().getLose()) * 100);
 
-      if (player.getMember().getRecord().getPoints() >= 125) {
+      if (player.getMember().getRecord().getPoints() >= 125 && player.getMember().getRecord().getPoints() < 150) {
         player.getMember().setTier(Tier.BRONZE);
-      } else if (player.getMember().getRecord().getPoints() >= 150) {
+      } else if (player.getMember().getRecord().getPoints() >= 150 && player.getMember().getRecord().getPoints() < 175) {
         player.getMember().setTier(Tier.SILVER);
-      } else if (player.getMember().getRecord().getPoints() >= 175) {
+      } else if (player.getMember().getRecord().getPoints() >= 175 && player.getMember().getRecord().getPoints() < 200) {
         player.getMember().setTier(Tier.GOLD);
-      } else if (player.getMember().getRecord().getPoints() >= 200) {
+      } else if (player.getMember().getRecord().getPoints() >= 200 && player.getMember().getRecord().getPoints() < 225) {
         player.getMember().setTier(Tier.PLATINUM);
-      } else if (player.getMember().getRecord().getPoints() >= 225) {
+      } else if (player.getMember().getRecord().getPoints() >= 225 && player.getMember().getRecord().getPoints() < 250) {
         player.getMember().setTier(Tier.DIAMOND);
-      } else if (player.getMember().getRecord().getPoints() >= 250) {
+      } else if (player.getMember().getRecord().getPoints() >= 250 && player.getMember().getRecord().getPoints() < 275) {
         player.getMember().setTier(Tier.MASTER);
-      } else if (player.getMember().getRecord().getPoints() >= 275) {
+      } else if (player.getMember().getRecord().getPoints() >= 275 && player.getMember().getRecord().getPoints() < 300) {
         player.getMember().setTier(Tier.GRANDMASTER);
       } else if (player.getMember().getRecord().getPoints() >= 300) {
         player.getMember().setTier(Tier.CHALLENGER);

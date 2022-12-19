@@ -84,7 +84,7 @@
                     <li class="card-text" th:text="'신청기간: ' + ${tournament.applicationStartDate} + ' ~ ' + ${tournament.applicationEndDate}">신청기간</li>
                     <li class="card-text" th:text="'대회기간: ' + ${tournament.compStartDate} + ' ~ ' + ${tournament.compEndDate}">대회기간</li>
                   </ul>
-                  <p class="card-text" th:text="${tournament.content}"></p>
+<!--                  <p class="card-text" th:text="${tournament.content}"></p>-->
                   <a th:href="${tournament.url}" class="btn btn-primary">대회 바로가기</a>
                   <button th:onclick="deleteTournament([[${tournament.id}]])" class="btn btn-warning">대회 삭제</button>
                 </div>

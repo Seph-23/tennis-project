@@ -48,14 +48,13 @@
       <div class="card">
         <img th:src="'data:image/jpg;base64,'+${tournament.image}" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title" th:text="${tournament.title}">Card title</h5>
+          <h5 class="card-title text-center" th:text="${tournament.title}">Card title</h5>
           <ul>
             <li class="card-text" th:text="'장소: ' + ${tournament.place}">장소</li>
             <li class="card-text" th:text="'신청기간: ' + ${tournament.applicationStartDate} + ' ~ ' + ${tournament.applicationEndDate}">신청기간</li>
             <li class="card-text" th:text="'대회기간: ' + ${tournament.compStartDate} + ' ~ ' + ${tournament.compEndDate}">대회기간</li>
           </ul>
-          <p class="card-text" th:text="${tournament.content}">
-          </p>
+<!--          <p class="card-text" th:text="${tournament.content}"></p>-->
           <div class="d-flex justify-content-center">
             <a th:href="${tournament.url}" class="btn btn-primary">대회 바로가기</a>
           </div>

@@ -42,3 +42,13 @@
 .card-body ul li {
   list-style: none;
 }
+
+.card-img-top {
+  max-height: 230px;
+  min-height: 230px;
+}
+
+/*.card-body {*/
+/*  max-height: 237px;*/
+/*  min-height: 237px;*/
+/*}*/

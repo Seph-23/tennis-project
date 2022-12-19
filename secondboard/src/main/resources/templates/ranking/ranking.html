@@ -49,7 +49,8 @@
                                 <ul class="list-unstyled mt-3 mb-0 fw-bold">
                                     <li th:text="${topRank.record.win} + '승' + ${topRank.record.lose} + '패'">165승 3패</li>
                                     <li th:text="${topRank.record.points} + '점'">1920점</li>
-                                    <li th:text="${topRank.record.rate} + '%'">82%</li>
+<!--                                    <li th:text="${topRank.record.rate} + '%'">82%</li>-->
+                                    <li th:text="${#numbers.formatDecimal(topRank.record.rate,2,2)} + '%'">82%</li>
                                     <img class="profile_first img-fluid" style="width: 50px" alt="티어"/>
                                     <li id="topRank" th:text="${topRank.tier}"></li>
                                 </ul>
@@ -74,7 +75,8 @@
                                 <ul class="list-unstyled mt-3 mb-0 fw-bold">
                                     <li th:text="${secondRank.record.win} + '승' + ${secondRank.record.lose} + '패'">165승 3패</li>
                                     <li th:text="${secondRank.record.points} + '점'">1920점</li>
-                                    <li th:text="${secondRank.record.rate} + '%'">82%</li>
+<!--                                    <li th:text="${secondRank.record.rate} + '%'">82%</li>-->
+                                    <li th:text="${#numbers.formatDecimal(secondRank.record.rate,2,2)} + '%'">82%</li>
                                     <img class="profile_second img-fluid" style="width: 50px" alt="티어"/>
                                     <li id="secondRank" th:text="${secondRank.tier}"></li>
                                 </ul>
@@ -99,7 +101,8 @@
                                 <ul class="list-unstyled mt-3 mb-0 fw-bold">
                                     <li th:text="${thirdRank.record.win} + '승' + ${thirdRank.record.lose} + '패'">165승 3패</li>
                                     <li th:text="${thirdRank.record.points} + '점'">1920점</li>
-                                    <li th:text="${thirdRank.record.rate} + '%'">82%</li>
+<!--                                    <li th:text="${thirdRank.record.rate} + '%'">82%</li>-->
+                                    <li th:text="${#numbers.formatDecimal(thirdRank.record.rate,2,2)} + '%'">82%</li>
                                     <img class="profile_third img-fluid" style="width: 50px" alt="티어"/>
                                     <li id="thirdRank" th:text="${thirdRank.tier}"></li>
                                 </ul>
@@ -130,7 +133,8 @@
             <td th:text="${member.nickname}">닉네임</td>
             <td th:text="${member.record.win} + '승' + ${member.record.lose} + '패'">전적</td>
             <td th:text="${member.record.points} + '점'">점수</td>
-            <td th:text="${member.record.rate} + '%'">승률</td>
+<!--            <td th:text="${member.record.rate} + '%'">승률</td>-->
+            <td th:text="${#numbers.formatDecimal(member.record.rate,2,2)} + '%'">82%</td>
         </tr>
         </tbody>
     </table>
